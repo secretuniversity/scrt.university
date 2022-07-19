@@ -1,0 +1,9 @@
+.git
+.svelte-kit
+build
+dist
+node_modules
+.dockerignore
+.gitingore
+Dockerfile
+README.md
