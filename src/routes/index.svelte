@@ -8,12 +8,12 @@
 
 <HeadPartial {pageTitle} />
 
-<section class="relative bg-white overflow-hidden">
+<section class="relative overflow-hidden bg-white">
 	<div>
 		<!-- Home Page Background Image Container -->
-		<div class="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
+		<div class="hidden lg:absolute lg:inset-0 lg:block" aria-hidden="true">
 			<svg
-				class="absolute top-0 left-1/2 transform translate-x-64 -translate-y-8"
+				class="absolute top-0 left-1/2 translate-x-64 -translate-y-8 transform"
 				width="640"
 				height="784"
 				fill="none"
@@ -40,16 +40,16 @@
 		<div class="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
 			<Nav />
 
-			<main class="mt-16 mx-auto max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
+			<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
 				<div class="lg:grid lg:grid-cols-12 lg:gap-8">
-					<div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+					<div class="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
 						<h1>
 							<span
 								class="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base"
 								>Coming soon</span
 							>
 							<span
-								class="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl"
+								class="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl"
 							>
 								<span class="block text-gray-900">Data to enrich your</span>
 								<span class="block text-indigo-600">online business</span>
@@ -59,7 +59,7 @@
 							Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
 							commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua ad ad non deserunt sunt.
 						</p>
-						<div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+						<div class="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
 							<p class="text-base font-medium text-gray-900">
 								Sign up to get notified when it’s ready.
 							</p>
@@ -69,12 +69,12 @@
 									type="email"
 									name="email"
 									id="email"
-									class="block w-full py-3 text-base rounded-md placeholder-gray-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:flex-1 border-gray-300"
+									class="block w-full rounded-md border-gray-300 py-3 text-base placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:flex-1"
 									placeholder="Enter your email"
 								/>
 								<button
 									type="submit"
-									class="mt-3 w-full px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:flex-shrink-0 sm:inline-flex sm:items-center sm:w-auto"
+									class="mt-3 w-full rounded-md border border-transparent bg-gray-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
 									>Notify me</button
 								>
 							</form>
@@ -85,10 +85,10 @@
 						</div>
 					</div>
 					<div
-						class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center"
+						class="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center"
 					>
 						<svg
-							class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden"
+							class="absolute top-0 left-1/2 origin-top -translate-x-1/2 -translate-y-8 scale-75 transform sm:scale-100 lg:hidden"
 							width="640"
 							height="784"
 							fill="none"
@@ -125,7 +125,7 @@
 						<div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
 							<button
 								type="button"
-								class="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+								class="relative block w-full overflow-hidden rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 							>
 								<span class="sr-only">Watch our video to learn more</span>
 								<img
@@ -134,7 +134,7 @@
 									alt=""
 								/>
 								<span
-									class="absolute inset-0 w-full h-full flex items-center justify-center"
+									class="absolute inset-0 flex h-full w-full items-center justify-center"
 									aria-hidden="true"
 								>
 									<svg class="h-20 w-20 text-indigo-500" fill="currentColor" viewBox="0 0 84 84">

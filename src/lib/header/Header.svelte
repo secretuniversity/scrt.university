@@ -2,6 +2,5 @@
 </script>
 
 <header>
-	<nav>
-	</nav>
+	<nav />
 </header>
