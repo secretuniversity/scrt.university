@@ -1,6 +1,9 @@
 <script context="module" lang="ts">
 	import Nav from '$lib/nav.svelte';
 	import HeadPartial from '$lib/head.svelte';
+	import Features from '$lib/features.svelte';
+	import SectionHeader from '$lib/sectionHeader.svelte';
+
 	export const prerender = true;
 
 	const pageTitle = 'Home';
@@ -36,7 +39,7 @@
 			</svg>
 		</div>
 
-		<!-- Page Content Container -->
+		<!-- Hero Content Container -->
 		<div class="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
 			<Nav />
 
@@ -149,6 +152,83 @@
 					</div>
 				</div>
 			</main>
+		</div>
+	</div>
+
+	<SectionHeader />
+
+	<Features />
+
+	<div class="container mx-auto lg:py-16 px-4 sm:px-6 lg:px-8">
+		<div class="overflow-hidden rounded-lg bg-white shadow px-4 py-6 lg:px-8 lg:py-4">
+			<!-- Content goes here -->
+		<h2 class="text-lg font-medium leading-6 text-gray-900">Support</h2>
+		<p class="mt-2 text-base text-gray-500 lg:max-w-xl">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
+			consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
+			cursus ac. Mauris semper at ipsum eget interdum. Cras ullamcorper fringilla nunc, ut
+			accumsan arcu accumsan ac.
+		</p>
+		<button class="lg:py-4">Learn more</button>
+
+		</div>
+  			</div>
+
+	<div class="py-12">
+		<div class="mx-auto flex md:flex-col lg:grid grid-cols-3 md:gap-y-8 lg:gap-x-8 justify-center max-w-xl sm:px-6 lg:max-w-7xl">
+			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+				<div>
+					<!-- Image goes here -->
+					<img src="./test-image.jpg" alt="Space">
+				</div>
+				<div class="px-4 py-4 sm:px-6">
+					<!-- Content goes here -->
+					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Builders</h2>
+					<p class="mt-2 text-base text-gray-500">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
+						consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
+						cursus ac. Mauris semper at ipsum eget interdum. Cras ullamcorper fringilla nunc, ut
+						accumsan arcu accumsan ac.
+					</p>
+					<!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
+				</div>
+			</div>
+
+			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+				<div>
+					<!-- Image goes here -->
+					<img src="./test-image.jpg" alt="Space">
+				</div>
+				<div class="px-4 py-4 sm:px-6">
+					<!-- Content goes here -->
+					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Builders</h2>
+					<p class="mt-2 text-base text-gray-500">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
+						consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
+						cursus ac. Mauris semper at ipsum eget interdum. Cras ullamcorper fringilla nunc, ut
+						accumsan arcu accumsan ac.
+					</p>
+					<!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
+				</div>
+			</div>
+
+			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+				<div>
+					<!-- Image goes here -->
+					<img src="./test-image.jpg" alt="Space">
+				</div>
+				<div class="px-4 py-4 sm:px-6">
+					<!-- Content goes here -->
+					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Builders</h2>
+					<p class="mt-2 text-base text-gray-500">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
+						consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
+						cursus ac. Mauris semper at ipsum eget interdum. Cras ullamcorper fringilla nunc, ut
+						accumsan arcu accumsan ac.
+					</p>
+					<!-- We use less vertical padding on card footers at all sizes than on headers or body sections -->
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
