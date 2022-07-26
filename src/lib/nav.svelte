@@ -1,6 +1,6 @@
 <div>
 	<nav
-		class="relative mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6"
+		class="relative mx-auto mt-4 flex max-w-7xl items-center justify-between px-4 sm:px-6"
 		aria-label="Global"
 	>
 		<div class="flex flex-1 items-center">
@@ -36,13 +36,10 @@
 				</div>
 			</div>
 			<div class="hidden md:ml-10 md:block md:space-x-10">
-				<a href="#" class="font-medium text-gray-500 hover:text-gray-900">Product</a>
-
-				<a href="#" class="font-medium text-gray-500 hover:text-gray-900">Features</a>
-
-				<a href="#" class="font-medium text-gray-500 hover:text-gray-900">Marketplace</a>
-
-				<a href="#" class="font-medium text-gray-500 hover:text-gray-900">Company</a>
+				<a href="/learn" class="font-medium text-gray-500 hover:text-gray-900">Learn</a>
+				<a href="/contribute" class="font-medium text-gray-500 hover:text-gray-900">Contribute</a>
+				<a href="/support" class="font-medium text-gray-500 hover:text-gray-900">Support</a>
+				<a href="/submit" class="font-medium text-gray-500 hover:text-gray-900">Submit</a>
 			</div>
 		</div>
 		<div class="hidden text-right md:block">
@@ -51,7 +48,7 @@
 					href="#"
 					class="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50"
 				>
-					Log in
+					Connect
 				</a>
 			</span>
 		</div>
