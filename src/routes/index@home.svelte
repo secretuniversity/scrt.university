@@ -1,7 +1,9 @@
 <script context="module" lang="ts">
-	import HeadPartial from '$lib/head.svelte';
-	import Features from '$lib/features.svelte';
-	import SectionHeader from '$lib/sectionHeader.svelte';
+	import HeadPartial from '$lib/Head.svelte';
+	import Nav from '$lib/Nav.svelte';
+	import Features from '$lib/Feature.svelte';
+	import SectionHeader from '$lib/SectionHeader.svelte';
+	import Stats from '$lib/Stats.svelte';
 
 	export const prerender = true;
 
@@ -38,21 +40,23 @@
 			</svg>
 		</div>
 
+		<Nav />
+
 		<!-- Hero Content Container -->
-		<div class="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
+		<div class="relative pt-2 pb-16 sm:pb-24 lg:pb-32">
 			<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
 				<div class="lg:grid lg:grid-cols-12 lg:gap-8">
 					<div class="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
 						<h1>
 							<span
 								class="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base"
-								>Coming soon</span
+								>Secret University</span
 							>
 							<span
 								class="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl"
 							>
-								<span class="block text-gray-900">Data to enrich your</span>
-								<span class="block text-indigo-600">online business</span>
+								<span class="block text-gray-900">Learn to build a better</span>
+								<span class="block text-indigo-600">private web</span>
 							</span>
 						</h1>
 						<p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
@@ -61,7 +65,7 @@
 						</p>
 						<div class="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
 							<p class="text-base font-medium text-gray-900">
-								Sign up to get notified when it’s ready.
+								Sign up for the Secret University newsletter.
 							</p>
 							<form action="#" method="POST" class="mt-3 sm:flex">
 								<label for="email" class="sr-only">Email</label>
@@ -75,7 +79,7 @@
 								<button
 									type="submit"
 									class="mt-3 w-full rounded-md border border-transparent bg-gray-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
-									>Notify me</button
+									>Register</button
 								>
 							</form>
 							<p class="mt-3 text-sm text-gray-500">
@@ -152,29 +156,45 @@
 		</div>
 	</div>
 
-	<SectionHeader />
+	<Stats />
+
+	<SectionHeader
+		title={'Secret Pathways'}
+		subtitle={'Find your path'}
+		description={"Choose the course that's right for you."}
+	/>
 
 	<Features />
 
-	<div class="container mx-auto px-4 sm:px-6 lg:py-16 lg:px-8">
-		<div class="overflow-hidden rounded-lg bg-white px-4 py-6 shadow lg:px-8 lg:py-4">
-			<!-- Content goes here -->
-			<h2 class="text-lg font-medium leading-6 text-gray-900">Support</h2>
-			<p class="mt-2 text-base text-gray-500 lg:max-w-xl">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
-				consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna cursus
-				ac. Mauris semper at ipsum eget interdum. Cras ullamcorper fringilla nunc, ut accumsan arcu
-				accumsan ac.
-			</p>
-			<button class="lg:py-4">Learn more</button>
-		</div>
+	<SectionHeader
+		title={'Secret Boxes'}
+		subtitle={'Start building today'}
+		description={'Secret Boxes are fully integrated projects for you to learn from and expand. Focus on building, not on configuration and setup.'}
+	/>
+
+	<Features />
+
+	<SectionHeader
+		title={'Community Resources'}
+		subtitle={'Learn from the community'}
+		description={'Read guides, watch screencasts, and learn from developers building on Secret Network'}
+	/>
+
+	<Features />
+
+	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+		<p
+			class="mt-1 text-center text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl"
+		>
+			Who we are
+		</p>
 	</div>
 
 	<div class="py-12">
 		<div
-			class="mx-auto flex max-w-xl grid-cols-3 justify-center sm:px-6 md:flex-col md:gap-y-8 lg:grid lg:max-w-7xl lg:gap-x-8"
+			class="mx-auto max-w-xl flex-col justify-center sm:px-6 md:flex-col md:gap-y-8 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8"
 		>
-			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
@@ -192,7 +212,7 @@
 				</div>
 			</div>
 
-			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
@@ -210,7 +230,7 @@
 				</div>
 			</div>
 
-			<div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
