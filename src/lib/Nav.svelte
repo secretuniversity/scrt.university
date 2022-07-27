@@ -1,6 +1,6 @@
 <div>
 	<nav
-		class="relative mx-auto mt-4 flex max-w-7xl items-center justify-between px-4 sm:px-6"
+		class="relative mx-auto mt-4 mb-4 flex max-w-7xl items-center justify-between px-4 sm:px-6"
 		aria-label="Global"
 	>
 		<div class="flex flex-1 items-center">
