@@ -1,27 +1,38 @@
+<script lang="ts">
+	import Dropdown from '$lib/Dropdown.svelte';
+</script>
+
 <!-- Repos Page Header -->
 <div class="bg-gray-800 lg:mx-16 lg:mt-8 lg:rounded-2xl">
 	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:flex lg:justify-between lg:px-8">
 		<div class="max-w-xl">
 			<h2 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
-				Repos
+				Community Resources
 			</h2>
 			<p class="mt-5 text-xl text-gray-400">
-				Learn from the source. Filter and find the best repos to inspire your next project.
+				Learn from the community. Find guides, courses, videos, and more— each made by developers on
+				Secret Network.
 			</p>
 		</div>
 	</div>
 </div>
 
-<!-- Search Input -->
-<div class="mx-8 my-12 lg:mx-16 lg:max-w-2xl">
-	<label for="search" class="sr-only">Search</label>
-	<input
-		type="search"
-		name="search"
-		id="search"
-		class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		placeholder="Search [by #tag]"
-	/>
+<div class="grid grid-cols-2 mx-16 my-12">
+	<!-- Search Input -->
+	<div class="lg:max-w-2xl">
+		<label for="search" class="sr-only">Search</label>
+		<input
+			type="search"
+			name="search"
+			id="search"
+			class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+			placeholder="Search [by #tag]"
+		/>
+	</div>
+
+	<div class="justify-self-end self-center">
+		<Dropdown />
+	</div>
 </div>
 
 <!-- Repo Cards -->
