@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-<div class="grid grid-cols-2 mx-16 my-12">
+<div class="mx-16 my-12 grid grid-cols-2">
 	<!-- Search Input -->
 	<div class="lg:max-w-2xl">
 		<label for="search" class="sr-only">Search</label>
@@ -31,13 +31,13 @@
 		/>
 	</div>
 
-	<div class="justify-self-end self-center">
+	<div class="self-center justify-self-end">
 		<Dropdown />
 	</div>
 </div>
 
 <!-- Repo Cards -->
-<div class="bg-white px-4 pt-6 pb-20 sm:px-6 lg:px-8 lg:pt-8 lg:pb-28 -z-10">
+<div class="-z-10 bg-white px-4 pt-6 pb-20 sm:px-6 lg:px-8 lg:pt-8 lg:pb-28">
 	<div class="relative mx-auto max-w-lg divide-y-2 divide-gray-200 lg:mx-16 lg:max-w-full">
 		<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
 			<Repo />

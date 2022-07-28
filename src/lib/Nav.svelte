@@ -5,7 +5,7 @@
 	>
 		<div class="flex flex-1 items-center">
 			<div class="flex w-full items-center justify-between md:w-auto">
-				<a href="#">
+				<a href="/">
 					<span class="sr-only">Workflow</span>
 					<img
 						class="h-8 w-auto sm:h-10"

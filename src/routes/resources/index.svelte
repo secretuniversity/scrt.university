@@ -17,7 +17,7 @@
 	</div>
 </div>
 
-<div class="grid grid-cols-2 mx-16 my-12">
+<div class="mx-16 my-12 grid grid-cols-2">
 	<!-- Search Input -->
 	<div class="lg:max-w-2xl">
 		<label for="search" class="sr-only">Search</label>
@@ -30,7 +30,7 @@
 		/>
 	</div>
 
-	<div class="justify-self-end self-center">
+	<div class="self-center justify-self-end">
 		<Dropdown />
 	</div>
 </div>
