@@ -5,7 +5,7 @@
 	import ToolCard from '$lib/ToolCard.svelte';
 	import Feature from '$lib/Feature.svelte';
 
-	const pageTitle = 'Learn | Secret University';
+	const pageTitle = 'Learn';
 </script>
 
 <Head {pageTitle} />
