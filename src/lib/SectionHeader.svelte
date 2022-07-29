@@ -5,7 +5,7 @@
 </script>
 
 <div class="bg-white">
-	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:py-12">
 		<div class="text-center">
 			<h2 class="text-base font-semibold uppercase tracking-wide text-indigo-600">{title}</h2>
 			<p
@@ -13,7 +13,7 @@
 			>
 				{subtitle}
 			</p>
-			<p class="mx-auto mt-5 max-w-xl text-xl text-gray-500">
+			<p class="mx-auto mt-5 max-w-2xl text-xl text-gray-500">
 				{description}
 			</p>
 		</div>

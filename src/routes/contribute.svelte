@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/Head.svelte';
+	import SectionHeader from '$lib/SectionHeader.svelte';
 	import Staking from '$lib/Staking.svelte';
 	const pageTitle = 'Contribute';
 </script>
@@ -53,3 +54,17 @@
 </div>
 
 <Staking />
+
+<SectionHeader
+	title={'Community Curated Bounties'}
+	subtitle={'Looking for your next project?'}
+	description={"If you're ready to build, take a look at Secret Network's Community Curated Bounty List (CCBL) and build what the community is asking for."}
+/>
+
+<div class="mb-32 flex justify-center">
+	<button
+		type="button"
+		class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+		>Learn more</button
+	>
+</div>
