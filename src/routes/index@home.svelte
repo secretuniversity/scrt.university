@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import HeadPartial from '$lib/Head.svelte';
 	import Nav from '$lib/Nav.svelte';
-	import Features from '$lib/Feature.svelte';
+	import Features from '$lib/FeatureList.svelte';
 	import SectionHeader from '$lib/SectionHeader.svelte';
 	import Stats from '$lib/Stats.svelte';
 
@@ -164,7 +164,30 @@
 		description={"Choose the course that's right for you."}
 	/>
 
-	<Features />
+	<Features
+		features={[
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Welcome to Secret Network',
+				description:
+					'An introductory course for developers to familiarize themselves with the Secret Network.'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Your first Secret Smart Contract',
+				description: 'Learn the ins and outs of writing a private smart contract on Secret Network'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Your First Private dApp',
+				description:
+					'Use JavaScript to connect to the Secret Network and supercharge your application with privacy'
+			}
+		]}
+	/>
 
 	<SectionHeader
 		title={'Secret Boxes'}
@@ -172,7 +195,30 @@
 		description={'Secret Boxes are fully integrated projects for you to learn from and expand. Focus on building, not on configuration and setup.'}
 	/>
 
-	<Features />
+	<Features
+		features={[
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Hello World',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Secret Counter',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Richie Rich',
+				description: "Solving Yao's millionaires' problem with secret smart contracts"
+			}
+		]}
+	/>
 
 	<SectionHeader
 		title={'Community Resources'}
@@ -180,7 +226,31 @@
 		description={'Read guides, watch screencasts, and learn from developers building on Secret Network'}
 	/>
 
-	<Features />
+	<Features
+		features={[
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Video Example',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Guide Example',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero'
+			},
+			{
+				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+				alt: '',
+				title: 'Another Example',
+				description:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero'
+			}
+		]}
+	/>
 
 	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
 		<p
@@ -219,7 +289,7 @@
 				</div>
 				<div class="px-4 py-4 sm:px-6">
 					<!-- Content goes here -->
-					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Builders</h2>
+					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Creatives</h2>
 					<p class="mt-2 text-base text-gray-500">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
 						consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
@@ -237,7 +307,7 @@
 				</div>
 				<div class="px-4 py-4 sm:px-6">
 					<!-- Content goes here -->
-					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Builders</h2>
+					<h2 class="mt-5 text-lg font-medium leading-6 text-gray-900">Teachers</h2>
 					<p class="mt-2 text-base text-gray-500">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et nisi efficitur,
 						consequat neque nec, volutpat orci. Proin auctor finibus dui, sed condimentum urna
@@ -248,5 +318,16 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
+		<h2 class="mb-8 text-2xl font-bold">
+			Interested in teaching? Join the community, and find out you can help.
+		</h2>
+		<button
+			type="button"
+			class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+			>Join our Community</button
+		>
 	</div>
 </section>

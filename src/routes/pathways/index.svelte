@@ -9,22 +9,26 @@
 	</div>
 
 	<div class="grid grid-cols-2 gap-y-12">
-		<div class="max-w-lg overflow-hidden rounded-lg bg-white px-6 py-6 shadow lg:px-8 lg:py-8">
-			<div class="grid auto-rows-min">
-				<p class="mb-4 inline-block justify-self-end rounded-full bg-blue-400 px-3 py-1 text-white">
-					Beginner
-				</p>
-				<!-- <img src="" alt=""> -->
-				<div class="mx-auto mb-6 h-36 w-36 bg-slate-400" />
-				<h2 class="mb-2 text-center text-lg font-semibold text-gray-900">
-					Welcome To Secret Network
-				</h2>
-				<p class="text-center text-base text-gray-600">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed dapibus libero. Mauris et
-					orci vel nibh accumsan suscipit sit amet sit amet diam.
-				</p>
+		<a href="/pathways/welcome-to-secret-network">
+			<div class="max-w-lg overflow-hidden rounded-lg bg-white px-6 py-6 shadow lg:px-8 lg:py-8">
+				<div class="grid auto-rows-min">
+					<p
+						class="mb-4 inline-block justify-self-end rounded-full bg-blue-400 px-3 py-1 text-white"
+					>
+						Beginner
+					</p>
+					<!-- <img src="" alt=""> -->
+					<div class="mx-auto mb-6 h-36 w-36 bg-slate-400" />
+					<h2 class="mb-2 text-center text-lg font-semibold text-gray-900">
+						Welcome To Secret Network
+					</h2>
+					<p class="text-center text-base text-gray-600">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed dapibus libero. Mauris
+						et orci vel nibh accumsan suscipit sit amet sit amet diam.
+					</p>
+				</div>
 			</div>
-		</div>
+		</a>
 
 		<div class="max-w-lg overflow-hidden rounded-lg bg-white px-6 py-6 shadow lg:px-8 lg:py-8">
 			<div class="grid auto-rows-min">
