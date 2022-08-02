@@ -39,7 +39,6 @@
 				<a href="/learn" class="font-medium text-gray-500 hover:text-gray-900">Learn</a>
 				<a href="/contribute" class="font-medium text-gray-500 hover:text-gray-900">Contribute</a>
 				<a href="/support" class="font-medium text-gray-500 hover:text-gray-900">Support</a>
-				<a href="/submit" class="font-medium text-gray-500 hover:text-gray-900">Submit</a>
 			</div>
 		</div>
 		<div class="hidden text-right md:block">
