@@ -1,18 +1,18 @@
-<form class="space-y-8 divide-y divide-gray-200">
-	<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+<form class="divide-gray-200 space-y-8 divide-y">
+	<div class="divide-gray-200 space-y-8 divide-y sm:space-y-5">
 		<div>
 			<div>
-				<h3 class="text-lg font-medium leading-6 text-gray-900">Support Ticket</h3>
-				<p class="mt-1 max-w-2xl text-sm text-gray-500">
+				<h3 class="text-gray-900 text-lg font-medium leading-6">Support Ticket</h3>
+				<p class="text-gray-500 mt-1 max-w-2xl text-sm">
 					This ticket will be sent directly to the Secret University team.
 				</p>
 			</div>
 
 			<div class="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
 				<div
-					class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+					class="sm:border-gray-200 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:pt-5"
 				>
-					<label for="subject" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+					<label for="subject" class="text-gray-700 block text-sm font-medium sm:mt-px sm:pt-2">
 						Subject
 					</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
@@ -20,21 +20,21 @@
 							id="subject"
 							name="subject"
 							type="text"
-							class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							class="border-gray-300 block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 						/>
 					</div>
 				</div>
 
 				<div
-					class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+					class="sm:border-gray-200 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:pt-5"
 				>
-					<label for="username" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+					<label for="username" class="text-gray-700 block text-sm font-medium sm:mt-px sm:pt-2">
 						Topic
 					</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
 						<div class="flex max-w-lg rounded-md shadow-sm">
 							<span
-								class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm"
+								class="border-gray-300 bg-gray-50 text-gray-500 inline-flex items-center rounded-l-md border border-r-0 px-3 sm:text-sm"
 							>
 								scrt.university/
 							</span>
@@ -43,16 +43,16 @@
 								name="username"
 								id="username"
 								autocomplete="username"
-								class="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+								class="border-gray-300 block w-full min-w-0 flex-1 rounded-none rounded-r-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 							/>
 						</div>
 					</div>
 				</div>
 
 				<div
-					class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+					class="sm:border-gray-200 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:pt-5"
 				>
-					<label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+					<label for="email" class="text-gray-700 block text-sm font-medium sm:mt-px sm:pt-2">
 						Email address
 					</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
@@ -61,15 +61,15 @@
 							name="email"
 							type="email"
 							autocomplete="email"
-							class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							class="border-gray-300 block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 						/>
 					</div>
 				</div>
 
 				<div
-					class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+					class="sm:border-gray-200 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:pt-5"
 				>
-					<label for="about" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+					<label for="about" class="text-gray-700 block text-sm font-medium sm:mt-px sm:pt-2">
 						Description
 					</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
@@ -77,21 +77,21 @@
 							id="about"
 							name="about"
 							rows="3"
-							class="block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							class="border-gray-300 block w-full max-w-lg rounded-md border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 						/>
-						<p class="mt-2 text-sm text-gray-500">Describe your problem in a couple sentences.</p>
+						<p class="text-gray-500 mt-2 text-sm">Describe your problem in a couple sentences.</p>
 					</div>
 				</div>
 
 				<div
-					class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+					class="sm:border-gray-200 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:pt-5"
 				>
-					<label for="os" class="block text-sm font-medium text-gray-700">Operating System</label>
+					<label for="os" class="text-gray-700 block text-sm font-medium">Operating System</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
 						<select
 							id="os"
 							name="os"
-							class="block w-full max-w-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							class="border-gray-300 block w-full max-w-lg rounded-md border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 						>
 							<option>Windows</option>
 							<option>Mac OS</option>
@@ -109,7 +109,7 @@
 		<div class="flex justify-end">
 			<button
 				type="button"
-				class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+				class="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-md border bg-white py-2 px-4 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>Clear</button
 			>
 			<button

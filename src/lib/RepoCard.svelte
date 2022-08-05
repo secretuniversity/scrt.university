@@ -22,8 +22,8 @@
 
 	<!-- Title and Description -->
 	<a href="#" class="mt-4 block">
-		<p class="text-xl font-semibold text-gray-900">{title}</p>
-		<p class="mt-3 text-base text-gray-500">
+		<p class="text-gray-900 text-xl font-semibold">{title}</p>
+		<p class="text-gray-500 mt-3 text-base">
 			{description}
 		</p>
 	</a>
@@ -39,10 +39,10 @@
 			</a>
 		</div>
 		<div class="ml-3">
-			<p class="text-sm font-medium text-gray-900">
+			<p class="text-gray-900 text-sm font-medium">
 				<a href="#"> {author} </a>
 			</p>
-			<div class="flex space-x-1 text-sm text-gray-500">
+			<div class="text-gray-500 flex space-x-1 text-sm">
 				<time datetime="2020-03-16"> {timestamp} </time>
 				<span aria-hidden="true"> &middot; </span>
 				<span> 6 min read </span>

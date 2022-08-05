@@ -9,7 +9,7 @@
 			<h2 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
 				{title}
 			</h2>
-			<p class="mt-5 text-xl text-gray-400">
+			<p class="text-gray-400 mt-5 text-xl">
 				{description}
 			</p>
 		</div>

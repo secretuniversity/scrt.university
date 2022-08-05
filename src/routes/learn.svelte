@@ -20,8 +20,8 @@
 		<a href="/pathways" class="inline-block lg:w-7/12">
 			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
 				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-2xl font-semibold text-gray-800">Secret Pathways</h2>
-					<p class="mt-2 text-base text-gray-600 lg:max-w-lg">
+					<h2 class="text-gray-800 text-2xl font-semibold">Secret Pathways</h2>
+					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -32,8 +32,8 @@
 		<a href="/repos" class="inline-block lg:grow">
 			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
 				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-2xl font-semibold text-gray-800">Repos</h2>
-					<p class="mt-2 text-base text-gray-600 lg:max-w-lg">
+					<h2 class="text-gray-800 text-2xl font-semibold">Repos</h2>
+					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -46,8 +46,8 @@
 		<a href="https://docs.scrt.network" class="inline-block lg:shrink">
 			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
 				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-2xl font-semibold text-gray-800">Official Docs</h2>
-					<p class="mt-2 text-base text-gray-600 lg:max-w-lg">
+					<h2 class="text-gray-800 text-2xl font-semibold">Official Docs</h2>
+					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -58,8 +58,8 @@
 		<a href="/resources" class="inline-block lg:grow">
 			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
 				<div class="grid px-4 py-5 sm:p-6">
-					<h2 class="text-2xl font-semibold text-gray-800">Community Resources</h2>
-					<p class="mt-2 text-base text-gray-600 lg:max-w-lg">
+					<h2 class="text-gray-800 text-2xl font-semibold">Community Resources</h2>
+					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>

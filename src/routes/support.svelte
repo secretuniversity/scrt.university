@@ -9,8 +9,8 @@
 
 <div class="grid grid-cols-1 items-center justify-items-center pt-16 pb-24 lg:grid-cols-2">
 	<div class="max-w-2xl flex-col py-16 lg:max-w-3xl lg:px-8">
-		<h1 class="self-start text-3xl font-bold text-gray-900">Need Support?</h1>
-		<p class="my-4 text-base text-gray-600">
+		<h1 class="text-gray-900 self-start text-3xl font-bold">Need Support?</h1>
+		<p class="text-gray-600 my-4 text-base">
 			Are you having trouble working through a course or guide. We're here to help. Submit a support
 			ticket and we will get back to you soon. If you need faster support, consider asking your
 			question in on Secret Network's many community channels.
@@ -37,8 +37,8 @@
 	<div class="mx-auto mt-8 flex max-w-7xl gap-x-12">
 		<div class="lg:w-4/12">
 			<!-- <img src="" alt=""> -->
-			<h2 class="mb-3 text-center text-lg font-semibold text-gray-900">Chat on Discord</h2>
-			<p class="mb-4 text-center text-base text-gray-600">
+			<h2 class="text-gray-900 mb-3 text-center text-lg font-semibold">Chat on Discord</h2>
+			<p class="text-gray-600 mb-4 text-center text-base">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
@@ -50,8 +50,8 @@
 
 		<div class="lg:w-4/12">
 			<!-- <img src="" alt=""> -->
-			<h2 class="mb-3 text-center text-lg font-semibold text-gray-900">Post on the Forum</h2>
-			<p class="mb-4 text-center text-base text-gray-600">
+			<h2 class="text-gray-900 mb-3 text-center text-lg font-semibold">Post on the Forum</h2>
+			<p class="text-gray-600 mb-4 text-center text-base">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
@@ -63,8 +63,8 @@
 
 		<div class="lg:w-4/12">
 			<!-- <img src="" alt=""> -->
-			<h2 class="mb-3 text-center text-lg font-semibold text-gray-900">Find us on Github</h2>
-			<p class="mb-4 text-center text-base text-gray-600">
+			<h2 class="text-gray-900 mb-3 text-center text-lg font-semibold">Find us on Github</h2>
+			<p class="text-gray-600 mb-4 text-center text-base">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a

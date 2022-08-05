@@ -1,5 +1,5 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative z-10 bg-gray-50 pt-12 sm:pt-16">
+<div class="bg-gray-50 relative z-10 pt-12 sm:pt-16">
 	<!-- <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-4xl text-center">
 			<h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -12,7 +12,7 @@
 	</div> -->
 	<div class="mt-2 pb-12 sm:pb-16">
 		<div class="relative">
-			<div class="absolute inset-0 h-1/2 bg-gray-50" />
+			<div class="bg-gray-50 absolute inset-0 h-1/2" />
 			<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto max-w-5xl">
 					<dl class="rounded-lg bg-dark-4 shadow-lg sm:grid sm:grid-cols-4">

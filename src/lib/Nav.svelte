@@ -1,6 +1,6 @@
 <div>
 	<nav
-		class="relative bg-dark-4 pt-4 pb-4 flex mx-4 items-center justify-between sm:px-6 shadow-xl rounded-lg mt-4"
+		class="relative mx-4 mt-4 flex items-center justify-between rounded-lg bg-dark-4 pt-4 pb-4 shadow-xl sm:px-6"
 		aria-label="Global"
 	>
 		<div class="flex flex-1 items-center pl-4">
@@ -16,7 +16,7 @@
 				<div class="-mr-2 flex items-center md:hidden">
 					<button
 						type="button"
-						class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+						class="text-gray-400 hover:bg-gray-100 hover:text-gray-500 inline-flex items-center justify-center rounded-md bg-white p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
 						aria-expanded="false"
 					>
 						<span class="sr-only">Open main menu</span>
@@ -36,16 +36,16 @@
 				</div>
 			</div>
 			<div class="hidden md:ml-10 md:block md:space-x-10">
-				<a href="/learn" class="font-medium text-white hover:text-gray-text">Learn</a>
+				<a href="/learn" class="hover:text-gray-text font-medium text-white">Learn</a>
 				<a href="/contribute" class="font-medium text-white hover:text-gray">Contribute</a>
 				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
 		</div>
-		<div class="hidden text-right md:block pr-4">
+		<div class="hidden pr-4 text-right md:block">
 			<span class="inline-flex rounded-md shadow-md ring-1 ring-black ring-opacity-5">
 				<a
 					href="#"
-					class="inline-flex items-center rounded-md border border-transparent shadow-md bg-gray px-4 py-2 text-base font-medium text-black hover:bg-gray-50"
+					class="hover:bg-gray-50 inline-flex items-center rounded-md border border-transparent bg-gray px-4 py-2 text-base font-medium text-black shadow-md"
 				>
 					Connect
 				</a>
@@ -76,7 +76,7 @@
 				<div class="-mr-2">
 					<button
 						type="button"
-						class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+						class="text-gray-400 hover:bg-gray-100 hover:text-gray-500 inline-flex items-center justify-center rounded-md bg-white p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
 					>
 						<span class="sr-only">Close main menu</span>
 						<!-- Heroicon name: outline/x -->
@@ -97,31 +97,31 @@
 			<div class="space-y-1 px-2 pt-2 pb-3">
 				<a
 					href="#"
-					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+					class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium"
 					>Product</a
 				>
 
 				<a
 					href="#"
-					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+					class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium"
 					>Features</a
 				>
 
 				<a
 					href="#"
-					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+					class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium"
 					>Marketplace</a
 				>
 
 				<a
 					href="#"
-					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+					class="text-gray-700 hover:bg-gray-50 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium"
 					>Company</a
 				>
 			</div>
 			<a
 				href="#"
-				class="block w-full bg-gray-50 px-5 py-3 text-center font-medium text-indigo-600 hover:bg-gray-100"
+				class="bg-gray-50 hover:bg-gray-100 block w-full px-5 py-3 text-center font-medium text-indigo-600"
 			>
 				Log in
 			</a>

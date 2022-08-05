@@ -5,7 +5,7 @@
 	export let description = '';
 </script>
 
-<div class="border-solid border-4 border-dark-3 px-12 py-12 rounded-3xl bg-dark-1">
+<div class="rounded-3xl border-4 border-solid border-dark-3 bg-dark-1 px-12 py-12">
 	<dt>
 		<div class="flex h-12 w-12 items-center justify-center rounded-md bg-dark-turquoise-g">
 			<img src={img} {alt} />

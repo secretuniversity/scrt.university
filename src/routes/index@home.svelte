@@ -19,7 +19,7 @@
 
 		<!-- Hero Content Container -->
 		<div
-			class="relative pt-2 pb-16 sm:pb-24 lg:pb-10 shadow-xl lg:mt-6 lg:mx-4 rounded-xl bg-dark-4"
+			class="relative rounded-xl bg-dark-4 pt-2 pb-16 shadow-xl sm:pb-24 lg:mx-4 lg:mt-6 lg:pb-10"
 		>
 			<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
 				<div class="lg:grid lg:grid-cols-12 lg:gap-8">
@@ -50,18 +50,18 @@
 									type="email"
 									name="email"
 									id="email"
-									class="block w-full rounded-md border-gray-300 py-3 text-base placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:flex-1"
+									class="border-gray-300 placeholder-gray-500 block w-full rounded-md py-3 text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:flex-1"
 									placeholder="Enter your email"
 								/>
 								<button
 									type="submit"
-									class="mt-3 w-full rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
+									class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
 									>Register</button
 								>
 							</form>
 							<p class="mt-3 text-sm text-gray">
 								We care about the protection of your data. Read our
-								<a href="#" class="font-medium text-gray-900 underline">Privacy Policy</a>.
+								<a href="#" class="text-gray-900 font-medium underline">Privacy Policy</a>.
 							</p>
 						</div>
 					</div>
@@ -130,11 +130,11 @@
 					</div>
 				</div>
 			</main>
-			<div class="mt-20 flex gap-x-2 justify-center">
-				<div class="w-4 h-4 rounded-full bg-white" />
-				<div class="w-4 h-4 rounded-full bg-white" />
-				<div class="w-4 h-4 rounded-full bg-white" />
-				<div class="w-4 h-4 rounded-full bg-white" />
+			<div class="mt-20 flex justify-center gap-x-2">
+				<div class="h-4 w-4 rounded-full bg-white" />
+				<div class="h-4 w-4 rounded-full bg-white" />
+				<div class="h-4 w-4 rounded-full bg-white" />
+				<div class="h-4 w-4 rounded-full bg-white" />
 			</div>
 		</div>
 	</div>
@@ -236,9 +236,9 @@
 	/>
 
 	<div class="py-12">
-		<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-white">
+		<div class="mx-auto max-w-7xl py-16 px-4 text-white sm:py-24 sm:px-6 lg:px-8">
 			<p
-				class="mt-1 text-center text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl"
+				class="text-gray-900 mt-1 text-center text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl"
 			>
 				Who we are
 			</p>
@@ -247,7 +247,7 @@
 		<div
 			class="mx-auto max-w-xl flex-col justify-center sm:px-6 md:flex-col md:gap-y-8 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-12"
 		>
-			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-dark-4 shadow">
+			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
@@ -265,7 +265,7 @@
 				</div>
 			</div>
 
-			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-dark-4 shadow">
+			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
@@ -283,7 +283,7 @@
 				</div>
 			</div>
 
-			<div class="mb-12 divide-y divide-gray-200 overflow-hidden rounded-lg bg-dark-4 shadow">
+			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
 				<div>
 					<!-- Image goes here -->
 					<img src="./test-image.jpg" alt="Space" />
@@ -304,9 +304,9 @@
 	</div>
 
 	<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
-		<h2 class="mb-8 text-4xl font-bold text-white text-center">
+		<h2 class="mb-8 text-center text-4xl font-bold text-white">
 			Interested in joining the <span class="text-dark-blue">university?</span> <br />
-			<span class="inline-block mt-2">Join the community, and find out how you can help.</span>
+			<span class="mt-2 inline-block">Join the community, and find out how you can help.</span>
 		</h2>
 		<button
 			type="button"

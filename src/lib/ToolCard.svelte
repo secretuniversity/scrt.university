@@ -11,11 +11,11 @@
 			{language}
 		</p>
 		<img src={image} alt="" />
-		<h2 class="mt-5 text-center text-lg font-medium leading-6 text-gray-900">{title}</h2>
-		<p class="mt-2 text-center text-sm text-gray-500">{description}</p>
+		<h2 class="text-gray-900 mt-5 text-center text-lg font-medium leading-6">{title}</h2>
+		<p class="text-gray-500 mt-2 text-center text-sm">{description}</p>
 		<button
 			type="button"
-			class="mt-2 justify-self-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+			class="border-gray-300 text-gray-700 hover:bg-gray-50 mt-2 justify-self-center rounded-md border bg-white px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 			>View</button
 		>
 	</div>

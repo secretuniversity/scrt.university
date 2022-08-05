@@ -1,7 +1,7 @@
 <div class="mx-auto mb-8 w-9/12 py-16">
 	<div class="max-w-3xl">
-		<h1 class="mb-4 text-5xl font-bold text-gray-900">Secret Pathways</h1>
-		<p class="mb-16 text-base text-gray-600">
+		<h1 class="text-gray-900 mb-4 text-5xl font-bold">Secret Pathways</h1>
+		<p class="text-gray-600 mb-16 text-base">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque facilisis felis ut neque
 			fermentum eleifend. Integer ultricies tortor augue, id scelerisque justo varius vitae.
 			Vestibulum molestie at nisl ac cursus.
@@ -19,10 +19,10 @@
 					</p>
 					<!-- <img src="" alt=""> -->
 					<div class="mx-auto mb-6 h-36 w-36 bg-slate-400" />
-					<h2 class="mb-2 text-center text-lg font-semibold text-gray-900">
+					<h2 class="text-gray-900 mb-2 text-center text-lg font-semibold">
 						Welcome To Secret Network
 					</h2>
-					<p class="text-center text-base text-gray-600">
+					<p class="text-gray-600 text-center text-base">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed dapibus libero. Mauris
 						et orci vel nibh accumsan suscipit sit amet sit amet diam.
 					</p>
@@ -37,10 +37,10 @@
 				</p>
 				<!-- <img src="" alt=""> -->
 				<div class="mx-auto mb-6 h-36 w-36 bg-slate-400" />
-				<h2 class="mb-2 text-center text-lg font-semibold text-gray-900">
+				<h2 class="text-gray-900 mb-2 text-center text-lg font-semibold">
 					Writing Your First Secret Smart Contract
 				</h2>
-				<p class="text-center text-base text-gray-600">
+				<p class="text-gray-600 text-center text-base">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed dapibus libero. Mauris et
 					orci vel nibh accumsan suscipit sit amet sit amet diam.
 				</p>
@@ -54,10 +54,10 @@
 				</p>
 				<!-- <img src="" alt=""> -->
 				<div class="mx-auto mb-6 h-36 w-36 bg-slate-400" />
-				<h2 class="mb-2 text-center text-lg font-semibold text-gray-900">
+				<h2 class="text-gray-900 mb-2 text-center text-lg font-semibold">
 					Building Your First Secret dApp
 				</h2>
-				<p class="text-center text-base text-gray-600">
+				<p class="text-gray-600 text-center text-base">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed dapibus libero. Mauris et
 					orci vel nibh accumsan suscipit sit amet sit amet diam.
 				</p>

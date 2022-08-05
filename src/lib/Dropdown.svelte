@@ -3,7 +3,7 @@
 	<div>
 		<button
 			type="button"
-			class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+			class="border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-offset-gray-100 inline-flex w-full justify-center rounded-md border bg-white px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 			id="menu-button"
 			aria-expanded="true"
 			aria-haspopup="true"
@@ -37,7 +37,7 @@
         To: "transform opacity-0 scale-95"
     -->
 	<div
-		class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+		class="divide-gray-100 absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 		role="menu"
 		aria-orientation="vertical"
 		aria-labelledby="menu-button"
@@ -47,14 +47,14 @@
 			<!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-0"
 			>
 				<!-- Heroicon name: solid/pencil-alt -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -71,14 +71,14 @@
 			</a>
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-1"
 			>
 				<!-- Heroicon name: solid/duplicate -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -93,14 +93,14 @@
 		<div class="py-1" role="none">
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-2"
 			>
 				<!-- Heroicon name: solid/archive -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -117,14 +117,14 @@
 			</a>
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-3"
 			>
 				<!-- Heroicon name: solid/arrow-circle-right -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -142,14 +142,14 @@
 		<div class="py-1" role="none">
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-4"
 			>
 				<!-- Heroicon name: solid/user-add -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -163,14 +163,14 @@
 			</a>
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-5"
 			>
 				<!-- Heroicon name: solid/heart -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"
@@ -188,14 +188,14 @@
 		<div class="py-1" role="none">
 			<a
 				href="#"
-				class="group flex items-center px-4 py-2 text-sm text-gray-700"
+				class="text-gray-700 group flex items-center px-4 py-2 text-sm"
 				role="menuitem"
 				tabindex="-1"
 				id="menu-item-6"
 			>
 				<!-- Heroicon name: solid/trash -->
 				<svg
-					class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+					class="text-gray-400 group-hover:text-gray-500 mr-3 h-5 w-5"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 20 20"
 					fill="currentColor"

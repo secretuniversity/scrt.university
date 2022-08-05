@@ -8,8 +8,8 @@
 <Head {pageTitle} />
 
 <div class="mx-auto max-w-xl py-20">
-	<h1 class="text-center text-6xl font-bold text-gray-900">Learn to Earn</h1>
-	<p class="mt-2 text-center text-base text-gray-600">
+	<h1 class="text-gray-900 text-center text-6xl font-bold">Learn to Earn</h1>
+	<p class="text-gray-600 mt-2 text-center text-base">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel laoreet ipsum. Quisque et
 		nulla dapibus, vehicula odio mollis, vestibulum dolor. Cras hendrerit ipsum ut tempus
 		scelerisque.
@@ -18,28 +18,28 @@
 
 <div class="flex justify-center gap-x-24">
 	<div class="lg:max-w-xs">
-		<div class="mx-auto h-24 w-24 bg-gray-500" />
+		<div class="bg-gray-500 mx-auto h-24 w-24" />
 		<!-- <img src="" alt="" /> -->
-		<h2 class="mt-3 text-center text-lg font-semibold text-gray-900">Code</h2>
-		<p class="mt-1 text-center text-base text-gray-600">
+		<h2 class="text-gray-900 mt-3 text-center text-lg font-semibold">Code</h2>
+		<p class="text-gray-600 mt-1 text-center text-base">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit
 		</p>
 	</div>
 
 	<div class="lg:max-w-xs">
-		<div class="mx-auto h-24 w-24 bg-gray-500" />
+		<div class="bg-gray-500 mx-auto h-24 w-24" />
 		<!-- <img src="" alt="" /> -->
-		<h2 class="mt-3 text-center text-lg font-semibold text-gray-900">Create</h2>
-		<p class="mt-1 text-center text-base text-gray-600">
+		<h2 class="text-gray-900 mt-3 text-center text-lg font-semibold">Create</h2>
+		<p class="text-gray-600 mt-1 text-center text-base">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit
 		</p>
 	</div>
 
 	<div class="lg:max-w-xs">
-		<div class="mx-auto h-24 w-24 bg-gray-500" />
+		<div class="bg-gray-500 mx-auto h-24 w-24" />
 		<!-- <img src="" alt="" /> -->
-		<h2 class="mt-3 text-center text-lg font-semibold text-gray-900">Teach</h2>
-		<p class="mt-1 text-center text-base text-gray-600">
+		<h2 class="text-gray-900 mt-3 text-center text-lg font-semibold">Teach</h2>
+		<p class="text-gray-600 mt-1 text-center text-base">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit
 		</p>
 	</div>
