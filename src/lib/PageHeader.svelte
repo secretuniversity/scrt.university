@@ -3,13 +3,13 @@
 	export let description = 'Description';
 </script>
 
-<div class="bg-gray-800 lg:mt-8 lg:rounded-2xl">
-	<div class="mx-auto max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:flex lg:justify-between lg:px-8">
+<div class="bg-dark-4 shadow-lg lg:mt-8 lg:rounded-2xl">
+	<div class="mx-auto max-w-7xl py-40 sm:px-6 lg:flex lg:justify-between">
 		<div class="max-w-xl">
 			<h2 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
 				{title}
 			</h2>
-			<p class="text-gray-400 mt-5 text-xl">
+			<p class="mt-5 text-xl text-gray">
 				{description}
 			</p>
 		</div>

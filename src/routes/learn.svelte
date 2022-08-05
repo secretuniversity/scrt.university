@@ -18,10 +18,10 @@
 
 	<div class="mt-16 flex gap-x-8">
 		<a href="/pathways" class="inline-block lg:w-7/12">
-			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
-				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-gray-800 text-2xl font-semibold">Secret Pathways</h2>
-					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
+			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
+				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
+					<h2 class="text-2xl font-semibold text-white">Secret Pathways</h2>
+					<p class="text-base text-gray lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -30,10 +30,10 @@
 		</a>
 
 		<a href="/repos" class="inline-block lg:grow">
-			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
-				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-gray-800 text-2xl font-semibold">Repos</h2>
-					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
+			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
+				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
+					<h2 class="text-2xl font-semibold text-white">Repositories</h2>
+					<p class="text-base text-gray lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -42,12 +42,12 @@
 		</a>
 	</div>
 
-	<div class="mt-16 flex justify-center gap-x-8">
+	<div class="mt-8 flex gap-x-8 pb-24">
 		<a href="https://docs.scrt.network" class="inline-block lg:shrink">
-			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
-				<div class="px-4 py-5 sm:p-6">
-					<h2 class="text-gray-800 text-2xl font-semibold">Official Docs</h2>
-					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
+			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
+				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
+					<h2 class="text-2xl font-semibold text-white">Official Docs</h2>
+					<p class="text-base text-gray lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -56,10 +56,10 @@
 		</a>
 
 		<a href="/resources" class="inline-block lg:grow">
-			<div class="h-48 overflow-hidden rounded-lg bg-white shadow">
-				<div class="grid px-4 py-5 sm:p-6">
-					<h2 class="text-gray-800 text-2xl font-semibold">Community Resources</h2>
-					<p class="text-gray-600 mt-2 text-base lg:max-w-lg">
+			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
+				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
+					<h2 class="text-2xl font-semibold text-white">Community Resources</h2>
+					<p class="text-base text-gray lg:max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim nunc erat.
 						Praesent elementum, lorem nec vehicula tincidunt, justo magna pellentesque urna, sit
 					</p>
@@ -75,7 +75,7 @@
 	description={'Jumpstart your development with native tools built for Secret Network.'}
 />
 
-<div class="flex justify-center gap-x-8">
+<div class="flex justify-center gap-x-8 bg-dark-2 pb-8">
 	<ToolCard title={'Secret.js'} description={'Lorem ipsum'} language={'JavaScript'} image={''} />
 	<ToolCard title={'Griptape.js'} description={'Lorem ipsum'} language={'JavaScript'} image={''} />
 	<ToolCard title={'Fadroma'} description={'Lorem ipsum'} language={'Rust'} image={''} />
@@ -89,7 +89,7 @@
 	description={'Cover valuable lessons from the secret Network community.'}
 />
 
-<div class="mb-36">
+<div class="bg-dark-2 pb-28">
 	<Features
 		features={[
 			{

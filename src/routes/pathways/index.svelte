@@ -1,4 +1,4 @@
-<div class="mx-auto mb-8 w-9/12 py-16">
+<div class="mx-auto w-9/12 py-16">
 	<div class="max-w-3xl">
 		<h1 class="text-gray-900 mb-4 text-5xl font-bold">Secret Pathways</h1>
 		<p class="text-gray-600 mb-16 text-base">

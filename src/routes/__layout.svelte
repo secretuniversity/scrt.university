@@ -6,8 +6,10 @@
 
 <header />
 
-<main>
-	<Nav />
+<main class="bg-dark-3">
+	<div class="overflow-hidden">
+		<Nav />
+	</div>
 	<slot />
 </main>
 
