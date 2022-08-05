@@ -1,9 +1,9 @@
 <div>
 	<nav
-		class="relative mx-auto mt-4 mb-4 flex max-w-7xl items-center justify-between px-4 sm:px-6"
+		class="relative bg-dark-4 pt-4 pb-4 flex mx-4 items-center justify-between sm:px-6 shadow-xl rounded-lg mt-4"
 		aria-label="Global"
 	>
-		<div class="flex flex-1 items-center">
+		<div class="flex flex-1 items-center pl-4">
 			<div class="flex w-full items-center justify-between md:w-auto">
 				<a href="/">
 					<span class="sr-only">Workflow</span>
@@ -36,16 +36,16 @@
 				</div>
 			</div>
 			<div class="hidden md:ml-10 md:block md:space-x-10">
-				<a href="/learn" class="font-medium text-gray-500 hover:text-gray-900">Learn</a>
-				<a href="/contribute" class="font-medium text-gray-500 hover:text-gray-900">Contribute</a>
-				<a href="/support" class="font-medium text-gray-500 hover:text-gray-900">Support</a>
+				<a href="/learn" class="font-medium text-white hover:text-gray-text">Learn</a>
+				<a href="/contribute" class="font-medium text-white hover:text-gray">Contribute</a>
+				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
 		</div>
-		<div class="hidden text-right md:block">
+		<div class="hidden text-right md:block pr-4">
 			<span class="inline-flex rounded-md shadow-md ring-1 ring-black ring-opacity-5">
 				<a
 					href="#"
-					class="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50"
+					class="inline-flex items-center rounded-md border border-transparent shadow-md bg-gray px-4 py-2 text-base font-medium text-black hover:bg-gray-50"
 				>
 					Connect
 				</a>

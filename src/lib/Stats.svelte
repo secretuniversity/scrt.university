@@ -10,40 +10,40 @@
 			</p>
 		</div>
 	</div> -->
-	<div class="mt-10 bg-white pb-12 sm:pb-16">
+	<div class="mt-2 pb-12 sm:pb-16">
 		<div class="relative">
 			<div class="absolute inset-0 h-1/2 bg-gray-50" />
 			<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto max-w-5xl">
-					<dl class="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-4">
+					<dl class="rounded-lg bg-dark-4 shadow-lg sm:grid sm:grid-cols-4">
 						<div
-							class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r"
+							class="flex flex-col border-b border-white p-6 text-center sm:border-0 sm:border-r"
 						>
-							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">
 								Courses and programs
 							</dt>
-							<dd class="order-1 text-5xl font-extrabold text-indigo-600">10+</dd>
+							<dd class="order-1 text-5xl font-extrabold text-white">10+</dd>
 						</div>
 
 						<div
-							class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r"
+							class="flex flex-col border-b border-white p-6 text-center sm:border-0 sm:border-r"
 						>
-							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">Students</dt>
-							<dd class="order-1 text-5xl font-extrabold text-indigo-600">500</dd>
+							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">Students</dt>
+							<dd class="order-1 text-5xl font-extrabold text-white">500</dd>
 						</div>
 						<div
-							class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r"
+							class="flex flex-col border-t border-b border-white p-6 text-center sm:border-0 sm:border-l sm:border-r"
 						>
-							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">
 								Badges earned
 							</dt>
-							<dd class="order-1 text-5xl font-extrabold text-indigo-600">1000</dd>
+							<dd class="order-1 text-5xl font-extrabold text-white">1000</dd>
 						</div>
 						<div
-							class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l"
+							class="flex flex-col border-t border-white p-6 text-center sm:border-0 sm:border-l"
 						>
-							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">NPS score</dt>
-							<dd class="order-1 text-5xl font-extrabold text-indigo-600">70</dd>
+							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">NPS score</dt>
+							<dd class="order-1 text-5xl font-extrabold text-white">70</dd>
 						</div>
 					</dl>
 				</div>
