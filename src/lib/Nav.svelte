@@ -45,7 +45,7 @@
 			<span class="inline-flex rounded-md shadow-md ring-1 ring-black ring-opacity-5">
 				<a
 					href="#"
-					class="hover:bg-gray-50 inline-flex items-center rounded-md border border-transparent bg-gray px-4 py-2 text-base font-medium text-black shadow-md"
+					class="hover:bg-gray-50 inline-flex items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm shadow-dark-blue/50"
 				>
 					Connect
 				</a>

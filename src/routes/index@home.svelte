@@ -18,9 +18,7 @@
 		<Nav />
 
 		<!-- Hero Content Container -->
-		<div
-			class="relative rounded-xl bg-dark-4 pt-2 pb-16 shadow-xl sm:pb-24 lg:mx-4 lg:mt-6 lg:pb-10"
-		>
+		<div class="relative rounded-3xl bg-dark-4 pt-2 pb-12 shadow-xl lg:mx-12 lg:mt-6">
 			<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
 				<div class="lg:grid lg:grid-cols-12 lg:gap-8">
 					<div class="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
@@ -55,7 +53,7 @@
 								/>
 								<button
 									type="submit"
-									class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
+									class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-dark-2 shadow-sm shadow-dark-blue/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
 									>Register</button
 								>
 							</form>
@@ -130,13 +128,18 @@
 					</div>
 				</div>
 			</main>
-			<div class="mt-20 flex justify-center gap-x-2">
+			<div class="mt-12 flex justify-center gap-x-2 lg:mt-36">
 				<div class="h-4 w-4 rounded-full bg-white" />
 				<div class="h-4 w-4 rounded-full bg-white" />
 				<div class="h-4 w-4 rounded-full bg-white" />
 				<div class="h-4 w-4 rounded-full bg-white" />
 			</div>
 		</div>
+	</div>
+
+	<div class="mt-5 grid grid-rows-2 justify-items-center">
+		<img class="inline-block h-12 w-12" src="scroll_icon.svg" alt="Mouse scroll icon" />
+		<p class="font-light text-gray">Scroll</p>
 	</div>
 
 	<Stats />
@@ -235,7 +238,7 @@
 		]}
 	/>
 
-	<div class="py-12">
+	<div class="py-8">
 		<div class="mx-auto max-w-7xl py-16 px-4 text-white sm:py-24 sm:px-6 lg:px-8">
 			<p
 				class="text-gray-900 mt-1 text-center text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl"
@@ -306,7 +309,9 @@
 	<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
 		<h2 class="mb-8 text-center text-4xl font-bold text-white">
 			Interested in joining the <span class="text-dark-blue">university?</span> <br />
-			<span class="mt-2 inline-block">Join the community, and find out how you can help.</span>
+			<span class="mt-2 inline-block text-3xl"
+				>Join the community, and find out how you can help.</span
+			>
 		</h2>
 		<button
 			type="button"

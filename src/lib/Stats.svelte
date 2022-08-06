@@ -1,16 +1,14 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="bg-gray-50 relative z-10 pt-12 sm:pt-16">
-	<!-- <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="relative z-10">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pt-8">
 		<div class="mx-auto max-w-4xl text-center">
-			<h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-				Educating developers 
-			</h2>
-			<p class="mt-3 text-xl text-gray-500 sm:mt-4">
+			<h2 class="text-3xl font-extrabold text-white sm:text-4xl">Educating developers</h2>
+			<p class="mt-3 text-xl text-gray sm:mt-4">
 				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium.
 			</p>
 		</div>
-	</div> -->
-	<div class="mt-2 pb-12 sm:pb-16">
+	</div>
+	<div class="pb-16 lg:pt-8 lg:pb-32">
 		<div class="relative">
 			<div class="bg-gray-50 absolute inset-0 h-1/2" />
 			<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
