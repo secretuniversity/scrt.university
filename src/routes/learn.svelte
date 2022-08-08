@@ -16,7 +16,9 @@
 		description={'Learn to build on Secret Network using our courses Secret Pathways or dive deep into code with Secret Boxes'}
 	/>
 
-	<div class="mt-16 flex gap-x-8">
+	<div class="mt-20 text-4xl font-bold leading-6 text-white">Core Learning Materials</div>
+
+	<div class="mt-8 flex gap-x-8">
 		<a href="/pathways" class="inline-block lg:w-7/12">
 			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
 				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
