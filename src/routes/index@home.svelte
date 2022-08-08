@@ -18,7 +18,7 @@
 		<Nav />
 
 		<!-- Hero Content Container -->
-		<div class="relative rounded-3xl bg-dark-4 pt-2 pb-12 shadow-xl lg:mx-12 lg:mt-6">
+		<div class="relative rounded-3xl bg-dark-4 pt-2 pb-8 shadow-xl lg:mx-12 lg:mt-6">
 			<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
 				<div class="lg:grid lg:grid-cols-12 lg:gap-8">
 					<div class="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
@@ -53,7 +53,7 @@
 								/>
 								<button
 									type="submit"
-									class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-dark-2 shadow-sm shadow-dark-blue/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
+									class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm shadow-dark-blue/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
 									>Register</button
 								>
 							</form>
@@ -128,11 +128,11 @@
 					</div>
 				</div>
 			</main>
-			<div class="mt-12 flex justify-center gap-x-2 lg:mt-36">
+			<div class="mt-12 flex justify-center gap-x-2 lg:mt-28">
 				<div class="h-4 w-4 rounded-full bg-white" />
-				<div class="h-4 w-4 rounded-full bg-white" />
-				<div class="h-4 w-4 rounded-full bg-white" />
-				<div class="h-4 w-4 rounded-full bg-white" />
+				<div class="h-4 w-4 rounded-full bg-gray" />
+				<div class="h-4 w-4 rounded-full bg-gray" />
+				<div class="h-4 w-4 rounded-full bg-gray" />
 			</div>
 		</div>
 	</div>
