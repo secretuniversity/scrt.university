@@ -10,7 +10,7 @@
 		<div class="">
 			{#each tags as tag}
 				<!-- content here -->
-				<a href="#" class="mr-2 inline-block">
+				<a href="#" class="mr-2 mb-1 inline-block">
 					<span
 						class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"
 					>
