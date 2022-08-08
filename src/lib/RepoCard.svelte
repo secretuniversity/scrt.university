@@ -3,50 +3,35 @@
 	export let title = 'Title';
 	export let description = 'Description';
 	export let author = '0xabc...xyz';
-	export let timestamp = '2020-01-01';
 </script>
 
-<div class="overflow-hidden rounded-lg bg-white px-4 py-6 shadow lg:px-8 lg:py-4">
-	<div>
-		{#each tags as tag}
-			<!-- content here -->
-			<a href="#" class="mr-2 inline-block">
-				<span
-					class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"
-				>
-					{tag}
-				</span>
-			</a>
-		{/each}
-	</div>
+<div class="overflow-hidden rounded-lg bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
+	<div class="grid auto-rows-auto">
+		<div class="">
+			{#each tags as tag}
+				<!-- content here -->
+				<a href="#" class="mr-2 inline-block">
+					<span
+						class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"
+					>
+						{tag}
+					</span>
+				</a>
+			{/each}
+		</div>
 
-	<!-- Title and Description -->
-	<a href="#" class="mt-4 block">
-		<p class="text-gray-900 text-xl font-semibold">{title}</p>
-		<p class="text-gray-500 mt-3 text-base">
-			{description}
-		</p>
-	</a>
-	<div class="mt-6 flex items-center">
-		<div class="flex-shrink-0">
-			<a href="#">
-				<span class="sr-only">Paul York</span>
-				<img
-					class="h-10 w-10 rounded-full"
-					src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-					alt=""
-				/>
-			</a>
-		</div>
-		<div class="ml-3">
-			<p class="text-gray-900 text-sm font-medium">
-				<a href="#"> {author} </a>
+		<!-- Title and Description -->
+		<a href="#" class="mt-4 block">
+			<p class="text-2xl font-semibold text-white">{title}</p>
+			<p class="mt-3 max-w-md text-base text-gray">
+				{description}
 			</p>
-			<div class="text-gray-500 flex space-x-1 text-sm">
-				<time datetime="2020-03-16"> {timestamp} </time>
-				<span aria-hidden="true"> &middot; </span>
-				<span> 6 min read </span>
-			</div>
-		</div>
+		</a>
+
+		<button
+			type="button"
+			class="mt-4 inline-flex items-center self-end justify-self-end rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+			>Learn more</button
+		>
 	</div>
 </div>
