@@ -29,7 +29,7 @@
 			</div>
 		</a>
 
-		<a href="/repos" class="inline-block lg:grow">
+		<a href="/repositories" class="inline-block lg:grow">
 			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
 				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
 					<h2 class="text-2xl font-semibold text-white">Repositories</h2>
