@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Head from '$lib/Head.svelte';
-	import PageHeader from '$lib/PageHeader.svelte';
-	import SectionHeader from '$lib/SectionHeader.svelte';
-	import ToolCard from '$lib/ToolCard.svelte';
-	import Features from '$lib/FeatureList.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import SectionHeader from '$lib/components/SectionHeader.svelte';
+	import GenericDarkCard from '$lib/components/cards/GenericDark.svelte';
+	import Features from '$lib/components/FeatureList.svelte';
 
 	const pageTitle = 'Learn';
 </script>
@@ -78,11 +78,21 @@
 />
 
 <div class="flex justify-center gap-x-8 bg-dark-2 pb-8">
-	<ToolCard title={'Secret.js'} description={'Lorem ipsum'} language={'JavaScript'} image={''} />
-	<ToolCard title={'Griptape.js'} description={'Lorem ipsum'} language={'JavaScript'} image={''} />
-	<ToolCard title={'Fadroma'} description={'Lorem ipsum'} language={'Rust'} image={''} />
-	<ToolCard title={'Polar'} description={'Lorem ipsum'} language={'Rust'} image={''} />
-	<ToolCard title={'Secret Py'} description={'Lorem ipsum'} language={'Python'} image={''} />
+	<GenericDarkCard
+		title={'Secret.js'}
+		description={'Lorem ipsum'}
+		language={'JavaScript'}
+		image={''}
+	/>
+	<GenericDarkCard
+		title={'Griptape.js'}
+		description={'Lorem ipsum'}
+		language={'JavaScript'}
+		image={''}
+	/>
+	<GenericDarkCard title={'Fadroma'} description={'Lorem ipsum'} language={'Rust'} image={''} />
+	<GenericDarkCard title={'Polar'} description={'Lorem ipsum'} language={'Rust'} image={''} />
+	<GenericDarkCard title={'Secret Py'} description={'Lorem ipsum'} language={'Python'} image={''} />
 </div>
 
 <SectionHeader

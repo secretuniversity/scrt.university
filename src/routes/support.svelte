@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Head from '$lib/Head.svelte';
-	import SectionHeader from '$lib/SectionHeader.svelte';
-	import SupportTicket from '$lib/support-ticket/SupportTicket.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import SectionHeader from '$lib/components/SectionHeader.svelte';
+	import SupportTicket from '$lib/components/support-ticket/SupportTicket.svelte';
 	const pageTitle = 'Support';
 </script>
 

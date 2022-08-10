@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Head from '$lib/Head.svelte';
-	import SectionHeader from '$lib/SectionHeader.svelte';
-	import Staking from '$lib/Staking.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import SectionHeader from '$lib/components/SectionHeader.svelte';
+	import Staking from '$lib/components/Staking.svelte';
 	const pageTitle = 'Contribute';
 </script>
 

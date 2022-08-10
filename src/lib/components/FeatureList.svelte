@@ -6,7 +6,7 @@
 		description: string;
 	}
 
-	import FeatureComponent from '$lib/Feature.svelte';
+	import FeatureComponent from '$lib/components/Feature.svelte';
 
 	export let features: Feature[] = [];
 	export let srText = '';

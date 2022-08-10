@@ -1,8 +1,22 @@
 <script lang="ts">
-	import Breadcrumb from '$lib/Breadcrumb.svelte';
+	import { page } from '$app/stores';
+
+	import Head from '$lib/components/Head.svelte';
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
+
+	let pageTitle = toPageTitle($page.params.slug) + ' | Pathways';
+
+	function toPageTitle(slug: string) {
+		const noHypens = slug.replace(/-/g, ' ');
+		const words = noHypens.split(' ');
+
+		return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+	}
 </script>
+
+<Head {pageTitle} />
 
 <section class="min-h-screen pb-36">
 	<div class="mx-4 mt-8 grid grid-cols-8 gap-x-4">

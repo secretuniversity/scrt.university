@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Head from '$lib/Head.svelte';
-	import PageHeader from '$lib/PageHeader.svelte';
-	import Dropdown from '$lib/Dropdown.svelte';
-	import Repo from '$lib/RepoCard.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import Repo from '$lib/components/cards/Repo.svelte';
 
 	const pageTitle = 'Community Resources';
 </script>

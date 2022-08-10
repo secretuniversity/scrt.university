@@ -1,17 +1,16 @@
 <script context="module" lang="ts">
-	import HeadPartial from '$lib/Head.svelte';
-	import Nav from '$lib/Nav.svelte';
-	import Features from '$lib/FeatureList.svelte';
-	import SectionHeader from '$lib/SectionHeader.svelte';
-	import Stats from '$lib/Stats.svelte';
+	import Head from '$lib/components/Head.svelte';
+	import Nav from '$lib/components/Nav.svelte';
+	import Features from '$lib/components/FeatureList.svelte';
+	import SectionHeader from '$lib/components/SectionHeader.svelte';
+	import Stats from '$lib/components/Stats.svelte';
 
 	export const prerender = true;
 
 	const pageTitle = 'Home';
-	const pageBgColor = 'dark-4';
 </script>
 
-<HeadPartial {pageTitle} />
+<Head {pageTitle} />
 
 <section class="relative overflow-hidden bg-dark-3">
 	<div>
