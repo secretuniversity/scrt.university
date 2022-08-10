@@ -1,12 +1,12 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="bg-dark-4 flex w-full mx-auto rounded-xl shadown-xl" aria-label="Breadcrumb">
-	<ol class="max-w-screen-xl px-4 flex space-x-4 sm:px-6 lg:px-8">
+<nav class="shadown-xl mx-auto flex w-full rounded-xl bg-dark-4" aria-label="Breadcrumb">
+	<ol class="flex max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8">
 		<li class="flex">
 			<div class="flex items-center">
-				<a href="#" class="text-gray hover:text-gray-500">
+				<a href="#" class="hover:text-gray-500 text-gray">
 					<!-- Heroicon name: solid/home -->
 					<svg
-						class="flex-shrink-0 h-5 w-5"
+						class="h-5 w-5 flex-shrink-0"
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 20 20"
 						fill="currentColor"
@@ -24,7 +24,7 @@
 		<li class="flex">
 			<div class="flex items-center">
 				<svg
-					class="flex-shrink-0 w-6 h-full text-gray-200"
+					class="text-gray-200 h-full w-6 flex-shrink-0"
 					viewBox="0 0 24 44"
 					preserveAspectRatio="none"
 					fill="white"
@@ -33,7 +33,7 @@
 				>
 					<path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
 				</svg>
-				<a href="#" class="ml-4 text-sm font-medium text-gray hover:text-gray-700"
+				<a href="#" class="hover:text-gray-700 ml-4 text-sm font-medium text-gray"
 					>Secret Pathways</a
 				>
 			</div>
@@ -42,7 +42,7 @@
 		<li class="flex">
 			<div class="flex items-center">
 				<svg
-					class="flex-shrink-0 w-6 h-full text-gray-200"
+					class="text-gray-200 h-full w-6 flex-shrink-0"
 					viewBox="0 0 24 44"
 					preserveAspectRatio="none"
 					fill="white"
@@ -53,7 +53,7 @@
 				</svg>
 				<a
 					href="#"
-					class="ml-4 text-sm font-medium text-gray hover:text-gray-700"
+					class="hover:text-gray-700 ml-4 text-sm font-medium text-gray"
 					aria-current="page">Welcome to Secret Network</a
 				>
 			</div>
