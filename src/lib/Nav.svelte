@@ -1,3 +1,7 @@
+<script lang="ts">
+	import Logo from '$lib/assets/logo.svg';
+</script>
+
 <div>
 	<nav
 		class="relative mx-4 mt-4 flex items-center justify-between rounded-lg bg-dark-4 pt-4 pb-4 shadow-xl sm:px-6"
@@ -7,7 +11,7 @@
 			<div class="flex w-full items-center justify-between md:w-auto">
 				<a href="/">
 					<span class="sr-only">Workflow</span>
-					<img class="h-10 w-auto" src="Logo White.svg" alt="Secret Network Logo" />
+					<img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" />
 				</a>
 				<div class="-mr-2 flex items-center md:hidden">
 					<button
