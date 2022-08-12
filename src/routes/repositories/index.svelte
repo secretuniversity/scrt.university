@@ -1,10 +1,31 @@
 <script lang="ts">
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Dropdown from '$lib/components/Dropdown.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
+	import SecretBox from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 
 	const pageTitle = 'Repositories';
+
+	const repos = [
+		{
+			kind: 'secret-box',
+			title: 'Secret Counter',
+			description: 'A quick introduction to building private smart contracts on Secret Network',
+			tags: ['secret-box', 'essential']
+		},
+		{
+			kind: 'generic',
+			title: 'secret-toolkit',
+			description: 'A rust library used to help build private smart contracts on Secret Network',
+			tags: ['rust', 'library', 'essential']
+		},
+		{
+			kind: 'generic',
+			title: 'secret-random-minting-snip721-impl',
+			description: 'A smart contract optimized for randomly minting SNIP-721s (Secret NFTs)',
+			tags: ['smart-contracts', 'nfts']
+		}
+	];
 </script>
 
 <Head {pageTitle} />
@@ -52,24 +73,14 @@
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-						<Repo
-							tags={['secret-box', 'essential']}
-							title={'Secret Counter'}
-							description={'A quick introdcution to building private smart contracts on Secret Network'}
-						/>
-						<Repo
-							tags={['library', 'smart-contracts', 'rust', 'essential']}
-							title={'secret-toolkit'}
-							description={'A rust package to help you build private smart contracts on Secret Network'}
-						/>
-						<Repo
-							tags={['smart-contracts', 'nfts']}
-							title={'secret-random-minting-snip721-impl'}
-							description={'A smart contract optimized for randomly minting SNIP-721s (Secret NFTs)'}
-						/>
-
-						<Repo />
-						<Repo />
+						{#each repos as r}
+							{#if r.kind === 'secret-box'}
+								<!-- content here -->
+								<SecretBox title={r.title} description={r.description} tags={r.tags} />
+							{:else}
+								<Repo title={r.title} description={r.description} tags={r.tags} />
+							{/if}
+						{/each}
 					</div>
 				</div>
 			</div>
