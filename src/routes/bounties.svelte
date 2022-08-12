@@ -65,10 +65,19 @@
 		</p>
 	</div>
 
-	<div class="mt-12 grid grid-cols-3 gap-4">
-		{#each bounties as bounty}
-			<!-- content here -->
-			<BountyCard {bounty} />
-		{/each}
+	<div class="mt-12 grid grid-cols-12 gap-x-6">
+		<div class="col-span-3">
+			<div class="mb-0.5 rounded-t-xl bg-dark-4 px-4 py-4 text-lg font-bold text-white">Filter</div>
+			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Date</div>
+			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Reward</div>
+			<div class="bg-dark-4 px-4 py-4 text-lg font-bold text-white">Status</div>
+		</div>
+
+		<div class="col-span-9 grid grid-cols-3 gap-4">
+			{#each bounties as bounty}
+				<!-- content here -->
+				<BountyCard {bounty} />
+			{/each}
+		</div>
 	</div>
 </section>
