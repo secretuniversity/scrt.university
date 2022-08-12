@@ -1,3 +1,13 @@
+<script lang="ts">
+	import { page } from '$app/stores';
+	import { toPageTitle } from '$lib/helpers/index';
+	import Head from '$lib/components/Head.svelte';
+
+	const pageTitle = toPageTitle($page.params.slug) + ' | Repositories';
+</script>
+
+<Head {pageTitle} />
+
 <section class="mx-4 pb-32">
 	<div class="px-24">
 		<div class="mt-16 grid grid-cols-2 grid-rows-2 border-b-2 border-white pb-4">

@@ -1,4 +1,10 @@
 <script>
+	import { page } from '$app/stores';
+	import { toPageTitle } from '$lib/helpers/index';
+	import Head from '$lib/components/Head.svelte';
+
+	const pageTitle = toPageTitle($page.params.slug) + ' | Secret Box';
+
 	const box = {
 		title: 'Secret Counter',
 		subtitle: 'A quick introduction to building private smart contracts on Secret Network',
@@ -7,6 +13,8 @@
 		tags: ['tag1', 'tag2']
 	};
 </script>
+
+<Head {pageTitle} />
 
 <section class="min-h-content pb-32">
 	<!-- <h1 class="text-3xl font-bold text-white my-8">Secret Boxes</h1> -->

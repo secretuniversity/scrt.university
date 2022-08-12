@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Bounty } from '$lib/models/lib';
+	import type { Bounty } from '$lib/models';
 
 	export let bounty: Bounty;
 
