@@ -3,11 +3,11 @@ export type Bounty = {
 	title: string;
 	description: string;
 	forumPost: string;
-	proposal: string;
+	proposal: string | null;
 	amount: number;
 	status: BountyStatus;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt: string; // ISO 8601 date string
+	updatedAt: string; // ISO 8601 date string
 };
 
-export type BountyStatus = 'open' | 'completed' | 'in-progress';
+type BountyStatus = 'open' | 'completed' | 'in-progress';
