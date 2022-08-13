@@ -10,3 +10,4 @@ pnpm-lock.yaml
 !.env.example
 .vercel
 .output
+.projectile
