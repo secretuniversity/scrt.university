@@ -12,7 +12,7 @@
 			<div class="flex w-full items-center justify-between md:w-auto">
 				<a href="/">
 					<span class="sr-only">Workflow</span>
-					<p class="text-white text-2xl font-bold">scrt.university</p>
+					<p class="text-2xl font-bold text-white">scrt.university</p>
 					<!-- <img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" /> -->
 				</a>
 				<div class="-mr-2 flex items-center md:hidden">
@@ -51,7 +51,7 @@
 				>
 					<div class="flex">
 						<img
-							class="self-center justify-self-center mr-2 w-7 h-7"
+							class="mr-2 h-7 w-7 self-center justify-self-center"
 							src={WalletIcon}
 							alt="Wallet icon"
 						/>

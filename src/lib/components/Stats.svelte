@@ -1,25 +1,25 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative z-10">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pt-8">
-		<div class="mx-auto max-w-4xl text-center">
-			<h2 class="text-3xl font-extrabold text-white sm:text-4xl">Educating developers</h2>
-			<p class="mt-3 text-xl text-gray sm:mt-4">
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium.
+<div class="relative z-10 lg:mx-16 lg:flex lg:items-center lg:pb-32">
+	<div class="mx-auto max-w-2xl shrink px-4 sm:px-6 lg:px-8">
+		<div class="mx-auto max-w-4xl">
+			<h2 class="max-w-2xl text-3xl font-extrabold text-white sm:text-4xl">Educating developers</h2>
+			<p class="mt-3 max-w-2xl text-xl text-gray sm:mt-4">
+				Secret University is actively committed to supporting development on Secret Network by
+				providing developers with <span class="font-bold text-dark-blue"
+					>education, bounties, and opportunities</span
+				>—all in the name of building a better, more secure internet.
 			</p>
 		</div>
 	</div>
-	<div class="pb-16 lg:pt-8 lg:pb-32">
+	<div class="grow">
 		<div class="relative">
-			<div class="bg-gray-50 absolute inset-0 h-1/2" />
 			<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mx-auto max-w-5xl">
+				<div class="mx-auto max-w-7xl">
 					<dl class="rounded-lg bg-dark-4 shadow-lg sm:grid sm:grid-cols-4">
 						<div
 							class="flex flex-col border-b border-white p-6 text-center sm:border-0 sm:border-r"
 						>
-							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">
-								Courses and programs
-							</dt>
+							<dt class="order-2 mt-2 text-lg font-medium leading-6 text-off-white">Courses</dt>
 							<dd class="order-1 text-5xl font-extrabold text-white">10+</dd>
 						</div>
 

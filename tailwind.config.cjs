@@ -3,6 +3,20 @@ module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			height: {
+				// Assumes Navbar is 70px
+				'home-hero': 'calc(100vh - 70px)'
+			},
+			maxHeight: {
+				'home-hero': 'calc(100vh - 70px)'
+			},
+			minHeight: {
+				'home-hero': 'calc(100vh - 70px)'
+			},
+			gridTemplateRows: {
+				'feature-inner': 'repeat(3, minmax(min-content, max-content))',
+				'feature-inner-tag': 'repeat(2, minmax(min-content, max-content))'
+			},
 			colors: {
 				'dark-red': '#E8504A',
 				'dark-orange': '#EB8045',
