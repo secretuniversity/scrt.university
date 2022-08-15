@@ -3,7 +3,7 @@
 	export let alt = '';
 	export let title = '';
 	export let description = '';
-	export let tag: String | null = '';
+	export let tag: string | null = '';
 </script>
 
 {#if tag}
