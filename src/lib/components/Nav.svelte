@@ -1,17 +1,19 @@
 <script lang="ts">
 	import Logo from '$lib/assets/logo.svg';
+	import WalletIcon from '$lib/assets/wallet_icon.svg';
 </script>
 
 <div>
 	<nav
-		class="relative mx-4 mt-4 flex items-center justify-between rounded-lg bg-dark-4 pt-4 pb-4 shadow-xl sm:px-6"
+		class="relative flex items-center justify-between bg-dark-4 py-3 shadow-xl sm:px-6"
 		aria-label="Global"
 	>
 		<div class="flex flex-1 items-center pl-4">
 			<div class="flex w-full items-center justify-between md:w-auto">
 				<a href="/">
 					<span class="sr-only">Workflow</span>
-					<img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" />
+					<p class="text-white text-2xl font-bold">scrt.university</p>
+					<!-- <img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" /> -->
 				</a>
 				<div class="-mr-2 flex items-center md:hidden">
 					<button
@@ -41,14 +43,21 @@
 				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
 		</div>
+
 		<div class="hidden pr-4 text-right md:block">
-			<span class="inline-flex rounded-md shadow-md ring-1 ring-black ring-opacity-5">
-				<a
-					href="#"
-					class="hover:bg-gray-50 inline-flex items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm shadow-dark-blue/50"
+			<span class="inline-flex rounded-md shadow-md">
+				<button
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
 				>
-					Connect
-				</a>
+					<div class="flex">
+						<img
+							class="self-center justify-self-center mr-2 w-7 h-7"
+							src={WalletIcon}
+							alt="Wallet icon"
+						/>
+						<p class="self-center justify-self-center">Connect</p>
+					</div>
+				</button>
 			</span>
 		</div>
 	</nav>
