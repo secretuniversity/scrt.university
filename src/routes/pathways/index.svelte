@@ -1,12 +1,26 @@
 <script lang="ts">
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
+
 	const pageTitle = 'Pathways';
+
+	const breadcrumbRoutes = [
+		{
+			name: 'Learn',
+			path: '/learn'
+		},
+		{
+			name: 'Secret Pathways',
+			path: '/pathways'
+		}
+	];
 </script>
 
 <Head {pageTitle} />
 
-<div class="mx-auto w-9/12 py-16">
-	<div class="max-w-3xl">
+<section class="mx-24 py-8">
+	<Breadcrumb routes={breadcrumbRoutes} />
+	<div class="mt-8 max-w-3xl">
 		<h1 class="mb-4 text-5xl font-bold text-white">Secret Pathways</h1>
 		<p class="mb-16 text-base text-gray">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque facilisis felis ut neque
@@ -15,7 +29,7 @@
 		</p>
 	</div>
 
-	<div class="grid grid-cols-3 gap-12">
+	<div class="mx-auto grid w-10/12 grid-cols-3 gap-12">
 		<a href="/pathways/welcome-to-secret-network">
 			<div
 				class="max-w-lg overflow-hidden rounded-2xl bg-dark-4 px-6 py-6 shadow-lg lg:px-8 lg:py-8"
@@ -71,4 +85,6 @@
 			</div>
 		</div>
 	</div>
-</div>
+</section>
+
+<div class="mx-auto w-9/12 py-16" />

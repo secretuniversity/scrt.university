@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
@@ -6,11 +7,22 @@
 	import Features from '$lib/components/FeatureList.svelte';
 
 	const pageTitle = 'Learn';
+
+	const breadcrumbRoutes = [
+		{
+			name: 'Learn',
+			path: '/learn'
+		}
+	];
 </script>
 
 <Head {pageTitle} />
 
 <div class="lg:mx-24">
+	<div class="mt-8">
+		<Breadcrumb routes={breadcrumbRoutes} />
+	</div>
+
 	<PageHeader
 		title={'Learn'}
 		description={'Learn to build on Secret Network using our courses Secret Pathways or dive deep into code with Secret Boxes'}

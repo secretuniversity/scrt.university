@@ -1,9 +1,18 @@
+<script lang="ts">
+	interface Route {
+		name: string;
+		path: string;
+	}
+
+	export let routes: Array<Route> = [];
+</script>
+
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="shadown-xl mx-auto flex w-full rounded-xl bg-dark-4" aria-label="Breadcrumb">
-	<ol class="flex max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8">
-		<li class="flex">
+<nav class="shadown-xl flex w-fit rounded-lg" aria-label="Breadcrumb">
+	<ol class="flex max-w-screen-xl px-4 sm:px-6 lg:px-2">
+		<li class="flex space-x-2">
 			<div class="flex items-center">
-				<a href="#" class="hover:text-gray-500 text-gray">
+				<a href="/" class="hover:text-gray-500 text-gray">
 					<!-- Heroicon name: solid/home -->
 					<svg
 						class="h-5 w-5 flex-shrink-0"
@@ -19,11 +28,13 @@
 					<span class="sr-only">Home</span>
 				</a>
 			</div>
+
+			<p class="text-bold text-gray">/</p>
 		</li>
 
-		<li class="flex">
-			<div class="flex items-center">
-				<svg
+		{#each routes as route, index}
+			<li class="flex space-x-2">
+				<!-- <svg
 					class="text-gray-200 h-full w-6 flex-shrink-0"
 					viewBox="0 0 24 44"
 					preserveAspectRatio="none"
@@ -32,31 +43,17 @@
 					aria-hidden="true"
 				>
 					<path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
-				</svg>
-				<a href="#" class="hover:text-gray-700 ml-4 text-sm font-medium text-gray"
-					>Secret Pathways</a
-				>
-			</div>
-		</li>
+				</svg> -->
 
-		<li class="flex">
-			<div class="flex items-center">
-				<svg
-					class="text-gray-200 h-full w-6 flex-shrink-0"
-					viewBox="0 0 24 44"
-					preserveAspectRatio="none"
-					fill="white"
-					xmlns="http://www.w3.org/2000/svg"
-					aria-hidden="true"
-				>
-					<path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
-				</svg>
-				<a
-					href="#"
-					class="hover:text-gray-700 ml-4 text-sm font-medium text-gray"
-					aria-current="page">Welcome to Secret Network</a
-				>
-			</div>
-		</li>
+				<div class="flex items-center">
+					<a href={route.path} class="hover:text-gray-700 ml-4 text-sm font-medium text-gray">
+						{route.name}
+					</a>
+				</div>
+				{#if index < routes.length - 1}
+					<p class="text-bold text-gray">/</p>
+				{/if}
+			</li>
+		{/each}
 	</ol>
 </nav>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
 	import SecretBox from '$lib/components/cards/SecretBox.svelte';
@@ -26,11 +27,25 @@
 			tags: ['smart-contracts', 'nfts']
 		}
 	];
+
+	const breadcrumbRoutes = [
+		{
+			name: 'Learn',
+			path: '/learn'
+		},
+		{
+			name: 'Repositories',
+			path: '/repositories'
+		}
+	];
 </script>
 
 <Head {pageTitle} />
 
 <section class="lg:mx-24">
+	<div class="mt-8">
+		<Breadcrumb routes={breadcrumbRoutes} />
+	</div>
 	<PageHeader
 		title={pageTitle}
 		description={'Learn from the source. Find inspiration for you next project by looking at these repositories.'}

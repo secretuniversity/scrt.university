@@ -1,15 +1,31 @@
 <script lang="ts">
+	// TODO: Remove temporary content from Repos page
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
 
 	const pageTitle = 'Community Resources';
+
+	const breadcrumbRoutes = [
+		{
+			name: 'Learn',
+			path: '/learn'
+		},
+		{
+			name: 'Community Resources',
+			path: '/resources'
+		}
+	];
 </script>
 
 <Head {pageTitle} />
 
 <section class="mx-24">
+	<div class="mt-8">
+		<Breadcrumb routes={breadcrumbRoutes} />
+	</div>
 	<PageHeader
 		title={'Community Resources'}
 		description={'Learn from the community. Find guides, courses, videos, and more— each made by developers on Secret Network.'}
