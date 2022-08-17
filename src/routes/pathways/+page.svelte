@@ -42,7 +42,7 @@
 					<h2 class="mt-2 text-center text-lg font-semibold text-white">
 						Welcome To Secret Network
 					</h2>
-					<div class="flex space-x-2 justify-self-center">
+					<div class="flex h-fit space-x-2 justify-self-center">
 						<p class="inline-block rounded-full bg-dark-blue px-3 py-0.5 text-white">
 							Introductory
 						</p>
