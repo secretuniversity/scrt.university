@@ -3,7 +3,7 @@
 	import { toPageTitle } from '$lib/helpers';
 
 	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Review from '$lib/components/Review.svelte';
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
 
@@ -12,10 +12,19 @@
 
 <Head {pageTitle} />
 
-<section class="min-h-screen pb-36">
-	<div class="mx-4 mt-8 grid grid-cols-8 gap-x-4">
+<section class="mx-4 grid min-h-screen pb-36">
+	<div class="mt-8 grid grid-cols-8 gap-x-4">
 		<div class="col-span-2">
-			<h2 class="rounded-t-xl bg-dark-4 px-8 py-4 text-lg font-bold text-white">Pathway Map</h2>
+			<Review />
+			<!-- Pathway Map Header  -->
+			<div class="mt-4 flex rounded-t-xl bg-dark-4 px-8 py-4">
+				<h2 class="text-lg font-bold text-white">Pathway Map</h2>
+				<p class="grow self-center text-right text-off-white">
+					<span class="text-gray">0</span> / 10
+				</p>
+			</div>
+
+			<!-- Lessons and Quizes -->
 			<div class="min-h-22 mt-1 grid grid-cols-5 grid-rows-2 bg-dark-4 p-4">
 				<div
 					class="col-span-1 row-span-full mt-0.5 h-5 w-5 self-center justify-self-center rounded-full bg-gray"
@@ -34,14 +43,19 @@
 					Your First Quiz
 				</p>
 			</div>
+
+			<!-- Pathway Map Footer -->
+			<p
+				class="mt-1 cursor-pointer rounded-b-xl bg-dark-4 px-8 py-4 text-center text-off-white underline"
+			>
+				View More
+			</p>
 		</div>
 
 		<div class="col-span-full col-start-3">
-			<Breadcrumb />
-
-			<div class="mt-4 grid grid-cols-10 rounded-lg bg-dark-4 pb-4 shadow-xl">
+			<div class="max-h-content grid grid-cols-10 rounded-lg bg-dark-4 pb-4 shadow-xl">
 				<img
-					class="h-auto w-8 self-center justify-self-center"
+					class="h-auto w-4 self-center justify-self-center"
 					src={LeftArrowIcon}
 					alt="Left reading arrow"
 				/>
@@ -66,7 +80,7 @@
 				</div>
 
 				<img
-					class="h-auto w-8 self-center justify-self-center"
+					class="h-auto w-4 self-center justify-self-center"
 					src={RightArrowIcon}
 					alt="Right reading arrow"
 				/>
