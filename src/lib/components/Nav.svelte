@@ -11,7 +11,7 @@
 		<div class="flex flex-1 items-center pl-4">
 			<div class="flex w-full items-center justify-between md:w-auto">
 				<a href="/">
-					<span class="sr-only">Workflow</span>
+					<span class="sr-only">Secret University</span>
 					<p class="text-2xl font-bold text-white">scrt.university</p>
 					<!-- <img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" /> -->
 				</a>

@@ -7,12 +7,12 @@
 
 <Head {pageTitle} />
 
-<div class="mx-auto max-w-xl py-20">
+<div class="mx-auto max-w-2xl py-20">
 	<h1 class="text-center text-6xl font-bold text-white">Learn to Earn</h1>
 	<p class="mt-2 text-center text-base text-gray">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel laoreet ipsum. Quisque et
-		nulla dapibus, vehicula odio mollis, vestibulum dolor. Cras hendrerit ipsum ut tempus
-		scelerisque.
+		Secret University is an open platform for developers building on Secret Network. Builders of all
+		skill levels are encouraged to become educators of the community and help guide others along a
+		path towards privacy & security.
 	</p>
 </div>
 
@@ -22,16 +22,7 @@
 		<!-- <img src="" alt="" /> -->
 		<h2 class="mt-3 text-center text-lg font-semibold text-white">Code</h2>
 		<p class="mt-1 text-center text-base text-gray">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit
-		</p>
-	</div>
-
-	<div class="lg:max-w-xs">
-		<div class="mx-auto h-24 w-24 bg-dark-blue" />
-		<!-- <img src="" alt="" /> -->
-		<h2 class="mt-3 text-center text-lg font-semibold text-white">Create</h2>
-		<p class="mt-1 text-center text-base text-gray">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit
+			Build your next project on Secret and learn to build private decentralized applications.
 		</p>
 	</div>
 
@@ -40,7 +31,18 @@
 		<!-- <img src="" alt="" /> -->
 		<h2 class="mt-3 text-center text-lg font-semibold text-white">Teach</h2>
 		<p class="mt-1 text-center text-base text-gray">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit
+			From video to courses, Secret University supports all kinds of educational material and wants
+			your help creating it.
+		</p>
+	</div>
+
+	<div class="lg:max-w-xs">
+		<div class="mx-auto h-24 w-24 bg-dark-blue" />
+		<!-- <img src="" alt="" /> -->
+		<h2 class="mt-3 text-center text-lg font-semibold text-white">Earn</h2>
+		<p class="mt-1 text-center text-base text-gray">
+			Your work on Secret is valuable. Earn real crypto for educating the community and become a
+			member of Secret University
 		</p>
 	</div>
 </div>
