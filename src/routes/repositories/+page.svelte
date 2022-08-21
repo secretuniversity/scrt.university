@@ -41,6 +41,7 @@
 	];
 
 	const filterSections = ['Type', 'Date', 'Tags'];
+	const filterTags = ['Essential', 'Smart Contracts', 'DeFi', 'Gaming', 'Rust', 'JavaScript'];
 </script>
 
 <Head {pageTitle} />
@@ -58,31 +59,56 @@
 		<div class="col-span-1">
 			<Filter sections={filterSections} let:index>
 				{#if index === 0}
-					<div class="mb-1 flex gap-x-2">
+					<div class="flex gap-x-2 py-2">
 						<input
 							class="self-center rounded-sm border-gray bg-dark-4"
 							id="type-box"
 							type="checkbox"
 						/>
-						<label class="self-center text-lg text-white" for="type-box">Secret Box</label>
+						<label class="self-center text-white" for="type-box">Secret Box</label>
 					</div>
 
-					<div class="mb-1 flex gap-x-2">
+					<div class="flex gap-x-2 py-2">
 						<input
 							class="self-center rounded-sm border-gray bg-dark-4"
 							id="type-repo"
 							type="checkbox"
 						/>
-						<label class="self-center text-lg text-white" for="type-repo">Repositores</label>
+						<label class="self-center text-white" for="type-repo">Repositores</label>
 					</div>
 				{/if}
 
 				{#if index === 1}
-					<p>Date Filter Options!</p>
+					<select
+						class="w-full rounded-lg border-white bg-dark-4 text-white"
+						name="date-selector"
+						id="date-select"
+					>
+						<option value="newest">Recently Added</option>
+						<option value="oldest">Recently Updated</option>
+					</select>
 				{/if}
 
 				{#if index === 2}
-					<p>Tag Filter Options!</p>
+					{#each filterTags as tag}
+						<div class="py-2">
+							<input
+								class="mr-2 rounded-sm border-white bg-dark-4"
+								type="checkbox"
+								name="{tag}-input"
+								id="{tag}-input"
+							/>
+							<label class="text-white" for="{tag}-input">{tag}</label>
+						</div>
+					{/each}
+
+					<div class="mx-auto w-fit">
+						<button
+							type="button"
+							class="mt-4 inline-flex w-fit items-center justify-self-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+							>View More</button
+						>
+					</div>
 				{/if}
 			</Filter>
 		</div>
