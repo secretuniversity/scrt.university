@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Filter from '$lib/components/Filter.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
 	import SecretBox from '$lib/components/cards/SecretBox.svelte';
@@ -38,6 +39,8 @@
 			path: '/repositories'
 		}
 	];
+
+	const filterSections = ['Type', 'Date', 'Tags'];
 </script>
 
 <Head {pageTitle} />
@@ -53,9 +56,35 @@
 
 	<div class="mt-12 grid grid-cols-4 gap-x-8 pb-12">
 		<div class="col-span-1">
-			<div class="mb-0.5 rounded-t-xl bg-dark-4 px-4 py-4 text-lg font-bold text-white">Filter</div>
-			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Type</div>
-			<div class="bg-dark-4 px-4 py-4 text-lg font-bold text-white">Tags</div>
+			<Filter sections={filterSections} let:index>
+				{#if index === 0}
+					<div class="mb-1 flex gap-x-2">
+						<input
+							class="self-center rounded-sm border-gray bg-dark-4"
+							id="type-box"
+							type="checkbox"
+						/>
+						<label class="self-center text-lg text-white" for="type-box">Secret Box</label>
+					</div>
+
+					<div class="mb-1 flex gap-x-2">
+						<input
+							class="self-center rounded-sm border-gray bg-dark-4"
+							id="type-repo"
+							type="checkbox"
+						/>
+						<label class="self-center text-lg text-white" for="type-repo">Repositores</label>
+					</div>
+				{/if}
+
+				{#if index === 1}
+					<p>Date Filter Options!</p>
+				{/if}
+
+				{#if index === 2}
+					<p>Tag Filter Options!</p>
+				{/if}
+			</Filter>
 		</div>
 
 		<div class="col-span-3">
