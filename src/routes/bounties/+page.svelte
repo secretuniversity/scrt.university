@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Bounty } from '$lib/models/lib';
+	import type { Bounty } from '$lib/models/index';
+	import Filter from '$lib/components/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
 
@@ -51,6 +52,8 @@
 	];
 
 	const pageTitle = 'Bounties';
+
+	const filterSections = ['Date', 'Reward', 'Status'];
 </script>
 
 <Head {pageTitle} />
@@ -67,10 +70,67 @@
 
 	<div class="mt-12 grid grid-cols-12 gap-x-6">
 		<div class="col-span-3">
-			<div class="mb-0.5 rounded-t-xl bg-dark-4 px-4 py-4 text-lg font-bold text-white">Filter</div>
-			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Date</div>
-			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Reward</div>
-			<div class="bg-dark-4 px-4 py-4 text-lg font-bold text-white">Status</div>
+			<Filter let:index sections={filterSections}>
+				{#if index === 0}
+					<select
+						class="w-full rounded-lg border-white bg-dark-4 text-white"
+						name="date-selector"
+						id="date-select"
+					>
+						<option value="newest">Recently Added</option>
+						<option value="oldest">Recently Updated</option>
+					</select>
+				{/if}
+
+				{#if index === 1}
+					<!-- TODO: Fix non-responsive widths. IDK inputs are not respecting flexbox -->
+					<div class="mx-auto flex w-fit justify-items-center gap-x-4 overflow-hidden">
+						<input
+							class="w-32 rounded-lg border-white bg-dark-4 text-white"
+							type="text"
+							placeholder="Min."
+						/>
+						<p class="self-center text-white">-</p>
+						<input
+							class="w-32 rounded-lg border-white bg-dark-4 text-white"
+							type="text"
+							placeholder="Max."
+						/>
+					</div>
+				{/if}
+
+				{#if index === 2}
+					<div class="flex items-center gap-x-2 text-lg text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="status-open"
+							id="status-open"
+						/>
+						<label for="status-open">Open</label>
+					</div>
+
+					<div class="flex items-center gap-x-2 text-lg text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="status-in-progress"
+							id="status-in-progress"
+						/>
+						<label for="status-open">In Progress</label>
+					</div>
+
+					<div class="flex items-center gap-x-2 text-lg text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="status-complete"
+							id="status-complete"
+						/>
+						<label for="status-open">Completed</label>
+					</div>
+				{/if}
+			</Filter>
 		</div>
 
 		<div class="col-span-9 grid grid-cols-3 gap-4">
