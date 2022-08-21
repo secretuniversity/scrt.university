@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 
 	import CaretLeftIcon from '$lib/assets/left_caret.svg';
-	import CaretRightIcon from '$lib/assets/right_caret.svg';
 	import CaretUpIcon from '$lib/assets/up_caret.svg';
 	import CaretDownIcon from '$lib/assets/down_caret.svg';
 	import FilterIcon from '$lib/assets/filter.svg';
