@@ -3,6 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Filter from '$lib/components/Filter.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
 
@@ -18,6 +19,9 @@
 			path: '/resources'
 		}
 	];
+
+	const filterSections = ['Date', 'Type', 'Tags'];
+	const tags = ['Recommended', 'Smart Contracts', 'dApps', 'DeFi', 'Privacy'];
 </script>
 
 <Head {pageTitle} />
@@ -33,9 +37,71 @@
 
 	<div class="mt-12 grid grid-cols-4 gap-x-8 pb-12">
 		<div class="col-span-1">
-			<div class="mb-0.5 rounded-t-xl bg-dark-4 px-4 py-4 text-lg font-bold text-white">Filter</div>
-			<div class="mb-0.5 bg-dark-4 px-4 py-4 text-lg font-bold text-white">Type</div>
-			<div class="bg-dark-4 px-4 py-4 text-lg font-bold text-white">Tags</div>
+			<Filter let:index sections={filterSections}>
+				{#if index === 0}
+					<select
+						class="w-full rounded-lg border-white bg-dark-4 text-white"
+						name="date-selector"
+						id="date-select"
+					>
+						<option value="newest">Recently Added</option>
+						<option value="oldest">Recently Updated</option>
+					</select>
+				{/if}
+				{#if index === 1}
+					<div class="flex items-center gap-x-2 py-2 text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="type-guide"
+							id="type-guide"
+						/>
+						<label for="type-guide">Guide</label>
+					</div>
+
+					<div class="flex items-center gap-x-2 py-2 text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="type-article"
+							id="type-article"
+						/>
+						<label for="type-article">Article</label>
+					</div>
+
+					<div class="flex items-center gap-x-2 py-2 text-white">
+						<input
+							class="rounded-sm border-white bg-dark-4"
+							type="checkbox"
+							name="type-screencast"
+							id="type-screencast"
+						/>
+						<label for="type-screencast">Screencast</label>
+					</div>
+				{/if}
+
+				{#if index === 2}
+					{#each tags as tag}
+						<div class="py-2">
+							<input
+								class="mr-2 rounded-sm border-white bg-dark-4"
+								type="checkbox"
+								name="{tag}-input"
+								id="{tag}-input"
+							/>
+							<label class="text-white" for="{tag}-input">{tag}</label>
+						</div>
+					{/each}
+
+					<div class="mx-auto w-fit">
+						<button
+							type="button"
+							class="mt-4 inline-flex w-fit items-center justify-self-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+							>View More</button
+						>
+					</div>
+				{/if}
+			</Filter>
 		</div>
 
 		<div class="col-span-3">
