@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
+	import { connect } from '$lib/helpers/keplr';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
@@ -104,6 +105,7 @@
 		<div class="hidden pr-4 text-right md:block">
 			<span class="inline-flex rounded-md shadow-md">
 				<button
+					on:click={() => connect()}
 					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
 				>
 					<div class="flex">
