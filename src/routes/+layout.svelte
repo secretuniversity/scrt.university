@@ -7,9 +7,7 @@
 <header />
 
 <main class="bg-dark-3">
-	<div class="overflow-hidden">
-		<Nav />
-	</div>
+	<Nav />
 	<slot />
 </main>
 
