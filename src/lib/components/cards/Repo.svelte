@@ -1,4 +1,6 @@
 <script lang="ts">
+	import GithubLogo from '$lib/assets/github_logo_gray.svg';
+
 	export let tags: string[] = ['tag1', 'tag2'];
 	export let title = 'Title';
 	export let description = 'Description';
@@ -7,13 +9,13 @@
 
 <a href="/repositories/repo/some-slug">
 	<div class="h-full overflow-hidden rounded-xl bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
-		<div class="grid auto-rows-auto">
-			<div class="">
+		<div class="grid h-full auto-rows-auto">
+			<div class="mb-1">
 				{#each tags as tag}
 					<!-- content here -->
 					<a href="#" class="mr-2 mb-1 inline-block">
 						<span
-							class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"
+							class="inline-flex items-center rounded-full bg-gray px-3 py-0.5 text-sm font-medium text-dark-4"
 						>
 							{tag}
 						</span>
@@ -27,11 +29,15 @@
 				{description}
 			</p>
 
-			<!-- <button
-			type="button"
-			class="mt-4 inline-flex items-center self-end justify-self-end rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-			>Learn more</button
-		> -->
+			<!-- Author -->
+			<div class="col-span-1 mt-2 flex gap-x-2 self-end">
+				<img
+					class="h-6 w-6 self-center"
+					src={GithubLogo}
+					alt="Learn more about the author of this Secret Box on Github"
+				/>
+				<p class="self-center text-white">Secret University</p>
+			</div>
 		</div>
 	</div>
 </a>
