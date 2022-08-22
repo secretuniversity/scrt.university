@@ -1,6 +1,12 @@
 <script lang="ts">
+	import { clickOutside } from '$lib/directives/clickOutside';
 	import Logo from '$lib/assets/logo.svg';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
+	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+
+	// Dropdown flags
+	let learn = false;
+	let contribute = false;
 </script>
 
 <div>
@@ -38,8 +44,52 @@
 				</div>
 			</div>
 			<div class="hidden md:ml-10 md:block md:space-x-10">
-				<a href="/learn" class="hover:text-gray-text font-medium text-white">Learn</a>
-				<a href="/contribute" class="font-medium text-white hover:text-gray">Contribute</a>
+				<span class="relative inline-flex items-center gap-x-2">
+					<a href="/learn" class="hover:text-gray-text font-medium text-white"> Learn </a>
+					<img
+						on:click={() => (learn = true)}
+						class="inline-block h-3.5 w-3.5 cursor-pointer"
+						src={ChevronDown}
+						alt="Learn to build on Secret Network"
+					/>
+					{#if learn}
+						<div
+							use:clickOutside
+							on:click_outside={() => (learn = false)}
+							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
+						>
+							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
+								<a href="/pathways">Secret Pathways</a>
+								<a href="/repositories">Repositores</a>
+								<a href="/resources">Community Resources</a>
+								<a href="https://docs.scrt.network">Official Docs</a>
+							</div>
+						</div>
+					{/if}
+				</span>
+
+				<span class="relative inline-flex items-center gap-x-2">
+					<a href="/contribute" class="font-medium text-white hover:text-gray"> Contribute </a>
+					<img
+						on:click={() => (contribute = true)}
+						class="inline-block h-3.5 w-3.5 cursor-pointer"
+						src={ChevronDown}
+						alt="Contribute to Secret University and Secret Network"
+					/>
+
+					{#if contribute}
+						<div
+							use:clickOutside
+							on:click_outside={() => (contribute = false)}
+							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
+						>
+							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
+								<a href="#">Application</a>
+								<a href="/bounties">Bounties</a>
+							</div>
+						</div>
+					{/if}
+				</span>
 				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
 		</div>
