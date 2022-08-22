@@ -1,12 +1,19 @@
 <script lang="ts">
+	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
-	import Logo from '$lib/assets/logo.svg';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
 	// Dropdown flags
 	let learn = false;
 	let contribute = false;
+
+	$: if ($navigating) reset();
+
+	function reset() {
+		learn = false;
+		contribute = false;
+	}
 </script>
 
 <div>
