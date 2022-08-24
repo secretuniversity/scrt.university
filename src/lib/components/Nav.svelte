@@ -77,7 +77,7 @@
 				</span>
 
 				<span class="relative inline-flex items-center gap-x-2">
-					<a href="/contribute" class="font-medium text-white hover:text-gray"> Contribute </a>
+					<a href="/contribute" class="font-medium text-white hover:text-gray"> Build </a>
 					<img
 						on:click={() => (contribute = true)}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
