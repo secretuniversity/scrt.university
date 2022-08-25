@@ -65,17 +65,6 @@
 	</div>
 
 	<div class="mt-8 flex gap-x-8 pb-24">
-		<!-- <a href="https://docs.scrt.network" class="inline-block lg:shrink">
-			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
-				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
-					<h2 class="text-2xl font-semibold text-white">Official Docs</h2>
-					<p class="text-base text-gray lg:max-w-lg">
-
-					</p>
-				</div>
-			</div>
-		</a> -->
-
 		<a href="/repositories" class="inline-block lg:shrink">
 			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
 				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
@@ -149,44 +138,31 @@
 	description={'Cover valuable lessons from the secret Network community.'}
 />
 
-<div class="bg-dark-2 pb-28">
-	<!-- <Features
-		features={[
-			{
-				title: 'Secret.js',
-				description: 'Build JavaScript applications on Secret Network with secret.js.',
-				img: '',
-				alt: '',
-				tag: null
-			},
-			{
-				title: 'Griptape.js',
-				description: 'Lorem ipsum',
-				img: '',
-				alt: '',
-				tag: null
-			},
-			{
-				title: 'Fadroma',
-				description: 'Lorem ipsum',
-				img: '',
-				alt: '',
-				tag: null
-			},
-			{
-				title: 'Polar',
-				description: 'Lorem ipsum',
-				img: '',
-				alt: '',
-				tag: null
-			},
-			{
-				title: 'Secret Py',
-				description: 'Lorem ipsum',
-				img: '',
-				alt: '',
-				tag: null
-			}
-		]}
-	/> -->
-</div>
+<Features
+	features={[
+		{
+			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+			alt: '',
+			title: 'Video Example',
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
+			tag: null
+		},
+		{
+			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+			alt: '',
+			title: 'Guide Example',
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
+			tag: null
+		},
+		{
+			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+			alt: '',
+			title: 'Another Example',
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
+			tag: null
+		}
+	]}
+/>
