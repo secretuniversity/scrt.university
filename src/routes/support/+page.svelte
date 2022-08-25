@@ -46,7 +46,7 @@
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
-				href="#"
+				href="https://chat.scrt.network"
 				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-4 py-2 text-base font-medium text-dark-2 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>Join Discord</a
 			>
@@ -59,7 +59,7 @@
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
-				href="#"
+				href="https://forum.scrt.network"
 				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-4 py-2 text-base font-medium text-dark-2 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>Join Discussion</a
 			>
@@ -72,7 +72,7 @@
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
-				href="#"
+				href="https://github.com/secretuniversity/scrt.university"
 				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-4 py-2 text-base font-medium text-dark-2 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>Check Github</a
 			>
