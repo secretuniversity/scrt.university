@@ -26,8 +26,6 @@
 	const tags: string[] = [];
 	const resources: CommunityResource[] = [];
 
-	let query = 'Enter #tag or search term...';
-
 	onMount(() => {
 		getResources();
 		getTags();
