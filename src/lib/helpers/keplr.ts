@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 // @ts-nocheck
 import { secret } from '$lib/stores';
+import { SecretNetworkClient } from 'secretjs';
 
 export async function connect() {
 	const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -2,29 +2,39 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
+	import { secret } from '$lib/stores';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
 	// Dropdown flags
 	let learn = false;
 	let contribute = false;
+	let dashboard = false;
+
+	let connected = false;
 
 	$: if ($navigating) reset();
+
+	secret.subscribe((val) => {
+		connected = val.client === null ? false : true;
+		console.log(`Users is connected: ${connected}`);
+	});
 
 	function reset() {
 		learn = false;
 		contribute = false;
+		dashboard = false;
 	}
 </script>
 
 <div>
 	<nav
-		class="relative flex items-center justify-between bg-dark-4 py-3 shadow-xl sm:px-6"
+		class="pointer-auto relative flex items-center justify-between bg-dark-4 py-3 shadow-xl sm:px-6"
 		aria-label="Global"
 	>
 		<div class="flex flex-1 items-center pl-4">
 			<div class="flex w-full items-center justify-between md:w-auto">
-				<a href="/">
+				<a href="/" class="cursor-pointer">
 					<span class="sr-only">Secret University</span>
 					<p class="text-2xl font-bold text-white">scrt.university</p>
 					<!-- <img class="h-10 w-auto" src={Logo} alt="Secret Network Logo" /> -->
@@ -103,20 +113,42 @@
 		</div>
 
 		<div class="hidden pr-4 text-right md:block">
-			<span class="inline-flex rounded-md shadow-md">
-				<button
-					on:click={() => connect()}
-					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
-				>
-					<div class="flex">
-						<img
-							class="mr-2 h-7 w-7 self-center justify-self-center"
-							src={WalletIcon}
-							alt="Wallet icon"
-						/>
-						<p class="self-center justify-self-center">Connect</p>
-					</div>
-				</button>
+			<span class="relative inline-flex rounded-md shadow-md">
+				{#if connected}
+					<button
+						on:click={() => (dashboard = true)}
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
+						>Dashboard</button
+					>
+					{#if dashboard}
+						<div
+							use:clickOutside
+							on:click_outside={() => (dashboard = false)}
+							class="absolute top-3 left-0 z-10 mt-10 w-full rounded-md border border-gray bg-dark-4 p-4"
+						>
+							<div
+								class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-left text-white"
+							>
+								<a href="/submit">Submit</a>
+								<a href="/bounties">Settings</a>
+							</div>
+						</div>
+					{/if}
+				{:else}
+					<button
+						on:click={() => connect()}
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
+					>
+						<div class="flex">
+							<img
+								class="mr-2 h-7 w-7 self-center justify-self-center"
+								src={WalletIcon}
+								alt="Wallet icon"
+							/>
+							<p class="self-center justify-self-center">Connect</p>
+						</div>
+					</button>
+				{/if}
 			</span>
 		</div>
 	</nav>
