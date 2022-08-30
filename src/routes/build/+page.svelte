@@ -2,7 +2,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import Staking from '$lib/components/Staking.svelte';
-	const pageTitle = 'Contribute';
+	const pageTitle = 'Build';
 </script>
 
 <Head {pageTitle} />
@@ -55,7 +55,9 @@
 	>
 </div>
 
-<Staking />
+<div id="staking">
+	<Staking />
+</div>
 
 <SectionHeader
 	title={'Community Curated Bounties'}

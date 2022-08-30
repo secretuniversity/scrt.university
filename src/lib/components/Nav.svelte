@@ -8,7 +8,7 @@
 
 	// Dropdown flags
 	let learn = false;
-	let contribute = false;
+	let build = false;
 	let dashboard = false;
 
 	let connected = false;
@@ -22,7 +22,7 @@
 
 	function reset() {
 		learn = false;
-		contribute = false;
+		build = false;
 		dashboard = false;
 	}
 </script>
@@ -87,18 +87,18 @@
 				</span>
 
 				<span class="relative inline-flex items-center gap-x-2">
-					<a href="/contribute" class="font-medium text-white hover:text-gray"> Build </a>
+					<a href="/build" class="font-medium text-white hover:text-gray"> Build </a>
 					<img
-						on:click={() => (contribute = true)}
+						on:click={() => (build = true)}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
 						src={ChevronDown}
 						alt="Contribute to Secret University and Secret Network"
 					/>
 
-					{#if contribute}
+					{#if build}
 						<div
 							use:clickOutside
-							on:click_outside={() => (contribute = false)}
+							on:click_outside={() => (build = false)}
 							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
 						>
 							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
