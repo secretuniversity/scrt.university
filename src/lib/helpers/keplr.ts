@@ -1,5 +1,7 @@
 // eslint-disable-next-line
 // @ts-nocheck
+import { secret } from '$lib/stores';
+
 export async function connect() {
 	const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -23,6 +25,8 @@ export async function connect() {
 		walletAddress: myAddress,
 		encryptionUtils: window.getEnigmaUtils(CHAIN_ID)
 	});
+
+	secret.set({ client: secretjs });
 
 	return secretjs;
 }
