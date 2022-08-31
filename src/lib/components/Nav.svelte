@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
@@ -15,9 +16,38 @@
 
 	$: if ($navigating) reset();
 
-	secret.subscribe((val) => {
-		connected = val.client === null ? false : true;
-		console.log(`Users is connected: ${connected}`);
+	const unsub = secret.subscribe((val) => {
+		if (!connected) {
+			console.log('Keplr is not connected. Now looking at store to see if client exists');
+			connected = val.client === null ? false : true;
+		}
+	});
+
+	onMount(() => {
+		console.log('Nav Mounted');
+		const session = sessionStorage.getItem('keplr-connected');
+
+		console.log(`Session found Keplr connected: ${session}`);
+
+		if (session === 'true' && !$secret.client) {
+			const { err } = connect();
+
+			if (!err) {
+				connected = true;
+				console.log('Keplr was reconnected based on session storage');
+			}
+
+			if (err) {
+				console.log('There was an error reconnected to Keplr');
+			}
+		} else if (session === 'true' && $secret.client) {
+			connected = true;
+			console.log('Keplr client exists in store already.');
+		}
+	});
+
+	onDestroy(() => {
+		unsub();
 	});
 
 	function reset() {
