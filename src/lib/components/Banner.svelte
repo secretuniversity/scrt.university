@@ -8,8 +8,8 @@
 			<span class="col-start-2 self-center justify-self-center"
 				>Support the core Secret University team by <a
 					href="/build/#staking"
-					class="text-dark-orange underline">staking with us</a
-				></span
+					class="text-light-orange underline">staking with us</a
+				> 😎</span
 			>
 			<span
 				class="col-start-3 cursor-pointer self-center justify-self-end pr-4 text-xl"
