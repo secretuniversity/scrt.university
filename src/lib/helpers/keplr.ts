@@ -4,8 +4,8 @@ import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
 
 interface Connection {
-	client: SecretNetworkClient | null
-	err: string | null
+	client: SecretNetworkClient | null;
+	err: string | null;
 }
 
 export async function connect(): Connection {
@@ -34,10 +34,10 @@ export async function connect(): Connection {
 		});
 
 		secret.set({ client: secretjs });
-		sessionStorage.setItem('keplr-connected', true)
+		sessionStorage.setItem('keplr-connected', true);
 
 		return { client: secretjs, err: null };
 	} catch (err) {
-		return { client: null, err: "Couldn't connect to Keplr" }
+		return { client: null, err: "Couldn't connect to Keplr" };
 	}
 }
