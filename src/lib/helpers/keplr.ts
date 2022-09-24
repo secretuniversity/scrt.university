@@ -1,14 +1,19 @@
 // eslint-disable-next-line
-// @ts-nocheck
 import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
 
 interface Connection {
-	client: SecretNetworkClient | null;
-	err: string | null;
+	address: string,
+	client: SecretNetworkClient | null,
+	err: string | null,
+	msg: string | null,
 }
 
-export async function connect(): Connection {
+// connect()
+// Fires when user pushes the main connect button. If the user has requested,
+// this will also fire when the nav.
+// First it tries to see if 
+export async function connect(): Promise<Connection> {
 	try {
 		const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -34,10 +39,10 @@ export async function connect(): Connection {
 		});
 
 		secret.set({ client: secretjs });
-		sessionStorage.setItem('keplr-connected', true);
-
-		return { client: secretjs, err: null };
+		sessionStorage.setItem("keplr-connected", "true")
+		return { address: myAddress, client: secretjs, err: null, msg: "Success"}
 	} catch (err) {
-		return { client: null, err: "Couldn't connect to Keplr" };
+		const address = ""
+		return { address, client: null, err: "Couldn't connect to Keplr", msg: null };
 	}
 }
