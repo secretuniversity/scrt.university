@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
@@ -38,7 +39,7 @@
 			}
 
 			if (err) {
-				console.log('There was an error reconnected to Keplr');
+				console.log('There was an error reconnecting to Keplr');
 			}
 		} else if (session === 'true' && $secret.client) {
 			connected = true;
@@ -146,24 +147,10 @@
 			<span class="relative inline-flex rounded-md shadow-md">
 				{#if connected}
 					<button
-						on:click={() => (dashboard = true)}
+						on:click={() => goto('/dashboard')}
 						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
 						>Dashboard</button
 					>
-					{#if dashboard}
-						<div
-							use:clickOutside
-							on:click_outside={() => (dashboard = false)}
-							class="absolute top-3 left-0 z-10 mt-10 w-full rounded-md border border-gray bg-dark-4 p-4"
-						>
-							<div
-								class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-left text-white"
-							>
-								<a href="/submit">Submit</a>
-								<a href="/bounties">Settings</a>
-							</div>
-						</div>
-					{/if}
 				{:else}
 					<button
 						on:click={() => connect()}
