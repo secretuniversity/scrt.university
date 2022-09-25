@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
+	import type { Pathway } from '$lib/models/index';
 
 	const pageTitle = 'Pathways';
 
@@ -14,6 +16,15 @@
 			path: '/pathways'
 		}
 	];
+
+	let pathways: Array<Pathway> = [];
+
+	onMount(() => {
+		// TODO: Decide on caching mechanisms
+		fetch('/api/v1/pathways/0')
+			.then((res) => res.json())
+			.then((data) => (pathways = [...pathways, ...(data as Array<Pathway>)]));
+	});
 </script>
 
 <Head {pageTitle} />
@@ -30,6 +41,14 @@
 			<span class="font-bold">certifications</span>.
 		</p>
 	</div>
+
+	{#if pathways.length === 0}
+		<div class="mt-4 text-center text-gray">Secret University is could not find any pathways.</div>
+	{/if}
+
+	{#each pathways as p}
+		<div>Some data</div>
+	{/each}
 
 	<div class="grid auto-rows-auto grid-cols-3 gap-12">
 		<a class="col-span-2" href="/pathways/welcome-to-secret-network">
