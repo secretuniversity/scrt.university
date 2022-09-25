@@ -6,7 +6,7 @@
 	import Filter from '$lib/components/Filter.svelte';
 	import Repo from '$lib/components/cards/Repo.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import type { CommunityResource } from '$lib/models/index';
+	import type { Article, Resource, Video, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Community Resources';
 	const BREADCRUMB_ROUTES = [
@@ -22,29 +22,55 @@
 
 	const FILTER_SECTIONS = ['Date', 'Type', 'Tags'];
 
-	// This will change when getting tags from backend
-	const tags: string[] = [];
-	const resources: CommunityResource[] = [];
+	let tags: Tag[] = [];
+	let resources: Resource[] = [];
 
-	onMount(() => {
-		getResources();
-		getTags();
+	onMount(async () => {
+		try {
+			resources = [...resources, ...(await getArticles())];
+			resources = [...resources, ...(await getVideos())];
+
+			tags = [...tags, ...(await getArticleTags())];
+			tags = [...tags, ...(await getVideoTags())];
+		} catch (err) {
+			// Fail toast
+		}
 	});
 
 	function handleSearch(e: CustomEvent) {
 		console.log(e.detail.val);
 	}
 
-	async function getResources() {
-		console.log('Getting resources from backend');
-		// TODO: Implement Backend for resources
-		resources.push(...[{ id: '1' }]);
+	async function getVideos(): Promise<Video[]> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/videos/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Video[]));
+		});
 	}
 
-	async function getTags() {
-		console.log('Getting tags from backend');
-		// TODO: Implement Backend for tags
-		tags.push(...['Recommended', 'Smart Contracts', 'dApps', 'DeFi', 'Privacy']);
+	async function getArticles(): Promise<Article[]> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/articles/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Article[]));
+		});
+	}
+
+	async function getArticleTags(): Promise<Tag[]> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/articles/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Tag[]));
+		});
+	}
+
+	async function getVideoTags(): Promise<Tag[]> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/articles/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Tag[]));
+		});
 	}
 </script>
 
@@ -141,25 +167,13 @@
 			<!-- Repo Cards -->
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
-					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-6">
-						<Repo
-							tags={['secret-box', 'essential']}
-							title={'Secret Counter'}
-							description={'A quick introdcution to building private smart contracts on Secret Network'}
-						/>
-						<Repo
-							tags={['library', 'smart-contracts', 'rust', 'essential']}
-							title={'secret-toolkit'}
-							description={'A rust package to help you build private smart contracts on Secret Network'}
-						/>
-						<Repo
-							tags={['smart-contracts', 'nfts']}
-							title={'secret-random-minting-snip721-impl'}
-							description={'A smart contract optimized for randomly minting SNIP-721s (Secret NFTs)'}
-						/>
-						<Repo />
-						<Repo />
-					</div>
+					{#if resources.length === 0}
+						<div class="mt-4 text-center text-gray">Unable to find any resources.</div>
+					{/if}
+
+					{#each resources as r}
+						<div>Some resource data</div>
+					{/each}
 				</div>
 			</div>
 		</div>
