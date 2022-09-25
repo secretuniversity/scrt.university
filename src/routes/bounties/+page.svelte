@@ -3,6 +3,14 @@
 	import Filter from '$lib/components/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const url = '/api/v1/bounties/0';
+		fetch(url)
+			.then((res) => res.json())
+			.then((data) => console.log(data));
+	});
 
 	const bounties: Bounty[] = [
 		{
