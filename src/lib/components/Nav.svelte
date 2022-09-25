@@ -24,14 +24,14 @@
 		}
 	});
 
-	onMount(() => {
+	onMount(async () => {
 		console.log('Nav Mounted');
 		const session = sessionStorage.getItem('keplr-connected');
 
 		console.log(`Session found Keplr connected: ${session}`);
 
 		if (session === 'true' && !$secret.client) {
-			const { err } = connect();
+			const { err } = await connect();
 
 			if (!err) {
 				connected = true;
