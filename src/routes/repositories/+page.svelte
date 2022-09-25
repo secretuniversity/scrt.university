@@ -4,10 +4,10 @@
 	import Filter from '$lib/components/Filter.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import RepoCard from '$lib/components/cards/Repo.svelte';
-	import SecretBox from '$lib/components/cards/SecretBox.svelte';
+	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import type { Repo } from '$lib/models/index';
+	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Repositories';
 	const BREADCRUMB_ROUTES = [
@@ -22,48 +22,54 @@
 	];
 	const FILTER_SECTIONS = ['Type', 'Date', 'Tags'];
 
-	let tags: string[] = [];
-	let repos: Repo[] = [];
+	let repos: Array<Repo> = [];
+	let boxes: Array<SecretBox> = [];
+	let tags: Array<Tag> = [];
 
-	onMount(() => {
-		getRepos();
-		getTags();
+	onMount(async () => {
+		try {
+			boxes = await getBoxes();
+			repos = await getRepos();
+			tags = [...(await getRepoTags()), ...(await getBoxesTags())];
+		} catch (err) {
+			// Fail toast
+		}
 	});
 
 	function handleSearch(e: CustomEvent) {
 		console.log(e.detail.val);
 	}
 
-	async function getRepos() {
-		console.log('Getting repos from backend');
-		repos = [
-			...repos,
-			{
-				kind: 'secret-box',
-				title: 'Secret Counter',
-				description: 'A quick introduction to building private smart contracts on Secret Network',
-				tags: ['secret-box', 'essential']
-			},
-			{
-				kind: 'generic',
-				title: 'secret-toolkit',
-				description: 'A rust library used to help build private smart contracts on Secret Network',
-				tags: ['rust', 'library', 'essential']
-			},
-			{
-				kind: 'generic',
-				title: 'secret-random-minting-snip721-impl',
-				description: 'A smart contract optimized for randomly minting SNIP-721s (Secret NFTs)',
-				tags: ['smart-contracts', 'nfts']
-			}
-		];
-
-		console.log({ repos });
+	async function getBoxes(): Promise<Array<SecretBox>> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/repos/secret_box/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Array<SecretBox>));
+		});
 	}
 
-	async function getTags() {
-		console.log('Getting tags from backend');
-		tags.push(...['Essential', 'Smart Contracts', 'DeFi', 'Gaming', 'Rust', 'JavaScript']);
+	async function getRepos(): Promise<Array<Repo>> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/repos/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Array<Repo>));
+		});
+	}
+
+	async function getRepoTags(): Promise<Array<Tag>> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/tags/kind/repo/offset/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Array<Tag>));
+		});
+	}
+
+	async function getBoxesTags(): Promise<Array<Tag>> {
+		return new Promise((res, rej) => {
+			fetch('/api/v1/tags/kind/secret_box/offset/0')
+				.then((response) => response.json())
+				.then((data) => res(data as Array<Tag>));
+		});
 	}
 </script>
 
@@ -118,10 +124,10 @@
 							<input
 								class="mr-2 rounded-sm border-white bg-dark-4"
 								type="checkbox"
-								name="{tag}-input"
-								id="{tag}-input"
+								name="{tag.id}-input"
+								id="{tag.id}-input"
 							/>
-							<label class="text-white" for="{tag}-input">{tag}</label>
+							<label class="text-white" for="{tag.id}-input">{tag.name}</label>
 						</div>
 					{/each}
 
@@ -146,17 +152,20 @@
 					&times<span class="pl-1 font-bold">tag:</span> essential
 				</p>
 			</div>
+			{#if boxes.length === 0 && repos.length === 0}
+				<div class="mt-4 text-center text-gray">Unable to find any repositories.</div>
+			{/if}
+
 			<!-- Repo Cards -->
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
+						{#each boxes as b}
+							<SecretBoxCard title={b.title} description={b.description} tags={b.tags} />
+						{/each}
+
 						{#each repos as r}
-							{#if r.kind === 'secret-box'}
-								<!-- content here -->
-								<SecretBox title={r.title} description={r.description} tags={r.tags} />
-							{:else}
-								<RepoCard title={r.title} description={r.description} tags={r.tags} />
-							{/if}
+							<RepoCard title={r.title} description={r.description} tags={r.tags} />
 						{/each}
 					</div>
 				</div>

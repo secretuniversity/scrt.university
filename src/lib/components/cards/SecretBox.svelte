@@ -1,7 +1,8 @@
 <script lang="ts">
 	import GithubLogo from '$lib/assets/github_logo_white.svg';
+	import type { Tag } from '$lib/models/index';
 
-	export let tags: string[] = ['tag1', 'tag2'];
+	export let tags: Tag[] = [];
 	export let title = 'Title';
 	export let description = 'Description';
 	export let author = '0xabc...xyz';
@@ -20,7 +21,7 @@
 							<span
 								class="inline-flex items-center rounded-full bg-gray px-3 py-0.5 text-sm font-medium text-dark-4"
 							>
-								{tag}
+								{tag.name}
 							</span>
 						</a>
 					{/each}
