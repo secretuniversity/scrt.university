@@ -1,23 +1,21 @@
 import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import type { SecretNetworkClient } from 'secretjs';
-import type { Bookmark } from './models/index'
+import type { Bookmark, Contribution, User } from './models/index';
 
-interface UserStore {
-	pubAddress: string | null,
-	profileImgUrl: string | null,
-	bookmarks: Array<Bookmark> | null
+interface ContributionStore {
+	data: Array<Contribution>;
 }
 
+interface BookmarkStore {
+	data: Array<Bookmark>;
+}
 
 interface SecretClientStore {
 	client: SecretNetworkClient | null;
 }
 
-
 export const secret: Writable<SecretClientStore> = writable({ client: null });
-export const user: Writable<UserStore> = writable({ 
-	pubAddress: null, 
-	profileImgUrl: null, 
-	bookmarks: null 
-})
+export const user: Writable<User> = writable({ id: 0, address: '' });
+export const bookmarks: Writable<BookmarkStore> = writable({ data: [] });
+export const contributions: Writable<ContributionStore> = writable({ data: [] });
