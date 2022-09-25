@@ -115,3 +115,4 @@ export interface QuizOption {
 }
 
 export type Contribution = Repo | SecretBox | Pathway | Video | Article;
+export type Resource = Video | Article;
