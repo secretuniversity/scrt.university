@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { user, contributions, bookmarks } from '$lib/stores';
 	import Head from '$lib/components/Head.svelte';
+	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
 	import type { Bookmark, Contribution, User } from '$lib/models';
 
@@ -14,6 +15,7 @@
 
 	let view = views.contributions;
 	let address = 'secret1q4vgdvkqcp20e7mzz0tnfx9rpy6fp0ykr8cxam';
+	let contributionDropdownActive = false;
 
 	onMount(async () => {
 		// Get user, contributions, and bookmarks, if not in store
@@ -80,7 +82,7 @@
 			<div class="flex-col items-center">
 				<div class="h-32 w-32 rounded-full bg-dark-3 " />
 				<div class="self-end px-2">
-					<div class="pb-2">{address}</div>
+					<div class="py-2">{address}</div>
 					<div
 						on:click={() => {
 							view = views.settings;
@@ -119,8 +121,29 @@
 		</div>
 	</section>
 
-	{#if view === views.contributions}
-		<section class="inline-block w-2/3">
+	<section class="inline-block w-2/3">
+		<div class="relative w-full flex justify-end">
+			<button
+				on:click|preventDefault={() => (contributionDropdownActive = true)}
+				class="py-2 px-4 mb-4 rounded-md bg-dark-4">&plus; New Contribution</button
+			>
+
+			{#if contributionDropdownActive}
+				<div
+					use:clickOutside
+					on:click_outside={() => (contributionDropdownActive = false)}
+					class="absolute top-0 right-0 z-10 mt-12 w-fit rounded-md border border-gray bg-dark-4 p-4"
+				>
+					<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
+						<a href="/submit/article">Article / Guide</a>
+						<a href="/submit/video">Video</a>
+						<a href="/submit/pathway">Pathway</a>
+						<a href="/submit/secret-box">Secret Box</a>
+					</div>
+				</div>
+			{/if}
+		</div>
+		{#if view === views.contributions}
 			<div class="h-1/2">
 				<h2 class="w-full border-b-4 border-dark-4 text-lg">
 					<div class="w-fit rounded-tr-3xl bg-dark-4 px-8 py-2">
@@ -152,11 +175,9 @@
 					<div>Some contribution</div>
 				{/each}
 			</div>
-		</section>
-	{/if}
+		{/if}
 
-	{#if view === views.bookmarks}
-		<section>
+		{#if view === views.bookmarks}
 			<h2 class="w-full border-b-2 border-white py-2 text-xl">
 				Bookmarks ({$bookmarks.data.length})
 			</h2>
@@ -164,12 +185,10 @@
 			{#each $bookmarks.data as b}
 				<div>Some bookmark</div>
 			{/each}
-		</section>
-	{/if}
+		{/if}
 
-	{#if view === views.settings}
-		<section>
+		{#if view === views.settings}
 			<h2>Profile Settings</h2>
-		</section>
-	{/if}
+		{/if}
+	</section>
 </section>
