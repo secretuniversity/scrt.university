@@ -2,15 +2,34 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
+	import Typography from '@tiptap/extension-typography';
+	import Underline from '@tiptap/extension-underline';
+	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import ClearIcon from '$lib/assets/clear-icon.svg';
 
-	let element: HTMLElement;
+	export let baseContent = `
+		<h1>Hello Agent 👋</h1>
+		<p>This text box will auto magically render your text as markdown, so you can preview your styled content before submitting it.</p>
+		<p>From Secret University, we thank you for your contribution and hope to see you around the agency.</p>
+	`;
+
+	let mainMenu: HTMLElement | null;
+	let bubbleMenuElement: HTMLElement | null;
+	let editorElement: HTMLElement;
 	let editor: Editor;
 
 	onMount(() => {
 		editor = new Editor({
-			element: element,
-			extensions: [StarterKit],
-			content: '<p>Hello World! 🌍️ </p>',
+			element: editorElement,
+			extensions: [
+				StarterKit,
+				Underline,
+				Typography,
+				BubbleMenu.configure({
+					element: bubbleMenuElement
+				})
+			],
+			content: baseContent,
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
@@ -25,32 +44,50 @@
 	});
 </script>
 
-{#if editor}
-	<button
-		on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-		class:active={editor.isActive('heading', { level: 1 })}
-	>
-		H1
-	</button>
-	<button
-		on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-		class:active={editor.isActive('heading', { level: 2 })}
-	>
-		H2
-	</button>
-	<button
-		on:click={() => editor.chain().focus().setParagraph().run()}
-		class:active={editor.isActive('paragraph')}
-	>
-		P
-	</button>
-{/if}
+<div class="h-full">
+	{#if editor}
+		<div
+			class="flex space-x-2 px-2 editor-menu bg-dark-4 border-b border-white"
+			bind:this={mainMenu}
+		>
+			<button class="bold" on:click={() => editor.chain().focus().toggleBold().run()}> B </button>
+			<button class="italic" on:click={() => editor.chain().focus().toggleItalic().run()}>
+				I
+			</button>
+			<button class="underline" on:click={() => editor.chain().focus().toggleUnderline().run()}>
+				U
+			</button>
+			<button class="line-through" on:click={() => editor.chain().focus().toggleStrike().run()}>
+				S
+			</button>
+			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
+				<img class="w-4 h-4" src={ClearIcon} alt="Clear text styles" />
+			</button>
+		</div>
+	{/if}
+	<div bind:this={editorElement} />
 
-<div bind:this={element} />
+	<div bind:this={bubbleMenuElement}>
+		<div class="flex space-x-2 px-2 editor-menu bg-dark-4 rounded-lg" bind:this={mainMenu}>
+			<button class="bold" on:click={() => editor.chain().focus().toggleBold().run()}> B </button>
+			<button class="italic" on:click={() => editor.chain().focus().toggleItalic().run()}>
+				I
+			</button>
+			<button class="underline" on:click={() => editor.chain().focus().toggleUnderline().run()}>
+				U
+			</button>
+			<button class="line-through" on:click={() => editor.chain().focus().toggleStrike().run()}>
+				S
+			</button>
+			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
+				<img class="w-4 h-4" src={ClearIcon} alt="Clear text styles" />
+			</button>
+		</div>
+	</div>
+</div>
 
 <style>
-	button.active {
-		background: black;
-		color: white;
+	.editor-menu button {
+		@apply p-1.5;
 	}
 </style>
