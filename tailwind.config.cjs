@@ -39,6 +39,9 @@ module.exports = {
 
 				gray: '#B2BFCD',
 				'off-white': '#F9FAFB'
+			},
+			gridTemplateRows: {
+				12: 'repeat(12, minmax(0, min-content))'
 			}
 		}
 	},
