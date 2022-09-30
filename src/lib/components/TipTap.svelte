@@ -47,7 +47,7 @@
 <div class="h-full">
 	{#if editor}
 		<div
-			class="flex space-x-2 px-2 editor-menu bg-dark-4 border-b border-white"
+			class="editor-menu flex space-x-2 border-b border-white bg-dark-4 px-2"
 			bind:this={mainMenu}
 		>
 			<button class="bold" on:click={() => editor.chain().focus().toggleBold().run()}> B </button>
@@ -61,14 +61,14 @@
 				S
 			</button>
 			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
-				<img class="w-4 h-4" src={ClearIcon} alt="Clear text styles" />
+				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
 			</button>
 		</div>
 	{/if}
 	<div bind:this={editorElement} />
 
 	<div bind:this={bubbleMenuElement}>
-		<div class="flex space-x-2 px-2 editor-menu bg-dark-4 rounded-lg" bind:this={mainMenu}>
+		<div class="editor-menu flex space-x-2 rounded-lg bg-dark-4 px-2" bind:this={mainMenu}>
 			<button class="bold" on:click={() => editor.chain().focus().toggleBold().run()}> B </button>
 			<button class="italic" on:click={() => editor.chain().focus().toggleItalic().run()}>
 				I
@@ -80,7 +80,7 @@
 				S
 			</button>
 			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
-				<img class="w-4 h-4" src={ClearIcon} alt="Clear text styles" />
+				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
 			</button>
 		</div>
 	</div>
