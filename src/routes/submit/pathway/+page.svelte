@@ -56,7 +56,7 @@
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-4 gap-y-4 py-8">
 	<div class="h-fit flex-col space-y-2">
 		<label for="name" class="block text-base font-medium text-white"
-			>Name <span class="italic text-sm font-thin">(e.g. Designing Private Smart Contracts)</span
+			>Name <span class="text-sm font-thin italic">(e.g. Designing Private Smart Contracts)</span
 			></label
 		>
 		<div>

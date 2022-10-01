@@ -41,14 +41,14 @@
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
 	<div class="col-start-2 h-fit flex-col space-y-6">
-		<div class="inline-flex items-center w-full">
-			<label for="title" class="block text-base font-medium text-white mr-4">Title</label>
+		<div class="inline-flex w-full items-center">
+			<label for="title" class="mr-4 block text-base font-medium text-white">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
 				value={title}
-				class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Box"
 			/>
 		</div>
@@ -59,31 +59,31 @@
 				name="description"
 				id="description"
 				value={description}
-				class="text-white block h-36 w-full resize-none rounded-md border-white bg-dark-3 shadow-sm"
+				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="What's in your Secet Box?"
 			/>
 		</div>
 
-		<div class="inline-flex items-center w-full">
-			<label for="github" class="block text-base font-medium text-white mr-4">Repo</label>
+		<div class="inline-flex w-full items-center">
+			<label for="github" class="mr-4 block text-base font-medium text-white">Repo</label>
 			<input
 				type="text"
 				name="github"
 				id="github"
 				value={github}
-				class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="https://github.com/you/your-repo"
 			/>
 		</div>
 
-		<div class="inline-flex items-center w-full">
-			<label for="dev-env" class="block text-base font-medium text-white mr-4">Deployment</label>
+		<div class="inline-flex w-full items-center">
+			<label for="dev-env" class="mr-4 block text-base font-medium text-white">Deployment</label>
 			<input
 				type="text"
 				name="dev-env"
 				id="dev-env"
 				value={devEnv}
-				class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="https://gitpod.com/you/your-gitpod-url"
 			/>
 		</div>

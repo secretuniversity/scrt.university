@@ -37,14 +37,14 @@
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
 	<div class="col-start-1 h-fit flex-col space-y-6">
-		<div class="inline-flex items-center w-full">
-			<label for="title" class="block text-base font-medium text-white mr-4">Title</label>
+		<div class="inline-flex w-full items-center">
+			<label for="title" class="mr-4 block text-base font-medium text-white">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
 				value={title}
-				class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Article..."
 			/>
 		</div>
@@ -55,7 +55,7 @@
 				name="description"
 				id="description"
 				value={description}
-				class="text-white block h-36 w-full resize-none rounded-md border-white bg-dark-3 shadow-sm"
+				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="Enter a brief introduction of your article..."
 			/>
 		</div>
