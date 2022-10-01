@@ -35,44 +35,43 @@
 	<PageHeader title={pageTitle} description={pageDescription} />
 </section>
 
-<section class="mx-auto grid w-11/12 grid-cols-3 grid-rows-12 gap-x-4 gap-y-4 py-8">
-	<div class="col-start-1 h-fit flex-col space-y-2">
-		<label for="title" class="block text-base font-medium text-white">Title</label>
-		<div>
+<section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
+	<div class="col-start-1 h-fit flex-col space-y-6">
+		<div class="inline-flex items-center w-full">
+			<label for="title" class="block text-base font-medium text-white mr-4">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
 				value={title}
-				class="block w-full rounded-md border-white bg-dark-3 shadow-sm"
+				class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
 				placeholder="My Secret Article..."
 			/>
 		</div>
-	</div>
 
-	<div class="col-start-1 row-start-2 h-fit flex-col space-y-2">
-		<label for="title" class="block text-base font-medium text-white">Description</label>
+		<label for="description" class="block text-base font-medium text-white">Description</label>
 		<div>
 			<textarea
 				name="description"
 				id="description"
 				value={description}
-				class="block h-28 w-full resize-none rounded-md border-white bg-dark-3 shadow-sm"
+				class="text-white block h-36 w-full resize-none rounded-md border-white bg-dark-3 shadow-sm"
 				placeholder="Enter a brief introduction of your article..."
 			/>
 		</div>
-	</div>
 
-	<div class="col-start-1 row-start-3">
 		<p class="mb-4 text-sm italic text-gray">
 			Before submitting, be sure you have read the standards and practices for writing Articles on
 			Secret University. Standards for all university contributions can be found in the public
 			Secret University notion.
 		</p>
-		<button class="rounded-md bg-dark-4 px-6 py-2 text-white">Submit</button>
+		<div>
+			<button class="mr-2 rounded-md bg-dark-blue px-6 py-2 text-white">Submit</button>
+			<button class="rounded-md bg-dark-4 px-6 py-2 text-white">Save Draft</button>
+		</div>
 	</div>
 
-	<div class="col-span-full col-start-2 row-span-full">
+	<div class="col-span-full col-start-2">
 		<div
 			class="h-[800px] max-h-[800px] overflow-hidden rounded-md border border-solid border-white text-white"
 		>
