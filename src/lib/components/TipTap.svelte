@@ -1,16 +1,42 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Typography from '@tiptap/extension-typography';
 	import Underline from '@tiptap/extension-underline';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+
+	import html from 'highlight.js/lib/languages/xml';
+	import css from 'highlight.js/lib/languages/css';
+	import js from 'highlight.js/lib/languages/javascript';
+	import ts from 'highlight.js/lib/languages/typescript';
+	import rust from 'highlight.js/lib/languages/rust';
+	import bash from 'highlight.js/lib/languages/bash';
+	import python from 'highlight.js/lib/languages/python';
+	import { lowlight } from 'lowlight';
+
 	import ClearIcon from '$lib/assets/clear-icon.svg';
+	import '$lib/styles/tiptap.scss';
 
 	export let baseContent = `
-		<h1>Hello Agent 👋</h1>
-		<p>This text box will auto magically render your text as markdown, so you can preview your styled content before submitting it.</p>
-		<p>From Secret University, we thank you for your contribution and hope to see you around the agency.</p>
+		<h1>👋</h1>
+		<p>This text box will auto-magically render your text as markdown, so you can preview your styled content before submitting it.</p>
+		<p>Code will be syntax highlighted if supported. Here's some JavaScript.</p>
+		<pre><code class="language-javascript">for (var i=1; i <= 20; i++)
+{
+  if (i % 15 == 0)
+    console.log("FizzBuzz");
+  else if (i % 3 == 0)
+    console.log("Fizz");
+  else if (i % 5 == 0)
+    console.log("Buzz");
+  else
+    console.log(i);
+}</code></pre>
+
+		<p>From Secret University to you, we thank you for your contribution and hope to see you more around the university.</p>
 	`;
 
 	let mainMenu: HTMLElement | null;
@@ -19,6 +45,15 @@
 	let editor: Editor;
 
 	onMount(() => {
+		lowlight.registerLanguage('html', html);
+		lowlight.registerLanguage('css', css);
+		lowlight.registerLanguage('js', js);
+		lowlight.registerLanguage('ts', ts);
+		lowlight.registerLanguage('rust', rust);
+		lowlight.registerLanguage('bash', bash);
+		lowlight.registerLanguage('sh', bash);
+		lowlight.registerLanguage('python', python);
+
 		editor = new Editor({
 			element: editorElement,
 			extensions: [
@@ -27,7 +62,8 @@
 				Typography,
 				BubbleMenu.configure({
 					element: bubbleMenuElement
-				})
+				}),
+				CodeBlockLowlight.configure({ lowlight })
 			],
 			content: baseContent,
 			onTransaction: () => {
@@ -86,7 +122,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	.editor-menu button {
 		@apply p-1.5;
 	}
