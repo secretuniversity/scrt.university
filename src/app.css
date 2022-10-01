@@ -60,6 +60,7 @@ h6 {
 }
 
 .ProseMirror pre {
+	margin: 0.8rem 0;
 	background: #0d0d0d;
 	color: #fff;
 	font-family: 'JetBrainsMono', monospace;
