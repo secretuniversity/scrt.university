@@ -13,7 +13,7 @@
 					Secret University is built to support development on Secret Network.
 				</p>
 				<div class="flex space-x-6">
-					<a href="#" class="text-white hover:text-off-white">
+					<a href="https://twitter.com/SecretNetwork" class="text-white hover:text-off-white">
 						<span class="sr-only">Twitter</span>
 						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path
@@ -22,7 +22,7 @@
 						</svg>
 					</a>
 
-					<a href="#" class="text-white hover:text-off-white">
+					<a href="https://github.com/secretuniversity" class="text-white hover:text-off-white">
 						<span class="sr-only">GitHub</span>
 						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path
@@ -38,21 +38,28 @@
 				<div class="md:grid md:grid-cols-2 md:gap-8">
 					<div>
 						<h3 class="text-sm font-semibold uppercase tracking-wider text-white">Learn</h3>
-						<ul role="list" class="mt-4 space-y-4">
+						<ul class="mt-4 space-y-4">
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Secret Pathways </a>
+								<a href="/pathways" class="text-base text-off-white hover:text-gray">
+									Secret Pathways
+								</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Repositories </a>
+								<a href="/repos" class="text-base text-off-white hover:text-gray"> Repositories </a>
 							</li>
 
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Official Docs </a>
+								<a
+									href="https://docs.scrt.network"
+									class="text-base text-off-white hover:text-gray"
+								>
+									Official Docs
+								</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray">
+								<a href="/resources" class="text-base text-off-white hover:text-gray">
 									Community Resources
 								</a>
 							</li>
@@ -60,17 +67,19 @@
 					</div>
 					<div class="mt-12 md:mt-0">
 						<h3 class="text-sm font-semibold uppercase tracking-wider text-white">Contribute</h3>
-						<ul role="list" class="mt-4 space-y-4">
+						<ul class="mt-4 space-y-4">
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Application </a>
+								<a href="/build" class="text-base text-off-white hover:text-gray"> Build </a>
 							</li>
 
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Bounties </a>
+								<a href="/bounties" class="text-base text-off-white hover:text-gray"> Bounties </a>
 							</li>
 
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Staking </a>
+								<a href="/build#staking" class="text-base text-off-white hover:text-gray">
+									Staking
+								</a>
 							</li>
 						</ul>
 					</div>
@@ -78,9 +87,11 @@
 				<div class="md:grid md:grid-cols-2 md:gap-8">
 					<div>
 						<h3 class="text-sm font-semibold uppercase tracking-wider text-white">Support</h3>
-						<ul role="list" class="mt-4 space-y-4">
+						<ul class="mt-4 space-y-4">
 							<li>
-								<a href="#" class="text-base text-off-white hover:text-gray"> Submit Ticket </a>
+								<a href="/support" class="text-base text-off-white hover:text-gray">
+									Submit Ticket
+								</a>
 							</li>
 						</ul>
 					</div>
