@@ -161,10 +161,10 @@
 				>Join the community, and find out how you can help.</span
 			>
 		</h2>
-		<button
-			type="button"
+		<a
+			href="https://chat.scrt.network"
 			class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
-			>Join our Community</button
+			>Become A Contributor</a
 		>
 	</div>
 </section>
