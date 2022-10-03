@@ -34,9 +34,9 @@
 
 <a
 	href={url}
-	class="block h-full rounded-md w-full {getBGColor()} px-4 py-6 shadow-md lg:px-8 lg:py-8"
+	class="block h-full w-full rounded-md {getBGColor()} px-4 py-6 shadow-md lg:px-8 lg:py-8"
 >
-	<div class="grid grid-col-5 auto-rows-auto">
+	<div class="grid-col-5 grid auto-rows-auto">
 		<div class="col-span-3 mt-2 text-white">
 			<div>
 				<p class="text-2xl font-semibold">{bounty.title}</p>
@@ -46,9 +46,9 @@
 		</div>
 
 		<div
-			class="col-start-5 rounded-lg h-min self-center w-max mx-auto text-white {getStatusColor()}"
+			class="col-start-5 mx-auto h-min w-max self-center rounded-lg text-white {getStatusColor()}"
 		>
-			<div class="h-fit px-2 py-1 rounded-lg capitalize {getStatusColor()}">
+			<div class="h-fit rounded-lg px-2 py-1 capitalize {getStatusColor()}">
 				{bounty.status}
 			</div>
 		</div>

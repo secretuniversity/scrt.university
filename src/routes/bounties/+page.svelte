@@ -2,7 +2,8 @@
 	import type { Bounty } from '$lib/models/index';
 	import Filter from '$lib/components/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import BountyCard from '$lib/components/cards/Bounty.svelte';
+	import BountyCard from '$lib/components/Bounty.svelte';
+	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -17,57 +18,71 @@
 			id: '1',
 			title: 'Some Bounty',
 			description: 'A super top secret bounty for a super secret, super shadowy coder',
-			forumPost: 'https://forum.scrt.network/',
-			proposal: null,
+			forum_url: 'https://forum.scrt.network/',
+			proposal_url: null,
 			amount: 1000,
 			status: 'open',
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString()
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
 		},
 		{
 			id: '2',
 			title: 'Some Other Bounty',
 			description: 'Another super top secret bounty for a super secret, super shadowy coder',
-			forumPost: 'https://forum.scrt.network/',
-			proposal: null,
+			forum_url: 'https://forum.scrt.network/',
+			proposal_url: null,
 			amount: 1000,
 			status: 'in-progress',
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString()
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
 		},
 		{
 			id: '3',
 			title: 'Yet Another Bounty',
 			description: 'Some super top secret bounty for a super secret, super shadowy coder',
-			forumPost: 'https://forum.scrt.network/',
-			proposal: null,
+			forum_url: 'https://forum.scrt.network/',
+			proposal_url: null,
 			amount: 1000,
-			status: 'completed',
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString()
+			status: 'complete',
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
 		},
 		{
 			id: '4',
 			title: 'Simple Bounty',
 			description: 'Some super simple top secret bounty for a super secret, super shadowy coder',
-			forumPost: 'https://forum.scrt.network/',
-			proposal: null,
+			forum_url: 'https://forum.scrt.network/',
+			proposal_url: null,
 			amount: 1000,
-			status: 'completed',
-			createdAt: new Date().toISOString(),
-			updatedAt: new Date().toISOString()
+			status: 'complete',
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
 		}
 	];
 
 	const pageTitle = 'Bounties';
+	const breadcrumbRoutes = [
+		{
+			name: 'Build',
+			path: '/build'
+		},
+		{
+			name: 'Bounties',
+			path: '/bounties'
+		}
+	];
 
 	const filterSections = ['Date', 'Reward', 'Status'];
 </script>
 
 <Head {pageTitle} />
 
+<section class="px-24 pt-12 pb-10">
+	<Breadcrumb routes={breadcrumbRoutes} />
+</section>
+
 <section class="min-h-screen px-24">
-	<div class="mt-16">
+	<div class="mb-16">
 		<h1 class="text-4xl font-bold text-white">Community Curated Bounty List</h1>
 		<p class="mt-2 max-w-3xl text-base font-medium text-gray">
 			This community curated bounty list (CCBL) contains requests from the Secret Network community.
@@ -76,7 +91,7 @@
 		</p>
 	</div>
 
-	<div class="mt-12 grid grid-cols-12 gap-x-6">
+	<div class="grid grid-cols-12 gap-x-6">
 		<div class="col-span-3">
 			<Filter let:index sections={filterSections}>
 				{#if index === 0}
@@ -141,10 +156,11 @@
 			</Filter>
 		</div>
 
-		<div class="col-span-9 grid grid-cols-3 gap-4">
-			{#each bounties as bounty}
-				<!-- content here -->
-				<BountyCard {bounty} />
+		<div class="col-span-9">
+			{#each bounties as bounty, index}
+				<div class="mb-2 w-full">
+					<BountyCard {bounty} {index} />
+				</div>
 			{/each}
 		</div>
 	</div>
