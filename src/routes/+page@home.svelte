@@ -36,14 +36,16 @@
 				title: 'Welcome to Secret Network',
 				description:
 					'An introductory course for developers to familiarize themselves with the Secret Network.',
-				tag: null
+				tag: null,
+				url: '/pathways/welcome-to-secret-network'
 			},
 			{
 				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
 				alt: '',
 				title: 'Writing Smart Contracts and Rolling Dice',
 				description: 'Learn the ins and outs of writing a private smart contract on Secret Network',
-				tag: null
+				tag: null,
+				url: '/pathways/writing-secret-smart-contracts'
 			},
 			{
 				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
@@ -51,7 +53,8 @@
 				title: 'JavaScript on Secret Network',
 				description:
 					'Use JavaScript to connect to the Secret Network and supercharge your application with privacy',
-				tag: null
+				tag: null,
+				url: '/pathways/writing-secret-smart-contracts'
 			}
 		]}
 	/>
@@ -69,49 +72,16 @@
 				alt: '',
 				title: 'Secret Counter',
 				description: 'A simple counter smart contract integrated on Secret Network',
-				tag: null
+				tag: null,
+				url: '/repos/secret-box/secret-counter'
 			},
 			{
 				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
 				alt: '',
 				title: 'Richie Rich',
 				description: "Solving Yao's millionaires' problem with secret smart contracts",
-				tag: 'Coming Soon'
-			}
-		]}
-	/>
-
-	<SectionHeader
-		title={'Community Resources'}
-		subtitle={'Learn from the community'}
-		description={'Read guides, watch screencasts, and learn from developers building on Secret Network.'}
-	/>
-
-	<Features
-		features={[
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Video Example',
-				description:
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-				tag: null
-			},
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Guide Example',
-				description:
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-				tag: null
-			},
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Another Example',
-				description:
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-				tag: null
+				tag: 'Coming Soon',
+				url: null
 			}
 		]}
 	/>
