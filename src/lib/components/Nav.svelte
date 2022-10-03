@@ -133,7 +133,7 @@
 							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
 						>
 							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
-								<a href="/build">Application</a>
+								<a href="/build">Contribute</a>
 								<a href="/bounties">Bounties</a>
 							</div>
 						</div>
