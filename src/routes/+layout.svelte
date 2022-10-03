@@ -3,14 +3,26 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import '../app.css';
+
+	const minScreenWidth = 961;
+
+	$: width = 0;
+	$: isMobile = width < minScreenWidth;
 </script>
+
+<svelte:window bind:innerWidth={width} />
 
 <header />
 
-<main class="bg-dark-3">
-	<Banner />
-	<Nav />
-	<slot />
-</main>
+{#if isMobile}
+	<!-- content here -->
+	<div>Sorry! Secret University currently only supports desktop devices.</div>
+{:else}
+	<main class="bg-dark-3">
+		<Banner />
+		<Nav />
+		<slot />
+	</main>
 
-<Footer />
+	<Footer />
+{/if}
