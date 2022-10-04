@@ -128,15 +128,15 @@
 			>
 
 			<a
-				class="block mb-4 rounded-tl-md rounded-bl-md bg-dark-4 py-2 px-4 box-border border-r-2 border-dark-3"
+				class="mb-4 box-border block rounded-tl-md rounded-bl-md border-r-2 border-dark-3 bg-dark-4 py-2 px-4"
 				href="/submit">&plus; New Contribution</a
 			>
 
 			<button
-				class="block mb-4 rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4 box-border"
+				class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4"
 				on:click|preventDefault={() => (contributionDropdownActive = true)}
 			>
-				<img class="w-4 h-4" src={ChevronDown} alt="Choose your contribution" />
+				<img class="h-4 w-4" src={ChevronDown} alt="Choose your contribution" />
 			</button>
 
 			{#if contributionDropdownActive}

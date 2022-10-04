@@ -2,6 +2,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import Staking from '$lib/components/Staking.svelte';
+	import GoldPot from '$lib/assets/gold_pot.svg';
 	const pageTitle = 'Build';
 </script>
 
@@ -59,17 +60,31 @@
 	<Staking />
 </div>
 
-<SectionHeader
+<div class="grid grid-cols-3 items-center justify-items-center bg-dark-2 py-32 text-white">
+	<div class="col-span-2 grid gap-y-6">
+		<p class="text-base font-semibold text-dark-turquoise-g">COMMUNITY CURATED BOUNTIES</p>
+		<p class="text-4xl font-bold">Looking for your next project?</p>
+		<p class="max-w-3xl">
+			If you think you've got the skills, try building for the community today. The CCBL is a list
+			of bounties requested to be developed by members of Secret Network. Complete the bounty, and
+			earn your reward in SCRT
+		</p>
+
+		<div class="flex justify-start bg-dark-2">
+			<a
+				href="/bounties"
+				type="button"
+				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+				>Learn more</a
+			>
+		</div>
+	</div>
+
+	<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+</div>
+
+<!-- <SectionHeader
 	title={'Community Curated Bounties'}
 	subtitle={'Looking for your next project?'}
 	description={"If you're ready, try building for the community. Use the CCBL to find your next project on Secret Network."}
-/>
-
-<div class="flex justify-center bg-dark-2 pb-32">
-	<a
-		href="/bounties"
-		type="button"
-		class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-		>Learn more</a
-	>
-</div>
+/> -->
