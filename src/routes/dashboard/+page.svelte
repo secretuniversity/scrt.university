@@ -4,6 +4,7 @@
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
 	import type { Bookmark, Contribution, User } from '$lib/models';
+	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';
@@ -126,10 +127,17 @@
 				class="mb-4 mr-4 rounded-md bg-dark-4 py-2 px-4">Become A Contributor</button
 			>
 
-			<button
-				on:click|preventDefault={() => (contributionDropdownActive = true)}
-				class="mb-4 rounded-md bg-dark-4 py-2 px-4">&plus; New Contribution</button
+			<a
+				class="block mb-4 rounded-tl-md rounded-bl-md bg-dark-4 py-2 px-4 box-border border-r-2 border-dark-3"
+				href="/submit">&plus; New Contribution</a
 			>
+
+			<button
+				class="block mb-4 rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4 box-border"
+				on:click|preventDefault={() => (contributionDropdownActive = true)}
+			>
+				<img class="w-4 h-4" src={ChevronDown} alt="Choose your contribution" />
+			</button>
 
 			{#if contributionDropdownActive}
 				<div
