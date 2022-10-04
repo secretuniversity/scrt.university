@@ -82,9 +82,3 @@
 
 	<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
 </div>
-
-<!-- <SectionHeader
-	title={'Community Curated Bounties'}
-	subtitle={'Looking for your next project?'}
-	description={"If you're ready, try building for the community. Use the CCBL to find your next project on Secret Network."}
-/> -->
