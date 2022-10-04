@@ -1,63 +1,133 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	const PAGE_TITLE = 'Submit';
+	import GoldPot from '$lib/assets/gold_pot.svg';
 
-	// Possible Selections
-	const PATHWAYS = 'pathways';
-	const BOXES = 'boxes';
-	const ARTICLES = 'articles';
-	const VIDEOS = 'videos';
-
-	let selected = 'pathways';
+	const pageTitle = 'Submit';
 </script>
 
-<Head pageTitle={PAGE_TITLE} />
+<Head {pageTitle} />
+
+<section class="pt-36 text-white">
+	<div class="mx-auto max-w-3xl">
+		<h1 class="mb-4 text-center text-6xl font-bold">Submit Your Contribution</h1>
+		<p class="text-center text-lg">
+			Are you ready to join Secret University? Select one of the types of contributions listed
+			below, submit your work, and become a member of the university
+		</p>
+	</div>
+</section>
 
 <section class="min-h-screen">
-	<div class="my-4 mx-auto flex w-min whitespace-nowrap rounded-md bg-dark-4 text-white">
-		<div
-			on:click={() => (selected = PATHWAYS)}
-			class="border-r-2 border-gray p-4 {selected === PATHWAYS ? 'rounded-l-md bg-dark-2' : ''}"
-		>
-			Pathways (Courses)
+	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
+		<div class="col-span-2 grid gap-y-4">
+			<p class="text-base font-semibold text-dark-turquoise-b">ARTICLES & GUIDES</p>
+			<p class="text-4xl font-bold">For the Writer</p>
+			<p class="max-w-3xl">
+				Secret University is accepting technical articles that highlight what it's like to build on
+				Secret Network. If you've got a project you've been working on and don't mind writing,
+				consider submitting your write-up to the university.
+			</p>
+
+			<div class="flex justify-start">
+				<a
+					href="/submit/article"
+					type="button"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					>Submit an Article</a
+				>
+			</div>
 		</div>
-		<div
-			on:click={() => (selected = BOXES)}
-			class="border-r-2 border-gray p-4 {selected === BOXES ? 'bg-dark-2' : ''}"
-		>
-			Secret Boxes (Repos)
-		</div>
-		<div
-			on:click={() => (selected = ARTICLES)}
-			class="border-r-2 border-gray p-4 {selected === ARTICLES ? 'bg-dark-2' : ''}"
-		>
-			Articles & Guides
-		</div>
-		<div
-			on:click={() => (selected = VIDEOS)}
-			class="p-4 {selected === VIDEOS ? 'rounded-r-md bg-dark-2' : ''}"
-		>
-			Videos & Screencasts
+
+		<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+	</div>
+
+	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
+		<img class="h-72 w-72 justify-self-end" src={GoldPot} alt="Pot of gold" />
+
+		<div class="col-span-2 grid gap-y-4">
+			<p class="text-base font-semibold text-dark-turquoise-b">VIDEOS & SCREENCASTS</p>
+			<p class="text-4xl font-bold">For the Content Creator</p>
+			<p class="max-w-3xl">
+				Do you have a knack for making videos and the technical skills to develop on Secret Network?
+				If so, your videos could help teach the next generation of developers on Secret Network what
+				it means to build with privacy.
+			</p>
+
+			<div class="flex justify-start">
+				<a
+					href="/submit/video"
+					type="button"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					>Submit a Video</a
+				>
+			</div>
 		</div>
 	</div>
 
-	{#if selected === PATHWAYS}
-		<div class="mx-auto mt-8 w-fit rounded-lg bg-white p-6">
-			Secret Pathway submissions coming soon
+	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
+		<div class="col-span-2 grid gap-y-4">
+			<p class="text-base font-semibold text-dark-turquoise-b">SECRET BOXES</p>
+			<p class="text-4xl font-bold">For the Developer</p>
+			<p class="max-w-3xl">
+				Secret Boxes are pre-packaged projects build on Secret. They come equipped with everything a
+				developer needs to compile their work and further their education as developers. If you have
+				a project that you think could fit into a Secret Secret Secret Box, consider this submitting
+				your work with Secret University.
+			</p>
+
+			<div class="flex justify-start">
+				<a
+					href="/submit/secret-box"
+					type="button"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					>Submit a Secret Box</a
+				>
+			</div>
 		</div>
-	{/if}
 
-	{#if selected === BOXES}
-		<div class="mx-auto mt-8 w-fit rounded-lg bg-white p-6">
-			Secret Boxes submissions coming soon
+		<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+	</div>
+
+	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
+		<img class="h-72 w-72 justify-self-end" src={GoldPot} alt="Pot of gold" />
+		<div class="col-span-2 grid gap-y-4">
+			<p class="text-base font-semibold text-dark-turquoise-b">SECRET PATHWAYS</p>
+			<p class="text-4xl font-bold">For the Professor</p>
+			<p class="max-w-3xl">
+				Pathways are courses, and you can make your own here at Secret University. If you feel you
+				can carry a topic across multiple lessons and can come up with questions to ask your
+				students, consider creating a pathway for the Secret community, and showcase your expertise.
+			</p>
+
+			<div class="flex justify-start">
+				<a
+					href="/submit/pathway"
+					type="button"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					>Submit a Pathway</a
+				>
+			</div>
 		</div>
-	{/if}
+	</div>
+</section>
 
-	{#if selected === ARTICLES}
-		<div>Coming Soon</div>
-	{/if}
-
-	{#if selected === VIDEOS}
-		<div>Coming Soon</div>
-	{/if}
+<section class="bg-dark-2 py-36 text-white">
+	<div class="mx-auto grid max-w-3xl gap-y-4">
+		<h2 class="text-center text-4xl font-bold">Ready to Contribute?</h2>
+		<p class="text-center">
+			If you're unsure of whether or not you're ready to contribute to Secret University. Reach out
+			to us on Discord. We are here to help you figure out how you can contribute to the network and
+			to the university. You can find us in the <span
+				class="m-1 rounded-md bg-dark-4 py-0.5 px-1 font-bold">#secret-university</span
+			>channel.
+		</p>
+		<div class="mx-auto w-min">
+			<a
+				href="/submit/pathway"
+				type="button"
+				class="inline-flex w-max items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-black shadow-sm"
+				>Reach Out</a
+			>
+		</div>
+	</div>
 </section>
