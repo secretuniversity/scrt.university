@@ -5,7 +5,7 @@
 
 	const minScreenWidth = 961;
 
-	$: width = 0;
+	$: width = 2000; // arbitrary large number to avoid loading mobile warning
 	$: isMobile = width < minScreenWidth;
 </script>
 
