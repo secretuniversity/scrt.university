@@ -38,6 +38,9 @@ module.exports = {
 				'dark-4': '#303C4A',
 				'dark-5': '#3f4f61',
 
+				success: '#4BB543',
+				fail: '#FC100D',
+
 				gray: '#B2BFCD',
 				'off-white': '#F9FAFB'
 			},
