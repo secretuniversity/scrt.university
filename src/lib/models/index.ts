@@ -114,5 +114,30 @@ export interface QuizOption {
 	quiz_id: number;
 }
 
+export interface PathwayRequest {
+	title: string;
+	contributor: number;
+	description: string;
+	difficulty: string;
+	lessons: LessonRequest[];
+}
+
+export interface LessonRequest {
+	name: string;
+	content: string;
+	quizzes: QuizRequest[];
+}
+
+export interface QuizRequest {
+	question: string;
+	answer: number;
+	hint: string;
+	options: QuizOptionRequest[];
+}
+
+export interface QuizOptionRequest {
+	content: string;
+}
+
 export type Contribution = Repo | SecretBox | Pathway | Video | Article;
 export type Resource = Video | Article;
