@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	import type { Pathway } from '$lib/models/index';
 
 	const pageTitle = 'Pathways';
@@ -18,16 +19,30 @@
 	];
 
 	let pathways: Array<Pathway> = [];
+	let errVisible = false;
+	let errMsg = '';
 
 	onMount(() => {
-		// TODO: Decide on caching mechanisms
-		fetch('/api/v1/pathways/0')
-			.then((res) => res.json())
-			.then((data) => (pathways = [...pathways, ...(data as Array<Pathway>)]));
+		try {
+			fetch('/api/v1/pathways/0')
+				.then((res) => res.json())
+				.then((some) => {
+					if (some.data) {
+						pathways = some.data as Pathway[];
+					}
+				});
+		} catch (err) {
+			errVisible = true;
+			errMsg = String(err);
+		}
 	});
 </script>
 
 <Head {pageTitle} />
+
+{#if errVisible}
+	<Toast msg={errMsg} kind="fail" />
+{/if}
 
 <section class="mx-24 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
