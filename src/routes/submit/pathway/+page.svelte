@@ -30,8 +30,8 @@
 	const lessonBaseContent = getLessonBaseContent();
 	const maxAnswers = 5;
 
-	let currentLessonIndex: number = -1;
-	let currentQuizIndex: number = -1;
+	let currentLessonIndex = -1;
+	let currentQuizIndex = -1;
 
 	let menu = 'pathway';
 
@@ -452,12 +452,6 @@
 							</p>
 
 							<div class="flex justify-self-end">
-								<button class="mr-2 rounded-md bg-dark-3 p-1.5" on:click={() => {}}>
-									<div class="flex items-center">
-										<span>Edit</span>
-										<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit lesson" />
-									</div>
-								</button>
 								<button
 									class="rounded-md bg-dark-red p-1.5"
 									on:click={() => {
