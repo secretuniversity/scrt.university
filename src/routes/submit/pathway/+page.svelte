@@ -213,7 +213,7 @@
 					type="text"
 					name="title"
 					id="title"
-					class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="(e.g. 'Building Private Oracle Smart Contracts)'"
 				/>
 			</div>
@@ -225,7 +225,7 @@
 					id="description"
 					value={$pathwayRequest.description}
 					on:input={handlePathwayDescriptionInput}
-					class="text-white block h-28 w-full resize-none rounded-md border-white bg-dark-3 shadow-sm"
+					class="block h-28 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Tell your students what they can expect to learn from your pathway..."
 				/>
 			</div>
@@ -259,19 +259,19 @@
 					</p>
 				{/if}
 
-				<div class="flex-col h-full w-full">
+				<div class="h-full w-full flex-col">
 					{#each $pathwayRequest.lessons as l, i}
 						<div
-							class="grid grid-rows-1 grid-cols-2 items-center mb-2 h-max w-full rounded-md bg-dark-4 py-4 px-6 text-white"
+							class="mb-2 grid h-max w-full grid-cols-2 grid-rows-1 items-center rounded-md bg-dark-4 py-4 px-6 text-white"
 						>
 							<p class="inline-block">
-								<span class="inline-block mr-2 text-off-white">{i + 1}</span>
+								<span class="mr-2 inline-block text-off-white">{i + 1}</span>
 								<span class="font-semibold">{l.name}</span>
 							</p>
 
 							<div class="flex justify-self-end">
 								<button
-									class="bg-dark-3 rounded-md p-1.5 mr-2"
+									class="mr-2 rounded-md bg-dark-3 p-1.5"
 									on:click={() => {
 										currentLessonIndex = i;
 										changeMenu('lesson');
@@ -279,16 +279,16 @@
 								>
 									<div class="flex items-center">
 										<span>Edit</span>
-										<img class="inline-block ml-2 w-5 h-5" src={EditIcon} alt="Edit lesson" />
+										<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit lesson" />
 									</div>
 								</button>
 								<button
-									class="bg-dark-red rounded-md p-1.5"
+									class="rounded-md bg-dark-red p-1.5"
 									on:click={() => {
 										$pathwayRequest.lessons = $pathwayRequest.lessons.filter((_, j) => j !== i);
 									}}
 								>
-									<img class="w-5 h-5" src={TrashIcon} alt="Remove lesson" />
+									<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
 								</button>
 							</div>
 						</div>
@@ -297,12 +297,12 @@
 			</div>
 		{:else if menu === 'lesson'}
 			<div
-				class="grid auto-cols-max grid-cols-2 items-center px-4 mb-8 w-full rounded-t-md bg-dark-4 py-4 text-white"
+				class="mb-8 grid w-full auto-cols-max grid-cols-2 items-center rounded-t-md bg-dark-4 px-4 py-4 text-white"
 			>
 				<h2 class="text-lg font-semibold">Create Your Lesson</h2>
 				<button
 					on:click={() => changeMenu('pathway')}
-					class="justify-self-end rounded-md py-2 px-3 bg-dark-5">Back</button
+					class="justify-self-end rounded-md bg-dark-5 py-2 px-3">Back</button
 				>
 			</div>
 			<label for="name" class="block text-sm font-medium text-white">Name</label>
@@ -313,7 +313,7 @@
 					name="name"
 					id="name"
 					value={$pathwayRequest.lessons[currentLessonIndex].name}
-					class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter the name of your lesson..."
 				/>
 			</div>
@@ -334,19 +334,19 @@
 					</p>
 				{/if}
 
-				<div class="flex-col h-full w-full">
+				<div class="h-full w-full flex-col">
 					{#each $pathwayRequest.lessons[currentLessonIndex].quizzes as q, i}
 						<div
-							class="grid grid-rows-1 grid-cols-2 items-center mb-2 h-max w-full rounded-md bg-dark-4 py-4 px-6 text-white"
+							class="mb-2 grid h-max w-full grid-cols-2 grid-rows-1 items-center rounded-md bg-dark-4 py-4 px-6 text-white"
 						>
 							<p class="inline-block">
-								<span class="inline-block mr-2 text-off-white">{i + 1}</span>
+								<span class="mr-2 inline-block text-off-white">{i + 1}</span>
 								<span class="font-semibold">New Quiz</span>
 							</p>
 
 							<div class="flex justify-self-end">
 								<button
-									class="bg-dark-3 rounded-md p-1.5 mr-2"
+									class="mr-2 rounded-md bg-dark-3 p-1.5"
 									on:click={() => {
 										currentQuizIndex = i;
 										changeMenu('quiz');
@@ -354,11 +354,11 @@
 								>
 									<div class="flex items-center">
 										<span>Edit</span>
-										<img class="inline-block ml-2 w-5 h-5" src={EditIcon} alt="Edit quiz" />
+										<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit quiz" />
 									</div>
 								</button>
 								<button
-									class="bg-dark-red rounded-md p-1.5"
+									class="rounded-md bg-dark-red p-1.5"
 									on:click={() => {
 										let quizzes = $pathwayRequest.lessons[currentLessonIndex].quizzes;
 										$pathwayRequest.lessons[currentLessonIndex].quizzes = quizzes.filter(
@@ -366,7 +366,7 @@
 										);
 									}}
 								>
-									<img class="w-5 h-5" src={TrashIcon} alt="Remove lesson" />
+									<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
 								</button>
 							</div>
 						</div>
@@ -375,12 +375,12 @@
 			</div>
 		{:else if menu === 'quiz'}
 			<div
-				class="grid auto-cols-max grid-cols-2 items-center px-4 mb-8 w-full rounded-t-md bg-dark-4 py-4 text-white"
+				class="mb-8 grid w-full auto-cols-max grid-cols-2 items-center rounded-t-md bg-dark-4 px-4 py-4 text-white"
 			>
 				<h2 class="text-lg font-semibold">Create Your Quiz</h2>
 				<button
 					on:click={() => changeMenu('lesson')}
-					class="justify-self-end rounded-md py-2 px-3 bg-dark-5">Back</button
+					class="justify-self-end rounded-md bg-dark-5 py-2 px-3">Back</button
 				>
 			</div>
 			<label for="question" class="block text-sm font-medium text-white">Question</label>
@@ -391,7 +391,7 @@
 					name="question"
 					id="question"
 					value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].question}
-					class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter your quiz question..."
 				/>
 			</div>
@@ -404,7 +404,7 @@
 					name="hint"
 					id="hint"
 					value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].hint}
-					class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter a hint for your quiz..."
 				/>
 			</div>
@@ -439,27 +439,27 @@
 					</p>
 				{/if}
 
-				<div class="flex-col h-full w-full">
+				<div class="h-full w-full flex-col">
 					{#each $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options as _, i}
 						<div
-							class="grid grid-rows-1 grid-cols-2 items-center mb-2 h-max w-full rounded-md bg-dark-4 py-4 px-6 text-white"
+							class="mb-2 grid h-max w-full grid-cols-2 grid-rows-1 items-center rounded-md bg-dark-4 py-4 px-6 text-white"
 						>
 							<p class="inline-block">
 								<span>Option</span>
-								<span class="font-semibold inline-block mr-2 text-off-white"
+								<span class="mr-2 inline-block font-semibold text-off-white"
 									>{getIndexAsLetter(i)}</span
 								>
 							</p>
 
 							<div class="flex justify-self-end">
-								<button class="bg-dark-3 rounded-md p-1.5 mr-2" on:click={() => {}}>
+								<button class="mr-2 rounded-md bg-dark-3 p-1.5" on:click={() => {}}>
 									<div class="flex items-center">
 										<span>Edit</span>
-										<img class="inline-block ml-2 w-5 h-5" src={EditIcon} alt="Edit lesson" />
+										<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit lesson" />
 									</div>
 								</button>
 								<button
-									class="bg-dark-red rounded-md p-1.5"
+									class="rounded-md bg-dark-red p-1.5"
 									on:click={() => {
 										const options =
 											$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options;
@@ -467,7 +467,7 @@
 											options.filter((_, j) => j !== i);
 									}}
 								>
-									<img class="w-5 h-5" src={TrashIcon} alt="Remove lesson" />
+									<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
 								</button>
 							</div>
 						</div>
@@ -484,7 +484,7 @@
 		class="sticky top-0 col-span-full col-start-2 {menu === 'quiz' ? 'h-full' : 'h-[800px]'}"
 	>
 		{#if menu === 'pathway'}
-			<div class="grid items-center justify-items-center h-full w-full bg-dark-5 rounded-md">
+			<div class="grid h-full w-full items-center justify-items-center rounded-md bg-dark-5">
 				<p class="text-white">Create and edit a lesson to begin writing your pathway.</p>
 			</div>
 		{/if}
@@ -499,15 +499,15 @@
 
 		{#if menu === 'quiz'}
 			{#if $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options.length === 0}
-				<div class="grid items-center justify-items-center h-full w-full bg-dark-5 rounded-md">
+				<div class="grid h-full w-full items-center justify-items-center rounded-md bg-dark-5">
 					<p class="text-white">Add a possible answer for your question to edit your quiz.</p>
 				</div>
 			{/if}
 
 			{#each $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options as _, i}
-				<h3 class="font-semibold mb-2 text-white">Answer {getIndexAsLetter(i)}</h3>
+				<h3 class="mb-2 font-semibold text-white">Answer {getIndexAsLetter(i)}</h3>
 				<div
-					class="h-[250px] overflow-hidden rounded-md border border-solid border-white text-white mb-4"
+					class="mb-4 h-[250px] overflow-hidden rounded-md border border-solid border-white text-white"
 				>
 					<TipTap
 						on:update={(e) => {

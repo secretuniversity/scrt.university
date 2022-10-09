@@ -25,4 +25,4 @@ export const pathwayRequest: Writable<PathwayRequest> = writable({
 	description: '',
 	difficulty: '',
 	lessons: []
-} as PathwayRequest)
+} as PathwayRequest);
