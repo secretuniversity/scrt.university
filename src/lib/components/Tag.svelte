@@ -4,7 +4,7 @@
 </script>
 
 <span
-	class="inline-flex items-center rounded-full bg-gray px-3 py-0.5 text-sm font-medium text-dark-4"
+	class="inline-flex items-center rounded-full bg-dark-blue px-3 py-1 text-sm font-medium text-white"
 >
 	{tag.name}
 </span>
