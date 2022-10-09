@@ -2,7 +2,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Banner from '$lib/components/Banner.svelte';
+	import Tag from '$lib/components/Tag.svelte';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -30,6 +30,14 @@
 	let difficulty = '';
 	let devEnv = '';
 	let bannerImg: File;
+	let tag = '';
+
+	let commonTags: string[] = ['gaming', 'defi', 'smart-contract', 'secret-box', 'privacy'];
+	let tags: string[] = [];
+
+	function addTag(str: string) {
+		tags.push(str);
+	}
 </script>
 
 <Head {pageTitle} />
@@ -99,6 +107,32 @@
 			>Banner Image (Optional)</label
 		>
 		<input value={bannerImg} type="file" />
+
+		<label for="tags" class="block text-sm font-medium text-white">Tags</label>
+
+		<input
+			type="text"
+			name="tag"
+			id="tag"
+			value={tag}
+			on:keydown={() => addTag(tag)}
+			class="block w-full rounded-md border-white bg-dark-3 shadow-sm"
+			placeholder="Type tag name and hit [space] to add it."
+		/>
+
+		<p class="text-white">Useful Tags (click to add)</p>
+		<div class="flex gap-x-2">
+			{#each commonTags as str, i}
+				<div
+					class="inline-block"
+					on:click={() => {
+						addTag(str);
+					}}
+				>
+					<Tag tag={{ id: i, name: str }} />
+				</div>
+			{/each}
+		</div>
 
 		<p class="mb-4 text-sm italic text-gray">
 			Before submitting, be sure you have read the standards and practices for creating Secret Boxes
