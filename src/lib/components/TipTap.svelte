@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher<{ update: { content: string } }>();
 
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
@@ -20,7 +23,7 @@
 	import ClearIcon from '$lib/assets/clear-icon.svg';
 	import '$lib/styles/tiptap.scss';
 
-	export let baseContent = `
+	export let value = `
 		<h1>👋</h1>
 		<p>This text box will auto-magically render your text as markdown, so you can preview your styled content before submitting it.</p>
 		<p>Code will be syntax highlighted if supported. Here's some JavaScript.</p>
@@ -40,7 +43,7 @@
 	`;
 
 	let mainMenu: HTMLElement | null;
-	let bubbleMenuElement: HTMLElement | null;
+	let bubbleMenuElement: HTMLElement | null = null;
 	let editorElement: HTMLElement;
 	let editor: Editor;
 
@@ -65,10 +68,13 @@
 				}),
 				CodeBlockLowlight.configure({ lowlight })
 			],
-			content: baseContent,
+			content: value,
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
+			},
+			onUpdate: () => {
+				dispatch('update', { content: editor.getHTML() });
 			}
 		});
 	});
@@ -101,6 +107,7 @@
 			</button>
 		</div>
 	{/if}
+
 	<div bind:this={editorElement} />
 
 	<div bind:this={bubbleMenuElement}>
