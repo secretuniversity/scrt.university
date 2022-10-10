@@ -16,7 +16,7 @@ interface SecretClientStore {
 }
 
 export const secret: Writable<SecretClientStore> = writable({ client: null });
-export const user: Writable<User> = writable({ id: 0, address: '' });
+export const user: Writable<User> = writable({ id: -1, address: '' });
 export const bookmarks: Writable<BookmarkStore> = writable({ data: [] });
 export const contributions: Writable<ContributionStore> = writable({ data: [] });
 export const pathwayRequest: Writable<PathwayRequest> = writable({

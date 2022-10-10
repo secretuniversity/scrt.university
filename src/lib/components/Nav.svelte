@@ -4,9 +4,12 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
-	import { secret } from '$lib/stores';
+	import { user, secret } from '$lib/stores';
+	import Toast from '$lib/components/Toast.svelte';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+
+	import type { Connection } from '$lib/helpers/keplr';
 
 	// Dropdown flags
 	let learn = false;
@@ -15,40 +18,43 @@
 
 	let connected = false;
 
+	let toastIsVisible = false;
+	let toastKind = 'fail';
+	let toastMsg = '';
+
 	$: if ($navigating) reset();
 
-	const unsub = secret.subscribe((val) => {
-		if (!connected) {
-			console.log('Keplr is not connected. Now looking at store to see if client exists');
-			connected = val.client === null ? false : true;
-		}
+	const unsubSecret = secret.subscribe((val) => {
+		connected = val.client === null ? false : true;
+	});
+
+	const unsubUser = user.subscribe((val) => {
+		connected = val.id === -1 ? false : true;
 	});
 
 	onMount(async () => {
-		console.log('Nav Mounted');
 		const session = sessionStorage.getItem('keplr-connected');
-
-		console.log(`Session found Keplr connected: ${session}`);
 
 		if (session === 'true' && !$secret.client) {
 			const { err } = await connect();
 
 			if (!err) {
 				connected = true;
-				console.log('Keplr was reconnected based on session storage');
 			}
 
 			if (err) {
-				console.log('There was an error reconnecting to Keplr');
+				toastMsg = 'There was an error reconnecting to Keplr';
+				toastIsVisible = true;
 			}
-		} else if (session === 'true' && $secret.client) {
+		} else if (session === 'true' && $secret.client && $user.id !== -1) {
 			connected = true;
 			console.log('Keplr client exists in store already.');
 		}
 	});
 
 	onDestroy(() => {
-		unsub();
+		unsubSecret();
+		unsubUser();
 	});
 
 	function reset() {
@@ -56,9 +62,60 @@
 		build = false;
 		dashboard = false;
 	}
+
+	async function getOrCreateUser(address: string) {
+		try {
+			const data = { address };
+			console.log(JSON.stringify(data));
+			await fetch('/api/v1/user', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					console.log(res);
+					$user.id = res.data.id;
+					$user.address = res.data.address;
+				});
+
+			toastMsg = 'Successfully connected to Secret University';
+			toastKind = 'success';
+			toastIsVisible = true;
+
+			console.log($user);
+		} catch (err) {
+			if (err) {
+				toastMsg = 'There was an error creating or finding your user';
+				toastIsVisible = true;
+			}
+		}
+	}
+
+	async function handleConnect() {
+		try {
+			let con: Connection = await connect();
+
+			if (con.address) {
+				await getOrCreateUser(con.address);
+			} else {
+				toastMsg = 'There was an error connecting you to Secret University';
+				toastIsVisible = true;
+			}
+		} catch (err) {
+			if (err) {
+				toastMsg = 'There was an error connecting to Keplr';
+				toastIsVisible = true;
+			}
+		}
+	}
 </script>
 
-<div>
+<div class="relative">
+	{#if toastIsVisible}
+		<Toast kind={toastKind} msg={toastMsg} />
+	{/if}
+
 	<nav
 		class="pointer-auto relative flex items-center justify-between bg-dark-4 py-3 shadow-xl sm:px-6"
 		aria-label="Global"
@@ -153,7 +210,7 @@
 					>
 				{:else}
 					<button
-						on:click={() => connect()}
+						on:click={handleConnect}
 						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
 					>
 						<div class="flex">

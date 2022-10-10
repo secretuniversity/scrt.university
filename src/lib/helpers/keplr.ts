@@ -2,7 +2,7 @@
 import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
 
-interface Connection {
+export interface Connection {
 	address: string;
 	client: SecretNetworkClient | null;
 	err: string | null;
@@ -40,9 +40,8 @@ export async function connect(): Promise<Connection> {
 
 		secret.set({ client: secretjs });
 		sessionStorage.setItem('keplr-connected', 'true');
-		return { address: myAddress, client: secretjs, err: null, msg: 'Success' };
+		return Promise.resolve({ address: myAddress, client: secretjs, err: null, msg: 'Success' });
 	} catch (err) {
-		const address = '';
-		return { address, client: null, err: "Couldn't connect to Keplr", msg: null };
+		return Promise.reject(err);
 	}
 }
