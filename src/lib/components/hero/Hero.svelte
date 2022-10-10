@@ -1,48 +1,73 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import Slide1 from './Slide1.svelte';
 	import Slide2 from './Slide2.svelte';
 	import Slide3 from './Slide3.svelte';
 	import Slide4 from './Slide4.svelte';
 
-	const MAX_INDEX = 3;
-	const SPEED = 8000; // ms
+	const max = 3;
+	const speed = 8000;
+	const delay = 800;
+	const duration = 800;
 
 	let i = 0;
 
-	// onMount(() => {
-	// 	setInterval(() => {
-	// 		if (i < MAX_INDEX) {
-	// 			i += 1;
-	// 		} else {
-	// 			i = 0;
-	// 		}
-	// 	}, SPEED);
-	// });
+	onMount(() => {
+		setInterval(() => {
+			if (i < max) {
+				i += 1;
+			} else {
+				i = 0;
+			}
+		}, speed);
+	});
 </script>
 
 <!-- Hero Content Container -->
-<div class="min-h-home-hero">
-	<main class="mx-auto max-w-7xl px-4 lg:px-0">
-		<div class="lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48">
-			{#if i === 0}
+<div class="grid h-home-hero min-h-home-hero">
+	<main class="mx-auto grid h-[90%] max-w-7xl grid-cols-1 grid-rows-1 overflow-hidden">
+		{#if i === 0}
+			<div
+				in:fade={{ duration, delay }}
+				out:fade={{ duration }}
+				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+			>
 				<Slide1 />
-			{/if}
+			</div>
+		{/if}
 
-			{#if i === 1}
+		{#if i === 1}
+			<div
+				in:fade={{ duration, delay }}
+				out:fade={{ duration }}
+				class="col-start-1 row-start-1  lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+			>
 				<Slide2 />
-			{/if}
+			</div>
+		{/if}
 
-			{#if i === 2}
+		{#if i === 2}
+			<div
+				in:fade={{ duration, delay }}
+				out:fade={{ duration }}
+				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+			>
 				<Slide3 />
-			{/if}
+			</div>
+		{/if}
 
-			{#if i === 3}
+		{#if i === 3}
+			<div
+				in:fade={{ duration, delay }}
+				out:fade={{ duration }}
+				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+			>
 				<Slide4 />
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</main>
-	<div class="mt-12 flex justify-center gap-x-2">
+	<div class="flex h-[10%] justify-center gap-x-2">
 		<div on:click={() => (i = 0)} class="h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}" />
 		<div on:click={() => (i = 1)} class="h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}" />
 		<div on:click={() => (i = 2)} class="h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}" />

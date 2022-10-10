@@ -2,20 +2,19 @@
 	import ShockwaveImage from '$lib/assets/shockwave.png';
 </script>
 
-<div class="sm:text-center md:mx-auto md:max-w-3xl lg:col-span-6 lg:text-left">
+<div class="col-span-6 text-left">
 	<h1>
 		<span class="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-8xl">
-			<span class="block text-white">Ramp up with</span>
+			<span class="block text-white">Explore</span>
 			<span
 				class="block bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
 				>Secret Boxes</span
 			>
 		</span>
 	</h1>
-	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-		Welcome to Secret University— home of developer education on Secret Network. Learn to build
-		private web3 applications on Secret. Explore to learn how you can contribute to the university
-		and get involved on the network.
+	<p class="text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+		Secret Boxes are prebuilt starter application ready for to be expanded upon and learned from.
+		Explore our catalogue of Secret Boxes to jumpstart your development on Secret.
 	</p>
 </div>
 <div

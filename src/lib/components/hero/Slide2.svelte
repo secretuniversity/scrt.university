@@ -2,25 +2,7 @@
 	import ShockwaveImage from '$lib/assets/shockwave.png';
 </script>
 
-<div class="sm:text-center md:mx-auto md:max-w-3xl lg:col-span-6 lg:text-left">
-	<h1>
-		<span class="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-8xl">
-			<span class="block text-white">Take your</span>
-			<span
-				class="block bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
-				>Secret Pathways</span
-			>
-		</span>
-	</h1>
-	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-		Welcome to Secret University— home of developer education on Secret Network. Learn to build
-		private web3 applications on Secret. Explore to learn how you can contribute to the university
-		and get involved on the network.
-	</p>
-</div>
-<div
-	class="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center"
->
+<div class="relative col-span-6 mx-0 flex max-w-none items-center">
 	<svg
 		class="absolute top-0 left-1/2 origin-top -translate-x-1/2 -translate-y-8 scale-75 transform sm:scale-100 lg:hidden"
 		width="640"
@@ -64,4 +46,25 @@
 			</span>
 		</button>
 	</div>
+</div>
+
+<div class="col-span-6 text-left">
+	<h1>
+		<span class="mt-1 block text-8xl font-extrabold tracking-tight">
+			<span class="block text-white">Grow as a</span>
+			<span
+				class="block bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
+				>developer</span
+			>
+		</span>
+	</h1>
+	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+		Learn to integrate privacy solutions powered by Secret Network into your next project. Find a <a
+			class="text-light-blue underline underline-offset-2"
+			href="/pathways">course</a
+		>
+		that fits your developer background or explore the many
+		<a class="text-light-blue underline underline-offset-2" href="/repos">projects</a> shared on the
+		network and learn from our open source code.
+	</p>
 </div>
