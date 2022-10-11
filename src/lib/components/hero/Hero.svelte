@@ -13,15 +13,15 @@
 
 	let i = 0;
 
-	onMount(() => {
-		setInterval(() => {
-			if (i < max) {
-				i += 1;
-			} else {
-				i = 0;
-			}
-		}, speed);
-	});
+	// onMount(() => {
+	// 	setInterval(() => {
+	// 		if (i < max) {
+	// 			i += 1;
+	// 		} else {
+	// 			i = 0;
+	// 		}
+	// 	}, speed);
+	// });
 </script>
 
 <!-- Hero Content Container -->
@@ -29,9 +29,9 @@
 	<main class="mx-auto grid h-[90%] max-w-7xl grid-cols-1 grid-rows-1 overflow-hidden">
 		{#if i === 0}
 			<div
-				in:fade={{ duration, delay }}
-				out:fade={{ duration }}
-				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+				in:fade|local={{ duration, delay }}
+				out:fade|local={{ duration }}
+				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-12"
 			>
 				<Slide1 />
 			</div>
@@ -39,9 +39,9 @@
 
 		{#if i === 1}
 			<div
-				in:fade={{ duration, delay }}
-				out:fade={{ duration }}
-				class="col-start-1 row-start-1  lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+				in:fade|local={{ duration, delay }}
+				out:fade|local={{ duration }}
+				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
 			>
 				<Slide2 />
 			</div>
@@ -49,9 +49,9 @@
 
 		{#if i === 2}
 			<div
-				in:fade={{ duration, delay }}
-				out:fade={{ duration }}
-				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+				in:fade|local={{ duration, delay }}
+				out:fade|local={{ duration }}
+				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
 			>
 				<Slide3 />
 			</div>
@@ -59,9 +59,9 @@
 
 		{#if i === 3}
 			<div
-				in:fade={{ duration, delay }}
-				out:fade={{ duration }}
-				class="col-start-1 row-start-1 lg:grid lg:grid-cols-12 lg:gap-4 lg:py-48"
+				in:fade|local={{ duration, delay }}
+				out:fade|local={{ duration }}
+				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
 			>
 				<Slide4 />
 			</div>
