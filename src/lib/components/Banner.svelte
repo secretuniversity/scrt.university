@@ -7,7 +7,7 @@
 		<span class="grid h-full grid-cols-3">
 			<span class="col-start-2 self-center justify-self-center"
 				>Support the core Secret University team by <a
-					href="/build/#staking"
+					href="/support/#staking"
 					class="text-light-orange underline">staking with us</a
 				> 😎</span
 			>
