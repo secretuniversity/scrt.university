@@ -13,15 +13,15 @@
 
 	let i = 0;
 
-	// onMount(() => {
-	// 	setInterval(() => {
-	// 		if (i < max) {
-	// 			i += 1;
-	// 		} else {
-	// 			i = 0;
-	// 		}
-	// 	}, speed);
-	// });
+	onMount(() => {
+		setInterval(() => {
+			if (i < max) {
+				i += 1;
+			} else {
+				i = 0;
+			}
+		}, speed);
+	});
 </script>
 
 <!-- Hero Content Container -->

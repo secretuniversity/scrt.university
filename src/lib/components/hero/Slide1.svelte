@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Image from '$lib/assets/main_hero.png';
+	import Image from '$lib/assets/illustrations/main_hero.png';
 </script>
 
 <div class="sm:text-center md:mx-auto md:max-w-3xl lg:col-span-6 lg:text-left">
@@ -21,29 +21,6 @@
 <div
 	class="relative mt-12 sm:mx-auto sm:max-w-lg lg:col-span-6 lg:mx-0 lg:mt-0 lg:flex lg:max-w-none lg:items-center"
 >
-	<svg
-		class="absolute top-0 left-1/2 origin-top -translate-x-1/2 -translate-y-8 scale-75 transform sm:scale-100 lg:hidden"
-		width="640"
-		height="784"
-		fill="none"
-		viewBox="0 0 640 784"
-		aria-hidden="true"
-	>
-		<defs>
-			<pattern
-				id="4f4f415c-a0e9-44c2-9601-6ded5a34a13e"
-				x="118"
-				y="0"
-				width="20"
-				height="20"
-				patternUnits="userSpaceOnUse"
-			>
-				<rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="#60A0DC" />
-			</pattern>
-		</defs>
-		<rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
-		<rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
-	</svg>
 	<div class="relative mx-auto w-max">
 		<img class="h-auto w-max" src={Image} alt="Shockwave illustration" />
 	</div>
