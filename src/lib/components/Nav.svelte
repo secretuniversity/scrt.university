@@ -13,7 +13,6 @@
 
 	// Dropdown flags
 	let learn = false;
-	let build = false;
 	let dashboard = false;
 
 	let connected = false;
@@ -59,14 +58,12 @@
 
 	function reset() {
 		learn = false;
-		build = false;
 		dashboard = false;
 	}
 
 	async function getOrCreateUser(address: string) {
 		try {
 			const data = { address };
-			console.log(JSON.stringify(data));
 			await fetch('/api/v1/user', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -82,8 +79,6 @@
 			toastMsg = 'Successfully connected to Secret University';
 			toastKind = 'success';
 			toastIsVisible = true;
-
-			console.log($user);
 		} catch (err) {
 			if (err) {
 				toastMsg = 'There was an error creating or finding your user';
@@ -176,25 +171,6 @@
 
 				<span class="relative inline-flex items-center gap-x-2">
 					<a href="/build" class="font-medium text-white hover:text-gray"> Build </a>
-					<img
-						on:click={() => (build = true)}
-						class="inline-block h-3.5 w-3.5 cursor-pointer"
-						src={ChevronDown}
-						alt="Contribute to Secret University and Secret Network"
-					/>
-
-					{#if build}
-						<div
-							use:clickOutside
-							on:click_outside={() => (build = false)}
-							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
-						>
-							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
-								<a href="/build">Contribute</a>
-								<a href="/bounties">Bounties</a>
-							</div>
-						</div>
-					{/if}
 				</span>
 				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
