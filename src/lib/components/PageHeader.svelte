@@ -1,17 +1,23 @@
 <script lang="ts">
 	export let title = 'Title';
 	export let description = 'Description';
+	export let image = '';
 </script>
 
-<div class="bg-dark-4 shadow-lg lg:mt-8 lg:rounded-2xl">
-	<div class="mx-auto max-w-7xl py-40 sm:px-6 lg:flex lg:justify-between">
-		<div class="max-w-xl">
-			<h2 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
+<div class="mt-8 rounded-2xl bg-dark-4 shadow-lg">
+	<div class="mx-auto flex max-h-fit max-w-7xl justify-between py-8">
+		<div class="grid h-full w-full grid-cols-2 grid-rows-2">
+			<h2
+				class="col-start-1 row-start-1 self-end text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl"
+			>
 				{title}
 			</h2>
-			<p class="mt-5 text-xl text-gray">
+			<p class="col-start-1 row-start-2 mt-5 text-xl text-gray">
 				{description}
 			</p>
+			<div class="col-start-2 row-span-full max-h-full w-full">
+				<img src={image} alt="some banner illustration" />
+			</div>
 		</div>
 	</div>
 </div>
