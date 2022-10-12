@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import GoldPot from '$lib/assets/gold_pot.svg';
+	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
 
 	const pageTitle = 'Submit';
 </script>
