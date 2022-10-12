@@ -5,6 +5,7 @@
 	import Features from '$lib/components/FeatureList.svelte';
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import Stats from '$lib/components/Stats.svelte';
+	import RoadImage from '$lib/assets/illustrations/road.svg';
 
 	export const prerender = true;
 
@@ -13,80 +14,83 @@
 
 <Head {pageTitle} />
 
-<section class="relative overflow-hidden bg-dark-3">
-	<div>
+<section class="relative overflow-hidden">
+	<div class="bg-dark-3">
 		<Nav />
 
 		<Hero />
+
+		<Stats />
 	</div>
 
-	<Stats />
+	<div class="bg-dark-2">
+		<SectionHeader
+			title={'Secret Pathways'}
+			subtitle={'Find your path'}
+			description={"Choose the course that's right for you."}
+		/>
 
-	<SectionHeader
-		title={'Secret Pathways'}
-		subtitle={'Find your path'}
-		description={"Choose the course that's right for you."}
-	/>
+		<Features
+			features={[
+				{
+					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+					alt: '',
+					title: 'Welcome to Secret Network',
+					description:
+						'An introductory course for developers to familiarize themselves with the Secret Network.',
+					tag: null,
+					url: '/pathways/welcome-to-secret-network'
+				},
+				{
+					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+					alt: '',
+					title: 'Writing Smart Contracts and Rolling Dice',
+					description:
+						'Learn the ins and outs of writing a private smart contract on Secret Network',
+					tag: null,
+					url: '/pathways/writing-secret-smart-contracts'
+				},
+				{
+					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+					alt: '',
+					title: 'JavaScript on Secret Network',
+					description:
+						'Use JavaScript to connect to the Secret Network and supercharge your application with privacy',
+					tag: null,
+					url: '/pathways/writing-secret-smart-contracts'
+				}
+			]}
+		/>
 
-	<Features
-		features={[
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Welcome to Secret Network',
-				description:
-					'An introductory course for developers to familiarize themselves with the Secret Network.',
-				tag: null,
-				url: '/pathways/welcome-to-secret-network'
-			},
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Writing Smart Contracts and Rolling Dice',
-				description: 'Learn the ins and outs of writing a private smart contract on Secret Network',
-				tag: null,
-				url: '/pathways/writing-secret-smart-contracts'
-			},
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'JavaScript on Secret Network',
-				description:
-					'Use JavaScript to connect to the Secret Network and supercharge your application with privacy',
-				tag: null,
-				url: '/pathways/writing-secret-smart-contracts'
-			}
-		]}
-	/>
+		<SectionHeader
+			title={'Secret Boxes'}
+			subtitle={'Start building today'}
+			description={'Launch your first secret smart contract in minutes. Secret Boxes are fully integrated starter projects. They come preconfigured and ready to hack.'}
+		/>
 
-	<SectionHeader
-		title={'Secret Boxes'}
-		subtitle={'Start building today'}
-		description={'Launch your first secret smart contract in minutes. Secret Boxes are fully integrated starter projects. They come preconfigured and ready to hack.'}
-	/>
+		<Features
+			features={[
+				{
+					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+					alt: '',
+					title: 'Secret Counter',
+					description: 'A simple counter smart contract integrated on Secret Network',
+					tag: null,
+					url: '/repos/secret-box/secret-counter'
+				},
+				{
+					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+					alt: '',
+					title: 'Richie Rich',
+					description: "Solving Yao's millionaires' problem with secret smart contracts",
+					tag: 'Coming Soon',
+					url: null
+				}
+			]}
+		/>
+	</div>
 
-	<Features
-		features={[
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Secret Counter',
-				description: 'A simple counter smart contract integrated on Secret Network',
-				tag: null,
-				url: '/repos/secret-box/secret-counter'
-			},
-			{
-				img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-				alt: '',
-				title: 'Richie Rich',
-				description: "Solving Yao's millionaires' problem with secret smart contracts",
-				tag: 'Coming Soon',
-				url: null
-			}
-		]}
-	/>
-
-	<div class="py-8">
+	<div class="bg-dark-3 py-8">
 		<div class="mx-auto max-w-7xl py-16 px-4 text-white sm:py-24 sm:px-6 lg:px-8">
 			<p
 				class="text-gray-900 mt-1 text-center text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl"
@@ -152,19 +156,19 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
-		<h2 class="mb-8 text-center text-4xl font-bold text-white">
-			Interested in joining the <span class="text-dark-blue">university?</span> <br />
-			<span class="mt-2 inline-block text-3xl"
-				>Join the community, and find out how you can help.</span
+		<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
+			<h2 class="mb-8 text-center text-4xl font-bold text-white">
+				Interested in joining the <span class="text-dark-blue">university?</span> <br />
+				<span class="mt-2 inline-block text-3xl"
+					>Join the community, and find out how you can help.</span
+				>
+			</h2>
+			<a
+				href="https://chat.scrt.network"
+				class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
+				>Become A Contributor</a
 			>
-		</h2>
-		<a
-			href="https://chat.scrt.network"
-			class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
-			>Become A Contributor</a
-		>
+		</div>
 	</div>
 </section>

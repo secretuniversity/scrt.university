@@ -5,6 +5,7 @@
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import ToolCard from '$lib/components/cards/Tool.svelte';
 	import Features from '$lib/components/FeatureList.svelte';
+	import HeaderImage from '$lib/assets/illustrations/teacher_student.svg';
 
 	const pageTitle = 'Learn';
 
@@ -26,6 +27,7 @@
 	<PageHeader
 		title={'Learn'}
 		description={'Learn to build on Secret Network using our courses Secret Pathways or dive deep into code with Secret Boxes'}
+		image={HeaderImage}
 	/>
 
 	<div class="mt-20 text-4xl font-bold leading-6 text-white">Core Learning Materials</div>
@@ -132,13 +134,13 @@
 	</div>
 </div>
 
-<SectionHeader
+<!-- <SectionHeader
 	title={'Community Showcase'}
 	subtitle={'Learn from devs like you'}
 	description={'Cover valuable lessons from the secret Network community.'}
 />
-
-<Features
+ -->
+<!-- <Features
 	features={[
 		{
 			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
@@ -165,4 +167,4 @@
 			tag: null
 		}
 	]}
-/>
+/> -->

@@ -5,13 +5,15 @@
 	import DiscordLogo from '$lib/assets/discord_logo.svg';
 	import GithubLogo from '$lib/assets/github_logo.png';
 	import SecretLogo from '$lib/assets/secret_logo.svg';
+	import Staking from '$lib/components/Staking.svelte';
+	import Image from '$lib/assets/illustrations/support.svg';
 
 	const pageTitle = 'Support';
 </script>
 
 <Head {pageTitle} />
 
-<div class="grid grid-cols-4 justify-items-center py-16 lg:grid-cols-2">
+<div class="grid grid-cols-4 justify-items-center pt-20 lg:grid-cols-2">
 	<div class="flex max-w-2xl flex-col lg:max-w-3xl lg:px-8">
 		<h1 class="mt-8 text-6xl font-bold text-white">Need some help?</h1>
 		<p class="my-4 text-base text-gray">
@@ -24,11 +26,17 @@
 			class="inline-flex w-fit items-center self-end rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 			>Join The Community</a
 		>
+
+		<img src={Image} alt="support illustration" />
 	</div>
 
 	<div class="h-fit w-9/12 overflow-hidden rounded-lg bg-dark-4 px-12 py-14 shadow-lg">
 		<SupportTicket />
 	</div>
+</div>
+
+<div id="staking" class="pb-20">
+	<Staking />
 </div>
 
 <div id="community" class="bg-dark-2 pb-36">

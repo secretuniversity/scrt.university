@@ -11,7 +11,8 @@
 	import Toast from '$lib/components/Toast.svelte';
 
 	const pageTitle = 'Submit A Pathway';
-	const pageDescription = 'Pathways are courses that teach the technicals of development on Secret';
+	const pageDescription =
+		'Pathways are courses that teach the technicals of development on Secret. Read our standards and guidelines for submitting a pathway to craft the perfect course.';
 	const breadcrumbRoutes = [
 		{
 			name: 'Dashboard',
