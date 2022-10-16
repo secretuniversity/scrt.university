@@ -3,6 +3,12 @@ export interface User {
 	address: string;
 }
 
+export interface Contributor {
+	id: number;
+	address: string;
+	name: string;
+}
+
 export interface Tag {
 	id: number;
 	name: string;
@@ -139,5 +145,21 @@ export interface QuizOptionRequest {
 	content: string;
 }
 
-export type Contribution = Repo | SecretBox | Pathway | Video | Article;
+interface ContributorVideo extends Repo {
+	kind: string	
+}
+
+interface ContributorSecretBox extends Repo {
+	kind: string	
+}
+
+interface ContributorPathway extends Repo {
+	kind: string	
+}
+
+interface ContributorArticle extends Repo {
+	kind: string	
+}
+
+export type Contribution = ContributorSecretBox | ContributorPathway | ContributorArticle | ContributorVideo;
 export type Resource = Video | Article;
