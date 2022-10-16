@@ -7,6 +7,15 @@ export function toPageTitle(slug: string) {
 	return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
+export function saveJWT(name: string, token: string) {
+	sessionStorage.setItem(name, token);
+}
+
+export function loadJWT(name: string): string | null {
+	return sessionStorage.getItem(name);
+}
+
+
 export function getLessonBaseContent(): string {
 	return `
 		<h1>Your Lesson</h1>
