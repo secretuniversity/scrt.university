@@ -1,19 +1,16 @@
 // eslint-disable-next-line
 import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
-
-export interface Connection {
-	address: string;
-	client: SecretNetworkClient | null;
-	err: string | null;
-	msg: string | null;
-}
+import {
+	PUBLIC_SECRET_NETWORK_CHAIN_ID,
+	PUBLIC_SECRET_NETWORK_GRPC_URL
+} from '$env/static/public'
 
 // connect()
 // Fires when user pushes the main connect button. If the user has requested,
 // this will also fire when the nav.
 // First it tries to see if
-export async function connect(): Promise<Connection> {
+export async function connect() {
 	try {
 		const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -21,14 +18,14 @@ export async function connect(): Promise<Connection> {
 			await sleep(100);
 		}
 
-		const CHAIN_ID = 'secret-4';
+		const CHAIN_ID = PUBLIC_SECRET_NETWORK_CHAIN_ID;
 
 		await window.keplr.enable(CHAIN_ID);
 
 		const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(CHAIN_ID);
 		const [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
 
-		const grpcWebUrl = 'TODO get from https://github.com/scrtlabs/api-registry';
+		const grpcWebUrl = PUBLIC_SECRET_NETWORK_GRPC_URL;
 
 		const secretjs = await SecretNetworkClient.create({
 			grpcWebUrl,
@@ -38,10 +35,12 @@ export async function connect(): Promise<Connection> {
 			encryptionUtils: window.getEnigmaUtils(CHAIN_ID)
 		});
 
-		secret.set({ client: secretjs });
+		secret.set(secretjs);
 		sessionStorage.setItem('keplr-connected', 'true');
-		return Promise.resolve({ address: myAddress, client: secretjs, err: null, msg: 'Success' });
+
+		return Promise.resolve();
 	} catch (err) {
-		return Promise.reject(err);
+		console.log(err)
+		return Promise.reject();
 	}
 }
