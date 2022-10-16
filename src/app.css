@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	font-family: 'Source Sans Pro', 'Lato', Arial, sans-serif;
+	src: url("/src/assets/fonts/Source_Sans_Pro/");
+}
+
 .border-gradient-color {
 	border-image: linear-gradient(to bottom, #f6d365 0%, #fda085) 1 100%;
 }
