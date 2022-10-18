@@ -35,7 +35,11 @@ export async function connect() {
 			encryptionUtils: window.getEnigmaUtils(CHAIN_ID)
 		});
 
-		secret.set(secretjs);
+		// set exp to 1 day from now
+		const exp = new Date();
+		exp.setDate(exp.getDate() + 1);
+
+		secret.set({ val: secretjs, exp: exp.getTime() });
 		sessionStorage.setItem('keplr-connected', 'true');
 
 		return Promise.resolve();
