@@ -6,7 +6,7 @@
 	// Secret University validator address
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
 
-	let disabled = $secret.client === null;
+	let disabled = $secret === null;
 	let scrtAmount: number | null = null;
 
 	let toastIsVisible = false;
@@ -15,12 +15,10 @@
 
 	async function handleStake() {
 		try {
-			console.log($secret);
-			console.log(scrtAmount);
-			if ($secret.client && scrtAmount) {
+			if ($secret && scrtAmount) {
 				console.log('Staking amount and client found. simulating tx');
-				const sim = await $secret.client.tx.staking.delegate.simulate({
-					delegatorAddress: $secret.client.address,
+				const sim = await $secret.val.tx.staking.delegate.simulate({
+					delegatorAddress: $secret.val.address,
 					validatorAddress,
 					amount: {
 						amount: getSCRTasUSCRT(scrtAmount),
