@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
@@ -9,13 +9,11 @@
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
-	import type { Connection } from '$lib/helpers/keplr';
+	import { saveJWT } from '$lib/helpers';
 
 	// Dropdown flags
 	let learn = false;
 	let dashboard = false;
-
-	let connected = false;
 
 	let toastIsVisible = false;
 	let toastKind = 'fail';
@@ -23,37 +21,18 @@
 
 	$: if ($navigating) reset();
 
-	const unsubSecret = secret.subscribe((val) => {
-		connected = val.client === null ? false : true;
-	});
-
-	const unsubUser = user.subscribe((val) => {
-		connected = val.id === -1 ? false : true;
-	});
-
 	onMount(async () => {
 		const session = sessionStorage.getItem('keplr-connected');
 
-		if (session === 'true' && !$secret.client) {
-			const { err } = await connect();
-
-			if (!err) {
-				connected = true;
+		try {
+			if (session === 'false' && !$secret) {
+				await connect();
 			}
-
-			if (err) {
-				toastMsg = 'There was an error reconnecting to Keplr';
-				toastIsVisible = true;
-			}
-		} else if (session === 'true' && $secret.client && $user.id !== -1) {
-			connected = true;
-			console.log('Keplr client exists in store already.');
+		} catch (err) {
+			toastIsVisible = true;
+			toastKind = 'fail';
+			toastMsg = 'Failed to connect to Keplr wallet.';
 		}
-	});
-
-	onDestroy(() => {
-		unsubSecret();
-		unsubUser();
 	});
 
 	function reset() {
@@ -69,11 +48,21 @@
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			})
-				.then((res) => res.json())
 				.then((res) => {
-					console.log(res);
-					$user.id = res.data.id;
-					$user.address = res.data.address;
+					const token = res.headers.get('token');
+
+					if (token) {
+						saveJWT('user', token);
+					}
+
+					return res.json();
+				})
+				.then((res) => {
+					// create and set exp for 1 hour from now
+					const exp = new Date();
+					exp.setHours(exp.getHours() + 1);
+
+					$user = { val: res.data, exp: exp.getTime() };
 				});
 
 			toastMsg = 'Successfully connected to Secret University';
@@ -88,21 +77,20 @@
 	}
 
 	async function handleConnect() {
+		console.log('Trying to handle connect');
 		try {
-			let con: Connection = await connect();
+			await connect();
 
-			if (con.address) {
-				await getOrCreateUser(con.address);
+			console.log(`Secret: ${$secret}`);
+
+			if ($secret) {
+				console.log(`Secret: ${$secret}`);
+				await getOrCreateUser($secret.val.address);
 			} else {
 				toastMsg = 'There was an error connecting you to Secret University';
 				toastIsVisible = true;
 			}
-		} catch (err) {
-			if (err) {
-				toastMsg = 'There was an error connecting to Keplr';
-				toastIsVisible = true;
-			}
-		}
+		} catch (_err) {}
 	}
 </script>
 
@@ -178,7 +166,7 @@
 
 		<div class="hidden pr-4 text-right md:block">
 			<span class="relative inline-flex rounded-md shadow-md">
-				{#if connected}
+				{#if $secret}
 					<button
 						on:click={() => goto('/dashboard')}
 						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
