@@ -1,64 +1,40 @@
 <script lang="ts">
-	import type { Bounty } from '$lib/models/index';
 	import Filter from '$lib/components/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/Bounty.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import { bounties } from '$lib/stores';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		const url = '/api/v1/bounties/0';
-		fetch(url)
-			.then((res) => res.json())
-			.then((data) => console.log(data));
-	});
+	import type { Bounty } from '$lib/models/index';
+	import { isExpired } from '$lib/helpers';
 
-	const bounties: Bounty[] = [
-		{
-			id: '1',
-			title: 'Some Bounty',
-			description: 'A super top secret bounty for a super secret, super shadowy coder',
-			forum_url: 'https://forum.scrt.network/',
-			proposal_url: null,
-			amount: 1000,
-			status: 'open',
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: '2',
-			title: 'Some Other Bounty',
-			description: 'Another super top secret bounty for a super secret, super shadowy coder',
-			forum_url: 'https://forum.scrt.network/',
-			proposal_url: null,
-			amount: 1000,
-			status: 'in-progress',
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: '3',
-			title: 'Yet Another Bounty',
-			description: 'Some super top secret bounty for a super secret, super shadowy coder',
-			forum_url: 'https://forum.scrt.network/',
-			proposal_url: null,
-			amount: 1000,
-			status: 'complete',
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		},
-		{
-			id: '4',
-			title: 'Simple Bounty',
-			description: 'Some super simple top secret bounty for a super secret, super shadowy coder',
-			forum_url: 'https://forum.scrt.network/',
-			proposal_url: null,
-			amount: 1000,
-			status: 'complete',
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
+	let toastIsVisible = false;
+	let toastKind = 'fail';
+	let toastMsg = '';
+
+	onMount(async () => {
+		if (!$bounties || ($bounties && !isExpired($bounties.exp))) {
+			try {
+				const url = '/api/v1/bounties/0';
+				let res = await fetch(url);
+				let json = await res.json();
+				let data = json.data;
+
+				// Create exp and set it to 1 hour from now
+				const exp = new Date();
+				exp.setHours(exp.getHours() + 1);
+
+				$bounties = {
+					val: data as Bounty[],
+					exp: exp.getTime()
+				};
+			} catch (err) {
+				toastIsVisible = true;
+				toastMsg = 'There was an error fetching bounties';
+			}
 		}
-	];
+	});
 
 	const pageTitle = 'Bounties';
 	const breadcrumbRoutes = [
@@ -157,11 +133,17 @@
 		</div>
 
 		<div class="col-span-9">
-			{#each bounties as bounty, index}
-				<div class="mb-2 w-full">
-					<BountyCard {bounty} {index} />
-				</div>
-			{/each}
+			{#if $bounties}
+				{#each $bounties.val as bounty, index}
+					<div class="mb-2 w-full">
+						<BountyCard {bounty} {index} />
+					</div>
+				{/each}
+			{:else}
+				<p class="block self-center text-center text-sm font-medium text-dark-5">
+					Secret University found no bounties.
+				</p>
+			{/if}
 		</div>
 	</div>
 </section>
