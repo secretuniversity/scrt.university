@@ -45,7 +45,7 @@
 {/if}
 
 {#each tags as tag, i}
-	<div class="cursor-pointer inline-block mr-2" on:click={() => removeTag(i)}>
+	<div class="mr-2 inline-block cursor-pointer" on:click={() => removeTag(i)}>
 		<Tag {tag} />
 	</div>
 {/each}
@@ -56,7 +56,7 @@
 	id="tag"
 	bind:value={tag}
 	on:keydown={handleTagInput}
-	class="text-white block w-full rounded-md border-white bg-dark-3 shadow-sm"
+	class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 	placeholder="Type tag name and hit [space] to add it."
 />
 
@@ -64,7 +64,7 @@
 <div class="flex gap-x-2">
 	{#each commonTags as str}
 		<div
-			class="cursor-pointer inline-block"
+			class="inline-block cursor-pointer"
 			on:click={() => {
 				addCommonTag(str);
 			}}

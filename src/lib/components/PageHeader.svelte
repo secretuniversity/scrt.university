@@ -12,7 +12,7 @@
 			>
 				{title}
 			</h2>
-			<p class="col-start-1 row-start-2 mt-5 text-xl text-gray max-w-xl">
+			<p class="col-start-1 row-start-2 mt-5 max-w-xl text-xl text-gray">
 				{@html description}
 			</p>
 			{#if image}

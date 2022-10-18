@@ -146,20 +146,24 @@ export interface QuizOptionRequest {
 }
 
 interface ContributorVideo extends Repo {
-	kind: string	
+	kind: string;
 }
 
 interface ContributorSecretBox extends Repo {
-	kind: string	
+	kind: string;
 }
 
 interface ContributorPathway extends Repo {
-	kind: string	
+	kind: string;
 }
 
 interface ContributorArticle extends Repo {
-	kind: string	
+	kind: string;
 }
 
-export type Contribution = ContributorSecretBox | ContributorPathway | ContributorArticle | ContributorVideo;
+export type Contribution =
+	| ContributorSecretBox
+	| ContributorPathway
+	| ContributorArticle
+	| ContributorVideo;
 export type Resource = Video | Article;

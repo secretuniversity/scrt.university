@@ -24,53 +24,53 @@
 	</div>
 
 	<div class="bg-dark-2 text-white">
-		<div class="grid grid-cols-12 items-center justify-center py-64 max-w-[80%] mx-auto">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-center py-64">
 			<div class="col-span-6 justify-self-start">
-				<p class="text-sm font-bold text-dark-turquoise-g mb-6">PATHWAYS</p>
-				<h2 class="text-7xl font-semibold mb-4">Find your path</h2>
-				<p class="text-base mb-4 max-w-xl">
+				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">PATHWAYS</p>
+				<h2 class="mb-4 text-7xl font-semibold">Find your path</h2>
+				<p class="mb-4 max-w-xl text-base">
 					Secret University provides online courses that we call pathways. Pathways can walk you
 					through the steps of building and integrating privacy into your dApps using Secret
 					Network.
 				</p>
-				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Find your path</button>
+				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Find your path</button>
 			</div>
 			<div class="col-span-6 justify-self-end">
-				<img class="w-[32rem] h-auto" src={RoadImage} alt="take coures on secret university" />
+				<img class="h-auto w-[32rem]" src={RoadImage} alt="take coures on secret university" />
 			</div>
 		</div>
 
-		<div class="grid grid-cols-12 items-center py-48 max-w-[80%] mx-auto">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center py-48">
 			<div class="col-span-6 justify-self-start">
-				<img class="w-[32rem] h-auto" src={BoxImage} alt="utilize secret box starter projects" />
+				<img class="h-auto w-[32rem]" src={BoxImage} alt="utilize secret box starter projects" />
 			</div>
 
 			<div class="col-span-6 justify-self-end">
-				<p class="text-sm font-bold text-dark-turquoise-g mb-6">SECRET BOXES</p>
-				<h2 class="text-7xl font-semibold mb-4">Open a Box</h2>
-				<p class="text-base mb-4 max-w-xl">
+				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">SECRET BOXES</p>
+				<h2 class="mb-4 text-7xl font-semibold">Open a Box</h2>
+				<p class="mb-4 max-w-xl text-base">
 					Secret Boxes can help you get building quicker and learn rapidly. Secret Boxes are
 					self-contained development instances complete with Secret Network integrations.
 				</p>
-				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Open a Box</button>
+				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Open a Box</button>
 			</div>
 		</div>
 
-		<div class="grid grid-cols-12 py-64 items-center max-w-[80%] mx-auto">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center py-64">
 			<div class="col-span-6">
-				<p class="text-sm font-bold text-dark-turquoise-g mb-6">RESOURCES</p>
-				<h2 class="text-7xl font-semibold mb-4">Browse our library</h2>
-				<p class="text-base mb-4 max-w-xl">
+				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">RESOURCES</p>
+				<h2 class="mb-4 text-7xl font-semibold">Browse our library</h2>
+				<p class="mb-4 max-w-xl text-base">
 					Secret University is collecting the many learning materials, both new and old, that aid
 					development and activity on the Secret Network. Find the resources you need to integrate
 					privacy into your next dentralized application.
 				</p>
-				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Browse resources</button>
+				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Browse resources</button>
 			</div>
 
 			<div class="col-span-6 justify-self-end">
 				<img
-					class="w-[32rem] h-auto"
+					class="h-auto w-[32rem]"
 					src={LibraryImage}
 					alt="browse resources on secret university"
 				/>
@@ -146,7 +146,7 @@
 		</div>
 
 		<div class="grid grid-rows-2 items-center justify-items-center py-32">
-			<h2 class="text-4xl mb-2 font-bold text-white">
+			<h2 class="mb-2 text-4xl font-bold text-white">
 				Want to join the
 				<span
 					class="inline bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
@@ -154,7 +154,7 @@
 				</span>
 			</h2>
 
-			<p class="mb-4 text-lg inline-block text-white">
+			<p class="mb-4 inline-block text-lg text-white">
 				Find out how you can jumpstart your development on Secret Network
 			</p>
 			<a

@@ -19,7 +19,6 @@ export function isExpired(exp: number) {
 	return exp < new Date().getTime();
 }
 
-
 export function getLessonBaseContent(): string {
 	return `
 		<h1>Your Lesson</h1>

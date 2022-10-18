@@ -1,10 +1,7 @@
 // eslint-disable-next-line
 import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
-import {
-	PUBLIC_SECRET_NETWORK_CHAIN_ID,
-	PUBLIC_SECRET_NETWORK_GRPC_URL
-} from '$env/static/public'
+import { PUBLIC_SECRET_NETWORK_CHAIN_ID, PUBLIC_SECRET_NETWORK_GRPC_URL } from '$env/static/public';
 
 // connect()
 // Fires when user pushes the main connect button. If the user has requested,
@@ -44,7 +41,7 @@ export async function connect() {
 
 		return Promise.resolve();
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 		return Promise.reject();
 	}
 }

@@ -4,7 +4,7 @@
 
 body {
 	font-family: 'Source Sans Pro', 'Lato', Arial, sans-serif;
-	src: url("/src/assets/fonts/Source_Sans_Pro/");
+	src: url('/src/assets/fonts/Source_Sans_Pro/');
 }
 
 .border-gradient-color {
