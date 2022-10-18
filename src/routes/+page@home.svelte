@@ -2,10 +2,10 @@
 	import Head from '$lib/components/Head.svelte';
 	import Hero from '$lib/components/hero/Hero.svelte';
 	import Nav from '$lib/components/Nav.svelte';
-	import Features from '$lib/components/FeatureList.svelte';
-	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import Stats from '$lib/components/Stats.svelte';
 	import RoadImage from '$lib/assets/illustrations/road.svg';
+	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
+	import LibraryImage from '$lib/assets/illustrations/library.svg';
 
 	export const prerender = true;
 
@@ -23,71 +23,59 @@
 		<Stats />
 	</div>
 
-	<div class="bg-dark-2">
-		<SectionHeader
-			title={'Secret Pathways'}
-			subtitle={'Find your path'}
-			description={"Choose the course that's right for you."}
-		/>
+	<div class="bg-dark-2 text-white">
+		<div class="grid grid-cols-12 items-center justify-center py-64 max-w-[80%] mx-auto">
+			<div class="col-span-6 justify-self-start">
+				<p class="text-sm font-bold text-dark-turquoise-g mb-6">PATHWAYS</p>
+				<h2 class="text-7xl font-semibold mb-4">Find your path</h2>
+				<p class="text-base mb-4 max-w-xl">
+					Secret University provides online courses that we call pathways. Pathways can walk you
+					through the steps of building and integrating privacy into your dApps using Secret
+					Network.
+				</p>
+				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Find your path</button>
+			</div>
+			<div class="col-span-6 justify-self-end">
+				<img class="w-[32rem] h-auto" src={RoadImage} alt="take coures on secret university" />
+			</div>
+		</div>
 
-		<Features
-			features={[
-				{
-					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-					alt: '',
-					title: 'Welcome to Secret Network',
-					description:
-						'An introductory course for developers to familiarize themselves with the Secret Network.',
-					tag: null,
-					url: '/pathways/welcome-to-secret-network'
-				},
-				{
-					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-					alt: '',
-					title: 'Writing Smart Contracts and Rolling Dice',
-					description:
-						'Learn the ins and outs of writing a private smart contract on Secret Network',
-					tag: null,
-					url: '/pathways/writing-secret-smart-contracts'
-				},
-				{
-					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-					alt: '',
-					title: 'JavaScript on Secret Network',
-					description:
-						'Use JavaScript to connect to the Secret Network and supercharge your application with privacy',
-					tag: null,
-					url: '/pathways/writing-secret-smart-contracts'
-				}
-			]}
-		/>
+		<div class="grid grid-cols-12 items-center py-48 max-w-[80%] mx-auto">
+			<div class="col-span-6 justify-self-start">
+				<img class="w-[32rem] h-auto" src={BoxImage} alt="utilize secret box starter projects" />
+			</div>
 
-		<SectionHeader
-			title={'Secret Boxes'}
-			subtitle={'Start building today'}
-			description={'Launch your first secret smart contract in minutes. Secret Boxes are fully integrated starter projects. They come preconfigured and ready to hack.'}
-		/>
+			<div class="col-span-6 justify-self-end">
+				<p class="text-sm font-bold text-dark-turquoise-g mb-6">SECRET BOXES</p>
+				<h2 class="text-7xl font-semibold mb-4">Open a Box</h2>
+				<p class="text-base mb-4 max-w-xl">
+					Secret Boxes can help you get building quicker and learn rapidly. Secret Boxes are
+					self-contained development instances complete with Secret Network integrations.
+				</p>
+				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Open a Box</button>
+			</div>
+		</div>
 
-		<Features
-			features={[
-				{
-					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-					alt: '',
-					title: 'Secret Counter',
-					description: 'A simple counter smart contract integrated on Secret Network',
-					tag: null,
-					url: '/repos/secret-box/secret-counter'
-				},
-				{
-					img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-					alt: '',
-					title: 'Richie Rich',
-					description: "Solving Yao's millionaires' problem with secret smart contracts",
-					tag: 'Coming Soon',
-					url: null
-				}
-			]}
-		/>
+		<div class="grid grid-cols-12 py-64 items-center max-w-[80%] mx-auto">
+			<div class="col-span-6">
+				<p class="text-sm font-bold text-dark-turquoise-g mb-6">RESOURCES</p>
+				<h2 class="text-7xl font-semibold mb-4">Browse our library</h2>
+				<p class="text-base mb-4 max-w-xl">
+					Secret University is collecting the many learning materials, both new and old, that aid
+					development and activity on the Secret Network. Find the resources you need to integrate
+					privacy into your next dentralized application.
+				</p>
+				<button class="text-black px-8 py-4 bg-light-orange rounded-md">Browse resources</button>
+			</div>
+
+			<div class="col-span-6 justify-self-end">
+				<img
+					class="w-[32rem] h-auto"
+					src={LibraryImage}
+					alt="browse resources on secret university"
+				/>
+			</div>
+		</div>
 	</div>
 
 	<div class="bg-dark-3 py-8">
@@ -157,17 +145,22 @@
 			</div>
 		</div>
 
-		<div class="mb-24 grid grid-rows-2 items-center justify-items-center py-24">
-			<h2 class="mb-8 text-center text-4xl font-bold text-white">
-				Interested in joining the <span class="text-dark-blue">university?</span> <br />
-				<span class="mt-2 inline-block text-3xl"
-					>Join the community, and find out how you can help.</span
-				>
+		<div class="grid grid-rows-2 items-center justify-items-center py-32">
+			<h2 class="text-4xl mb-2 font-bold text-white">
+				Want to join the
+				<span
+					class="inline bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
+					>university?
+				</span>
 			</h2>
+
+			<p class="mb-4 text-lg inline-block text-white">
+				Find out how you can jumpstart your development on Secret Network
+			</p>
 			<a
 				href="https://chat.scrt.network"
 				class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
-				>Become A Contributor</a
+				>Reach Out</a
 			>
 		</div>
 	</div>
