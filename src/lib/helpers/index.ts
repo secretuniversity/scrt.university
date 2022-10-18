@@ -15,6 +15,10 @@ export function loadJWT(name: string): string | null {
 	return sessionStorage.getItem(name);
 }
 
+export function isExpired(exp: number) {
+	return exp < new Date().getTime();
+}
+
 
 export function getLessonBaseContent(): string {
 	return `
