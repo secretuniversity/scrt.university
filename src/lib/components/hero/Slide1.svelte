@@ -14,8 +14,8 @@
 	</h1>
 	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
 		Welcome to Secret University— home of developer education on Secret Network. Learn to build
-		private web3 applications on Secret. Explore to learn how you can contribute to the university
-		and get involved on the network.
+		private dApps, discover how you can contribute to the university, and begin your developer
+		journey on Secret.
 	</p>
 </div>
 <div

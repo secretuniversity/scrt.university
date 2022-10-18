@@ -13,8 +13,9 @@
 		</span>
 	</h1>
 	<p class="text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-		Secret Boxes are prebuilt starter application ready for to be expanded upon and learned from.
-		Explore our catalogue of Secret Boxes to jumpstart your development on Secret.
+		Secret Boxes are prebuilt starter application ready to use with the push of a button. Expand a
+		Secret Box to fit your application and learn without setup. Explore our catalogue of Secret
+		Boxes to jumpstart your development on Secret.
 	</p>
 </div>
 <div

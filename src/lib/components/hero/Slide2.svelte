@@ -22,12 +22,12 @@
 		</span>
 	</h1>
 	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-		Learn to integrate privacy solutions powered by Secret Network into your next project. Find a <a
+		Integrate privacy powered by Secret into your next next project. Find a <a
 			class="text-light-blue underline underline-offset-2"
 			href="/pathways">course</a
 		>
 		that fits your developer background or explore the many
-		<a class="text-light-blue underline underline-offset-2" href="/repos">projects</a> shared on the
-		network and learn from our open source code.
+		<a class="text-light-blue underline underline-offset-2" href="/repos">projects</a> shared by members
+		of the network and learn from our open source code.
 	</p>
 </div>

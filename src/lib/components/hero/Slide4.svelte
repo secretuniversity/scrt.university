@@ -13,9 +13,9 @@
 		</span>
 	</h1>
 	<p class="mt-3 text-base text-gray sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-		We cannot do this alone. To grow the adoption of private blockchain solutions, we need your
-		help. Secret University is accepting contribution from writing to development. Connect to learn
-		more, and reach out to us on Discord
+		We cannot do this alone. Creating secure and friendly user experiences is no easy task. We need
+		your help. Secret University is accepting contribution from writing to development. Connect us
+		to learn more.
 	</p>
 </div>
 <div class="relative col-span-4 flex max-w-none items-center">
