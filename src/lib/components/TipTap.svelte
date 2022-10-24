@@ -55,7 +55,7 @@
 		lowlight.registerLanguage('rust', rust);
 		lowlight.registerLanguage('bash', bash);
 		lowlight.registerLanguage('sh', bash);
-		lowlight.registerLanguage('python', python);
+		lowlight.registerLanguage('py', python);
 
 		editor = new Editor({
 			element: editorElement,
