@@ -11,17 +11,32 @@
 	const delay = 800;
 	const duration = 800;
 
+	let interval: NodeJS.Timer | null = null;
+
 	let i = 0;
 
 	onMount(() => {
-		setInterval(() => {
+		runSlides();
+	});
+
+	function runSlides() {
+		interval = setInterval(() => {
 			if (i < max) {
 				i += 1;
 			} else {
 				i = 0;
 			}
 		}, speed);
-	});
+	}
+
+	function clear(n: number) {
+		if (interval) {
+			clearInterval(interval);
+			runSlides();
+		}
+
+		i = n;
+	}
 </script>
 
 <!-- Hero Content Container -->
@@ -68,9 +83,21 @@
 		{/if}
 	</main>
 	<div class="flex h-[10%] justify-center gap-x-2">
-		<div on:click={() => (i = 0)} class="h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}" />
-		<div on:click={() => (i = 1)} class="h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}" />
-		<div on:click={() => (i = 2)} class="h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}" />
-		<div on:click={() => (i = 3)} class="h-4 w-4 rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}" />
+		<div
+			on:click={() => clear(0)}
+			class="h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
+		/>
+		<div
+			on:click={() => clear(1)}
+			class="h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
+		/>
+		<div
+			on:click={() => clear(2)}
+			class="h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
+		/>
+		<div
+			on:click={() => clear(3)}
+			class="h-4 w-4 rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
+		/>
 	</div>
 </div>
