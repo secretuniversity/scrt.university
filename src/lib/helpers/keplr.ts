@@ -3,10 +3,6 @@ import { secret } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
 import { PUBLIC_SECRET_NETWORK_CHAIN_ID, PUBLIC_SECRET_NETWORK_GRPC_URL } from '$env/static/public';
 
-// connect()
-// Fires when user pushes the main connect button. If the user has requested,
-// this will also fire when the nav.
-// First it tries to see if
 export async function connect() {
 	try {
 		const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -32,7 +28,6 @@ export async function connect() {
 			encryptionUtils: window.getEnigmaUtils(CHAIN_ID)
 		});
 
-		// set exp to 1 day from now
 		const exp = new Date();
 		exp.setDate(exp.getDate() + 1);
 
