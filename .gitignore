@@ -11,3 +11,4 @@ pnpm-lock.yaml
 .vercel
 .output
 .projectile
+.VSCodeCounter
