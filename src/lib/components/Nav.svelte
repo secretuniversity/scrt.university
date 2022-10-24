@@ -4,12 +4,13 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
+	import { retry, getOrCreateUser, loadJWT } from '$lib/helpers/index';
 	import { user, secret } from '$lib/stores';
 	import Toast from '$lib/components/Toast.svelte';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
-	import { saveJWT } from '$lib/helpers';
+	import { isExpired } from '$lib/helpers';
 
 	// Dropdown flags
 	let learn = false;
@@ -25,14 +26,10 @@
 		const session = sessionStorage.getItem('keplr-connected');
 
 		try {
-			if (session === 'false' && !$secret) {
-				await connect();
+			if (session && !secret) {
+				await handleConnect();
 			}
-		} catch (err) {
-			toastIsVisible = true;
-			toastKind = 'fail';
-			toastMsg = 'Failed to connect to Keplr wallet.';
-		}
+		} catch (_err) {}
 	});
 
 	function reset() {
@@ -40,57 +37,45 @@
 		dashboard = false;
 	}
 
-	async function getOrCreateUser(address: string) {
-		try {
-			const data = { address };
-			await fetch('/api/v1/user', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data)
-			})
-				.then((res) => {
-					const token = res.headers.get('token');
-
-					if (token) {
-						saveJWT('user', token);
-					}
-
-					return res.json();
-				})
-				.then((res) => {
-					// create and set exp for 1 hour from now
-					const exp = new Date();
-					exp.setHours(exp.getHours() + 1);
-
-					$user = { val: res.data, exp: exp.getTime() };
-				});
-
-			toastMsg = 'Successfully connected to Secret University';
-			toastKind = 'success';
-			toastIsVisible = true;
-		} catch (err) {
-			if (err) {
-				toastMsg = 'There was an error creating or finding your user';
-				toastIsVisible = true;
-			}
-		}
-	}
-
 	async function handleConnect() {
-		console.log('Trying to handle connect');
 		try {
 			await connect();
 
-			console.log(`Secret: ${$secret}`);
+			if ($user && loadJWT('user')) {
+				return Promise.resolve();
+			}
 
 			if ($secret) {
-				console.log(`Secret: ${$secret}`);
-				await getOrCreateUser($secret.val.address);
+				const userResult = await getOrCreateUser($secret.val.address);
+
+				if (userResult) {
+					const exp = new Date();
+					exp.setDate(exp.getDate() + 1);
+
+					$user = { val: userResult, exp: exp.getTime() };
+				}
 			} else {
-				toastMsg = 'There was an error connecting you to Secret University';
-				toastIsVisible = true;
+				return Promise.reject(
+					'Problem saving secret.js instance to app store. Please report if you see this.'
+				);
 			}
-		} catch (_err) {}
+
+			if ($user && !isExpired($user.exp)) {
+				return;
+			} else {
+				retry(async () => {
+					if ($secret) {
+						await getOrCreateUser($secret.val.address);
+					}
+				}).catch((err) => {
+					toastMsg = err;
+					toastIsVisible = true;
+				});
+			}
+		} catch (_err) {
+			toastMsg = 'There was an error connecting you to Secret University';
+			toastIsVisible = true;
+		}
 	}
 </script>
 
@@ -134,7 +119,7 @@
 			</div>
 			<div class="hidden md:ml-10 md:block md:space-x-10">
 				<span class="relative inline-flex items-center gap-x-2">
-					<a href="/learn" class="hover:text-gray-text font-medium text-white"> Learn </a>
+					<a href="/learn" class="font-medium text-white hover:text-gray"> Learn </a>
 					<img
 						on:click={() => (learn = true)}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
@@ -166,16 +151,16 @@
 
 		<div class="hidden pr-4 text-right md:block">
 			<span class="relative inline-flex rounded-md shadow-md">
-				{#if $secret}
+				{#if $secret && $user && loadJWT('user')}
 					<button
 						on:click={() => goto('/dashboard')}
-						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-4 py-2 font-semibold text-white"
 						>Dashboard</button
 					>
 				{:else}
 					<button
 						on:click={handleConnect}
-						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white"
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-4 py-2 font-semibold text-white"
 					>
 						<div class="flex">
 							<img
