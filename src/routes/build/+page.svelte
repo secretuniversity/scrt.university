@@ -57,7 +57,7 @@
 <div class="mt-20 mb-36 flex justify-center">
 	<button
 		type="button"
-		class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+		class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-darker-blue"
 		>Become A Contributor</button
 	>
 </div>
@@ -76,7 +76,7 @@
 			<a
 				href="/bounties"
 				type="button"
-				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm"
+				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-dark-2 shadow-sm hover:bg-darker-light-cream"
 				>View Bounties</a
 			>
 		</div>

@@ -1,18 +1,23 @@
 <script lang="ts">
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
+	import DevImage from '$lib/assets/illustrations/dev.svg';
+	import WriterImage from '$lib/assets/illustrations/writing.svg';
+	import ProfessorImage from '$lib/assets/illustrations/professor.svg';
+	import ContentCreatorImage from '$lib/assets/illustrations/content_creator.svg';
 
 	const pageTitle = 'Submit';
+	const pageDescription =
+		'Are you ready to join Secret University? Select one of the types of contributions listed below to get started.';
 </script>
 
 <Head {pageTitle} />
 
 <section class="pt-36 text-white">
-	<div class="mx-auto max-w-3xl">
+	<div class="mx-auto max-w-5xl">
 		<h1 class="mb-4 text-center text-6xl font-bold">Submit Your Contribution</h1>
-		<p class="text-center text-lg">
-			Are you ready to join Secret University? Select one of the types of contributions listed
-			below, submit your work, and become a member of the university
+		<p class="mx-auto text-center text-lg max-w-2xl">
+			{pageDescription}
 		</p>
 	</div>
 </section>
@@ -38,11 +43,11 @@
 			</div>
 		</div>
 
-		<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+		<img class="h-72 w-72 justify-self-start" src={WriterImage} alt="Submit an article" />
 	</div>
 
 	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
-		<img class="h-72 w-72 justify-self-end" src={GoldPot} alt="Pot of gold" />
+		<img class="h-72 w-72 justify-self-end" src={ContentCreatorImage} alt="Submit a video" />
 
 		<div class="col-span-2 grid gap-y-4">
 			<p class="text-base font-semibold text-dark-turquoise-b">VIDEOS & SCREENCASTS</p>
@@ -85,11 +90,11 @@
 			</div>
 		</div>
 
-		<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+		<img class="h-72 w-72 justify-self-start" src={DevImage} alt="Submit a secret box" />
 	</div>
 
 	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
-		<img class="h-72 w-72 justify-self-end" src={GoldPot} alt="Pot of gold" />
+		<img class="h-72 w-72 justify-self-end" src={ProfessorImage} alt="Submit a pathway" />
 		<div class="col-span-2 grid gap-y-4">
 			<p class="text-base font-semibold text-dark-turquoise-b">SECRET PATHWAYS</p>
 			<p class="text-4xl font-bold">For the Professor</p>

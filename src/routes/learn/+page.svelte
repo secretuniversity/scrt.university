@@ -93,78 +93,45 @@
 	</div>
 </div>
 
-<SectionHeader
-	title={"Builder's Toolkit"}
-	subtitle={'Pick your tools'}
-	description={'Jumpstart your development with native tools built for Secret Network.'}
-/>
+<div class="bg-dark-2 py-64">
+	<SectionHeader
+		title={"Builder's Toolkit"}
+		subtitle={'Pick your tools'}
+		description={'Jumpstart your development with native tools built for Secret Network.'}
+	/>
 
-<div class="bg-dark-2 pb-8">
-	<div class="mx-auto grid h-72 w-fit grid-cols-5 gap-x-8">
-		<ToolCard
-			title={'Secret.js'}
-			description={'The JavaScript SDK for Secret Network'}
-			langs={['JavaScript']}
-			url={'https://secretjs.scrt.network/'}
-		/>
-		<ToolCard
-			title={'Griptape.js'}
-			description={'A JavaScript framework for building dApps on Secret Network'}
-			langs={['JavaScript']}
-			url={'https://griptapejs.com/'}
-		/>
-		<ToolCard
-			title={'Fadroma'}
-			description={'A dApp development platform for Typescript and Rust'}
-			langs={['Rust', 'Typescript']}
-			url={'https://github.com/hackbg/fadroma'}
-		/>
-		<ToolCard
-			title={'Polar'}
-			description={'A framework for building secret smart contracts'}
-			langs={['Rust']}
-			url={'https://docs.arufaresearch.com/'}
-		/>
-		<ToolCard
-			title={'Secret Py'}
-			description={'The Python SDK for Secret Network'}
-			langs={['Python']}
-			url={'https://github.com/secretanalytics/secret-sdk-python'}
-		/>
+	<div class="mt-12 bg-dark-2">
+		<div class="mx-auto grid h-72 w-fit grid-cols-5 gap-x-8">
+			<ToolCard
+				title={'Secret.js'}
+				description={'The JavaScript SDK for Secret Network'}
+				langs={['JavaScript']}
+				url={'https://secretjs.scrt.network/'}
+			/>
+			<ToolCard
+				title={'Griptape.js'}
+				description={'A JavaScript framework for building dApps on Secret Network'}
+				langs={['JavaScript']}
+				url={'https://griptapejs.com/'}
+			/>
+			<ToolCard
+				title={'Fadroma'}
+				description={'A dApp development platform for Typescript and Rust'}
+				langs={['Rust', 'Typescript']}
+				url={'https://github.com/hackbg/fadroma'}
+			/>
+			<ToolCard
+				title={'Polar'}
+				description={'A framework for building secret smart contracts'}
+				langs={['Rust']}
+				url={'https://docs.arufaresearch.com/'}
+			/>
+			<ToolCard
+				title={'Secret Py'}
+				description={'The Python SDK for Secret Network'}
+				langs={['Python']}
+				url={'https://github.com/secretanalytics/secret-sdk-python'}
+			/>
+		</div>
 	</div>
 </div>
-
-<!-- <SectionHeader
-	title={'Community Showcase'}
-	subtitle={'Learn from devs like you'}
-	description={'Cover valuable lessons from the secret Network community.'}
-/>
- -->
-<!-- <Features
-	features={[
-		{
-			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-			alt: '',
-			title: 'Video Example',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-			tag: null
-		},
-		{
-			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-			alt: '',
-			title: 'Guide Example',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-			tag: null
-		},
-		{
-			img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-			alt: '',
-			title: 'Another Example',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas, nisi eu consequat condimentum, leo lorem feugiat leo, sed gravida sem mi in libero',
-			tag: null
-		}
-	]}
-/> -->

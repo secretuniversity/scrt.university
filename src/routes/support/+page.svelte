@@ -3,8 +3,8 @@
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
 	import SupportTicket from '$lib/components/support-ticket/SupportTicket.svelte';
 	import DiscordLogo from '$lib/assets/discord_logo.svg';
-	import GithubLogo from '$lib/assets/github_logo.png';
-	import SecretLogo from '$lib/assets/secret_logo.svg';
+	import GithubLogo from '$lib/assets/github_logo_white.svg';
+	import SecretLogo from '$lib/assets/secret_white.svg';
 	import Staking from '$lib/components/Staking.svelte';
 	import Image from '$lib/assets/illustrations/support.svg';
 
@@ -39,18 +39,20 @@
 	<Staking />
 </div>
 
-<div id="community" class="bg-dark-2 pb-36">
+<div id="community" class="bg-dark-2 py-36">
 	<SectionHeader
 		title={'Secret Community'}
 		subtitle={'Join the community'}
 		description={'Find the answers to your questions in one of our many community channels.'}
 	/>
 
-	<div class="mx-auto mt-8 flex max-w-7xl gap-x-12">
+	<div class="mx-auto flex max-w-7xl gap-x-12 py-12">
 		<div class="flex flex-col items-center space-y-4 lg:w-4/12">
-			<img src={DiscordLogo} alt="Join the Secret Network Discord" />
+			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-red">
+				<img src={DiscordLogo} alt="Join the Secret Network Discord" />
+			</div>
 			<h2 class="text-lg font-semibold text-white">Chat on Discord</h2>
-			<p class="text-center text-base text-gray">
+			<p class="mb-2 max-w-xs text-center text-base text-gray">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
@@ -61,9 +63,15 @@
 		</div>
 
 		<div class="flex flex-col items-center space-y-4 lg:w-4/12">
-			<img class="h-14 w-40" src={SecretLogo} alt="Join discussions on the Secret Network forum." />
+			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-turquoise-g">
+				<img
+					class="h-20 w-auto"
+					src={SecretLogo}
+					alt="Join discussions on the Secret Network forum."
+				/>
+			</div>
 			<h2 class="text-lg font-semibold text-white">Post on the Forum</h2>
-			<p class="text-center text-base text-gray">
+			<p class="mb-2 max-w-xs text-center text-base text-gray">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
@@ -74,9 +82,11 @@
 		</div>
 
 		<div class="flex flex-col items-center space-y-4 lg:w-4/12">
-			<img src={GithubLogo} alt="Check out Secret University on Github" />
+			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-blue">
+				<img src={GithubLogo} alt="Check out Secret University on Github" />
+			</div>
 			<h2 class="text-lg font-semibold text-white">Find us on Github</h2>
-			<p class="text-center text-base text-gray">
+			<p class="mb-2 max-w-xs text-center text-base text-gray">
 				Have real-time discussions with developers building on Secret Network
 			</p>
 			<a
