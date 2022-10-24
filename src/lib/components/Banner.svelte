@@ -3,7 +3,7 @@
 </script>
 
 {#if show}
-	<div id="banner" class="h-10 w-full bg-dark-blue text-sm font-bold text-white">
+	<div id="banner" class="h-12 w-full bg-dark-2 text-sm font-bold text-white">
 		<span class="grid h-full grid-cols-3">
 			<span class="col-start-2 self-center justify-self-center"
 				>Support the core Secret University team by <a
