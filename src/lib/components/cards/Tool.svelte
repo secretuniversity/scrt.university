@@ -55,7 +55,7 @@
 		<p class="mt-2 text-center text-sm text-gray">{description}</p>
 		<a
 			href={url}
-			class="mt-4 inline-flex w-fit self-center justify-self-center rounded-md border px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-dark-purple focus:ring-offset-2"
+			class="mt-4 inline-flex w-fit self-center justify-self-center rounded-md border px-4 py-2 text-sm font-medium text-white shadow-sm hover:text-dark-5"
 			>View</a
 		>
 	</div>
