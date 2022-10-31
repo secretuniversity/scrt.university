@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { toPageTitle } from '$lib/helpers';
 
 	import Head from '$lib/components/Head.svelte';
 	import Review from '$lib/components/Review.svelte';
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
 
-	const pageTitle = toPageTitle($page.params.slug) + ' | Pathways';
+	const pageTitle = '' + ' | Pathways';
 </script>
 
 <Head {pageTitle} />
