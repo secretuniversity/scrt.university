@@ -23,24 +23,7 @@
 	import ClearIcon from '$lib/assets/clear-icon.svg';
 	import '$lib/styles/tiptap.scss';
 
-	export let value = `
-		<h1>👋</h1>
-		<p>This text box will auto-magically render your text as markdown, so you can preview your styled content before submitting it.</p>
-		<p>Code will be syntax highlighted if supported. Here's some JavaScript.</p>
-		<pre><code class="language-javascript">for (var i=1; i <= 20; i++)
-{
-  if (i % 15 == 0)
-    console.log("FizzBuzz");
-  else if (i % 3 == 0)
-    console.log("Fizz");
-  else if (i % 5 == 0)
-    console.log("Buzz");
-  else
-    console.log(i);
-}</code></pre>
-
-		<p>From Secret University to you, we thank you for your contribution and hope to see you more around the university.</p>
-	`;
+	export let value = '';
 
 	let mainMenu: HTMLElement | null;
 	let bubbleMenuElement: HTMLElement | null = null;
