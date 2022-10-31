@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  PUBLIC_SECRET_NETWORK_CHAIN_ID: 'secret-4'
+  PUBLIC_SECRET_NETWORK_GRPC_URL: 'https://grpc.mainnet.secretsaturn.net'
+
 jobs:
   build:
     runs-on: ubuntu-latest
