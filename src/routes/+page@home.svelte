@@ -33,7 +33,7 @@
 					through the steps of building and integrating privacy into your dApps using Secret
 					Network.
 				</p>
-				<button class="rounded-md hover:bg-darker-light-cream bg-light-cream px-8 py-4 text-black"
+				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
 					>Find your path</button
 				>
 			</div>
@@ -54,7 +54,7 @@
 					Secret Boxes can help you get building quicker and learn rapidly. Secret Boxes are
 					self-contained development instances complete with Secret Network integrations.
 				</p>
-				<button class="rounded-md bg-light-cream hover:bg-darker-light-cream px-8 py-4 text-black"
+				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
 					>Open a Box</button
 				>
 			</div>
@@ -69,7 +69,7 @@
 					development and activity on the Secret Network. Find the resources you need to integrate
 					privacy into your next dentralized application.
 				</p>
-				<button class="rounded-md bg-light-cream hover:bg-darker-light-cream px-8 py-4 text-black"
+				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
 					>Browse resources</button
 				>
 			</div>
@@ -165,7 +165,7 @@
 			</p>
 			<a
 				href="https://chat.scrt.network"
-				class="inline-flex items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
+				class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-darker-blue"
 				>Reach Out</a
 			>
 		</div>

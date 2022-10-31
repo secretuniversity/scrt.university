@@ -17,8 +17,8 @@
 
 <section class="min-h-screen">
 	{#if $video}
-		<div class="max-w-5xl mx-auto mt-16">
-			<div class="border-2 border-dark-5 rounded-sm">
+		<div class="mx-auto mt-16 max-w-5xl">
+			<div class="rounded-sm border-2 border-dark-5">
 				<video autoplay controls width="100%" height="auto">
 					<source
 						src="https://storage.googleapis.com/celadon/videos/{$video.file}"
@@ -26,13 +26,13 @@
 					/>
 				</video>
 			</div>
-			<div class="flex items-center mt-4 h-12">
-				<h2 class="text-2xl text-white mr-4">{$video.title}</h2>
+			<div class="mt-4 flex h-12 items-center">
+				<h2 class="mr-4 text-2xl text-white">{$video.title}</h2>
 				{#if contributorName}
-					<p class="text-white text-sm">by {contributorName}</p>
+					<p class="text-sm text-white">by {contributorName}</p>
 				{/if}
 			</div>
-			<p class="text-white text-base mt-4 w-full bg-dark-5 rounded-md p-4">{$video.description}</p>
+			<p class="mt-4 w-full rounded-md bg-dark-5 p-4 text-base text-white">{$video.description}</p>
 		</div>
 	{/if}
 </section>

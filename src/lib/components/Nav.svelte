@@ -29,7 +29,9 @@
 			if (session && !secret) {
 				await handleConnect();
 			}
-		} catch (_err) {}
+		} catch (err) {
+			console.log(err);
+		}
 	});
 
 	function reset() {
@@ -154,13 +156,13 @@
 				{#if $secret && $user && loadJWT('user')}
 					<button
 						on:click={() => goto('/dashboard')}
-						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-4 py-2 font-semibold text-white"
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white hover:bg-darker-blue"
 						>Dashboard</button
 					>
 				{:else}
 					<button
 						on:click={handleConnect}
-						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-4 py-2 font-semibold text-white"
+						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white hover:bg-darker-blue"
 					>
 						<div class="flex">
 							<img

@@ -32,15 +32,15 @@
 
 <section class="min-h-screen py-16 text-white">
 	{#if $article}
-		<div class="flex flex-col items-center justify-center w-full h-full">
-			<p class="text-5xl font-bold text-center">{$article.title}</p>
-			<div id="content" class="w-full max-w-4xl mt-8">
+		<div class="flex h-full w-full flex-col items-center justify-center">
+			<p class="text-center text-5xl font-bold">{$article.title}</p>
+			<div id="content" class="mt-8 w-full max-w-4xl">
 				{@html $article.content}
 			</div>
 		</div>
 	{:else}
-		<div class="flex flex-col items-center justify-center w-full h-full">
-			<h1 class="text-4xl font-bold text-center">Article not found</h1>
+		<div class="flex h-full w-full flex-col items-center justify-center">
+			<h1 class="text-center text-4xl font-bold">Article not found</h1>
 			<p class="mt-4 text-center">The article you are looking for does not exist.</p>
 		</div>
 	{/if}
@@ -48,10 +48,10 @@
 
 <style>
 	#content :global(h1) {
-		@apply text-4xl mb-2;
+		@apply mb-2 text-4xl;
 	}
 
 	#content :global(pre) {
-		@apply bg-dark-4 p-2 my-2 rounded;
+		@apply my-2 rounded bg-dark-4 p-2;
 	}
 </style>

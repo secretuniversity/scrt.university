@@ -65,7 +65,7 @@ export interface Video {
 	file: string;
 	created_at: string;
 	updated_at: string;
-	tags: Array<Tag>
+	tags: Array<Tag>;
 }
 
 export interface Bounty {
@@ -146,12 +146,12 @@ export interface QuizOptionRequest {
 }
 
 export interface ArticleRequest {
-		title: string;
-		description: string;
-		contributor: number;
-		content: string;
-		tags: string[];
-	}
+	title: string;
+	description: string;
+	contributor: number;
+	content: string;
+	tags: string[];
+}
 
 interface ContributorVideo extends Repo {
 	kind: string;

@@ -275,7 +275,7 @@
 						<div class="mt-4 text-center text-dark-5">Unable to find any resources.</div>
 					{/if}
 
-					<div class="grid grid-cols-3 gap-4 auto-rows-max text-white">
+					<div class="grid auto-rows-max grid-cols-3 gap-4 text-white">
 						{#each resources as r}
 							{#if r.type === 'article'}
 								<a
@@ -283,22 +283,22 @@
 									on:click={() => setArticle(r.src)}
 								>
 									<div
-										class="grid grid-cols-2 auto-rows-max w-full h-48 bg-dark-4 rounded-md py-6 px-4"
+										class="grid h-48 w-full auto-rows-max grid-cols-2 rounded-md bg-dark-4 py-6 px-4"
 									>
 										<p
-											class="col-start-2 justify-self-end w-min py-1 px-3 rounded-full bg-dark-orange capitalize"
+											class="col-start-2 w-min justify-self-end rounded-full bg-dark-orange py-1 px-3 capitalize"
 										>
 											{r.type}
 										</p>
-										<h3 class="col-start-1 row-start-1 font-semibold text-xl mb-2">
+										<h3 class="col-start-1 row-start-1 mb-2 text-xl font-semibold">
 											{r.src.title}
 										</h3>
-										<p class="col-start-1 row-start-2 col-span-full pt-4">
+										<p class="col-span-full col-start-1 row-start-2 pt-4">
 											Just as super long description of article. How are we gonna handle all of
 											these words. IDk.
 										</p>
 										{#each r.src.tags as tag}
-											<div class="self-end w-min mt-2">
+											<div class="mt-2 w-min self-end">
 												<TagComponent tag={tag.name} />
 											</div>
 										{/each}
@@ -312,22 +312,22 @@
 									on:click={() => setVideo(r.src)}
 								>
 									<div
-										class="grid grid-cols-2 auto-rows-max w-full h-48 bg-dark-4 rounded-md py-6 px-4"
+										class="grid h-48 w-full auto-rows-max grid-cols-2 rounded-md bg-dark-4 py-6 px-4"
 									>
 										<p
-											class="col-start-2 justify-self-end w-min py-1 px-3 rounded-full bg-dark-orange capitalize"
+											class="col-start-2 w-min justify-self-end rounded-full bg-dark-orange py-1 px-3 capitalize"
 										>
 											{r.type}
 										</p>
-										<h3 class="col-start-1 row-start-1 font-semibold text-xl mb-2">
+										<h3 class="col-start-1 row-start-1 mb-2 text-xl font-semibold">
 											{r.src.title}
 										</h3>
-										<p class="col-start-1 row-start-2 col-span-full pt-4">
+										<p class="col-span-full col-start-1 row-start-2 pt-4">
 											Just as super long description of article. How are we gonna handle all of
 											these words. IDk.
 										</p>
 										{#each r.src.tags as tag}
-											<div class="self-end w-min mt-2">
+											<div class="mt-2 w-min self-end">
 												<TagComponent tag={tag.name} />
 											</div>
 										{/each}

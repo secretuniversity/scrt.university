@@ -1,57 +1,57 @@
-import type { ArticleRequest, PathwayRequest, User } from '$lib/models/index'
+import type { ArticleRequest, PathwayRequest, User } from '$lib/models/index';
 
-type Draft = PathwayRequest | ArticleRequest
-type DraftStorage = { drafts: Record<string, Draft[]> }
+type Draft = PathwayRequest | ArticleRequest;
+type DraftStorage = { drafts: Record<string, Draft[]> };
 
 export function slugify(str: string) {
 	return str
 		.toString()
-		.normalize('NFD') 
-		.replace(/[\u0300-\u036f]/g, '') 
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
 		.toLowerCase()
 		.trim()
-		.replace(/[^a-z0-9 ]/g, '') 
-		.replace(/\s+/g, '-'); 
+		.replace(/[^a-z0-9 ]/g, '')
+		.replace(/\s+/g, '-');
 }
 
 export function unslugify(str: string) {
 	return str
 		.toString()
-		.normalize('NFD') 
-		.replace(/[\u0300-\u036f]/g, '') 
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
 		.toLowerCase()
 		.trim()
-		.replace(/-/g, ' '); 
+		.replace(/-/g, ' ');
 }
 
 export function saveLocalDraft(key: string, value: Draft) {
-	const drafts = localStorage.getItem('drafts')
+	const drafts = localStorage.getItem('drafts');
 
 	if (drafts) {
-		const parsed = JSON.parse(drafts)
+		const parsed = JSON.parse(drafts);
 
 		if (parsed[key] as Draft[]) {
-			parsed[key] = [value, ...parsed[key]]	
+			parsed[key] = [value, ...parsed[key]];
 		} else {
-			parsed[key] = [value]
+			parsed[key] = [value];
 		}
 
-		localStorage.setItem('drafts', JSON.stringify(parsed))
+		localStorage.setItem('drafts', JSON.stringify(parsed));
 	} else {
-		const newDrafts = { drafts: {} } as DraftStorage
-		newDrafts.drafts[key] = [value]
-		localStorage.setItem('drafts', JSON.stringify(newDrafts))
+		const newDrafts = { drafts: {} } as DraftStorage;
+		newDrafts.drafts[key] = [value];
+		localStorage.setItem('drafts', JSON.stringify(newDrafts));
 	}
 }
 
 export function loadLocalDrafts(key: string): Draft[] | null {
 	const drafts = localStorage.getItem('drafts');
 
-	if (!drafts) return null
-	if (!JSON.parse(drafts)[key]) return null
+	if (!drafts) return null;
+	if (!JSON.parse(drafts)[key]) return null;
 
-	return JSON.parse(drafts)[key]
-};
+	return JSON.parse(drafts)[key];
+}
 
 export function saveJWT(name: string, token: string) {
 	sessionStorage.setItem(name, token);
@@ -75,7 +75,7 @@ export async function getOrCreateUser(address: string): Promise<User | null> {
 			body: JSON.stringify(data)
 		})
 			.then((res) => {
-				console.log('HERE')
+				console.log('HERE');
 				const token = res.headers.get('token');
 
 				if (token) {
@@ -85,13 +85,12 @@ export async function getOrCreateUser(address: string): Promise<User | null> {
 				return res.json();
 			})
 			.then((res) => {
-				resolve(res.data as User)
+				resolve(res.data as User);
 			})
 			.catch(() => {
-				reject("Error getting user");
-			})
-
-	})
+				reject('Error getting user');
+			});
+	});
 }
 
 export function retry(fn: () => Promise<any>, retriesLeft = 5, interval = 1000): Promise<any> {
@@ -107,7 +106,7 @@ export function retry(fn: () => Promise<any>, retriesLeft = 5, interval = 1000):
 				// Passing on "reject" is the important part
 				retry(fn, retriesLeft - 1, interval).then(resolve, reject);
 			}, interval);
-		})
+		});
 	});
 }
 

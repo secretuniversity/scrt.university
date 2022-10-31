@@ -1,5 +1,5 @@
 <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-	<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+	<div class="bg-gray-500 fixed inset-0 bg-opacity-75 transition-opacity" />
 
 	<div class="fixed inset-0 z-10 overflow-y-auto">
 		<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -22,11 +22,11 @@
 						</svg>
 					</div>
 					<div class="mt-3 text-center sm:mt-5">
-						<h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">
+						<h3 class="text-gray-900 text-lg font-medium leading-6" id="modal-title">
 							Payment successful
 						</h3>
 						<div class="mt-2">
-							<p class="text-sm text-gray-500">
+							<p class="text-gray-500 text-sm">
 								Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
 							</p>
 						</div>

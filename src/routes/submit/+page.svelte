@@ -16,7 +16,7 @@
 <section class="pt-36 text-white">
 	<div class="mx-auto max-w-5xl">
 		<h1 class="mb-4 text-center text-6xl font-bold">Submit Your Contribution</h1>
-		<p class="mx-auto text-center text-lg max-w-2xl">
+		<p class="mx-auto max-w-2xl text-center text-lg">
 			{pageDescription}
 		</p>
 	</div>

@@ -44,7 +44,7 @@
 	<Toast msg={errMsg} kind="fail" />
 {/if}
 
-<section class="min-h-home-hero mx-24 py-8">
+<section class="mx-24 min-h-home-hero py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
 	<div class="mt-8 max-w-3xl">
 		<h1 class="mb-4 text-5xl font-bold text-white">Secret Pathways</h1>

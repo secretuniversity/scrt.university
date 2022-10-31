@@ -102,9 +102,13 @@
 			});
 	}
 
-	function loadDraft() {}
+	function loadDraft() {
+		console.log('load draft');
+	}
 
-	function saveDraft() {}
+	function saveDraft() {
+		console.log('save draft');
+	}
 
 	function addNewLesson() {
 		const l: LessonRequest = {
@@ -170,55 +174,6 @@
 				return 'E';
 			default:
 				return 'A';
-		}
-	}
-
-	function handlePathwayTitleInput(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.title = el.value;
-		}
-	}
-
-	function handlePathwayDescriptionInput(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.description = el.value;
-		}
-	}
-
-	function handlePathwayDifficultyChange(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.difficulty = el.value;
-		}
-	}
-
-	function handleLessonNameInput(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.lessons[currentLessonIndex].name = el.value;
-		}
-	}
-
-	function handleQuizQuestionInput(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].question = el.value;
-		}
-	}
-	function handleQuizHintInput(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].hint = el.value;
-		}
-	}
-	function handleQuizAnswerChange(e: Event) {
-		if (e.target) {
-			let el: HTMLInputElement = e.target as HTMLInputElement;
-			$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].answer = parseInt(
-				el.value
-			);
 		}
 	}
 
@@ -513,18 +468,18 @@
 			</div>
 		{/if}
 
-		<div class="grid grid-cols-3 w-full gap-x-2">
+		<div class="grid w-full grid-cols-3 gap-x-2">
 			<button
 				on:click={submit}
-				class="w-full bg-dark-blue py-2 rounded-md hover:bg-darker-blue text-white">Submit</button
+				class="w-full rounded-md bg-dark-blue py-2 text-white hover:bg-darker-blue">Submit</button
 			>
 			<button
 				on:click={saveDraft}
-				class="w-full bg-dark-5 py-2 rounded-md hover:bg-dark-4 text-white">Save Draft</button
+				class="w-full rounded-md bg-dark-5 py-2 text-white hover:bg-dark-4">Save Draft</button
 			>
 			<button
 				on:click={loadDraft}
-				class="w-full bg-dark-5 py-2 rounded-md hover:bg-dark-4 text-white">Load Draft</button
+				class="w-full rounded-md bg-dark-5 py-2 text-white hover:bg-dark-4">Load Draft</button
 			>
 		</div>
 	</div>

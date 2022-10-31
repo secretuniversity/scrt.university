@@ -12,7 +12,7 @@
 	<ol class="flex max-w-screen-xl px-4 sm:px-6 lg:px-2">
 		<li class="flex space-x-2">
 			<div class="flex items-center">
-				<a href="/" class="hover:text-dark-4 text-gray">
+				<a href="/" class="text-gray hover:text-dark-4">
 					<!-- Heroicon name: solid/home -->
 					<svg
 						class="h-5 w-5 flex-shrink-0"
@@ -46,7 +46,7 @@
 				</svg> -->
 
 				<div class="flex items-center">
-					<a href={route.path} class="hover:text-dark-5 ml-4 text-sm font-medium text-gray">
+					<a href={route.path} class="ml-4 text-sm font-medium text-gray hover:text-dark-5">
 						{route.name}
 					</a>
 				</div>

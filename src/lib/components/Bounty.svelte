@@ -43,14 +43,14 @@
 				<p>Reward: <span class="font-bold">{bounty.amount}</span> SCRT</p>
 			</div>
 			<p>{bounty.description}</p>
-			<div class="flex mt-2">
+			<div class="mt-2 flex">
 				<a
 					href={bounty.forum_url}
 					disabled={bounty.forum_url ? true : false}
 					class="mr-2 inline-block"
 				>
 					<span
-						class="inline-flex items-center rounded-md bg-dark-blue hover:bg-darker-blue px-4 py-2 font-medium text-white"
+						class="inline-flex items-center rounded-md bg-dark-blue px-4 py-2 font-medium text-white hover:bg-darker-blue"
 					>
 						View Forum Discussion
 					</span>
@@ -61,7 +61,7 @@
 					class="inline-block"
 				>
 					<span
-						class="inline-flex items-center rounded-md bg-dark-blue hover:bg-darker-blue px-4 py-2 font-medium text-white"
+						class="inline-flex items-center rounded-md bg-dark-blue px-4 py-2 font-medium text-white hover:bg-darker-blue"
 					>
 						View Proposal
 					</span>

@@ -197,7 +197,7 @@
 	<Toast msg={toastMsg} kind={toastKind} />
 {/if}
 
-<section class="relative jusitfy-items-center mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
+<section class="jusitfy-items-center relative mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
 	<section class="inline-block w-1/3" id="profile">
 		<div class="grid w-full justify-items-center">
 			<div class="h-48 w-48 rounded-full bg-dark-5" />
