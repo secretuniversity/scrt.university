@@ -2,6 +2,10 @@
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import TagInput from '$lib/components/TagInput.svelte';
+	import Toast from '$lib/components/Toast.svelte';
+	import { contributor } from '$lib/stores';
+	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -24,10 +28,55 @@
 
 	let title = '';
 	let description = '';
-	let file: File;
+	let files: FileList;
+	let tags: string[] = [];
+
+	let toastIsVisible = false;
+	let toastMessage = '';
+	let toastType = '';
+
+	function submit() {
+		const token = loadJWT('contributor');
+
+		if (!$contributor || !token) {
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append('title', title);
+		formData.append('description', description);
+		formData.append('contributor', $contributor.val.id.toString());
+		formData.append('file', files[0]);
+		tags.forEach((tag) => formData.append('tags', tag));
+
+		fetch('/api/v1/video', {
+			method: 'POST',
+			headers: {
+				Token: token
+			},
+			body: formData
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				console.log(res);
+				if (res.success) {
+					toastMessage = 'Video submitted successfully!';
+					toastType = 'success';
+					toastIsVisible = true;
+				} else {
+					toastMessage = 'Video submission failed.';
+					toastType = 'fail';
+					toastIsVisible = true;
+				}
+			});
+	}
 </script>
 
 <Head {pageTitle} />
+
+{#if toastIsVisible}
+	<Toast msg={toastMessage} kind={toastType} />
+{/if}
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
@@ -42,7 +91,7 @@
 				type="text"
 				name="title"
 				id="title"
-				value={title}
+				bind:value={title}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Video..."
 			/>
@@ -53,15 +102,24 @@
 			<textarea
 				name="description"
 				id="description"
-				value={description}
+				bind:value={description}
 				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="Enter a brief introduction of your article..."
 			/>
 		</div>
 
-		<label for="description" class="block text-base font-medium text-white">Video File (.mp4)</label
+		<label class="block cursor-pointer text-sm font-medium text-white" for="file_input"
+			>Upload video <span class="text-dark-5">MP4</span></label
 		>
-		<input value={file} type="file" />
+		<input
+			class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
+			aria-describedby="file_input_help"
+			id="file_input"
+			type="file"
+			bind:files
+		/>
+
+		<TagInput artifact={'video'} on:update={(e) => (tags = e.detail.tags)} />
 
 		<p class="mb-4 text-sm italic text-gray">
 			Before submitting, be sure you have read the standards and practices for creating videos on
@@ -70,7 +128,9 @@
 		</p>
 
 		<div>
-			<button class="mr-2 rounded-md bg-dark-blue px-6 py-2 text-white">Submit</button>
+			<button on:click={submit} class="mr-2 rounded-md bg-dark-blue px-6 py-2 text-white"
+				>Submit</button
+			>
 		</div>
 	</div>
 </section>

@@ -5,10 +5,12 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest } from '$lib/stores';
+	import { pathwayRequest, contributor } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
-	import { getLessonBaseContent } from '$lib/helpers';
+	import { getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import Toast from '$lib/components/Toast.svelte';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit A Pathway';
 	const pageDescription =
@@ -28,7 +30,6 @@
 		}
 	];
 
-	const lessonBaseContent = getLessonBaseContent();
 	const maxAnswers = 5;
 
 	let currentLessonIndex = -1;
@@ -57,6 +58,53 @@
 			}
 		}
 	}
+
+	onMount(() => {
+		if ($contributor && loadJWT('contributor')) {
+			$pathwayRequest.contributor = $contributor.val.id;
+		} else {
+			goto('/');
+		}
+	});
+
+	function submit() {
+		const token = loadJWT('contributor');
+
+		console.log($pathwayRequest);
+
+		if (!token) {
+			toastMsg = 'You must be logged in to submit a pathway.';
+			toastKind = 'fail';
+			toastIsVisible = true;
+			return;
+		}
+
+		fetch('/api/v1/pathway', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Token: token
+			},
+			body: JSON.stringify($pathwayRequest)
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				console.log(res);
+				if (res.success) {
+					toastMsg = 'Pathway submitted successfully!';
+					toastKind = 'success';
+					toastIsVisible = true;
+				} else {
+					toastMsg = res.message;
+					toastKind = 'fail';
+					toastIsVisible = true;
+				}
+			});
+	}
+
+	function loadDraft() {}
+
+	function saveDraft() {}
 
 	function addNewLesson() {
 		const l: LessonRequest = {
@@ -209,8 +257,7 @@
 			<label for="title" class="block text-sm font-medium text-white">Title</label>
 			<div>
 				<input
-					value={$pathwayRequest.title}
-					on:input={handlePathwayTitleInput}
+					bind:value={$pathwayRequest.title}
 					type="text"
 					name="title"
 					id="title"
@@ -224,8 +271,7 @@
 				<textarea
 					name="description"
 					id="description"
-					value={$pathwayRequest.description}
-					on:input={handlePathwayDescriptionInput}
+					bind:value={$pathwayRequest.description}
 					class="block h-28 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Tell your students what they can expect to learn from your pathway..."
 				/>
@@ -233,8 +279,7 @@
 
 			<label for="difficulty" class="block text-sm font-medium text-white">Difficulty</label>
 			<select
-				value={$pathwayRequest.difficulty}
-				on:change={handlePathwayDifficultyChange}
+				bind:value={$pathwayRequest.difficulty}
 				id="difficulty"
 				name="difficulty"
 				class="mt-1 block w-full rounded-md border-2 border-white bg-dark-3 py-2 pl-3 pr-10 text-base text-white focus:border-dark-blue focus:outline-none focus:ring-dark-blue"
@@ -309,11 +354,10 @@
 			<label for="name" class="block text-sm font-medium text-white">Name</label>
 			<div>
 				<input
-					on:input={handleLessonNameInput}
 					type="text"
 					name="name"
 					id="name"
-					value={$pathwayRequest.lessons[currentLessonIndex].name}
+					bind:value={$pathwayRequest.lessons[currentLessonIndex].name}
 					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter the name of your lesson..."
 				/>
@@ -387,11 +431,11 @@
 			<label for="question" class="block text-sm font-medium text-white">Question</label>
 			<div>
 				<input
-					on:input={handleQuizQuestionInput}
 					type="text"
 					name="question"
 					id="question"
-					value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].question}
+					bind:value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex]
+						.question}
 					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter your quiz question..."
 				/>
@@ -400,11 +444,10 @@
 			<label for="hint" class="block text-sm font-medium text-white">Hint (optional)</label>
 			<div>
 				<input
-					on:input={handleQuizHintInput}
 					type="text"
 					name="hint"
 					id="hint"
-					value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].hint}
+					bind:value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].hint}
 					class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 					placeholder="Enter a hint for your quiz..."
 				/>
@@ -413,8 +456,7 @@
 			<label for="answer" class="block text-sm font-medium text-white">Correct Answer</label>
 
 			<select
-				on:change={handleQuizAnswerChange}
-				value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].answer}
+				bind:value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].answer}
 				id="answer"
 				name="answer"
 				class="mt-1 block w-full rounded-md border-2 border-white bg-dark-3 py-2 pl-3 pr-10 text-base text-white focus:border-dark-blue focus:outline-none focus:ring-dark-blue"
@@ -470,6 +512,21 @@
 				</div>
 			</div>
 		{/if}
+
+		<div class="grid grid-cols-3 w-full gap-x-2">
+			<button
+				on:click={submit}
+				class="w-full bg-dark-blue py-2 rounded-md hover:bg-darker-blue text-white">Submit</button
+			>
+			<button
+				on:click={saveDraft}
+				class="w-full bg-dark-5 py-2 rounded-md hover:bg-dark-4 text-white">Save Draft</button
+			>
+			<button
+				on:click={loadDraft}
+				class="w-full bg-dark-5 py-2 rounded-md hover:bg-dark-4 text-white">Load Draft</button
+			>
+		</div>
 	</div>
 
 	<div
@@ -485,10 +542,7 @@
 		{/if}
 		{#if menu === 'lesson'}
 			<div class="h-full overflow-hidden rounded-md border border-solid border-white text-white">
-				<TipTap
-					on:update={handleLessonContentChange}
-					bind:value={$pathwayRequest.lessons[currentLessonIndex].content}
-				/>
+				<TipTap value={getLessonBaseContent()} on:update={handleLessonContentChange} />
 			</div>
 		{/if}
 
@@ -505,11 +559,10 @@
 					class="mb-4 h-[250px] overflow-hidden rounded-md border border-solid border-white text-white"
 				>
 					<TipTap
+						value={'Enter your answer option here as <i>markdown</i>.'}
 						on:update={(e) => {
 							handleQuizOptionContentChange(e.detail.content, i);
 						}}
-						bind:value={$pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex]
-							.options[i].content}
 					/>
 				</div>
 			{/each}
