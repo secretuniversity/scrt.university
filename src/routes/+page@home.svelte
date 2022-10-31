@@ -24,8 +24,8 @@
 	</div>
 
 	<div class="bg-dark-2 text-white">
-		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-center py-64">
-			<div class="col-span-6 justify-self-start">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-items-center py-64">
+			<div class="col-span-6 p-12">
 				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">PATHWAYS</p>
 				<h2 class="mb-4 text-7xl font-semibold">Find your path</h2>
 				<p class="mb-4 max-w-xl text-base">
@@ -33,30 +33,34 @@
 					through the steps of building and integrating privacy into your dApps using Secret
 					Network.
 				</p>
-				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Find your path</button>
+				<button class="rounded-md hover:bg-darker-light-cream bg-light-cream px-8 py-4 text-black"
+					>Find your path</button
+				>
 			</div>
-			<div class="col-span-6 justify-self-end">
+			<div class="col-span-6">
 				<img class="h-auto w-[32rem]" src={RoadImage} alt="take coures on secret university" />
 			</div>
 		</div>
 
-		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center py-48">
-			<div class="col-span-6 justify-self-start">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-items-center">
+			<div class="col-span-6">
 				<img class="h-auto w-[32rem]" src={BoxImage} alt="utilize secret box starter projects" />
 			</div>
 
-			<div class="col-span-6 justify-self-end">
+			<div class="col-span-6">
 				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">SECRET BOXES</p>
 				<h2 class="mb-4 text-7xl font-semibold">Open a Box</h2>
 				<p class="mb-4 max-w-xl text-base">
 					Secret Boxes can help you get building quicker and learn rapidly. Secret Boxes are
 					self-contained development instances complete with Secret Network integrations.
 				</p>
-				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Open a Box</button>
+				<button class="rounded-md bg-light-cream hover:bg-darker-light-cream px-8 py-4 text-black"
+					>Open a Box</button
+				>
 			</div>
 		</div>
 
-		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center py-64">
+		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-items-center py-64">
 			<div class="col-span-6">
 				<p class="mb-6 text-sm font-bold text-dark-turquoise-g">RESOURCES</p>
 				<h2 class="mb-4 text-7xl font-semibold">Browse our library</h2>
@@ -65,10 +69,12 @@
 					development and activity on the Secret Network. Find the resources you need to integrate
 					privacy into your next dentralized application.
 				</p>
-				<button class="rounded-md bg-light-orange px-8 py-4 text-black">Browse resources</button>
+				<button class="rounded-md bg-light-cream hover:bg-darker-light-cream px-8 py-4 text-black"
+					>Browse resources</button
+				>
 			</div>
 
-			<div class="col-span-6 justify-self-end">
+			<div class="col-span-6">
 				<img
 					class="h-auto w-[32rem]"
 					src={LibraryImage}
@@ -159,7 +165,7 @@
 			</p>
 			<a
 				href="https://chat.scrt.network"
-				class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
+				class="inline-flex items-center rounded-md border border-transparent hover:bg-darker-blue bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm"
 				>Reach Out</a
 			>
 		</div>
