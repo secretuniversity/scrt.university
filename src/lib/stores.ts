@@ -17,6 +17,12 @@ import type {
 	Video
 } from './models/index';
 
+interface Notification {
+	msg: string;
+	hasError: boolean;
+	loading: boolean;
+}
+
 interface SecretStore {
 	val: SecretNetworkClient;
 	exp: number;
@@ -72,6 +78,7 @@ interface BoxesStore {
 	exp: number;
 }
 
+export const notification: Writable<Notification | null> = writable(null);
 export const secret: Writable<SecretStore | null> = writable(null);
 export const user: Writable<UserStore | null> = writable(null);
 export const bookmarks: Writable<BookmarksStore | null> = writable(null);
