@@ -1,143 +1,245 @@
 <script lang="ts">
-	import { user, contributions, bookmarks } from '$lib/stores';
 	import Head from '$lib/components/Head.svelte';
+	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+	import Toast from '$lib/components/Toast.svelte';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import type { Bookmark, Contribution, User } from '$lib/models';
-	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+	import { secret, user, contributor, contributions, bookmarks } from '$lib/stores';
+	import type { Bookmark, Contributor, Contribution, User } from '$lib/models';
+	import { loadJWT, saveJWT, getOrCreateUser } from '$lib/helpers';
+	import { connect } from '$lib/helpers/keplr';
+	import { goto } from '$app/navigation';
+
+	let toastIsVisible = false;
+	let toastKind = 'fail';
+	let toastMsg = '';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';
 	const views = {
-		contributions: 'contributions',
-		bookmarks: 'bookmarks',
+		profile: 'profile',
 		settings: 'settings'
 	};
 
-	let view = views.contributions;
-	let address = 'secret1q4vgdvkqcp20e7mzz0tnfx9rpy6fp0ykr8cxam';
+	let view = views.profile;
 
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
 
+	let renderBecomeContributorBtn = false;
+	let renderContributionSubmissionBtn = false;
+
 	onMount(async () => {
-		// Get user, contributions, and bookmarks, if not in store
-		const reqs = [];
+		let addr = '';
 
-		if ($user.id === 0) {
-			reqs.push(getUser);
+		if (!loadJWT('user')) {
+			goto('/');
+			return Promise.reject();
 		}
 
-		if ($contributions.data.length === 0) {
-			reqs.push(getUserContributions);
+		if (!$secret) {
+			await connect();
+		} else {
+			addr = $secret.val.address;
 		}
 
-		if ($bookmarks.data.length === 0) {
-			reqs.push(getUserBookmarks);
+		if (loadJWT('contributor') && $contributor) {
+			renderContributionSubmissionBtn = true;
+		} else {
+			renderBecomeContributorBtn = true;
 		}
 
 		try {
-			const [userResponse, bookmarkResponse, contributionResponse] = await Promise.all([
-				getUser,
-				getUserBookmarks,
-				getUserContributions
-			]);
+			const exp = new Date();
+			exp.setHours(exp.getHours() + 1);
+
+			if (!$user || !$contributor) {
+				console.log('trying to get user and contributor');
+
+				const [userResult, contributorResult] = await Promise.all([
+					getOrCreateUser(addr),
+					tryLoginContributor()
+				]);
+
+				if (userResult) {
+					console.log(userResult);
+					$user = { val: userResult, exp: exp.getTime() };
+				}
+
+				if (contributorResult) {
+					$contributor = { val: contributorResult, exp: exp.getTime() };
+				}
+
+				if ($contributor) {
+					renderContributionSubmissionBtn = true;
+				} else {
+					renderBecomeContributorBtn = true;
+				}
+			}
+
+			if (!$contributions || !$bookmarks) {
+				const [contributionsResult, bookmarksResult] = await Promise.all([
+					getContributions(),
+					getBookmarks()
+				]);
+
+				console.log({ contributionsResult, bookmarksResult });
+
+				if (contributionsResult) {
+					$contributions = { val: contributionsResult, exp: exp.getTime() };
+				}
+
+				if (bookmarksResult) {
+					$bookmarks = { val: bookmarksResult, exp: exp.getTime() };
+				}
+			}
 		} catch (err) {
-			// Fail toast
+			console.log(err);
+			toastMsg = err as string;
+			toastIsVisible = true;
 		}
 	});
 
-	async function getUser(): Promise<User> {
+	async function tryLoginContributor(): Promise<Contributor | null> {
 		return new Promise((res, rej) => {
-			fetch(`/api/v1/user/${$user.id}`)
-				.then((res) => res.json())
-				.then((data) => res(data as User));
+			const userToken = loadJWT('user');
+
+			if (!userToken) {
+				return rej('No user token found');
+			}
+
+			if ($user) {
+				console.log($user);
+				fetch(`/api/v1/contributor/login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Token: userToken
+					},
+					body: JSON.stringify({
+						address: $user.val.address,
+						name: null
+					})
+				})
+					.then((res) => {
+						let token = res.headers.get('Token');
+
+						if (token) {
+							saveJWT('contributor', token);
+						}
+
+						return res.json();
+					})
+					.then((result) => {
+						if (!result.data) {
+							return res(null);
+						}
+
+						const c: Contributor = {
+							id: result.data.id,
+							address: result.data.address,
+							name: result.data.name
+						};
+						res(c);
+					})
+					.catch((_err) => {
+						return rej('Failed to login contributor');
+					});
+			}
 		});
 	}
 
-	async function getUserBookmarks(): Promise<Array<Bookmark>> {
+	async function getBookmarks(): Promise<Array<Bookmark> | null> {
 		return new Promise((res, rej) => {
-			fetch(`/api/v1/bookmarks/${$user.id}`)
-				.then((res) => res.json())
-				.then((data) => res(data as Array<Bookmark>));
+			if ($user) {
+				fetch(`/api/v1/bookmarks/${$user.val.id}`)
+					.then((res) => res.json())
+					.then((result) => {
+						const b: Array<Bookmark> = result.data;
+						res(b);
+					});
+			} else {
+				rej('No user in storage');
+			}
 		});
 	}
 
-	async function getUserContributions(): Promise<Array<Contribution>> {
+	async function getContributions(): Promise<Array<Contribution> | null> {
 		return new Promise((res, rej) => {
-			fetch(`/api/v1/contributions/${$user.id}`)
-				.then((res) => res.json())
-				.then((data) => res(data as Array<Contribution>));
+			const token = loadJWT('contributor');
+
+			if (!token) {
+				return rej('No contributor token found');
+			}
+
+			if ($contributor) {
+				fetch(`/api/v1/contributions/${$contributor.val.id}`, {
+					headers: {
+						Token: token
+					}
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						const c: Array<Contribution> = data.data;
+						res(c);
+					})
+					.catch((err) => {
+						rej('There was a problem finding your contributions');
+					});
+			}
 		});
 	}
 </script>
 
 <Head pageTitle={title} />
 
-<section class="jusitfy-items-center mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
-	<section class="inline-block w-1/3" id="profile">
-		<div class="h-fit rounded-lg bg-dark-4 p-6">
-			<!-- <img src="" alt="" /> -->
-			<div class="flex-col items-center">
-				<div class="h-32 w-32 rounded-full bg-dark-3 " />
-				<div class="self-end px-2">
-					<div class="py-2">{address}</div>
-					<div
-						on:click={() => {
-							view = views.settings;
-						}}
-						class="cursor-pointer rounded-md bg-dark-3 py-1 text-center"
-					>
-						Edit Profile
-					</div>
-				</div>
-			</div>
-		</div>
+{#if toastIsVisible}
+	<Toast msg={toastMsg} kind={toastKind} />
+{/if}
 
-		<div
-			on:click={() => {
-				view = views.contributions;
-			}}
-			class="mb-0.5 mt-2 cursor-pointer rounded-t-xl bg-dark-4 p-4"
-		>
-			Contributions
-		</div>
-		<div
-			on:click={() => {
-				view = views.bookmarks;
-			}}
-			class="mb-0.5 cursor-pointer bg-dark-4 p-4"
-		>
-			Bookmarks
-		</div>
-		<div
-			on:click={() => {
-				view = views.settings;
-			}}
-			class="cursor-pointer rounded-b-xl bg-dark-4 p-4"
-		>
-			Settings
+<section class="relative jusitfy-items-center mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
+	<section class="inline-block w-1/3" id="profile">
+		<div class="grid w-full justify-items-center">
+			<div class="h-48 w-48 rounded-full bg-dark-5" />
+			{#if $contributor}
+				<div class="py-2">Hey, {$contributor.val.name} 👋</div>
+			{:else}
+				<div class="py-2">Your Dashboard</div>
+			{/if}
+			<div
+				on:click={() => {
+					view = views.settings;
+				}}
+				class="w-max cursor-pointer rounded-md bg-dark-4 py-2 px-4 text-center"
+			>
+				Edit Profile
+			</div>
 		</div>
 	</section>
 
 	<section class="inline-block w-2/3">
 		<div class="relative flex w-full justify-end">
-			<button
-				on:click|preventDefault={() => (contributorModalActive = true)}
-				class="mb-4 mr-4 rounded-md bg-dark-4 py-2 px-4">Become A Contributor</button
-			>
+			{#if renderBecomeContributorBtn}
+				<button
+					on:click|preventDefault={() => (contributorModalActive = true)}
+					class="mb-4 mr-4 rounded-md bg-dark-4 py-2 px-4">Become A Contributor</button
+				>
+			{/if}
 
-			<a
-				class="mb-4 box-border block rounded-tl-md rounded-bl-md border-r-2 border-dark-3 bg-dark-4 py-2 px-4"
-				href="/submit">&plus; New Contribution</a
-			>
+			{#if renderContributionSubmissionBtn}
+				<!-- content here -->
+				<a
+					class="mb-4 box-border block rounded-tl-md rounded-bl-md border-r-2 border-dark-3 bg-dark-4 py-2 px-4"
+					href="/submit">&plus; New Contribution</a
+				>
 
-			<button
-				class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4"
-				on:click|preventDefault={() => (contributionDropdownActive = true)}
-			>
-				<img class="h-4 w-4" src={ChevronDown} alt="Choose your contribution" />
-			</button>
+				<button
+					class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4"
+					on:click|preventDefault={() => (contributionDropdownActive = true)}
+				>
+					<img class="h-4 w-4" src={ChevronDown} alt="Choose your contribution" />
+				</button>
+			{/if}
 
 			{#if contributionDropdownActive}
 				<div
@@ -154,48 +256,28 @@
 				</div>
 			{/if}
 		</div>
-		{#if view === views.contributions}
+		{#if view === views.profile}
 			<div class="h-1/2">
 				<h2 class="w-full border-b-4 border-dark-4 text-lg">
 					<div class="w-fit rounded-tr-3xl bg-dark-4 px-8 py-2">
-						Contributions ({$contributions.data.length})
+						Contributions ({$contributions ? $contributions.val.length : 0})
 					</div>
 				</h2>
 
-				{#if $contributions.data.length === 0}
+				{#if !$contributions}
 					<div class="mt-4 text-center text-gray">You have no published contributions yet.</div>
-				{/if}
-
-				{#each $contributions.data as c}
-					<div>Some contribution</div>
-				{/each}
-			</div>
-
-			<div>
-				<h2 class="w-full border-b-4 border-dark-4 text-lg">
-					<div class="w-fit rounded-tr-3xl bg-dark-4 px-8 py-2">
-						In Review ({$contributions.data.length})
+				{:else}
+					<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-2 gap-6 px-8 pb-4">
+						{#each $contributions.val as c}
+							<div class="grid h-32 w-full grid-rows-3 rounded-xl bg-dark-4 py-4 px-6">
+								<p class="h-min justify-self-end rounded-full bg-dark-blue py-2 px-4">{c.kind}</p>
+								<h3 class="text-lg font-semibold">{c.title}</h3>
+								<p class="max-w-[80%]">{c.description}</p>
+							</div>
+						{/each}
 					</div>
-				</h2>
-
-				{#if $contributions.data.length === 0}
-					<div class="mt-4 text-center text-gray">You have no contributions in review.</div>
 				{/if}
-
-				{#each $contributions.data as c}
-					<div>Some contribution</div>
-				{/each}
 			</div>
-		{/if}
-
-		{#if view === views.bookmarks}
-			<h2 class="w-full border-b-2 border-white py-2 text-xl">
-				Bookmarks ({$bookmarks.data.length})
-			</h2>
-
-			{#each $bookmarks.data as b}
-				<div>Some bookmark</div>
-			{/each}
 		{/if}
 
 		{#if view === views.settings}
