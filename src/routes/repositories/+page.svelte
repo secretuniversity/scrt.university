@@ -7,6 +7,8 @@
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
+	import { repos, boxes } from '$lib/stores';
+	import { genExp } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Repositories';
@@ -22,15 +24,19 @@
 	];
 	const FILTER_SECTIONS = ['Type', 'Date', 'Tags'];
 
-	let repos: Array<Repo> = [];
-	let boxes: Array<SecretBox> = [];
-	let tags: Array<Tag> = [];
+	let tags: Tag[] = [];
 
 	onMount(async () => {
 		try {
-			boxes = await getBoxes();
-			repos = await getRepos();
-			tags = [...(await getRepoTags()), ...(await getBoxesTags())];
+			const data = await getAllRepos();
+
+			if (data && data.repos) {
+				$repos = { val: data.repos, exp: genExp() };
+			}
+
+			if (data && data.boxes) {
+				$boxes = { val: data.boxes, exp: genExp() };
+			}
 		} catch (err) {
 			// Fail toast
 		}
@@ -40,19 +46,20 @@
 		console.log(e.detail.val);
 	}
 
-	async function getBoxes(): Promise<Array<SecretBox>> {
+	async function getAllRepos(): Promise<{ repos: Repo[]; boxes: SecretBox[] } | null> {
 		return new Promise((res, rej) => {
-			fetch('/api/v1/repos/secret_box/0')
-				.then((response) => response.json())
-				.then((data) => res(data as Array<SecretBox>));
-		});
-	}
-
-	async function getRepos(): Promise<Array<Repo>> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/repos/0')
-				.then((response) => response.json())
-				.then((data) => res(data as Array<Repo>));
+			fetch('/api/v1/repos/all/0')
+				.then((r) => r.json())
+				.then((r) => {
+					if (r.data) {
+						res({ repos: r.data.repos, boxes: r.data.boxes });
+					} else {
+						res(null);
+					}
+				})
+				.catch(() => {
+					rej('Failed to fetch repos');
+				});
 		});
 	}
 
@@ -152,7 +159,7 @@
 					&times<span class="pl-1 font-bold">tag:</span> essential
 				</p>
 			</div>
-			{#if boxes.length === 0 && repos.length === 0}
+			{#if !$boxes && !$repos}
 				<div class="mt-4 text-center text-gray">Unable to find any repositories.</div>
 			{/if}
 
@@ -160,13 +167,18 @@
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-						{#each boxes as b}
-							<SecretBoxCard title={b.title} description={b.description} tags={b.tags} />
-						{/each}
+						{#if $boxes}
+							{#each $boxes.val as b}
+								<SecretBoxCard title={b.title} description={b.description} />
+							{/each}
+						{/if}
 
-						{#each repos as r}
-							<RepoCard title={r.title} description={r.description} tags={r.tags} />
-						{/each}
+						{#if $repos}
+							<!-- content here -->
+							{#each $repos.val as r}
+								<div>repos</div>
+							{/each}
+						{/if}
 					</div>
 				</div>
 			</div>

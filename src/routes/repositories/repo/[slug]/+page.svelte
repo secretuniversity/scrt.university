@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { toPageTitle } from '$lib/helpers/index';
 	import Head from '$lib/components/Head.svelte';
 
-	const pageTitle = toPageTitle($page.params.slug) + ' | Repositories';
+	const pageTitle = ' | Repositories';
 </script>
 
 <Head {pageTitle} />
