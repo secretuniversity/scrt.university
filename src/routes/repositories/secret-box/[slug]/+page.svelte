@@ -1,9 +1,8 @@
 <script>
 	import { page } from '$app/stores';
-	import { toPageTitle } from '$lib/helpers/index';
 	import Head from '$lib/components/Head.svelte';
 
-	const pageTitle = toPageTitle($page.params.slug) + ' | Secret Box';
+	const pageTitle = $page.params.slug + ' | Secret Box';
 
 	const box = {
 		title: 'Secret Counter',
