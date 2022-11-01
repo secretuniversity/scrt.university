@@ -1,17 +1,11 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/staking.svg';
-	import Toast from '$lib/components/Toast.svelte';
-	import { secret } from '$lib/stores';
+	import { notification, secret } from '$lib/stores';
 
-	// Secret University validator address
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
 
 	let disabled = $secret === null;
 	let scrtAmount: number | null = null;
-
-	let toastIsVisible = false;
-	let toastKind = 'fail';
-	let toastMsg = '';
 
 	async function handleStake() {
 		try {
@@ -27,11 +21,21 @@
 				});
 
 				console.log(sim);
+
+				$notification = {
+					msg: 'Succesfully staked with Secret University. Tyvm!',
+					hasError: false,
+					loading: false
+				};
 			}
 		} catch (err) {
 			console.log(err);
-			toastMsg = 'There was an error staking your SCRT';
-			toastIsVisible = true;
+
+			$notification = {
+				msg: 'There was a problem staking your SCRT. Please try again.',
+				hasError: true,
+				loading: false
+			};
 		}
 	}
 
@@ -39,10 +43,6 @@
 		return `${scrt * 1_000_000}`;
 	}
 </script>
-
-{#if toastIsVisible}
-	<Toast msg={toastMsg} kind={toastKind} />
-{/if}
 
 <div class="container relative mx-auto max-h-fit px-4 sm:px-6 lg:py-20 lg:px-16">
 	<img

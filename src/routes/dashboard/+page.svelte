@@ -1,18 +1,13 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
-	import Toast from '$lib/components/Toast.svelte';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { secret, user, contributor, contributions, bookmarks } from '$lib/stores';
-	import type { Bookmark, Contributor, Contribution, User } from '$lib/models';
+	import { secret, user, contributor, contributions, bookmarks, notification } from '$lib/stores';
 	import { loadJWT, saveJWT, getOrCreateUser } from '$lib/helpers';
 	import { connect } from '$lib/helpers/keplr';
 	import { goto } from '$app/navigation';
-
-	let toastIsVisible = false;
-	let toastKind = 'fail';
-	let toastMsg = '';
+	import type { Bookmark, Contributor, Contribution } from '$lib/models';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';
@@ -94,9 +89,11 @@
 				}
 			}
 		} catch (err) {
-			console.log(err);
-			toastMsg = err as string;
-			toastIsVisible = true;
+			$notification = {
+				msg: err as string,
+				hasError: true,
+				loading: false
+			};
 		}
 	});
 
@@ -192,10 +189,6 @@
 </script>
 
 <Head pageTitle={title} />
-
-{#if toastIsVisible}
-	<Toast msg={toastMsg} kind={toastKind} />
-{/if}
 
 <section class="jusitfy-items-center relative mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
 	<section class="inline-block w-1/3" id="profile">

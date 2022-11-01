@@ -2,6 +2,7 @@
 	import Banner from '$lib/components/Banner.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Nav from '$lib/components/Nav.svelte';
+	import Notification from '$lib/components/Notification.svelte';
 	import '../app.css';
 
 	const minScreenWidth = 961;
@@ -18,11 +19,15 @@
 	<!-- content here -->
 	<div>Sorry! Secret University currently only supports desktop devices.</div>
 {:else}
-	<main class="bg-dark-3">
-		<Banner />
-		<Nav />
-		<slot />
-	</main>
+	<div class="relative">
+		<Notification />
 
-	<Footer />
+		<main class="bg-dark-3 relative">
+			<Banner />
+			<Nav />
+			<slot />
+		</main>
+
+		<Footer />
+	</div>
 {/if}

@@ -1,22 +1,16 @@
 <script lang="ts">
 	import Spinner from '$lib/assets/spinner.svg';
 	import { notification } from '$lib/stores';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
 
-	let visible = false;
-
-	onMount(() => {
-		notification.subscribe((value) => {
-			if (value) {
-				visible = true;
-				setTimeout(() => {
-					hide();
-					notification.set(null);
-				}, 4000);
-			}
-		});
-	});
+	$: {
+		if ($notification) {
+			setTimeout(() => {
+				hide();
+			}, 6000);
+		}
+	}
 
 	onDestroy(() => {
 		notification.set(null);
@@ -27,26 +21,24 @@
 			return '';
 		}
 
-		if ($notification.loading) {
-			return 'bg-gray';
-		} else if ($notification.hasError) {
-			return 'bg-dark-red';
+		if ($notification.hasError) {
+			return 'bg-fail';
 		} else {
-			return 'bg-dark-turquoise-g';
+			return 'bg-success';
 		}
 	}
 
 	function hide() {
-		visible = false;
+		notification.set(null);
 	}
 </script>
 
-{#if visible}
+{#if $notification}
 	<div
 		in:fly={{ y: -200, duration: 1000 }}
 		out:fade
 		on:click={hide}
-		class="absolute bottom-0 right-0 text-base text-white {getBGColor} rounded-md shadow-md"
+		class="cursor-pointer fixed z-10 px-4 py-2 bottom-5 right-5 text-base text-white {getBGColor()} rounded-md shadow-md"
 	>
 		<div class="flex">
 			{#if $notification && $notification.loading}

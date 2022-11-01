@@ -3,8 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import Toast from '$lib/components/Toast.svelte';
-	import { contributor } from '$lib/stores';
+	import { contributor, notification } from '$lib/stores';
 	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Secret Box';
@@ -35,10 +34,6 @@
 	let bannerImg: FileList;
 	let tags: string[] = [];
 
-	let toastMessage = '';
-	let toastIsVisible = false;
-	let toastKind = 'fail';
-
 	function submit() {
 		const token = loadJWT('contributor');
 
@@ -65,30 +60,32 @@
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				if (res.success) {
-					toastMessage = 'Your Secret Box has been submitted!';
-					toastKind = 'success';
-					toastIsVisible = true;
+				if (res.status === 200) {
+					$notification = {
+						msg: 'Your Secret Box has been submitted!',
+						hasError: false,
+						loading: false
+					};
+
 					title = '';
 					description = '';
 					url = '';
 					difficulty = '';
 					devEnv = '';
 					tags = [];
-				} else {
-					toastMessage = 'Something went wrong. Try again.';
-					toastKind = 'fail';
-					toastIsVisible = true;
 				}
+			})
+			.catch((err) => {
+				$notification = {
+					msg: 'Failed to submit Secret Box. Try again.',
+					hasError: true,
+					loading: false
+				};
 			});
 	}
 </script>
 
 <Head {pageTitle} />
-
-{#if toastIsVisible}
-	<Toast />
-{/if}
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

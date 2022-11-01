@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import Toast from '$lib/components/Toast.svelte';
 	import type { Pathway } from '$lib/models/index';
+	import { notification } from '$lib/stores';
 
 	const pageTitle = 'Pathways';
 
@@ -19,30 +19,26 @@
 	];
 
 	let pathways: Array<Pathway> = [];
-	let errVisible = false;
-	let errMsg = '';
 
-	onMount(() => {
+	onMount(async () => {
 		try {
-			fetch('/api/v1/pathways/0')
-				.then((res) => res.json())
-				.then((some) => {
-					if (some.data) {
-						pathways = some.data as Pathway[];
-					}
-				});
+			const res = await fetch('/api/v1/pathways/0');
+			const json = await res.json();
+
+			if (json.data) {
+				pathways = json.data as Pathway[];
+			}
 		} catch (err) {
-			errVisible = true;
-			errMsg = String(err);
+			$notification = {
+				msg: 'Failed to load pathways',
+				hasError: true,
+				loading: false
+			};
 		}
 	});
 </script>
 
 <Head {pageTitle} />
-
-{#if errVisible}
-	<Toast msg={errMsg} kind="fail" />
-{/if}
 
 <section class="mx-24 min-h-home-hero py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

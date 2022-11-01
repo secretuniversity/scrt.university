@@ -4,21 +4,13 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
-	import { retry, getOrCreateUser, loadJWT } from '$lib/helpers/index';
-	import { user, secret } from '$lib/stores';
-	import Toast from '$lib/components/Toast.svelte';
+	import { isExpired, retry, getOrCreateUser, loadJWT } from '$lib/helpers/index';
+	import { notification, user, secret } from '$lib/stores';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
-	import { isExpired } from '$lib/helpers';
-
-	// Dropdown flags
 	let learn = false;
 	let dashboard = false;
-
-	let toastIsVisible = false;
-	let toastKind = 'fail';
-	let toastMsg = '';
 
 	$: if ($navigating) reset();
 
@@ -70,22 +62,24 @@
 						await getOrCreateUser($secret.val.address);
 					}
 				}).catch((err) => {
-					toastMsg = err;
-					toastIsVisible = true;
+					$notification = {
+						msg: 'Problem connecting to server. Please try again.',
+						hasError: true,
+						loading: false
+					};
 				});
 			}
 		} catch (_err) {
-			toastMsg = 'There was an error connecting you to Secret University';
-			toastIsVisible = true;
+			$notification = {
+				msg: 'Problem connecting to Keplr. Please try again.',
+				hasError: true,
+				loading: false
+			};
 		}
 	}
 </script>
 
 <div class="relative">
-	{#if toastIsVisible}
-		<Toast kind={toastKind} msg={toastMsg} />
-	{/if}
-
 	<nav
 		class="pointer-auto relative flex items-center justify-between bg-dark-4 py-3 shadow-xl sm:px-6"
 		aria-label="Global"

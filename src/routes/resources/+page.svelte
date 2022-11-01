@@ -4,9 +4,8 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Filter from '$lib/components/Filter.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import Toast from '$lib/components/Toast.svelte';
 	import TagComponent from '$lib/components/Tag.svelte';
-	import { articles, article, videos, video, resourceTags } from '$lib/stores';
+	import { articles, article, notification, videos, video, resourceTags } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { genExp, slugify } from '$lib/helpers';
 
@@ -33,10 +32,6 @@
 
 	let tags: Tag[] = [];
 	let resources: LocalResource[] = [];
-
-	let toastIsVisible = false;
-	let toastMsg = '';
-	let toastKind = 'fail';
 
 	onMount(async () => {
 		try {
@@ -89,8 +84,11 @@
 				tags = [...tags, ...videoTagResult];
 			}
 		} catch (err) {
-			toastMsg = err as string;
-			toastIsVisible = true;
+			$notification = {
+				msg: err as string,
+				hasError: true,
+				loading: false
+			};
 		}
 	});
 
@@ -176,10 +174,6 @@
 </script>
 
 <Head pageTitle={PAGE_TITLE} />
-
-{#if toastIsVisible}
-	<Toast msg={toastMsg} kind={toastKind} />
-{/if}
 
 <section class="mx-24">
 	<div class="mt-8">

@@ -4,11 +4,9 @@
 	import DraftModal from '$lib/components/ModalDrafts.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import Toast from '$lib/components/Toast.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/developer.svg';
-	import { articleRequest } from '$lib/stores';
-	import { contributor } from '$lib/stores';
+	import { articleRequest, contributor, notification } from '$lib/stores';
 	import { getLessonBaseContent, loadJWT, loadLocalDrafts, saveLocalDraft } from '$lib/helpers';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -34,10 +32,6 @@
 		}
 	];
 
-	let toastIsVisible = false;
-	let toastMessage = '';
-	let toastType = 'fail';
-
 	let draftModalActive = false;
 
 	onMount(() => {
@@ -52,15 +46,7 @@
 	function submit() {
 		let token = loadJWT('contributor');
 
-		if (!token) {
-			toastMessage = 'Could not validate your session. Try refreshing.';
-			toastIsVisible = true;
-			return;
-		}
-
-		if (!$contributor) {
-			toastMessage = 'Could not validate your contributor status. Try refreshing.';
-			toastIsVisible = true;
+		if (!token || !$contributor) {
 			return;
 		}
 
@@ -73,28 +59,23 @@
 			body: JSON.stringify($articleRequest)
 		})
 			.then((res) => {
-				if (!res.ok) {
-					toastMessage = 'Something went wrong. Try again.';
-					toastType = 'fail';
-					toastIsVisible = true;
-				} else {
-					toastMessage = 'Article submitted successfully!';
-					toastType = 'success';
-					toastIsVisible = true;
-				}
+				$notification = {
+					msg: 'Article submitted successfully',
+					hasError: false,
+					loading: false
+				};
 			})
 			.catch((err) => {
-				toastMessage = 'Something went wrong. Try again.';
-				toastIsVisible = true;
+				$notification = {
+					msg: 'Failed to submit article',
+					hasError: true,
+					loading: false
+				};
 			});
 	}
 
 	function saveDraft() {
 		saveLocalDraft('article', $articleRequest);
-
-		toastMessage = 'Draft saved successfully!';
-		toastType = 'success';
-		toastIsVisible = true;
 	}
 
 	function loadDrafts() {
@@ -109,10 +90,6 @@
 </script>
 
 <Head {pageTitle} />
-
-{#if toastIsVisible}
-	<Toast msg={toastMessage} kind={toastType} />
-{/if}
 
 {#if draftModalActive}
 	<DraftModal />

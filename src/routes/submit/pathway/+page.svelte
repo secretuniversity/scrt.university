@@ -5,10 +5,9 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest, contributor } from '$lib/stores';
+	import { pathwayRequest, contributor, notification } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
 	import { getLessonBaseContent, loadJWT } from '$lib/helpers';
-	import Toast from '$lib/components/Toast.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
@@ -36,10 +35,6 @@
 	let currentQuizIndex = -1;
 
 	let menu = 'pathway';
-
-	let toastMsg = '';
-	let toastKind = '';
-	let toastIsVisible = false;
 
 	const editorOffset = 16; // 1rem
 	let formHeight = 0;
@@ -70,12 +65,7 @@
 	function submit() {
 		const token = loadJWT('contributor');
 
-		console.log($pathwayRequest);
-
-		if (!token) {
-			toastMsg = 'You must be logged in to submit a pathway.';
-			toastKind = 'fail';
-			toastIsVisible = true;
+		if (!token || !$contributor) {
 			return;
 		}
 
@@ -87,18 +77,23 @@
 			},
 			body: JSON.stringify($pathwayRequest)
 		})
-			.then((res) => res.json())
 			.then((res) => {
-				console.log(res);
-				if (res.success) {
-					toastMsg = 'Pathway submitted successfully!';
-					toastKind = 'success';
-					toastIsVisible = true;
-				} else {
-					toastMsg = res.message;
-					toastKind = 'fail';
-					toastIsVisible = true;
+				if (res.status === 200) {
+					$notification = {
+						msg: 'Pathway submitted successfully!',
+						hasError: false,
+						loading: false
+					};
+
+					goto('/dashboard');
 				}
+			})
+			.catch((_err) => {
+				$notification = {
+					msg: 'Pathway submission failed. Try again later.',
+					hasError: true,
+					loading: false
+				};
 			});
 	}
 
@@ -137,9 +132,11 @@
 		const options = $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options;
 
 		if (options.length > maxAnswers) {
-			toastKind = 'fail';
-			toastMsg = `Quiz questions can have a max of ${maxAnswers} possible options.`;
-			toastIsVisible = true;
+			$notification = {
+				msg: `You can only have up to ${maxAnswers} answers.`,
+				hasError: true,
+				loading: false
+			};
 			return;
 		}
 
@@ -157,7 +154,6 @@
 
 		menu = str;
 		scrollY = Math.abs(scrollY - formHeight / 6);
-		console.log({ scrollY, formHeight });
 	}
 
 	function getIndexAsLetter(n: number) {
@@ -190,10 +186,6 @@
 <svelte:window bind:scrollY />
 
 <Head {pageTitle} />
-
-{#if toastIsVisible}
-	<Toast msg={toastMsg} kind={toastKind} />
-{/if}
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

@@ -3,15 +3,10 @@
 	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/Bounty.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import { bounties } from '$lib/stores';
+	import { bounties, notification } from '$lib/stores';
 	import { onMount } from 'svelte';
-
 	import type { Bounty } from '$lib/models/index';
 	import { isExpired } from '$lib/helpers';
-
-	let toastIsVisible = false;
-	let toastKind = 'fail';
-	let toastMsg = '';
 
 	onMount(async () => {
 		if (!$bounties || ($bounties && !isExpired($bounties.exp))) {
@@ -30,8 +25,11 @@
 					exp: exp.getTime()
 				};
 			} catch (err) {
-				toastIsVisible = true;
-				toastMsg = 'There was an error fetching bounties';
+				$notification = {
+					msg: 'Failed to load bounties',
+					hasError: true,
+					loading: false
+				};
 			}
 		}
 	});

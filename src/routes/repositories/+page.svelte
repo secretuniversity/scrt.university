@@ -7,7 +7,7 @@
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import { repos, boxes } from '$lib/stores';
+	import { notification, repos, boxes } from '$lib/stores';
 	import { genExp } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
@@ -38,7 +38,11 @@
 				$boxes = { val: data.boxes, exp: genExp() };
 			}
 		} catch (err) {
-			// Fail toast
+			$notification = {
+				msg: 'Unable to fetch repositories. Please try again later.',
+				hasError: true,
+				loading: false
+			};
 		}
 	});
 

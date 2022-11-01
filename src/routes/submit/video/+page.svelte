@@ -3,8 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import Toast from '$lib/components/Toast.svelte';
-	import { contributor } from '$lib/stores';
+	import { contributor, notification } from '$lib/stores';
 	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Video';
@@ -31,10 +30,6 @@
 	let files: FileList;
 	let tags: string[] = [];
 
-	let toastIsVisible = false;
-	let toastMessage = '';
-	let toastType = '';
-
 	function submit() {
 		const token = loadJWT('contributor');
 
@@ -49,6 +44,12 @@
 		formData.append('file', files[0]);
 		tags.forEach((tag) => formData.append('tags', tag));
 
+		$notification = {
+			msg: 'Submitting your video...',
+			hasError: false,
+			loading: true,
+		}
+
 		fetch('/api/v1/video', {
 			method: 'POST',
 			headers: {
@@ -58,25 +59,18 @@
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(res);
-				if (res.success) {
-					toastMessage = 'Video submitted successfully!';
-					toastType = 'success';
-					toastIsVisible = true;
-				} else {
-					toastMessage = 'Video submission failed.';
-					toastType = 'fail';
-					toastIsVisible = true;
+				if (res.status === 200) {
+					$notification = {
+						msg: 'Video submitted successfully',
+						hasError: false,
+						loading: false,
+					}
 				}
 			});
 	}
 </script>
 
 <Head {pageTitle} />
-
-{#if toastIsVisible}
-	<Toast msg={toastMessage} kind={toastType} />
-{/if}
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
