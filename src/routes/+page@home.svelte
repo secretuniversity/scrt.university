@@ -33,8 +33,10 @@
 					through the steps of building and integrating privacy into your dApps using Secret
 					Network.
 				</p>
-				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
-					>Find your path</button
+				<a
+					href="/pathways"
+					class="block w-max rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
+					>Find your path</a
 				>
 			</div>
 			<div class="col-span-6">
@@ -54,8 +56,10 @@
 					Secret Boxes can help you get building quicker and learn rapidly. Secret Boxes are
 					self-contained development instances complete with Secret Network integrations.
 				</p>
-				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
-					>Open a Box</button
+				<a
+					href="/repositories"
+					class="block w-max rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
+					>Open a Box</a
 				>
 			</div>
 		</div>
@@ -69,8 +73,10 @@
 					development and activity on the Secret Network. Find the resources you need to integrate
 					privacy into your next dentralized application.
 				</p>
-				<button class="rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
-					>Browse resources</button
+				<a
+					href="/resources"
+					class="block w-max rounded-md bg-light-cream px-8 py-4 text-black hover:bg-darker-light-cream"
+					>Browse resources</a
 				>
 			</div>
 
