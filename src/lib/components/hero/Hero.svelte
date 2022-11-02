@@ -40,13 +40,13 @@
 </script>
 
 <!-- Hero Content Container -->
-<div class="grid h-home-hero min-h-home-hero">
-	<main class="mx-auto grid h-[90%] max-w-7xl grid-cols-1 grid-rows-1 overflow-hidden">
+<div class="h-home-hero flex-col">
+	<main class="grid items-center h-[88%] w-full overflow-hidden">
 		{#if i === 0}
 			<div
 				in:fade|local={{ duration, delay }}
 				out:fade|local={{ duration }}
-				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-12"
+				class="col-start-1 row-start-1"
 			>
 				<Slide1 />
 			</div>
@@ -56,7 +56,7 @@
 			<div
 				in:fade|local={{ duration, delay }}
 				out:fade|local={{ duration }}
-				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
+				class="col-start-1 row-start-1"
 			>
 				<Slide2 />
 			</div>
@@ -66,7 +66,7 @@
 			<div
 				in:fade|local={{ duration, delay }}
 				out:fade|local={{ duration }}
-				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
+				class="col-start-1 row-start-1"
 			>
 				<Slide3 />
 			</div>
@@ -76,28 +76,28 @@
 			<div
 				in:fade|local={{ duration, delay }}
 				out:fade|local={{ duration }}
-				class="col-start-1 row-start-1 grid grid-cols-12 gap-4 pt-44 pb-48"
+				class="col-start-1 row-start-1"
 			>
 				<Slide4 />
 			</div>
 		{/if}
 	</main>
-	<div class="flex h-[10%] justify-center gap-x-2">
+	<div class="flex h-[12%] w-max mx-auto space-x-2">
 		<div
 			on:click={() => clear(0)}
-			class="h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
+			class="cursor-pointer h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(1)}
-			class="h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
+			class="cursor-pointer h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(2)}
-			class="h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
+			class="cursor-pointer h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(3)}
-			class="h-4 w-4 rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
+			class="cursor-pointer h-4 w-4 rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
 		/>
 	</div>
 </div>
