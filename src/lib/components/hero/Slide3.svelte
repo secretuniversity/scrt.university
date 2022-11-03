@@ -4,8 +4,8 @@
 	import Image3 from '$lib/assets/illustrations/hello_box.svg';
 </script>
 
-<div class="flex justify-center items-center">
-	<div class="text-left max-w-2xl">
+<div class="flex items-center justify-center">
+	<div class="max-w-2xl text-left">
 		<h1>
 			<span class="block text-4xl font-extrabold tracking-tight xl:text-8xl">
 				<span class="block text-white">Explore</span>
@@ -23,9 +23,9 @@
 	</div>
 	<div class="relative">
 		<div class="relative mx-auto w-max">
-			<img class="w-full h-full" src={Image} alt="Explore Secret Boxes" />
-			<img class="ml-16 w-full h-full" src={Image2} alt="Explore Secret Boxes" />
-			<img class="w-full h-full" src={Image3} alt="Explore Secret Boxes" />
+			<img class="h-full w-full" src={Image} alt="Explore Secret Boxes" />
+			<img class="ml-16 h-full w-full" src={Image2} alt="Explore Secret Boxes" />
+			<img class="h-full w-full" src={Image3} alt="Explore Secret Boxes" />
 		</div>
 	</div>
 </div>

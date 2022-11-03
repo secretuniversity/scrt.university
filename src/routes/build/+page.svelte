@@ -1,13 +1,21 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
+
 	const pageTitle = 'Build';
+
+	let isModalActive = false;
 </script>
 
 <Head {pageTitle} />
+
+<Modal active={isModalActive} on:hide={() => (isModalActive = false)}>
+	<h1>TEST</h1>
+</Modal>
 
 <div class="mx-auto max-w-2xl pt-20 pb-10">
 	<h1 class="text-center text-6xl font-bold text-white">Learn to Earn</h1>
@@ -56,6 +64,7 @@
 
 <div class="mt-20 mb-36 flex justify-center">
 	<button
+		on:click={() => (isModalActive = true)}
 		type="button"
 		class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-darker-blue"
 		>Become A Contributor</button

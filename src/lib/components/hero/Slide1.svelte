@@ -3,7 +3,7 @@
 </script>
 
 <div class="flex justify-center">
-	<div class="text-left max-w-2xl">
+	<div class="max-w-2xl text-left">
 		<h1>
 			<span class="block text-4xl font-extrabold tracking-tight xl:text-8xl">
 				<span class="block text-white">Build a more</span>
@@ -21,7 +21,7 @@
 	</div>
 	<div class="relative">
 		<div class="relative mx-auto w-max">
-			<img class="w-full h-full" src={Image} alt="Welcome to Secret University" />
+			<img class="h-full w-full" src={Image} alt="Welcome to Secret University" />
 		</div>
 	</div>
 </div>

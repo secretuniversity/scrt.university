@@ -22,7 +22,7 @@
 	<div class="relative">
 		<Notification />
 
-		<main class="bg-dark-3 relative">
+		<main class="relative bg-dark-3">
 			<Banner />
 			<Nav />
 			<slot />

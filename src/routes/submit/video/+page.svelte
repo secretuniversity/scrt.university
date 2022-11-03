@@ -47,8 +47,8 @@
 		$notification = {
 			msg: 'Submitting your video...',
 			hasError: false,
-			loading: true,
-		}
+			loading: true
+		};
 
 		fetch('/api/v1/video', {
 			method: 'POST',
@@ -63,8 +63,8 @@
 					$notification = {
 						msg: 'Video submitted successfully',
 						hasError: false,
-						loading: false,
-					}
+						loading: false
+					};
 				}
 			});
 	}

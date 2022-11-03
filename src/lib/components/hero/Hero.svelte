@@ -41,7 +41,7 @@
 
 <!-- Hero Content Container -->
 <div class="h-home-hero flex-col">
-	<main class="grid items-center h-[88%] w-full overflow-hidden">
+	<main class="grid h-[88%] w-full items-center overflow-hidden">
 		{#if i === 0}
 			<div
 				in:fade|local={{ duration, delay }}
@@ -82,22 +82,22 @@
 			</div>
 		{/if}
 	</main>
-	<div class="flex h-[12%] w-max mx-auto space-x-2">
+	<div class="mx-auto flex h-[12%] w-max space-x-2">
 		<div
 			on:click={() => clear(0)}
-			class="cursor-pointer h-4 w-4 rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
+			class="h-4 w-4 cursor-pointer rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(1)}
-			class="cursor-pointer h-4 w-4 rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
+			class="h-4 w-4 cursor-pointer rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(2)}
-			class="cursor-pointer h-4 w-4 rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
+			class="h-4 w-4 cursor-pointer rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(3)}
-			class="cursor-pointer h-4 w-4 rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
+			class="h-4 w-4 cursor-pointer rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
 		/>
 	</div>
 </div>

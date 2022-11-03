@@ -4,12 +4,12 @@
 
 <div class="flex justify-center space-x-6">
 	<div class="relative">
-		<div class="relative mx-auto w-full h-full">
+		<div class="relative mx-auto h-full w-full">
 			<img class="h-full w-full" src={Image} alt="Grow as a developer" />
 		</div>
 	</div>
 
-	<div class="text-left max-w-2xl">
+	<div class="max-w-2xl text-left">
 		<h1>
 			<span class="block text-4xl font-extrabold tracking-tight xl:text-8xl">
 				<span class="block text-white">Grow as a</span>

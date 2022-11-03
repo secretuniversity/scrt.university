@@ -38,7 +38,7 @@
 		in:fly={{ y: -200, duration: 1000 }}
 		out:fade
 		on:click={hide}
-		class="cursor-pointer fixed z-10 px-4 py-2 bottom-5 right-5 text-base text-white {getBGColor()} rounded-md shadow-md"
+		class="fixed bottom-5 right-5 z-10 cursor-pointer px-4 py-2 text-base text-white {getBGColor()} rounded-md shadow-md"
 	>
 		<div class="flex">
 			{#if $notification && $notification.loading}
