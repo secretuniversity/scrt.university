@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import DraftModal from '$lib/components/ModalDrafts.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
