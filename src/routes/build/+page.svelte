@@ -5,16 +5,147 @@
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
+	import { notification } from '$lib/stores';
 
 	const pageTitle = 'Build';
 
 	let isModalActive = false;
+
+	let name = '';
+	let skill = 'beginner';
+	let reason = '';
+	let discord = '';
+	let email = '';
+
+	async function submitContributorForm() {
+		try {
+			const res = await fetch('/api/v1/forms/contributor', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name,
+					skill,
+					reason,
+					discord,
+					email
+				})
+			});
+
+			if (res.status === 200) {
+				$notification = {
+					msg: 'Thank you for your submission!',
+					hasError: false,
+					loading: false
+				};
+			} else {
+				$notification = {
+					msg: 'Failed to submit form',
+					hasError: true,
+					loading: false
+				};
+			}
+		} catch (err) {
+			$notification = {
+				msg: 'Failed to submit form. Please try again soon.',
+				hasError: true,
+				loading: false
+			};
+		}
+	}
 </script>
 
 <Head {pageTitle} />
 
 <Modal active={isModalActive} on:hide={() => (isModalActive = false)}>
-	<h1>TEST</h1>
+	<form class="grid grid-cols-1 text-white">
+		<h2 class="mx-auto max-w-xs text-center text-2xl font-semibold">
+			Become A Contributor for Secret University
+		</h2>
+		<p class="mx-auto mt-2 max-w-md text-center text-sm">
+			Fill out the questions below and a leader of Secret University will process your request soon!
+			Thank you for your interest in advancing private blockchain solutions and developer education!
+		</p>
+
+		<div class="my-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">Name (Pseudonym)</label>
+			<input
+				bind:value={name}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="name"
+				name="name"
+				placeholder="How people will see you on Secret University"
+			/>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="skills"
+				>How would you rate your skills as a developer?</label
+			>
+			<select
+				bind:value={skill}
+				class="w-full rounded-md border border-white bg-dark-4 text-white outline-none"
+				name="skills"
+				id="skills"
+			>
+				<option selected class="text-gray" value="beginner">Beginner (New to programming) </option>
+				<option class="text-gray" value="intermediate"
+					>Intermediate (Knows fundamental programming concepts)</option
+				>
+				<option class="text-gray" value="advanced"
+					>Advanced (Can take a project from concept to production)</option
+				>
+			</select>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="reason"
+				>Why do you want to join and contribute to Secret University?</label
+			>
+			<textarea
+				bind:value={reason}
+				id="reason"
+				name="reason"
+				class="h-40 w-full resize-none rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				placeholder="In a couple of sentences, please describe why or what you'd like to contribute to Secret University (Remember Secret University is actively looking for technical articles/guides, developer screencasts, courses, and templates projects that utilize Secret)"
+			/>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">What's you Discord username?</label>
+			<input
+				bind:value={discord}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="discord"
+				name="discord"
+				placeholder="agent#1234"
+			/>
+		</div>
+
+		<p class="text-center text-sm font-bold">OR</p>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">What's your email address</label>
+			<input
+				bind:value={email}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="email"
+				name="email"
+				placeholder="agent@scrt.network"
+			/>
+		</div>
+
+		<button
+			on:click|preventDefault={submitContributorForm}
+			class="w-20 justify-self-end rounded-md bg-dark-blue px-4 py-2 hover:bg-darker-blue"
+			>Submit</button
+		>
+	</form>
 </Modal>
 
 <div class="mx-auto max-w-2xl pt-20 pb-10">

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
@@ -23,6 +24,12 @@
 
 	let renderBecomeContributorBtn = false;
 	let renderContributionSubmissionBtn = false;
+
+	let name = '';
+	let skill = 'beginner';
+	let reason = '';
+	let discord = '';
+	let email = '';
 
 	onMount(async () => {
 		let addr = '';
@@ -186,9 +193,137 @@
 			}
 		});
 	}
+
+	async function submitContributorForm() {
+		try {
+			const res = await fetch('/api/v1/forms/contributor', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name,
+					skill,
+					reason,
+					discord,
+					email
+				})
+			});
+
+			if (res.status === 200) {
+				$notification = {
+					msg: 'Thank you for your submission!',
+					hasError: false,
+					loading: false
+				};
+			} else {
+				$notification = {
+					msg: 'Failed to submit form',
+					hasError: true,
+					loading: false
+				};
+			}
+		} catch (err) {
+			$notification = {
+				msg: 'Failed to submit form. Please try again soon.',
+				hasError: true,
+				loading: false
+			};
+		}
+	}
 </script>
 
 <Head pageTitle={title} />
+
+<Modal active={contributorModalActive} on:hide={() => (contributorModalActive = false)}>
+	<form class="grid grid-cols-1 text-white">
+		<h2 class="mx-auto max-w-xs text-center text-2xl font-semibold">
+			Become A Contributor for Secret University
+		</h2>
+		<p class="mx-auto mt-2 max-w-md text-center text-sm">
+			Fill out the questions below and a leader of Secret University will process your request soon!
+			Thank you for your interest in advancing private blockchain solutions and developer education!
+		</p>
+
+		<div class="my-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">Name (Pseudonym)</label>
+			<input
+				bind:value={name}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="name"
+				name="name"
+				placeholder="How people will see you on Secret University"
+			/>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="skills"
+				>How would you rate your skills as a developer?</label
+			>
+			<select
+				bind:value={skill}
+				class="w-full rounded-md border border-white bg-dark-4 text-white outline-none"
+				name="skills"
+				id="skills"
+			>
+				<option selected class="text-gray" value="beginner">Beginner (New to programming) </option>
+				<option class="text-gray" value="intermediate"
+					>Intermediate (Knows fundamental programming concepts)</option
+				>
+				<option class="text-gray" value="advanced"
+					>Advanced (Can take a project from concept to production)</option
+				>
+			</select>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="reason"
+				>Why do you want to join and contribute to Secret University?</label
+			>
+			<textarea
+				bind:value={reason}
+				id="reason"
+				name="reason"
+				class="h-40 w-full resize-none rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				placeholder="In a couple of sentences, please describe why or what you'd like to contribute to Secret University (Remember Secret University is actively looking for technical articles/guides, developer screencasts, courses, and templates projects that utilize Secret)"
+			/>
+		</div>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">What's you Discord username?</label>
+			<input
+				bind:value={discord}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="discord"
+				name="discord"
+				placeholder="agent#1234"
+			/>
+		</div>
+
+		<p class="text-center text-sm font-bold">OR</p>
+
+		<div class="mb-4 flex-col">
+			<label class="mb-1 block text-sm font-bold" for="name">What's your email address</label>
+			<input
+				bind:value={email}
+				class="w-full rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
+				type="text"
+				id="email"
+				name="email"
+				placeholder="agent@scrt.network"
+			/>
+		</div>
+
+		<button
+			on:click|preventDefault={submitContributorForm}
+			class="w-20 justify-self-end rounded-md bg-dark-blue px-4 py-2 hover:bg-darker-blue"
+			>Submit</button
+		>
+	</form>
+</Modal>
 
 <section class="jusitfy-items-center relative mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
 	<section class="inline-block w-1/3" id="profile">
@@ -278,76 +413,3 @@
 		{/if}
 	</section>
 </section>
-
-{#if contributorModalActive}
-	<div class="absolute top-0 left-0 h-full w-full bg-black/[0.6]" />
-	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-		<!--
-	  Background backdrop, show/hide based on modal state.
-  
-	  Entering: "ease-out duration-300"
-		From: "opacity-0"
-		To: "opacity-100"
-	  Leaving: "ease-in duration-200"
-		From: "opacity-100"
-		To: "opacity-0"
-	-->
-		<div class="bg-gray-500 fixed inset-0 bg-opacity-75 transition-opacity" />
-
-		<div class="fixed inset-0 z-10 overflow-y-auto">
-			<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-				<!--
-		  Modal panel, show/hide based on modal state.
-  
-		  Entering: "ease-out duration-300"
-			From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-			To: "opacity-100 translate-y-0 sm:scale-100"
-		  Leaving: "ease-in duration-200"
-			From: "opacity-100 translate-y-0 sm:scale-100"
-			To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-		-->
-				<div
-					use:clickOutside
-					on:click_outside={() => (contributorModalActive = false)}
-					class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
-				>
-					<div>
-						<div
-							class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
-						>
-							<!-- Heroicon name: outline/check -->
-							<svg
-								class="h-6 w-6 text-green-600"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-							</svg>
-						</div>
-						<div class="mt-3 text-center sm:mt-5">
-							<h3 class="text-gray-900 text-lg font-medium leading-6" id="modal-title">
-								Payment successful
-							</h3>
-							<div class="mt-2">
-								<p class="text-gray-500 text-sm">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="mt-5 sm:mt-6">
-						<button
-							type="button"
-							class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-							>Go back to dashboard</button
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-{/if}
