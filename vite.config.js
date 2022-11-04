@@ -1,6 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import EnvironmentPlugin from 'vite-plugin-environment';
 
 const target = process.env.CELADON_URL;
+
+console.log(target);
 
 if (!target) {
 	throw new Error('CELADON_URL is not set');
@@ -8,7 +11,7 @@ if (!target) {
 
 /** @type {import('vite').UserConfig} */
 const config = {
-	plugins: [sveltekit()],
+	plugins: [sveltekit(), EnvironmentPlugin('all', { loadEnvFiles: false })],
 	server: {
 		proxy: {
 			'/api': {
