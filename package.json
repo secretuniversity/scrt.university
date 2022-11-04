@@ -2,7 +2,7 @@
 	"name": "scrt.university",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev --port 8080",
+		"dev": "CELADON_URL='http://127.0.0.1:3000' vite dev --port 8080",
 		"build": "vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview --port 3000",

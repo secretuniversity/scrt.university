@@ -1,8 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 
-const apiUrl = process.env.CELADON_URL;
+const target = process.env.CELADON_URL;
 
-if (!apiUrl) {
+if (!target) {
 	throw new Error('CELADON_URL is not set');
 }
 
@@ -12,7 +12,7 @@ const config = {
 	server: {
 		proxy: {
 			'/api': {
-				target: apiUrl,
+				target,
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, '')
 			}
