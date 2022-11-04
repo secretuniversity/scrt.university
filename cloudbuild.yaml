@@ -1,9 +1,13 @@
 steps:
   # Build the container
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA', '.']
-    env:
+    args:
+      - 'build'
+      - '--build-arg'
       - 'CELADON_URL=${_CELADON_URL}'
+      - '-t'
+      - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
+      - '.'
   # Push the container
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA']
