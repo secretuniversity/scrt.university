@@ -19,7 +19,7 @@ steps:
       - 'deploy'
       - 'web-client'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
+      - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
       - '--region'
       - 'us-central1'
 images:
