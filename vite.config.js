@@ -4,7 +4,14 @@ import EnvironmentPlugin from 'vite-plugin-environment';
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig(({ command, mode }) => ({
-	plugins: [sveltekit(), EnvironmentPlugin({ CELADON_URL: undefined }, { loadEnvFiles: false })],
+	plugins: [
+		sveltekit(),
+		EnvironmentPlugin({
+			PUBLIC_SECRET_NETWORK_CHAIN_ID: undefined,
+			PUBLIC_SECRET_NETWORK_GRPC_URL: undefined,
+			CELADON_URL: undefined
+		})
+	],
 	server: {
 		proxy: {
 			'/api': {

@@ -5,6 +5,11 @@ steps:
       - 'build'
       - '--build-arg'
       - 'CELADON_URL=${_CELADON_URL}'
+      - '--build-arg'
+      - 'CHAIN_ID=${_CHAIN_ID}'
+      - '--build-arg'
+      - 'CHAIN_GRPC=${_CHAIN_GRPC}'
+
       - '-t'
       - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
       - '.'
