@@ -10,7 +10,8 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
-		"format": "prettier --write --plugin-search-dir=. ."
+		"format": "prettier --write --plugin-search-dir=. .",
+		"prepare": "husky install"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.26.1",
@@ -25,6 +26,8 @@
 		"eslint": "^8.16.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"husky": "^8.0.0",
+		"lint-staged": "^13.0.3",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.6.2",
@@ -59,5 +62,10 @@
 		"sass": "^1.55.0",
 		"secretjs": "1.3.0-beta.25",
 		"vite-plugin-environment": "^1.1.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,css,scss,md,svelte}": [
+			"prettier --write --plugin-search-dir=. ."
+		]
 	}
 }
