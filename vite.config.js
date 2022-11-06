@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import EnvironmentPlugin from 'vite-plugin-environment';
 
 /** @type {import('vite').UserConfig} */
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
 	plugins: [sveltekit(), EnvironmentPlugin({ CELADON_URL: undefined }, { loadEnvFiles: false })],
 	server: {
 		proxy: {
@@ -14,4 +14,4 @@ export default defineConfig({
 			}
 		}
 	}
-});
+}));
