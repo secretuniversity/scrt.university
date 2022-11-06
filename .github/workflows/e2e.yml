@@ -9,6 +9,7 @@ on:
 env:
   PUBLIC_SECRET_NETWORK_CHAIN_ID: 'secret-4'
   PUBLIC_SECRET_NETWORK_GRPC_URL: 'https://grpc.mainnet.secretsaturn.net'
+  CELADON_URL: 'http://127.0.0.1:3000'
 
 jobs:
   build:
