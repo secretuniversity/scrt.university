@@ -4,10 +4,17 @@
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { secret, user, contributor, contributions, bookmarks, notification } from '$lib/stores';
 	import { loadJWT, saveJWT, getOrCreateUser } from '$lib/helpers';
 	import { connect } from '$lib/helpers/keplr';
 	import { goto } from '$app/navigation';
+	import {
+		secretStore,
+		userStore,
+		contributionsStore,
+		contributorStore,
+		bookmarksStore,
+		notificationsStore
+	} from '$lib/stores';
 	import type { Bookmark, Contributor, Contribution } from '$lib/models';
 
 	const title = 'Your Dashboard';
@@ -39,13 +46,13 @@
 			return Promise.reject();
 		}
 
-		if (!$secret) {
+		if (!$secretStore) {
 			await connect();
 		} else {
-			addr = $secret.val.address;
+			addr = $secretStore.val.address;
 		}
 
-		if (loadJWT('contributor') && $contributor) {
+		if (loadJWT('contributor') && $contributorStore) {
 			renderContributionSubmissionBtn = true;
 		} else {
 			renderBecomeContributorBtn = true;
@@ -55,7 +62,7 @@
 			const exp = new Date();
 			exp.setHours(exp.getHours() + 1);
 
-			if (!$user || !$contributor) {
+			if (!$userStore || !$contributorStore) {
 				console.log('trying to get user and contributor');
 
 				const [userResult, contributorResult] = await Promise.all([
@@ -65,21 +72,21 @@
 
 				if (userResult) {
 					console.log(userResult);
-					$user = { val: userResult, exp: exp.getTime() };
+					$userStore = { val: userResult, exp: exp.getTime() };
 				}
 
 				if (contributorResult) {
-					$contributor = { val: contributorResult, exp: exp.getTime() };
+					$contributorStore = { val: contributorResult, exp: exp.getTime() };
 				}
 
-				if ($contributor) {
+				if ($contributorStore) {
 					renderContributionSubmissionBtn = true;
 				} else {
 					renderBecomeContributorBtn = true;
 				}
 			}
 
-			if (!$contributions || !$bookmarks) {
+			if (!$contributionsStore || !$bookmarksStore) {
 				const [contributionsResult, bookmarksResult] = await Promise.all([
 					getContributions(),
 					getBookmarks()
@@ -88,19 +95,19 @@
 				console.log({ contributionsResult, bookmarksResult });
 
 				if (contributionsResult) {
-					$contributions = { val: contributionsResult, exp: exp.getTime() };
+					$contributionsStore = { val: contributionsResult, exp: exp.getTime() };
 				}
 
 				if (bookmarksResult) {
-					$bookmarks = { val: bookmarksResult, exp: exp.getTime() };
+					$bookmarksStore = { val: bookmarksResult, exp: exp.getTime() };
 				}
 			}
 		} catch (err) {
-			$notification = {
-				msg: err as string,
-				hasError: true,
+			$notificationsStore.push({
+				message: err as string,
+				status: 'error',
 				loading: false
-			};
+			});
 		}
 	});
 
@@ -112,8 +119,7 @@
 				return rej('No user token found');
 			}
 
-			if ($user) {
-				console.log($user);
+			if ($userStore) {
 				fetch(`/api/v1/contributor/login`, {
 					method: 'POST',
 					headers: {
@@ -121,7 +127,7 @@
 						Token: userToken
 					},
 					body: JSON.stringify({
-						address: $user.val.address,
+						address: $userStore.val.address,
 						name: null
 					})
 				})
@@ -155,8 +161,8 @@
 
 	async function getBookmarks(): Promise<Array<Bookmark> | null> {
 		return new Promise((res, rej) => {
-			if ($user) {
-				fetch(`/api/v1/bookmarks/${$user.val.id}`)
+			if ($userStore) {
+				fetch(`/api/v1/bookmarks/${$userStore.val.id}`)
 					.then((res) => res.json())
 					.then((result) => {
 						const b: Array<Bookmark> = result.data;
@@ -176,8 +182,8 @@
 				return rej('No contributor token found');
 			}
 
-			if ($contributor) {
-				fetch(`/api/v1/contributions/${$contributor.val.id}`, {
+			if ($contributorStore) {
+				fetch(`/api/v1/contributions/${$contributorStore.val.id}`, {
 					headers: {
 						Token: token
 					}
@@ -211,24 +217,18 @@
 			});
 
 			if (res.status === 200) {
-				$notification = {
-					msg: 'Thank you for your submission!',
-					hasError: false,
+				$notificationsStore.push({
+					message: 'Thank you for your submission!',
+					status: 'success',
 					loading: false
-				};
-			} else {
-				$notification = {
-					msg: 'Failed to submit form',
-					hasError: true,
-					loading: false
-				};
+				});
 			}
 		} catch (err) {
-			$notification = {
-				msg: 'Failed to submit form. Please try again soon.',
-				hasError: true,
+			$notificationsStore.push({
+				message: err as string,
+				status: 'error',
 				loading: false
-			};
+			});
 		}
 	}
 </script>
@@ -329,8 +329,8 @@
 	<section class="inline-block w-1/3" id="profile">
 		<div class="grid w-full justify-items-center">
 			<div class="h-48 w-48 rounded-full bg-dark-5" />
-			{#if $contributor}
-				<div class="py-2">Hey, {$contributor.val.name} 👋</div>
+			{#if $contributorStore}
+				<div class="py-2">Hey, {$contributorStore.val.name} 👋</div>
 			{:else}
 				<div class="py-2">Your Dashboard</div>
 			{/if}
@@ -388,15 +388,15 @@
 			<div class="h-1/2">
 				<h2 class="w-full border-b-4 border-dark-4 text-lg">
 					<div class="w-fit rounded-tr-3xl bg-dark-4 px-8 py-2">
-						Contributions ({$contributions ? $contributions.val.length : 0})
+						Contributions ({$contributionsStore ? $contributionsStore.val.length : 0})
 					</div>
 				</h2>
 
-				{#if !$contributions}
+				{#if !$contributionsStore}
 					<div class="mt-4 text-center text-gray">You have no published contributions yet.</div>
 				{:else}
 					<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-2 gap-6 px-8 pb-4">
-						{#each $contributions.val as c}
+						{#each $contributionsStore.val as c}
 							<div class="grid h-32 w-full grid-rows-3 rounded-xl bg-dark-4 py-4 px-6">
 								<p class="h-min justify-self-end rounded-full bg-dark-blue py-2 px-4">{c.kind}</p>
 								<h3 class="text-lg font-semibold">{c.title}</h3>
