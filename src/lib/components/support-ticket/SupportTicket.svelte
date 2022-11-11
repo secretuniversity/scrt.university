@@ -1,4 +1,4 @@
-<form class="space-y-8 divide-y divide-gray">
+<form class="w-full space-y-8 divide-y divide-gray">
 	<div class="space-y-8 divide-y divide-gray sm:space-y-5">
 		<div>
 			<div>

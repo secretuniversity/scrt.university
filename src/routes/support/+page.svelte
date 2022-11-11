@@ -13,29 +13,33 @@
 
 <Head {pageTitle} />
 
-<div class="grid grid-cols-4 justify-items-center pt-20 lg:grid-cols-2">
-	<div class="flex max-w-2xl flex-col lg:max-w-3xl lg:px-8">
-		<h1 class="mt-8 text-6xl font-bold text-white">Need some help?</h1>
-		<p class="my-4 text-base text-gray">
-			Are you having trouble working through a course or guide. We're here to help. Submit a support
-			ticket and we will get back to you soon. If you need faster support, consider asking your
-			question in on Secret Network's many community channels.
-		</p>
-		<a
-			href="/support#community"
-			class="inline-flex w-fit items-center self-end rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-			>Join The Community</a
-		>
+<section class="mx-24">
+	<div class="grid grid-cols-2 justify-items-center pt-36">
+		<div>
+			<div class="mx-auto max-w-2xl flex-col rounded-b-md rounded-tr-[125px] rounded-tl-md p-8">
+				<h1 class="mt-8 text-6xl font-bold text-white">Looking for help?</h1>
+				<p class="mt-8 mb-16 text-base text-gray">
+					Are you having trouble working through a course or guide. We're here to help. Submit a
+					support ticket and we will get back to you soon. If you need faster support, consider
+					asking your question in on Secret Network's many community channels.
+				</p>
+				<a
+					href="/support#community"
+					class="inline-flex w-fit items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					>Join The Community</a
+				>
+			</div>
 
-		<img src={Image} alt="support illustration" />
+			<img class="mt-16" src={Image} alt="support illustration" />
+		</div>
+
+		<div class="h-fit overflow-hidden rounded-lg bg-dark-4 px-20 py-16 shadow-lg">
+			<SupportTicket />
+		</div>
 	</div>
+</section>
 
-	<div class="h-fit w-9/12 overflow-hidden rounded-lg bg-dark-4 px-12 py-14 shadow-lg">
-		<SupportTicket />
-	</div>
-</div>
-
-<div id="staking" class="pb-20">
+<div id="staking" class="pb-36 pt-8">
 	<Staking />
 </div>
 
