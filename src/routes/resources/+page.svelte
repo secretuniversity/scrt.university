@@ -5,14 +5,23 @@
 	import Filter from '$lib/components/Filter.svelte';
 	import Search from '$lib/components/Search.svelte';
 	import TagComponent from '$lib/components/Tag.svelte';
-	import { articles, article, notification, videos, video, resourceTags } from '$lib/stores';
-	import { onMount } from 'svelte';
+
+	import ArticleCard from '$lib/components/cards/Article.svelte';
+	import VideoCard from '$lib/components/cards/Video.svelte';
+	import {
+		articlesStore,
+		selectedArticle,
+		notificationsStore,
+		videosStore,
+		selectedVideo,
+		resourceTagsStore
+	} from '$lib/stores';
 	import { genExp, slugify } from '$lib/helpers';
+	import type { Article, Video, Tag } from '$lib/models/index';
+	import { onMount } from 'svelte';
 
-	import type { Article, Resource, Video, Tag } from '$lib/models/index';
-
-	const PAGE_TITLE = 'Community Resources';
-	const BREADCRUMB_ROUTES = [
+	const pageTitle = 'Community Resources';
+	const breadcrumbRoutes = [
 		{
 			name: 'Learn',
 			path: '/learn'
@@ -22,171 +31,107 @@
 			path: '/resources'
 		}
 	];
+	const filterSections = ['Date', 'Type', 'Tags'];
 
-	const FILTER_SECTIONS = ['Date', 'Type', 'Tags'];
-
-	interface LocalResource {
-		src: Resource;
-		type: string;
-	}
-
-	let tags: Tag[] = [];
-	let resources: LocalResource[] = [];
+	// let tags: Tag[];
+	let articles: Article[] = [];
+	let videos: Video[] = [];
 
 	onMount(async () => {
 		try {
-			const [articlesResult, videosResult, articleTagResult, videoTagResult] = await Promise.all([
-				getArticles(),
-				getVideos(),
-				getArticleTags(),
-				getVideoTags()
-			]);
+			articles = await getArticles();
+			videos = await getVideos();
 
-			if (articlesResult) {
-				$articles = { val: articlesResult, exp: genExp() };
-				let locals = $articles.val.map((a) => {
-					return {
-						src: a,
-						type: 'article'
-					};
-				});
-				resources = [...resources, ...locals];
-			}
-
-			if (videosResult) {
-				$videos = { val: videosResult, exp: genExp() };
-				let locals = $videos.val.map((v) => {
-					return {
-						src: v,
-						type: 'video'
-					};
-				});
-				resources = [...resources, ...locals];
-			}
-
-			if (articleTagResult) {
-				if ($resourceTags) {
-					$resourceTags.val = [...$resourceTags.val, ...articleTagResult];
-				} else {
-					$resourceTags = { val: articleTagResult, exp: genExp() };
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: 'Successfully loaded resources',
+					status: 'success',
+					loading: false
 				}
-
-				tags = [...tags, ...articleTagResult];
-			}
-
-			if (videoTagResult) {
-				if ($resourceTags) {
-					$resourceTags.val = [...$resourceTags.val, ...videoTagResult];
-				} else {
-					$resourceTags = { val: videoTagResult, exp: genExp() };
-				}
-
-				tags = [...tags, ...videoTagResult];
-			}
+			];
 		} catch (err) {
-			$notification = {
-				msg: err as string,
-				hasError: true,
-				loading: false
-			};
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				}
+			];
 		}
 	});
+
+	$: {
+		if (articles) {
+			$articlesStore = { val: articles, exp: genExp() };
+		}
+
+		if (videos) {
+			$videosStore = { val: videos, exp: genExp() };
+		}
+	}
 
 	function handleSearch(e: CustomEvent) {
 		console.log(e.detail.val);
 	}
 
-	async function getVideos(): Promise<Video[] | null> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/videos/0')
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.data) {
-						return res(result.data as Video[]);
-					} else {
-						return res(null);
-					}
-				})
-				.catch(() => {
-					return rej('Failed to fetch videos');
-				});
-		});
+	async function getVideos(): Promise<Video[]> {
+		try {
+			const res = await fetch('/api/v1/videos?limit=25&offset=0');
+
+			if (res.ok) {
+				const json = await res.json();
+				let typed: Video[] = json;
+				return Promise.resolve(typed);
+			} else {
+				return Promise.reject('Failed to fetch videos');
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	}
 
-	async function getArticles(): Promise<Article[] | null> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/articles/0')
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.data) {
-						return res(result.data as Article[]);
-					} else {
-						return res(null);
-					}
-				})
-				.catch(() => {
-					rej('Failed to fetch articles');
-				});
-		});
+	async function getArticles(): Promise<Article[]> {
+		try {
+			const res = await fetch('/api/v1/articles?limit=25&offset=0');
+
+			if (res.ok) {
+				const json = await res.json();
+				let typed: Article[] = json;
+				return Promise.resolve(typed);
+			} else {
+				return Promise.reject('Failed to fetch videos');
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	}
 
-	async function getArticleTags(): Promise<Tag[] | null> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/tags/kind/articles/offset/0')
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.data) {
-						return res(result.data as Tag[]);
-					} else {
-						return res(null);
-					}
-				})
-				.catch(() => {
-					return rej('Failed to fetch article tags');
-				});
-		});
+	async function getArticleTags(): Promise<Tag[]> {
+		return Promise.reject();
 	}
 
 	async function getVideoTags(): Promise<Tag[] | null> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/tags/kind/videos/offset/0')
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.data) {
-						return res(result.data as Tag[]);
-					} else {
-						return res(null);
-					}
-				})
-				.catch(() => {
-					return rej('Failed to fetch video tags');
-				});
-		});
-	}
-
-	function setArticle(r: Resource) {
-		$article = r as Article;
-	}
-
-	function setVideo(r: Resource) {
-		$video = r as Video;
+		return Promise.reject();
 	}
 </script>
 
-<Head pageTitle={PAGE_TITLE} />
+<Head {pageTitle} />
+
+<div class="mx-24 py-8">
+	<Breadcrumb routes={breadcrumbRoutes} />
+</div>
 
 <section class="mx-24">
-	<div class="mt-8">
-		<Breadcrumb routes={BREADCRUMB_ROUTES} />
-	</div>
 	<PageHeader
 		title={'Community Resources'}
 		description={'Learn from the community. Find guides, courses, videos, and more— each made by developers on Secret Network.'}
 	/>
 
-	<div class="mt-12 grid grid-cols-4 gap-x-8 pb-12">
+	<div class="mt-12 grid grid-cols-4 gap-x-8 pb-36">
 		<div class="col-span-1">
-			<Filter let:index sections={FILTER_SECTIONS}>
+			<Filter let:index sections={filterSections}>
 				{#if index === 0}
 					<select
 						class="w-full rounded-lg border-white bg-dark-4 text-white"
@@ -230,7 +175,7 @@
 				{/if}
 
 				{#if index === 2}
-					{#each tags as tag}
+					<!-- {#each tags as tag}
 						<div class="py-2">
 							<input
 								class="mr-2 rounded-sm border-white bg-dark-4"
@@ -240,7 +185,7 @@
 							/>
 							<label class="text-white" for="{tag}-input">{tag.name}</label>
 						</div>
-					{/each}
+					{/each} -->
 
 					<div class="mx-auto w-fit">
 						<button
@@ -255,7 +200,7 @@
 
 		<div class="col-span-3">
 			<Search on:search={handleSearch} />
-			<div class="mt-4 flex gap-x-4">
+			<div class="my-6 flex gap-x-4">
 				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
 					&times<span class="pl-1 font-bold">tag:</span> secret-box
 				</p>
@@ -264,70 +209,18 @@
 				</p>
 			</div>
 			<div class="-z-10 pt-4 pb-28">
-				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
-					{#if resources.length === 0}
-						<div class="mt-4 text-center text-dark-5">Unable to find any resources.</div>
+				<div class="relative mx-auto max-w-full">
+					{#if articles.length === 0 && videos.length === 0}
+						<div class="mt-4 text-center text-dark-5">Unable to find any community resources.</div>
 					{/if}
 
-					<div class="grid auto-rows-max grid-cols-3 gap-4 text-white">
-						{#each resources as r}
-							{#if r.type === 'article'}
-								<a
-									href={'/resources/articles/' + slugify(r.src.title)}
-									on:click={() => setArticle(r.src)}
-								>
-									<div
-										class="grid h-48 w-full auto-rows-max grid-cols-2 rounded-md bg-dark-4 py-6 px-4"
-									>
-										<p
-											class="col-start-2 w-min justify-self-end rounded-full bg-dark-orange py-1 px-3 capitalize"
-										>
-											{r.type}
-										</p>
-										<h3 class="col-start-1 row-start-1 mb-2 text-xl font-semibold">
-											{r.src.title}
-										</h3>
-										<p class="col-span-full col-start-1 row-start-2 pt-4">
-											Just as super long description of article. How are we gonna handle all of
-											these words. IDk.
-										</p>
-										{#each r.src.tags as tag}
-											<div class="mt-2 w-min self-end">
-												<TagComponent tag={tag.name} />
-											</div>
-										{/each}
-									</div>
-								</a>
-							{/if}
+					<div class="grid grid-cols-3 gap-4">
+						{#each videos as video}
+							<VideoCard {video} />
+						{/each}
 
-							{#if r.type === 'video'}
-								<a
-									href={'/resources/videos/' + slugify(r.src.title)}
-									on:click={() => setVideo(r.src)}
-								>
-									<div
-										class="grid h-48 w-full auto-rows-max grid-cols-2 rounded-md bg-dark-4 py-6 px-4"
-									>
-										<p
-											class="col-start-2 w-min justify-self-end rounded-full bg-dark-orange py-1 px-3 capitalize"
-										>
-											{r.type}
-										</p>
-										<h3 class="col-start-1 row-start-1 mb-2 text-xl font-semibold">
-											{r.src.title}
-										</h3>
-										<p class="col-span-full col-start-1 row-start-2 pt-4">
-											Just as super long description of article. How are we gonna handle all of
-											these words. IDk.
-										</p>
-										{#each r.src.tags as tag}
-											<div class="mt-2 w-min self-end">
-												<TagComponent tag={tag.name} />
-											</div>
-										{/each}
-									</div>
-								</a>
-							{/if}
+						{#each articles as article}
+							<ArticleCard {article} />
 						{/each}
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { article } from '$lib/stores';
+	import { selectedArticle } from '$lib/stores';
 	import { goto } from '$app/navigation';
 	import hljs from 'highlight.js/lib/core';
 	import javascript from 'highlight.js/lib/languages/javascript';
@@ -14,7 +14,7 @@
 	import 'highlight.js/styles/tokyo-night-dark.css';
 
 	onMount(() => {
-		if (!$article) {
+		if (!$selectedArticle) {
 			goto('/resources');
 		}
 
@@ -31,11 +31,11 @@
 </script>
 
 <section class="min-h-screen py-16 text-white">
-	{#if $article}
+	{#if $selectedArticle}
 		<div class="flex h-full w-full flex-col items-center justify-center">
-			<p class="text-center text-5xl font-bold">{$article.title}</p>
+			<p class="text-center text-5xl font-bold">{$selectedArticle.title}</p>
 			<div id="content" class="mt-8 w-full max-w-4xl">
-				{@html $article.content}
+				{@html $selectedArticle.content}
 			</div>
 		</div>
 	{:else}

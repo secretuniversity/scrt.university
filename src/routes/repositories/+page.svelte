@@ -7,7 +7,7 @@
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import { notification, repos, boxes } from '$lib/stores';
+	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
 	import { genExp } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
@@ -25,24 +25,34 @@
 	const FILTER_SECTIONS = ['Type', 'Date', 'Tags'];
 
 	let tags: Tag[] = [];
+	let limit = 25;
+	let offset = 0;
 
 	onMount(async () => {
 		try {
-			const data = await getAllRepos();
+			let reposFetched = await getRepos();
+			let boxesFetched = await getSecretBoxes();
 
-			if (data && data.repos) {
-				$repos = { val: data.repos, exp: genExp() };
-			}
+			$reposStore = { val: reposFetched, exp: genExp() };
+			$boxesStore = { val: boxesFetched, exp: genExp() };
 
-			if (data && data.boxes) {
-				$boxes = { val: data.boxes, exp: genExp() };
-			}
+			$notificationsStore = [
+				{
+					message: 'Repositories fetched successfully',
+					status: 'success',
+					loading: false
+				},
+				...$notificationsStore
+			];
 		} catch (err) {
-			$notification = {
-				msg: 'Unable to fetch repositories. Please try again later.',
-				hasError: true,
-				loading: false
-			};
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
 		}
 	});
 
@@ -50,21 +60,34 @@
 		console.log(e.detail.val);
 	}
 
-	async function getAllRepos(): Promise<{ repos: Repo[]; boxes: SecretBox[] } | null> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/repos/all/0')
-				.then((r) => r.json())
-				.then((r) => {
-					if (r.data) {
-						res({ repos: r.data.repos, boxes: r.data.boxes });
-					} else {
-						res(null);
-					}
-				})
-				.catch(() => {
-					rej('Failed to fetch repos');
-				});
-		});
+	async function getRepos(): Promise<Repo[]> {
+		try {
+			let res = await fetch(`/api/v1/repos?limit=${limit}&offset=${offset}`);
+
+			if (res.ok) {
+				let data = await res.json();
+				return data as Repo[];
+			} else {
+				return Promise.reject("Couldn't fetch repos");
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	}
+
+	async function getSecretBoxes(): Promise<SecretBox[]> {
+		try {
+			let res = await fetch(`/api/v1/secret-boxes?limit=${limit}&offset=${offset}`);
+
+			if (res.ok) {
+				let data = await res.json();
+				return data as SecretBox[];
+			} else {
+				return Promise.reject("Couldn't fetch secret boxes");
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	}
 
 	async function getRepoTags(): Promise<Array<Tag>> {
@@ -86,10 +109,11 @@
 
 <Head pageTitle={PAGE_TITLE} />
 
+<div class="mx-24 py-8">
+	<Breadcrumb routes={BREADCRUMB_ROUTES} />
+</div>
+
 <section class="lg:mx-24">
-	<div class="mt-8">
-		<Breadcrumb routes={BREADCRUMB_ROUTES} />
-	</div>
 	<PageHeader
 		title={PAGE_TITLE}
 		description={'Learn from the source. Find inspiration for you next project by looking at these repositories.'}
@@ -163,7 +187,7 @@
 					&times<span class="pl-1 font-bold">tag:</span> essential
 				</p>
 			</div>
-			{#if !$boxes && !$repos}
+			{#if !$boxesStore && !$reposStore}
 				<div class="mt-4 text-center text-gray">Unable to find any repositories.</div>
 			{/if}
 
@@ -171,15 +195,15 @@
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-						{#if $boxes}
-							{#each $boxes.val as b}
+						{#if $boxesStore}
+							{#each $boxesStore.val as b}
 								<SecretBoxCard title={b.title} description={b.description} />
 							{/each}
 						{/if}
 
-						{#if $repos}
+						{#if $reposStore}
 							<!-- content here -->
-							{#each $repos.val as r}
+							{#each $reposStore.val as r}
 								<div>repos</div>
 							{/each}
 						{/if}
