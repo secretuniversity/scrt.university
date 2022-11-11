@@ -157,8 +157,8 @@
 			</div>
 		</div>
 
-		<div class="grid grid-rows-2 items-center justify-items-center py-32">
-			<h2 class="mb-2 text-4xl font-bold text-white">
+		<div class="grid grid-rows-2 items-center justify-items-center py-56">
+			<h2 class="text-4xl font-bold text-white">
 				Want to join the
 				<span
 					class="inline bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text text-transparent"
@@ -166,8 +166,9 @@
 				</span>
 			</h2>
 
-			<p class="mb-4 inline-block text-lg text-white">
-				Find out how you can jumpstart your development on Secret Network
+			<p class="mb-10 inline-block max-w-2xl text-center text-lg text-white">
+				Join our growing community of builders and help us build better products and tools for a
+				more private internet.
 			</p>
 			<a
 				href="https://chat.scrt.network"
