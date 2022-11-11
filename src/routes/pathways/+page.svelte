@@ -3,7 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import type { Pathway } from '$lib/models/index';
-	import { notification } from '$lib/stores';
+	import { notificationsStore } from '$lib/stores';
 
 	const pageTitle = 'Pathways';
 
@@ -18,31 +18,44 @@
 		}
 	];
 
-	let pathways: Array<Pathway> = [];
+	let pathways: Pathway[] = [];
 
 	onMount(async () => {
 		try {
-			const res = await fetch('/api/v1/pathways/0');
+			const res = await fetch('/api/v1/pathways');
 			const json = await res.json();
 
-			if (json.data) {
-				pathways = json.data as Pathway[];
-			}
+			pathways = json as Pathway[];
+
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: 'Successfully loaded pathways',
+					status: 'success',
+					loading: false
+				}
+			];
 		} catch (err) {
-			$notification = {
-				msg: 'Failed to load pathways',
-				hasError: true,
-				loading: false
-			};
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				}
+			];
 		}
 	});
 </script>
 
 <Head {pageTitle} />
 
-<section class="mx-24 min-h-home-hero py-8">
+<div class="mx-24 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
-	<div class="mt-8 max-w-3xl">
+</div>
+
+<section class="mx-24 min-h-home-hero">
+	<div class="mb-28 max-w-3xl">
 		<h1 class="mb-4 text-5xl font-bold text-white">Secret Pathways</h1>
 		<p class="mb-16 text-base text-gray">
 			Secret Pathways are self-contained lessons designed to help you build on Secret. Gain insight
