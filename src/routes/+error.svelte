@@ -1,7 +1,12 @@
 <script lang="ts">
+	import Head from '$lib/components/Head.svelte';
 	import { page } from '$app/stores';
 	import Image from '$lib/assets/illustrations/404.svg';
+
+	const pageTitle = '404';
 </script>
+
+<Head {pageTitle} />
 
 <section class="h-home-hero">
 	<div class="grid h-full w-full justify-items-center">

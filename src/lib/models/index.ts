@@ -74,7 +74,7 @@ export interface Bounty {
 	description: string;
 	forum_url: string;
 	proposal_url: string | null;
-	amount: number;
+	reward_amount: number;
 	status: string;
 	created_at: string;
 	updated_at: string;
