@@ -5,7 +5,7 @@
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
 	import { isExpired, retry, getOrCreateUser, loadJWT } from '$lib/helpers/index';
-	import { notification, user, secret } from '$lib/stores';
+	import { notificationsStore, userStore, secretStore } from '$lib/stores';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
@@ -18,7 +18,7 @@
 		const session = sessionStorage.getItem('keplr-connected');
 
 		try {
-			if (session && !secret) {
+			if (session && !secretStore) {
 				await handleConnect();
 			}
 		} catch (err) {
@@ -35,18 +35,18 @@
 		try {
 			await connect();
 
-			if ($user && loadJWT('user')) {
+			if ($userStore && loadJWT('user')) {
 				return Promise.resolve();
 			}
 
-			if ($secret) {
-				const userResult = await getOrCreateUser($secret.val.address);
+			if ($secretStore) {
+				const userResult = await getOrCreateUser($secretStore.val.address);
 
 				if (userResult) {
 					const exp = new Date();
 					exp.setDate(exp.getDate() + 1);
 
-					$user = { val: userResult, exp: exp.getTime() };
+					$userStore = { val: userResult, exp: exp.getTime() };
 				}
 			} else {
 				return Promise.reject(
@@ -54,27 +54,27 @@
 				);
 			}
 
-			if ($user && !isExpired($user.exp)) {
+			if ($userStore && !isExpired($userStore.exp)) {
 				return;
 			} else {
 				retry(async () => {
-					if ($secret) {
-						await getOrCreateUser($secret.val.address);
+					if ($secretStore) {
+						await getOrCreateUser($secretStore.val.address);
 					}
 				}).catch((err) => {
-					$notification = {
-						msg: 'Problem connecting to server. Please try again.',
-						hasError: true,
+					$notificationsStore.push({
+						message: err as string,
+						status: 'error',
 						loading: false
-					};
+					});
 				});
 			}
-		} catch (_err) {
-			$notification = {
-				msg: 'Problem connecting to Keplr. Please try again.',
-				hasError: true,
+		} catch (err) {
+			$notificationsStore.push({
+				message: err as string,
+				status: 'error',
 				loading: false
-			};
+			});
 		}
 	}
 </script>
@@ -147,7 +147,7 @@
 
 		<div class="hidden pr-4 text-right md:block">
 			<span class="relative inline-flex rounded-md shadow-md">
-				{#if $secret && $user && loadJWT('user')}
+				{#if $secretStore && $userStore && loadJWT('user')}
 					<button
 						on:click={() => goto('/dashboard')}
 						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white hover:bg-darker-blue"
