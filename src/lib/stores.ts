@@ -17,9 +17,9 @@ import type {
 	Video
 } from './models/index';
 
-interface Notification {
-	msg: string;
-	hasError: boolean;
+export interface Notification {
+	message: string;
+	status: 'success' | 'error' | 'info';
 	loading: boolean;
 }
 
@@ -78,22 +78,31 @@ interface BoxesStore {
 	exp: number;
 }
 
-export const notification: Writable<Notification | null> = writable(null);
-export const secret: Writable<SecretStore | null> = writable(null);
-export const user: Writable<UserStore | null> = writable(null);
-export const bookmarks: Writable<BookmarksStore | null> = writable(null);
-export const contributions: Writable<ContributionsStore | null> = writable(null);
-export const bounties: Writable<BountiesStore | null> = writable(null);
-export const articles: Writable<ArticlesStore | null> = writable(null);
-export const repos: Writable<ReposStore | null> = writable(null);
-export const boxes: Writable<BoxesStore | null> = writable(null);
-export const videos: Writable<VideosStore | null> = writable(null);
-export const contributor: Writable<ContributorStore | null> = writable(null);
-export const resourceTags: Writable<ResourceTagsStore | null> = writable(null);
-export const article: Writable<Article | null> = writable(null);
-export const video: Writable<Video | null> = writable(null);
-export const secretBox: Writable<SecretBox | null> = writable(null);
-export const pathway: Writable<Pathway | null> = writable(null);
+export const notificationsStore: Writable<Notification[]> = writable([]);
+export const secretStore: Writable<SecretStore | null> = writable(null);
+export const bountiesStore: Writable<BountiesStore | null> = writable(null);
+
+// Dashboard stores
+export const userStore: Writable<UserStore | null> = writable(null);
+export const bookmarksStore: Writable<BookmarksStore | null> = writable(null);
+export const contributionsStore: Writable<ContributionsStore | null> = writable(null);
+export const contributorStore: Writable<ContributorStore | null> = writable(null);
+
+// Resources stores
+export const videosStore: Writable<VideosStore | null> = writable(null);
+export const articlesStore: Writable<ArticlesStore | null> = writable(null);
+export const resourceTagsStore: Writable<ResourceTagsStore | null> = writable(null);
+
+// Repos stores
+export const reposStore: Writable<ReposStore | null> = writable(null);
+export const boxesStore: Writable<BoxesStore | null> = writable(null);
+
+// Page state stores
+export const selectedArticle: Writable<Article | null> = writable(null);
+export const selectedVideo: Writable<Video | null> = writable(null);
+export const selectedSecretBox: Writable<SecretBox | null> = writable(null);
+export const selectedPathway: Writable<Pathway | null> = writable(null);
+
 export const pathwayRequest: Writable<PathwayRequest> = writable({
 	title: '',
 	contributor: -1,
