@@ -151,7 +151,7 @@
 	</p>
 </div>
 
-<div class="flex justify-center gap-x-24">
+<div class="my-8 flex justify-center gap-x-40">
 	<div class="lg:max-w-xs">
 		<img class="mx-auto h-56 w-56" src={CodeImage} alt="code your next project on secret" />
 		<h2 class="mt-4 text-center text-lg font-semibold text-white">Code</h2>
