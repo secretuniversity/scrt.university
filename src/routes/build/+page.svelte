@@ -5,7 +5,7 @@
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
-	import { notification } from '$lib/stores';
+	import { notificationsStore } from '$lib/stores';
 
 	const pageTitle = 'Build';
 
@@ -34,24 +34,18 @@
 			});
 
 			if (res.status === 200) {
-				$notification = {
-					msg: 'Thank you for your submission!',
-					hasError: false,
+				$notificationsStore.push({
+					message: 'Thank you for your submission!',
+					status: 'success',
 					loading: false
-				};
-			} else {
-				$notification = {
-					msg: 'Failed to submit form',
-					hasError: true,
-					loading: false
-				};
+				});
 			}
 		} catch (err) {
-			$notification = {
-				msg: 'Failed to submit form. Please try again soon.',
-				hasError: true,
+			$notificationsStore.push({
+				message: err as string,
+				status: 'error',
 				loading: false
-			};
+			});
 		}
 	}
 </script>
