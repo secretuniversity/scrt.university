@@ -19,85 +19,86 @@
 
 <Head {pageTitle} />
 
-<div class="lg:mx-24">
-	<div class="mt-8">
-		<Breadcrumb routes={breadcrumbRoutes} />
-	</div>
+<div class="mx-24 py-8">
+	<Breadcrumb routes={breadcrumbRoutes} />
+</div>
 
+<div class="pb-24 lg:mx-24">
 	<PageHeader
 		title={'Learn'}
 		description={'Learn to build on Secret Network using our courses Secret Pathways or dive deep into code with Secret Boxes'}
 		image={HeaderImage}
 	/>
 
-	<div class="mt-20 text-4xl font-bold leading-6 text-white">Core Learning Materials</div>
+	<div class="mt-20 mb-12 text-4xl font-bold leading-6 text-white">Core Learning Materials</div>
 
-	<div class="mt-8 flex gap-x-8">
-		<a href="/pathways" class="inline-block lg:w-7/12">
-			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
-				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
-					<h2 class="text-2xl font-semibold text-white">Secret Pathways</h2>
-					<p class="text-base text-gray lg:max-w-lg">
-						Secret Pathways are a series of courses that teach you how to build on Secret Network.
-						Follow each lesson and answer quiz question to earn <span
-							class="bg-transparent bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text font-bold"
-							>badges</span
-						>
-						and
-						<span
-							class="bg-transparent bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text font-bold"
-							>certifications.</span
-						>
-					</p>
-				</div>
+	<div class="grid grid-cols-12 grid-rows-2 gap-x-8 gap-y-8">
+		<a
+			class="col-span-8 h-80 flex-col rounded-b-3xl rounded-tl-[100px] rounded-tr-3xl bg-dark-2 px-20 py-24"
+			href="/pathways"
+		>
+			<div>
+				<h2 class="mb-4 text-3xl font-semibold text-white">Secret Pathways</h2>
+				<p class="text-base text-gray lg:max-w-xl">
+					Secret Pathways are a series of courses that teach you how to build on Secret Network.
+					Follow each lesson and answer quiz question to earn <span
+						class="bg-transparent bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text font-bold"
+						>badges</span
+					>
+					and
+					<span
+						class="bg-transparent bg-gradient-to-r from-light-blue to-dark-blue bg-clip-text font-bold"
+						>certifications.</span
+					>
+				</p>
+			</div>
+		</a>
+		<a
+			class="col-span-4 h-80 flex-col rounded-b-3xl rounded-tr-[100px] rounded-tl-3xl bg-dark-2 py-24 px-12"
+			href="/repositories"
+		>
+			<div>
+				<h2 class="mb-4 text-3xl font-semibold text-white">Repositories</h2>
+				<p class="text-base text-gray lg:max-w-sm">
+					Learn directly from the source. Find many of the most helpful open source repositories on
+					Secret Network.
+				</p>
 			</div>
 		</a>
 
-		<a href="/repositories" class="inline-block lg:grow">
-			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
-				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
-					<h2 class="text-2xl font-semibold text-white">Repositories</h2>
-					<p class="text-base text-gray lg:max-w-lg">
-						Learn directly from the source. Find many of the most helpful open source repositories
-						on Secret Network.
-					</p>
-				</div>
-			</div>
-		</a>
-	</div>
-
-	<div class="mt-8 flex gap-x-8 pb-24">
-		<a href="/repositories" class="inline-block lg:shrink">
-			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
-				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
-					<h2 class="text-2xl font-semibold text-white">Official Docs</h2>
-					<p class="text-base text-gray lg:max-w-lg">
-						The official documentation for Secret Network. Use this to find the most up-to-date
-						infromation regarding development, node running, and network infrastructure.
-					</p>
-				</div>
+		<a
+			class="col-span-4 h-80 flex-col rounded-t-3xl rounded-bl-[100px] rounded-br-3xl bg-dark-2 py-24 px-12"
+			href="https://docs.scrt.network"
+		>
+			<div>
+				<h2 class="mb-4 text-3xl font-semibold text-white">Official Docs</h2>
+				<p class="text-base text-gray lg:max-w-lg">
+					The official documentation for Secret Network. Use this to find the most up-to-date
+					infromation regarding development, node running, and network infrastructure.
+				</p>
 			</div>
 		</a>
 
-		<a href="/resources" class="inline-block lg:grow">
-			<div class="h-52 overflow-hidden rounded-xl bg-dark-2 shadow-lg">
-				<div class="grid h-4/5 w-4/5 grid-rows-2 items-center p-6">
-					<h2 class="text-2xl font-semibold text-white">Community Resources</h2>
-					<p class="text-base text-gray lg:max-w-lg">
-						Need even more material? Learn by reading technical guides or by watching developer
-						screencasts— all made by contributors of Secret University.
-					</p>
-				</div>
+		<a
+			class="col-span-8 h-80 flex-col rounded-t-3xl rounded-br-[100px] rounded-bl-3xl bg-dark-2 py-24 px-20"
+			href="/resources"
+		>
+			<div>
+				<h2 class="mb-4 text-3xl font-semibold text-white">Community Resources</h2>
+				<p class="text-base text-gray lg:max-w-lg">
+					Need even more material? Learn by reading technical guides or by watching developer
+					screencasts— all made by contributors of Secret University.
+				</p>
 			</div>
 		</a>
 	</div>
 </div>
 
-<div class="bg-dark-2 py-64">
+<div class="bg-dark-2 pt-64 pb-72">
 	<SectionHeader
 		title={"Builder's Toolkit"}
 		subtitle={'Pick your tools'}
-		description={'Jumpstart your development with native tools built for Secret Network.'}
+		description={'Jumpstart your development experience on Secret with native tools built for your favorite programming language.'}
 	/>
 
 	<div class="mt-12 bg-dark-2">
