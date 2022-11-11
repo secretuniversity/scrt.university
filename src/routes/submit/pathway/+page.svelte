@@ -5,7 +5,7 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest, contributor, notification } from '$lib/stores';
+	import { pathwayRequest, contributorStore, notificationsStore } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
 	import { getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { onMount } from 'svelte';
@@ -55,8 +55,8 @@
 	}
 
 	onMount(() => {
-		if ($contributor && loadJWT('contributor')) {
-			$pathwayRequest.contributor = $contributor.val.id;
+		if ($contributorStore && loadJWT('contributor')) {
+			$pathwayRequest.contributor = $contributorStore.val.id;
 		} else {
 			goto('/');
 		}
@@ -65,7 +65,7 @@
 	function submit() {
 		const token = loadJWT('contributor');
 
-		if (!token || !$contributor) {
+		if (!token || !$contributorStore) {
 			return;
 		}
 
@@ -79,21 +79,21 @@
 		})
 			.then((res) => {
 				if (res.status === 200) {
-					$notification = {
-						msg: 'Pathway submitted successfully!',
-						hasError: false,
+					$notificationsStore.push({
+						message: 'Succesfully uploaded pathway!',
+						status: 'success',
 						loading: false
-					};
+					});
 
 					goto('/dashboard');
 				}
 			})
-			.catch((_err) => {
-				$notification = {
-					msg: 'Pathway submission failed. Try again later.',
-					hasError: true,
+			.catch((err) => {
+				$notificationsStore.push({
+					message: err as string,
+					status: 'error',
 					loading: false
-				};
+				});
 			});
 	}
 
@@ -132,11 +132,11 @@
 		const options = $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options;
 
 		if (options.length > maxAnswers) {
-			$notification = {
-				msg: `You can only have up to ${maxAnswers} answers.`,
-				hasError: true,
+			$notificationsStore.push({
+				message: `You can only have up to ${maxAnswers} answers.`,
+				status: 'error',
 				loading: false
-			};
+			});
 			return;
 		}
 

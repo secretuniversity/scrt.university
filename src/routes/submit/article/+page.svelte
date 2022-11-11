@@ -5,7 +5,7 @@
 	import TagInput from '$lib/components/TagInput.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/developer.svg';
-	import { articleRequest, contributor, notification } from '$lib/stores';
+	import { articleRequest, contributorStore, notificationsStore } from '$lib/stores';
 	import { getLessonBaseContent, loadJWT, loadLocalDrafts, saveLocalDraft } from '$lib/helpers';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -31,11 +31,9 @@
 		}
 	];
 
-	let draftModalActive = false;
-
 	onMount(() => {
-		if ($contributor && loadJWT('contributor')) {
-			$articleRequest.contributor = $contributor.val.id;
+		if ($contributorStore && loadJWT('contributor')) {
+			$articleRequest.contributor = $contributorStore.val.id;
 			$articleRequest.content = getLessonBaseContent();
 		} else {
 			goto('/');
@@ -45,7 +43,7 @@
 	function submit() {
 		let token = loadJWT('contributor');
 
-		if (!token || !$contributor) {
+		if (!token || !$contributorStore) {
 			return;
 		}
 
@@ -58,18 +56,18 @@
 			body: JSON.stringify($articleRequest)
 		})
 			.then((res) => {
-				$notification = {
-					msg: 'Article submitted successfully',
-					hasError: false,
+				$notificationsStore.push({
+					message: 'Article submitted successfully',
+					status: 'success',
 					loading: false
-				};
+				});
 			})
 			.catch((err) => {
-				$notification = {
-					msg: 'Failed to submit article',
-					hasError: true,
+				$notificationsStore.push({
+					message: err as string,
+					status: 'error',
 					loading: false
-				};
+				});
 			});
 	}
 
@@ -80,8 +78,6 @@
 	function loadDrafts() {
 		const drafts = loadLocalDrafts('article');
 
-		draftModalActive = true;
-
 		if (drafts) {
 			console.log(drafts);
 		}
@@ -89,10 +85,6 @@
 </script>
 
 <Head {pageTitle} />
-
-{#if draftModalActive}
-	<DraftModal />
-{/if}
 
 <section class="relative mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

@@ -3,7 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import { contributor, notification } from '$lib/stores';
+	import { contributorStore, notificationsStore } from '$lib/stores';
 	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Video';
@@ -33,22 +33,22 @@
 	function submit() {
 		const token = loadJWT('contributor');
 
-		if (!$contributor || !token) {
+		if (!$contributorStore || !token) {
 			return;
 		}
 
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('description', description);
-		formData.append('contributor', $contributor.val.id.toString());
+		formData.append('contributor', $contributorStore.val.id.toString());
 		formData.append('file', files[0]);
 		tags.forEach((tag) => formData.append('tags', tag));
 
-		$notification = {
-			msg: 'Submitting your video...',
-			hasError: false,
+		$notificationsStore.push({
+			message: 'Submitting your video...',
+			status: 'info',
 			loading: true
-		};
+		});
 
 		fetch('/api/v1/video', {
 			method: 'POST',
@@ -56,17 +56,15 @@
 				Token: token
 			},
 			body: formData
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				if (res.status === 200) {
-					$notification = {
-						msg: 'Video submitted successfully',
-						hasError: false,
-						loading: false
-					};
-				}
-			});
+		}).then((res) => {
+			if (res.status === 200) {
+				$notificationsStore.push({
+					message: 'Video submitted successfully',
+					status: 'success',
+					loading: false
+				});
+			}
+		});
 	}
 </script>
 

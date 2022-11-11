@@ -3,7 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import { contributor, notification } from '$lib/stores';
+	import { contributorStore, notificationsStore } from '$lib/stores';
 	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Secret Box';
@@ -37,14 +37,14 @@
 	function submit() {
 		const token = loadJWT('contributor');
 
-		if (!$contributor || !token) {
+		if (!$contributorStore || !token) {
 			return;
 		}
 
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('description', description);
-		formData.append('contributor', $contributor.val.id.toString());
+		formData.append('contributor', $contributorStore.val.id.toString());
 		formData.append('difficulty', difficulty);
 		formData.append('dev_env', devEnv);
 		formData.append('banner_img', bannerImg[0]);
@@ -61,11 +61,11 @@
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.status === 200) {
-					$notification = {
-						msg: 'Your Secret Box has been submitted!',
-						hasError: false,
+					$notificationsStore.push({
+						message: 'Your Secret Box has been submitted!',
+						status: 'success',
 						loading: false
-					};
+					});
 
 					title = '';
 					description = '';
@@ -76,11 +76,11 @@
 				}
 			})
 			.catch((err) => {
-				$notification = {
-					msg: 'Failed to submit Secret Box. Try again.',
-					hasError: true,
+				$notificationsStore.push({
+					message: err as string,
+					status: 'error',
 					loading: false
-				};
+				});
 			});
 	}
 </script>
