@@ -1,38 +1,9 @@
 <script lang="ts">
 	import Filter from '$lib/components/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import BountyCard from '$lib/components/Bounty.svelte';
+	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import { bounties, notification } from '$lib/stores';
-	import { onMount } from 'svelte';
-	import type { Bounty } from '$lib/models/index';
-	import { isExpired } from '$lib/helpers';
-
-	onMount(async () => {
-		if (!$bounties || ($bounties && !isExpired($bounties.exp))) {
-			try {
-				const url = '/api/v1/bounties/0';
-				let res = await fetch(url);
-				let json = await res.json();
-				let data = json.data;
-
-				// Create exp and set it to 1 hour from now
-				const exp = new Date();
-				exp.setHours(exp.getHours() + 1);
-
-				$bounties = {
-					val: data as Bounty[],
-					exp: exp.getTime()
-				};
-			} catch (err) {
-				$notification = {
-					msg: 'Failed to load bounties',
-					hasError: true,
-					loading: false
-				};
-			}
-		}
-	});
+	import { bountiesStore, notificationsStore } from '$lib/stores';
 
 	const pageTitle = 'Bounties';
 	const breadcrumbRoutes = [
@@ -47,18 +18,55 @@
 	];
 
 	const filterSections = ['Date', 'Reward', 'Status'];
+
+	let limit = 25;
+	let offset = 0;
+
+	async function getBounties() {
+		try {
+			const url = `/api/v1/bounties?limit=${limit}&offset=${offset}`;
+			let res = await fetch(url);
+			let json = await res.json();
+
+			if (res.ok) {
+				$bountiesStore = {
+					val: json,
+					exp: new Date().setHours(new Date().getHours() + 1)
+				};
+
+				$notificationsStore = [
+					{
+						message: 'Bounties fetched successfully',
+						status: 'success',
+						loading: false
+					},
+					...$notificationsStore
+				];
+				return json;
+			}
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+		}
+	}
 </script>
 
 <Head {pageTitle} />
 
-<section class="px-24 pt-12 pb-10">
+<section class="px-24 py-12">
 	<Breadcrumb routes={breadcrumbRoutes} />
 </section>
 
 <section class="min-h-screen px-24">
-	<div class="mb-16">
-		<h1 class="text-4xl font-bold text-white">Community Curated Bounty List</h1>
-		<p class="mt-2 max-w-3xl text-base font-medium text-gray">
+	<div class="pb-28">
+		<h1 class="mb-4 text-4xl font-bold text-white">Community Curated Bounty List</h1>
+		<p class="max-w-3xl text-base font-medium text-gray">
 			This community curated bounty list (CCBL) contains requests from the Secret Network community.
 			Each bounty is a project many have voted on and hope to see built on the network. Think you
 			can take on a bounty for the community? Click the bounty to learn more.
@@ -131,17 +139,19 @@
 		</div>
 
 		<div class="col-span-9">
-			{#if $bounties}
-				{#each $bounties.val as bounty, index}
-					<div class="mb-2 w-full">
-						<BountyCard {bounty} {index} />
-					</div>
+			{#await getBounties()}
+				<!-- promise is pending -->
+			{:then list}
+				<!-- promise was fulfilled -->
+				{#each list as bounty, index}
+					<BountyCard {bounty} {index} />
 				{/each}
-			{:else}
+			{:catch error}
+				<!-- promise was rejected -->
 				<p class="block self-center text-center text-sm font-medium text-dark-5">
 					Secret University found no bounties.
 				</p>
-			{/if}
+			{/await}
 		</div>
 	</div>
 </section>

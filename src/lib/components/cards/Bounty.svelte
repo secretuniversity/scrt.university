@@ -32,15 +32,12 @@
 	};
 </script>
 
-<a
-	href={url}
-	class="block h-full w-full rounded-md {getBGColor()} px-4 py-6 shadow-md lg:px-8 lg:py-8"
->
+<a href={url} class="block h-fit w-full rounded-md {getBGColor()} px-8 py-6 shadow-md">
 	<div class="grid-col-5 grid auto-rows-auto">
 		<div class="col-span-3 mt-2 text-white">
 			<div>
 				<p class="text-2xl font-semibold">{bounty.title}</p>
-				<p>Reward: <span class="font-bold">{bounty.amount}</span> SCRT</p>
+				<p>Reward: <span class="font-bold">{bounty.reward_amount}</span> SCRT</p>
 			</div>
 			<p>{bounty.description}</p>
 			<div class="mt-2 flex">
