@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Banner from '$lib/components/Banner.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import Notification from '$lib/components/Notification.svelte';
+	import Notification from '$lib/components/Notifications.svelte';
 	import '../app.css';
 
 	const minScreenWidth = 961;
