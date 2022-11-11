@@ -1,18 +1,18 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/staking.svg';
-	import { notification, secret } from '$lib/stores';
+	import { notificationsStore, secretStore } from '$lib/stores';
 
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
 
-	let disabled = $secret === null;
+	let disabled = $secretStore === null;
 	let scrtAmount: number | null = null;
 
 	async function handleStake() {
 		try {
-			if ($secret && scrtAmount) {
+			if ($secretStore && scrtAmount) {
 				console.log('Staking amount and client found. simulating tx');
-				const sim = await $secret.val.tx.staking.delegate.simulate({
-					delegatorAddress: $secret.val.address,
+				const sim = await $secretStore.val.tx.staking.delegate.simulate({
+					delegatorAddress: $secretStore.val.address,
 					validatorAddress,
 					amount: {
 						amount: getSCRTasUSCRT(scrtAmount),
@@ -22,20 +22,18 @@
 
 				console.log(sim);
 
-				$notification = {
-					msg: 'Succesfully staked with Secret University. Tyvm!',
-					hasError: false,
+				$notificationsStore.push({
+					message: 'Succesfully staked with Secret University. Tyvm!',
+					status: 'success',
 					loading: false
-				};
+				});
 			}
 		} catch (err) {
-			console.log(err);
-
-			$notification = {
-				msg: 'There was a problem staking your SCRT. Please try again.',
-				hasError: true,
+			$notificationsStore.push({
+				message: err as string,
+				status: 'error',
 				loading: false
-			};
+			});
 		}
 	}
 
