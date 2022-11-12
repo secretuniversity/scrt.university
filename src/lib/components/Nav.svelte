@@ -4,8 +4,9 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
-	import { isExpired, retry, getOrCreateUser, loadJWT } from '$lib/helpers/index';
+	import { isExpired, retry, loadJWT, saveJWT } from '$lib/helpers/index';
 	import { notificationsStore, userStore, secretStore } from '$lib/stores';
+	import type { User } from '$lib/models';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 
@@ -13,68 +14,97 @@
 	let dashboard = false;
 
 	$: if ($navigating) reset();
-
-	onMount(async () => {
-		const session = sessionStorage.getItem('keplr-connected');
-
-		try {
-			if (session && !secretStore) {
-				await handleConnect();
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	});
+	$: loggedIn = $userStore && $secretStore && loadJWT('user');
 
 	function reset() {
 		learn = false;
 		dashboard = false;
 	}
 
+	async function login(address: string): Promise<User> {
+		try {
+			const res = await fetch('/api/v1/users', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ address })
+			});
+			const token = res.headers.get('Token');
+			const json = await res.json();
+
+			if (token) {
+				saveJWT('user', token);
+			}
+
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: 'Successfully connected to Secret University.',
+					status: 'success',
+					loading: false
+				}
+			];
+
+			return Promise.resolve(json);
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+			return Promise.reject(err);
+		}
+	}
+
 	async function handleConnect() {
 		try {
+			// Connect to Keplr
 			await connect();
 
-			if ($userStore && loadJWT('user')) {
-				return Promise.resolve();
-			}
-
-			if ($secretStore) {
-				const userResult = await getOrCreateUser($secretStore.val.address);
-
-				if (userResult) {
-					const exp = new Date();
-					exp.setDate(exp.getDate() + 1);
-
-					$userStore = { val: userResult, exp: exp.getTime() };
-				}
-			} else {
-				return Promise.reject(
-					'Problem saving secret.js instance to app store. Please report if you see this.'
-				);
-			}
-
-			if ($userStore && !isExpired($userStore.exp)) {
-				return;
-			} else {
-				retry(async () => {
-					if ($secretStore) {
-						await getOrCreateUser($secretStore.val.address);
-					}
-				}).catch((err) => {
-					$notificationsStore.push({
-						message: err as string,
+			// SecretStore should be populated by now
+			if (!$secretStore) {
+				$notificationsStore = [
+					...$notificationsStore,
+					{
+						message: 'Something went wrong with Keplr. Please report this if you see this message.',
 						status: 'error',
 						loading: false
-					});
-				});
+					}
+				];
+
+				return;
 			}
-		} catch (err) {
-			$notificationsStore.push({
-				message: err as string,
-				status: 'error',
-				loading: false
+
+			// Check if user is already logged in
+			if ($userStore && !isExpired($userStore.exp) && loadJWT('user')) {
+				return;
+			}
+
+			// Otherwise log user in
+			const res = await login($secretStore.val.address);
+			const exp = new Date();
+			exp.setDate(exp.getDate() + 1);
+
+			$userStore = { val: res, exp: exp.getTime() };
+
+			console.table({
+				userStore: $userStore,
+				jwt: loadJWT('user'),
+				secretStore: $secretStore
 			});
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				}
+			];
 		}
 	}
 </script>
@@ -147,7 +177,7 @@
 
 		<div class="hidden pr-4 text-right md:block">
 			<span class="relative inline-flex rounded-md shadow-md">
-				{#if $secretStore && $userStore && loadJWT('user')}
+				{#if loggedIn}
 					<button
 						on:click={() => goto('/dashboard')}
 						class="inline-flex h-12 cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 font-semibold text-white hover:bg-darker-blue"

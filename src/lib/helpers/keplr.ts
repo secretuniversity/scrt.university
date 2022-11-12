@@ -13,16 +13,12 @@ export async function connect() {
 
 		const CHAIN_ID = env.PUBLIC_SECRET_NETWORK_CHAIN_ID;
 
-		console.log(CHAIN_ID);
-
 		await window.keplr.enable(CHAIN_ID);
 
 		const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(CHAIN_ID);
 		const [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
 
 		const grpcWebUrl = env.PUBLIC_SECRET_NETWORK_GRPC_URL;
-
-		console.log(grpcWebUrl);
 
 		const secretjs = await SecretNetworkClient.create({
 			grpcWebUrl,

@@ -1,3 +1,4 @@
+import { notificationsStore } from '$lib/stores';
 import type { ArticleRequest, PathwayRequest, User } from '$lib/models/index';
 
 type Draft = PathwayRequest | ArticleRequest;
@@ -65,33 +66,28 @@ export function isExpired(exp: number) {
 	return exp < new Date().getTime();
 }
 
-export async function getOrCreateUser(address: string): Promise<User | null> {
-	return new Promise((resolve, reject) => {
-		const data = { address };
+// export async function getOrCreateUser(address: string): Promise<User> {
+// 	try {
+// 		const data = { address };
+// 		const res = await fetch('/api/v1/users', {
+// 			method: 'POST',
+// 			headers: { 'Content-Type': 'application/json' },
+// 			body: JSON.stringify(data)
+// 		})
 
-		fetch('/api/v1/user', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data)
-		})
-			.then((res) => {
-				console.log('HERE');
-				const token = res.headers.get('token');
+// 		const token = res.headers.get('token');
+// 		const json = await res.json();
 
-				if (token) {
-					saveJWT('user', token);
-				}
-
-				return res.json();
-			})
-			.then((res) => {
-				resolve(res.data as User);
-			})
-			.catch(() => {
-				reject('Error getting user');
-			});
-	});
-}
+// 		saveJWT(token);
+// 	} catch (err) {
+// 		$notificationsStore = [
+// 			{
+// 				message: "Error creating or finding your Secret University account.",
+// 				type: "error"
+// 			}
+// 		]
+// 	}
+// }
 
 export function retry(fn: () => Promise<any>, retriesLeft = 5, interval = 1000): Promise<any> {
 	return fn().catch((err) => {
