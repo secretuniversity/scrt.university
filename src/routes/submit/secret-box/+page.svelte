@@ -51,7 +51,7 @@
 		tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
-			const res = await fetch('/api/submit/secret-box', {
+			const res = await fetch('/api/submit/secret-boxes', {
 				method: 'POST',
 				headers: {
 					Token: token

@@ -62,39 +62,51 @@
 		}
 	});
 
-	function submit() {
+	async function submit() {
 		const token = loadJWT('contributor');
 
 		if (!token || !$contributorStore) {
 			return;
 		}
 
-		fetch('/api/v1/pathway', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Token: token
-			},
-			body: JSON.stringify($pathwayRequest)
-		})
-			.then((res) => {
-				if (res.status === 200) {
-					$notificationsStore.push({
-						message: 'Succesfully uploaded pathway!',
+		try {
+			const res = await fetch('/api/v1/pathway', {
+				method: 'POST',
+				headers: {
+					Token: token
+				},
+				body: JSON.stringify($pathwayRequest)
+			});
+
+			if (res.status === 200) {
+				$notificationsStore = [
+					{
+						message: 'Pathway submitted successfully!',
 						status: 'success',
 						loading: false
-					});
-
-					goto('/dashboard');
-				}
-			})
-			.catch((err) => {
-				$notificationsStore.push({
+					},
+					...$notificationsStore
+				];
+			} else {
+				$notificationsStore = [
+					{
+						message: 'Something went wrong. Please try again.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+			}
+		} catch (err) {
+			$notificationsStore = [
+				{
 					message: err as string,
 					status: 'error',
 					loading: false
-				});
-			});
+				},
+				...$notificationsStore
+			];
+		}
 	}
 
 	function loadDraft() {

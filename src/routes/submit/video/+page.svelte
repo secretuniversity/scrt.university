@@ -30,7 +30,7 @@
 	let files: FileList;
 	let tags: string[] = [];
 
-	function submit() {
+	async function submit() {
 		const token = loadJWT('contributor');
 
 		if (!$contributorStore || !token) {
@@ -44,27 +44,44 @@
 		formData.append('file', files[0]);
 		tags.forEach((tag) => formData.append('tags', tag));
 
-		$notificationsStore.push({
-			message: 'Submitting your video...',
-			status: 'info',
-			loading: true
-		});
+		try {
+			const res = await fetch('/api/v1/videos', {
+				method: 'POST',
+				headers: {
+					Token: token
+				},
+				body: formData
+			});
 
-		fetch('/api/v1/video', {
-			method: 'POST',
-			headers: {
-				Token: token
-			},
-			body: formData
-		}).then((res) => {
 			if (res.status === 200) {
-				$notificationsStore.push({
-					message: 'Video submitted successfully',
-					status: 'success',
-					loading: false
-				});
+				$notificationsStore = [
+					...$notificationsStore,
+					{
+						message: 'Your video has been submitted!',
+						status: 'success',
+						loading: false
+					}
+				];
+			} else {
+				$notificationsStore = [
+					...$notificationsStore,
+					{
+						message: 'There was an error submitting your video',
+						status: 'error',
+						loading: false
+					}
+				];
 			}
-		});
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+		}
 	}
 </script>
 
