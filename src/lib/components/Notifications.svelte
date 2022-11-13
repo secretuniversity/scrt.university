@@ -8,7 +8,15 @@
 		if ($notificationsStore.length > 0) {
 			setTimeout(() => {
 				$notificationsStore = $notificationsStore.filter((_, i) => i !== 0);
-			}, 5000);
+			}, 3000);
+		}
+
+		if ($notificationsStore.length > 8) {
+			while ($notificationsStore.length > 8) {
+				setTimeout(() => {
+					$notificationsStore = $notificationsStore.splice($notificationsStore.length - 1, 1);
+				}, 500);
+			}
 		}
 	}
 
@@ -24,10 +32,6 @@
 				return 'bg-dark-1';
 		}
 	}
-
-	function hide(index: number) {
-		$notificationsStore = $notificationsStore.filter((n, i) => i !== index);
-	}
 </script>
 
 <div class="fixed bottom-5 right-5 z-10 flex-col space-y-4">
@@ -36,7 +40,6 @@
 		<div
 			in:fly={{ y: -200, duration: 1000 }}
 			out:fade
-			on:click={() => hide(i)}
 			class="cursor-pointer px-4 py-2 text-base text-white {getBGColor(n)} rounded-md shadow-md"
 		>
 			<div class="flex">
@@ -44,7 +47,7 @@
 					<img src={Spinner} alt="Loading your request" />
 				{/if}
 				<div>
-					{n.message}
+					{@html n.message}
 				</div>
 			</div>
 		</div>
