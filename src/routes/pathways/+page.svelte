@@ -20,21 +20,32 @@
 
 	let pathways: Pathway[] = [];
 
-	onMount(async () => {
+	async function fetchPathways(): Promise<Pathway[]> {
 		try {
 			const res = await fetch('/api/v1/pathways');
 			const json = await res.json();
 
-			pathways = json as Pathway[];
+			if (res.status === 200) {
+				$notificationsStore = [
+					...$notificationsStore,
+					{
+						message: 'Pathways fetched successfully!',
+						status: 'success',
+						loading: false
+					}
+				];
 
-			$notificationsStore = [
-				...$notificationsStore,
-				{
-					message: 'Successfully loaded pathways',
-					status: 'success',
-					loading: false
-				}
-			];
+				return Promise.resolve(json);
+			} else {
+				$notificationsStore = [
+					...$notificationsStore,
+					{
+						message: 'Pathways could not be fetched!',
+						status: 'success',
+						loading: false
+					}
+				];
+			}
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
@@ -45,6 +56,13 @@
 				}
 			];
 		}
+
+		return Promise.reject();
+	}
+
+	onMount(async () => {
+		const p = await fetchPathways();
+		pathways = p;
 	});
 </script>
 
