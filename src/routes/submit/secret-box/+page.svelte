@@ -4,7 +4,6 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
 	import { contributorStore, notificationsStore } from '$lib/stores';
-	import { loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -34,8 +33,8 @@
 	let bannerImg: FileList;
 	let tags: string[] = [];
 
-	function submit() {
-		const token = loadJWT('contributor');
+	async function submit() {
+		const token = sessionStorage.getItem('contributor');
 
 		if (!$contributorStore || !token) {
 			return;
@@ -51,37 +50,44 @@
 		formData.append('url', url);
 		tags.forEach((tag) => formData.append('tags', tag));
 
-		fetch('/api/v1/repos/secret_box', {
-			method: 'POST',
-			headers: {
-				Token: token
-			},
-			body: formData
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				if (res.status === 200) {
-					$notificationsStore.push({
+		try {
+			const res = await fetch('/api/submit/secret-box', {
+				method: 'POST',
+				headers: {
+					Token: token
+				},
+				body: formData
+			});
+
+			if (res.status === 200) {
+				$notificationsStore = [
+					{
 						message: 'Your Secret Box has been submitted!',
 						status: 'success',
 						loading: false
-					});
-
-					title = '';
-					description = '';
-					url = '';
-					difficulty = '';
-					devEnv = '';
-					tags = [];
-				}
-			})
-			.catch((err) => {
-				$notificationsStore.push({
+					},
+					...$notificationsStore
+				];
+			} else {
+				$notificationsStore = [
+					{
+						message: 'There was an error submitting your Secret Box.',
+						status: 'success',
+						loading: false
+					},
+					...$notificationsStore
+				];
+			}
+		} catch (err) {
+			$notificationsStore = [
+				{
 					message: err as string,
-					status: 'error',
+					status: 'success',
 					loading: false
-				});
-			});
+				},
+				...$notificationsStore
+			];
+		}
 	}
 </script>
 
@@ -174,7 +180,11 @@
 		</p>
 
 		<div>
-			<button class="mr-2 rounded-md bg-dark-blue px-6 py-2 text-white">Submit</button>
+			<button
+				on:click={() => submit()}
+				class="mr-2 rounded-md bg-dark-blue px-6 py-2 text-white hover:bg-darker-blue"
+				>Submit</button
+			>
 		</div>
 	</div>
 </section>
