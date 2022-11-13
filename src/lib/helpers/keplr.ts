@@ -4,21 +4,19 @@ import { SecretNetworkClient } from 'secretjs';
 import { env } from '$env/dynamic/public';
 
 export async function connect() {
+	if (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSignerOnlyAmino) {
+		return Promise.reject(
+			'Wallet not found. Please install <a class="underline" href="https://www.keplr.app/">Keplr</a>'
+		);
+	}
+
 	try {
-		const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-		while (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSignerOnlyAmino) {
-			await sleep(100);
-		}
-
 		const CHAIN_ID = env.PUBLIC_SECRET_NETWORK_CHAIN_ID;
-
+		const grpcWebUrl = env.PUBLIC_SECRET_NETWORK_GRPC_URL;
 		await window.keplr.enable(CHAIN_ID);
 
 		const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(CHAIN_ID);
 		const [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
-
-		const grpcWebUrl = env.PUBLIC_SECRET_NETWORK_GRPC_URL;
 
 		const secretjs = await SecretNetworkClient.create({
 			grpcWebUrl,
