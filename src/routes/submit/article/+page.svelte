@@ -40,35 +40,52 @@
 		}
 	});
 
-	function submit() {
+	async function submit() {
 		let token = loadJWT('contributor');
 
 		if (!token || !$contributorStore) {
 			return;
 		}
 
-		fetch('/api/v1/article', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Token: token
-			},
-			body: JSON.stringify($articleRequest)
-		})
-			.then((res) => {
-				$notificationsStore.push({
-					message: 'Article submitted successfully',
-					status: 'success',
-					loading: false
-				});
-			})
-			.catch((err) => {
-				$notificationsStore.push({
+		try {
+			const res = await fetch('/api/v1/article', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Token: token
+				},
+				body: JSON.stringify($articleRequest)
+			});
+
+			if (res.status === 200) {
+				$notificationsStore = [
+					{
+						message: 'Article submitted successfully!',
+						status: 'success',
+						loading: false
+					},
+					...$notificationsStore
+				];
+			} else {
+				$notificationsStore = [
+					{
+						message: 'There was an error submitting your article. Please try again.',
+						status: 'success',
+						loading: false
+					},
+					...$notificationsStore
+				];
+			}
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				{
 					message: err as string,
 					status: 'error',
 					loading: false
-				});
-			});
+				}
+			];
+		}
 	}
 
 	function saveDraft() {
