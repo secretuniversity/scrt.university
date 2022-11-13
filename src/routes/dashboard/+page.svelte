@@ -4,7 +4,7 @@
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { loadJWT, saveJWT, getOrCreateUser } from '$lib/helpers';
+	import { loadJWT, saveJWT } from '$lib/helpers';
 	import { connect } from '$lib/helpers/keplr';
 	import { goto } from '$app/navigation';
 	import {
@@ -23,14 +23,15 @@
 		profile: 'profile',
 		settings: 'settings'
 	};
+	const exp = new Date().setHours(new Date().getHours() + 1);
 
 	let view = views.profile;
 
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
 
-	let renderBecomeContributorBtn = false;
-	let renderContributionSubmissionBtn = false;
+	$: renderBecomeContributorBtn = false;
+	$: renderContributionSubmissionBtn = $contributorStore && loadJWT('contributor');
 
 	let name = '';
 	let skill = 'beginner';
@@ -39,166 +40,133 @@
 	let email = '';
 
 	onMount(async () => {
-		let addr = '';
-
-		if (!loadJWT('user')) {
-			goto('/');
-			return Promise.reject();
-		}
-
-		if (!$secretStore) {
-			await connect();
-		} else {
-			addr = $secretStore.val.address;
-		}
-
-		if (loadJWT('contributor') && $contributorStore) {
-			renderContributionSubmissionBtn = true;
-		} else {
-			renderBecomeContributorBtn = true;
-		}
-
 		try {
-			const exp = new Date();
-			exp.setHours(exp.getHours() + 1);
-
-			if (!$userStore || !$contributorStore) {
-				console.log('trying to get user and contributor');
-
-				const [userResult, contributorResult] = await Promise.all([
-					getOrCreateUser(addr),
-					tryLoginContributor()
-				]);
-
-				if (userResult) {
-					console.log(userResult);
-					$userStore = { val: userResult, exp: exp.getTime() };
-				}
-
-				if (contributorResult) {
-					$contributorStore = { val: contributorResult, exp: exp.getTime() };
-				}
-
-				if ($contributorStore) {
-					renderContributionSubmissionBtn = true;
-				} else {
-					renderBecomeContributorBtn = true;
-				}
-			}
-
-			if (!$contributionsStore || !$bookmarksStore) {
-				const [contributionsResult, bookmarksResult] = await Promise.all([
-					getContributions(),
-					getBookmarks()
-				]);
-
-				console.log({ contributionsResult, bookmarksResult });
-
-				if (contributionsResult) {
-					$contributionsStore = { val: contributionsResult, exp: exp.getTime() };
-				}
-
-				if (bookmarksResult) {
-					$bookmarksStore = { val: bookmarksResult, exp: exp.getTime() };
-				}
-			}
+			await loginContributor();
 		} catch (err) {
-			$notificationsStore.push({
-				message: err as string,
-				status: 'error',
-				loading: false
-			});
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
 		}
 	});
 
-	async function tryLoginContributor(): Promise<Contributor | null> {
-		return new Promise((res, rej) => {
-			const userToken = loadJWT('user');
-
-			if (!userToken) {
-				return rej('No user token found');
-			}
-
-			if ($userStore) {
-				fetch(`/api/v1/contributor/login`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Token: userToken
-					},
-					body: JSON.stringify({
-						address: $userStore.val.address,
-						name: null
-					})
-				})
-					.then((res) => {
-						let token = res.headers.get('Token');
-
-						if (token) {
-							saveJWT('contributor', token);
-						}
-
-						return res.json();
-					})
-					.then((result) => {
-						if (!result.data) {
-							return res(null);
-						}
-
-						const c: Contributor = {
-							id: result.data.id,
-							address: result.data.address,
-							name: result.data.name
-						};
-						res(c);
-					})
-					.catch((_err) => {
-						return rej('Failed to login contributor');
-					});
-			}
-		});
-	}
-
-	async function getBookmarks(): Promise<Array<Bookmark> | null> {
-		return new Promise((res, rej) => {
-			if ($userStore) {
-				fetch(`/api/v1/bookmarks/${$userStore.val.id}`)
-					.then((res) => res.json())
-					.then((result) => {
-						const b: Array<Bookmark> = result.data;
-						res(b);
-					});
-			} else {
-				rej('No user in storage');
-			}
-		});
-	}
-
-	async function getContributions(): Promise<Array<Contribution> | null> {
-		return new Promise((res, rej) => {
-			const token = loadJWT('contributor');
+	async function loginContributor() {
+		try {
+			const token = sessionStorage.getItem('user');
 
 			if (!token) {
-				return rej('No contributor token found');
+				$notificationsStore = [
+					{
+						message: 'You must be logged in as a user to log in as a contributor.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+				return;
 			}
 
-			if ($contributorStore) {
-				fetch(`/api/v1/contributions/${$contributorStore.val.id}`, {
-					headers: {
-						Token: token
-					}
-				})
-					.then((res) => res.json())
-					.then((data) => {
-						const c: Array<Contribution> = data.data;
-						res(c);
-					})
-					.catch((err) => {
-						rej('There was a problem finding your contributions');
-					});
+			if (!$secretStore) {
+				$notificationsStore = [
+					{
+						message: 'Could not find Keplr connection. Plese try reconnecting',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+				return;
 			}
-		});
+
+			const formData = new FormData();
+			formData.append('address', $secretStore.val.address);
+
+			const res = await fetch('/api/v1/contributors/login', {
+				method: 'POST',
+				headers: {
+					Token: token
+				},
+				body: formData
+			});
+
+			if (res.status === 404) {
+				$notificationsStore = [
+					{
+						message: 'You are not yet a contributor. Please apply to become one.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+
+				renderBecomeContributorBtn = true;
+				return;
+			}
+
+			const cToken = res.headers.get('Token');
+			if (cToken) {
+				sessionStorage.setItem('contributor', cToken);
+			}
+
+			const json = await res.json();
+
+			$contributorStore = { val: json, exp };
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+		}
 	}
+
+	// async function getBookmarks(): Promise<Array<Bookmark> | null> {
+	// 	return new Promise((res, rej) => {
+	// 		if ($userStore) {
+	// 			fetch(`/api/v1/bookmarks/${$userStore.val.id}`)
+	// 				.then((res) => res.json())
+	// 				.then((result) => {
+	// 					const b: Array<Bookmark> = result.data;
+	// 					res(b);
+	// 				});
+	// 		} else {
+	// 			rej('No user in storage');
+	// 		}
+	// 	});
+	// }
+
+	// async function getContributions(): Promise<Array<Contribution> | null> {
+	// 	return new Promise((res, rej) => {
+	// 		const token = loadJWT('contributor');
+
+	// 		if (!token) {
+	// 			return rej('No contributor token found');
+	// 		}
+
+	// 		if ($contributorStore) {
+	// 			fetch(`/api/v1/contributions/${$contributorStore.val.id}`, {
+	// 				headers: {
+	// 					Token: token
+	// 				}
+	// 			})
+	// 				.then((res) => res.json())
+	// 				.then((data) => {
+	// 					const c: Array<Contribution> = data.data;
+	// 					res(c);
+	// 				})
+	// 				.catch((err) => {
+	// 					rej('There was a problem finding your contributions');
+	// 				});
+	// 		}
+	// 	});
+	// }
 
 	async function submitContributorForm() {
 		try {
