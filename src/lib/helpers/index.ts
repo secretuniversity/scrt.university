@@ -1,5 +1,4 @@
-import { notificationsStore } from '$lib/stores';
-import type { ArticleRequest, PathwayRequest, User } from '$lib/models/index';
+import type { ArticleRequest, PathwayRequest } from '$lib/models/index';
 
 type Draft = PathwayRequest | ArticleRequest;
 type DraftStorage = { drafts: Record<string, Draft[]> };
