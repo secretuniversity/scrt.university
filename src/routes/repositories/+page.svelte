@@ -8,7 +8,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
 	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
-	import { genExp } from '$lib/helpers';
+	import { genExp, getBaseAPIUrl } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Repositories';
@@ -62,7 +62,8 @@
 
 	async function getRepos(): Promise<Repo[]> {
 		try {
-			let res = await fetch(`/api/v1/repos?limit=${limit}&offset=${offset}`);
+			const url = getBaseAPIUrl() + `/v1/repos?limit=${limit}&offset=${offset}`;
+			const res = await fetch(url);
 
 			if (res.ok) {
 				let data = await res.json();
@@ -77,7 +78,8 @@
 
 	async function getSecretBoxes(): Promise<SecretBox[]> {
 		try {
-			let res = await fetch(`/api/v1/secret-boxes?limit=${limit}&offset=${offset}`);
+			const url = getBaseAPIUrl() + `/v1/secret-boxes?limit=${limit}&offset=${offset}`;
+			const res = await fetch(url);
 
 			if (res.ok) {
 				let data = await res.json();
@@ -90,21 +92,21 @@
 		}
 	}
 
-	async function getRepoTags(): Promise<Array<Tag>> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/tags/kind/repo/offset/0')
-				.then((response) => response.json())
-				.then((data) => res(data as Array<Tag>));
-		});
-	}
+	// async function getRepoTags(): Promise<Array<Tag>> {
+	// 	return new Promise((res, rej) => {
+	// 		fetch('/api/v1/tags/kind/repo/offset/0')
+	// 			.then((response) => response.json())
+	// 			.then((data) => res(data as Array<Tag>));
+	// 	});
+	// }
 
-	async function getBoxesTags(): Promise<Array<Tag>> {
-		return new Promise((res, rej) => {
-			fetch('/api/v1/tags/kind/secret_box/offset/0')
-				.then((response) => response.json())
-				.then((data) => res(data as Array<Tag>));
-		});
-	}
+	// async function getBoxesTags(): Promise<Array<Tag>> {
+	// 	return new Promise((res, rej) => {
+	// 		fetch('/api/v1/tags/kind/secret_box/offset/0')
+	// 			.then((response) => response.json())
+	// 			.then((data) => res(data as Array<Tag>));
+	// 	});
+	// }
 </script>
 
 <Head pageTitle={PAGE_TITLE} />

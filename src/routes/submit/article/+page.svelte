@@ -6,7 +6,13 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/developer.svg';
 	import { articleRequest, contributorStore, notificationsStore } from '$lib/stores';
-	import { getLessonBaseContent, loadJWT, loadLocalDrafts, saveLocalDraft } from '$lib/helpers';
+	import {
+		getBaseAPIUrl,
+		getLessonBaseContent,
+		loadJWT,
+		loadLocalDrafts,
+		saveLocalDraft
+	} from '$lib/helpers';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
@@ -48,7 +54,8 @@
 		}
 
 		try {
-			const res = await fetch('/api/v1/article', {
+			const url = getBaseAPIUrl() + '/v1/articles';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

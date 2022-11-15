@@ -4,7 +4,7 @@
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { loadJWT, saveJWT } from '$lib/helpers';
+	import { getBaseAPIUrl, loadJWT, saveJWT } from '$lib/helpers';
 	import { connect } from '$lib/helpers/keplr';
 	import { goto } from '$app/navigation';
 	import {
@@ -85,7 +85,8 @@
 			const formData = new FormData();
 			formData.append('address', $secretStore.val.address);
 
-			const res = await fetch('/api/v1/contributors/login', {
+			const url = getBaseAPIUrl() + '/v1/contributors/login';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					Token: token
@@ -170,7 +171,8 @@
 
 	async function submitContributorForm() {
 		try {
-			const res = await fetch('/api/v1/forms/contributor', {
+			const url = getBaseAPIUrl() + '/v1/contributors';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

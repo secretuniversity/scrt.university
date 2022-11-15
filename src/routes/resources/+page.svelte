@@ -16,7 +16,7 @@
 		selectedVideo,
 		resourceTagsStore
 	} from '$lib/stores';
-	import { genExp, slugify } from '$lib/helpers';
+	import { genExp, getBaseAPIUrl } from '$lib/helpers';
 	import type { Article, Video, Tag } from '$lib/models/index';
 	import { onMount } from 'svelte';
 
@@ -36,6 +36,9 @@
 	// let tags: Tag[];
 	let articles: Article[] = [];
 	let videos: Video[] = [];
+
+	let limit = 25;
+	let offset = 0;
 
 	onMount(async () => {
 		try {
@@ -78,7 +81,8 @@
 
 	async function getVideos(): Promise<Video[]> {
 		try {
-			const res = await fetch('/api/v1/videos?limit=25&offset=0');
+			const url = getBaseAPIUrl() + `/v1/videos?limit=${limit}&offset=${offset}`;
+			const res = await fetch(url);
 
 			if (res.ok) {
 				const json = await res.json();
@@ -94,7 +98,8 @@
 
 	async function getArticles(): Promise<Article[]> {
 		try {
-			const res = await fetch('/api/v1/articles?limit=25&offset=0');
+			const url = getBaseAPIUrl() + `/v1/articles?limit=${limit}&offset=${offset}`;
+			const res = await fetch(url);
 
 			if (res.ok) {
 				const json = await res.json();

@@ -4,6 +4,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import type { Pathway } from '$lib/models/index';
 	import { notificationsStore } from '$lib/stores';
+	import { getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Pathways';
 
@@ -22,7 +23,8 @@
 
 	async function fetchPathways(): Promise<Pathway[]> {
 		try {
-			const res = await fetch('/api/v1/pathways');
+			const url = getBaseAPIUrl() + '/v1/pathways';
+			const res = await fetch(url);
 			const json = await res.json();
 
 			if (res.status === 200) {

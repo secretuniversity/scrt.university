@@ -4,6 +4,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
 	import { contributorStore, notificationsStore } from '$lib/stores';
+	import { getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -51,7 +52,8 @@
 		tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
-			const res = await fetch('/api/submit/secret-boxes', {
+			const url = getBaseAPIUrl() + '/v1/secret-boxes';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					Token: token

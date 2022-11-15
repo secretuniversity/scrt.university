@@ -16,9 +16,8 @@ const config = defineConfig(({ command, mode }) => ({
 	server: {
 		proxy: {
 			'/api': {
-				target: process.env.CELADON_URL,
+				target: 'http://127.0.0.1:3000',
 				changeOrigin: true,
-				secure: process.env.APP_ENV === 'production',
 				rewrite: (path) => path.replace(/^\/api/, '')
 			}
 		}

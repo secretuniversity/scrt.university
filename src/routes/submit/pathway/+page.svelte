@@ -7,7 +7,7 @@
 	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import { pathwayRequest, contributorStore, notificationsStore } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
-	import { getLessonBaseContent, loadJWT } from '$lib/helpers';
+	import { getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
@@ -70,7 +70,8 @@
 		}
 
 		try {
-			const res = await fetch('/api/v1/pathway', {
+			const url = getBaseAPIUrl() + '/v1/pathways';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					Token: token

@@ -14,6 +14,19 @@ export function slugify(str: string) {
 		.replace(/\s+/g, '-');
 }
 
+export function getBaseAPIUrl() {
+	if (process.env.APP_ENV === 'production') {
+		if (process.env.CELADON_URL) {
+			return process.env.CELADON_URL;
+		}
+
+		console.error('No CELADON_URL set in production environment');
+		return '';
+	} else {
+		return '/api';
+	}
+}
+
 export function unslugify(str: string) {
 	return str
 		.toString()

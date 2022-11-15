@@ -4,7 +4,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
 	import { contributorStore, notificationsStore } from '$lib/stores';
-	import { loadJWT } from '$lib/helpers';
+	import { getBaseAPIUrl, loadJWT } from '$lib/helpers';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -45,7 +45,8 @@
 		tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
-			const res = await fetch('/api/v1/videos', {
+			const url = getBaseAPIUrl() + '/v1/videos';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					Token: token

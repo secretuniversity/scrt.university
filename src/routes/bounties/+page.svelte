@@ -4,6 +4,7 @@
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import { bountiesStore, notificationsStore } from '$lib/stores';
+	import { getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Bounties';
 	const breadcrumbRoutes = [
@@ -24,9 +25,9 @@
 
 	async function getBounties() {
 		try {
-			const url = `/api/v1/bounties?limit=${limit}&offset=${offset}`;
-			let res = await fetch(url);
-			let json = await res.json();
+			const url = getBaseAPIUrl() + `/v1/bounties?limit=${limit}&offset=${offset}`;
+			const res = await fetch(url);
+			const json = await res.json();
 
 			if (res.ok) {
 				$bountiesStore = {
