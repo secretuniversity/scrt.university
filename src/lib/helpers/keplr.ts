@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import { secretStore } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
-import { env } from '$env/dynamic/public';
 
 export async function connect() {
 	if (!window.keplr || !window.getEnigmaUtils || !window.getOfflineSignerOnlyAmino) {
@@ -11,8 +10,8 @@ export async function connect() {
 	}
 
 	try {
-		const CHAIN_ID = env.PUBLIC_SECRET_NETWORK_CHAIN_ID;
-		const grpcWebUrl = env.PUBLIC_SECRET_NETWORK_GRPC_URL;
+		const CHAIN_ID = process.env.PUBLIC_SECRET_NETWORK_CHAIN_ID;
+		const grpcWebUrl = process.env.PUBLIC_SECRET_NETWORK_GRPC_URL;
 		await window.keplr.enable(CHAIN_ID);
 
 		const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(CHAIN_ID);
