@@ -34,8 +34,10 @@
 			const token = res.headers.get('Token');
 			const json = await res.json();
 
+			console.log(token);
+
 			if (token) {
-				saveJWT('user', token);
+				sessionStorage.setItem('user', token);
 			}
 
 			$notificationsStore = [
