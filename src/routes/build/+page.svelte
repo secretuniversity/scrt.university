@@ -5,7 +5,8 @@
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
-	import { notificationsStore } from '$lib/stores';
+	import { getBaseAPIUrl } from '$lib/helpers';
+	import { notificationsStore, userStore } from '$lib/stores';
 
 	const pageTitle = 'Build';
 
@@ -17,35 +18,105 @@
 	let discord = '';
 	let email = '';
 
+	async function isContributor(): Promise<boolean> {
+		try {
+			if (!$userStore) return Promise.reject('User not found.');
+
+			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as string[];
+
+			if (json.includes('contributor')) {
+				return Promise.resolve(true);
+			}
+
+			return Promise.resolve(false);
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+			return Promise.reject(err);
+		}
+	}
+
 	async function submitContributorForm() {
 		try {
-			const res = await fetch('/api/v1/forms/contributor', {
+			if (!$userStore) {
+				$notificationsStore = [
+					{
+						message: 'You need to connect your Keplr wallet before becoming a contributor.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+				return;
+			}
+
+			const form = new FormData();
+			form.append('id', $userStore.val.id.toString());
+			form.append('name', name);
+			form.append('reason', reason);
+			form.append('skill_rating', skill);
+			form.append('discord', discord);
+			form.append('email', email);
+			const url = getBaseAPIUrl() + '/v1/users/register';
+			const res = await fetch(url, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					name,
-					skill,
-					reason,
-					discord,
-					email
-				})
+				body: form
 			});
 
 			if (res.status === 200) {
-				$notificationsStore.push({
-					message: 'Thank you for your submission!',
-					status: 'success',
-					loading: false
-				});
+				$notificationsStore = [
+					{
+						message: 'Thank you for your submission!',
+						status: 'success',
+						loading: false
+					},
+					...$notificationsStore
+				];
 			}
 		} catch (err) {
-			$notificationsStore.push({
-				message: err as string,
-				status: 'error',
-				loading: false
-			});
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
+		}
+	}
+
+	async function tryShowContributorForm() {
+		try {
+			const is = await isContributor();
+			if (!is) {
+				isModalActive = true;
+			} else {
+				$notificationsStore = [
+					{
+						message: 'You are already a contributor.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+			}
+		} catch (err) {
+			$notificationsStore = [
+				{
+					message: err as string,
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
 		}
 	}
 </script>
@@ -189,7 +260,7 @@
 
 <div class="mt-20 mb-36 flex justify-center">
 	<button
-		on:click={() => (isModalActive = true)}
+		on:click={() => tryShowContributorForm()}
 		type="button"
 		class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-darker-blue"
 		>Become A Contributor</button
