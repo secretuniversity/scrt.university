@@ -31,10 +31,10 @@
 				},
 				body: JSON.stringify({ address })
 			});
-			const token = res.headers.get('Token');
+			const token = res.headers.get('token');
 			const json = await res.json();
 
-			console.log(token);
+			console.log(res.headers);
 
 			if (token) {
 				sessionStorage.setItem('user', token);
