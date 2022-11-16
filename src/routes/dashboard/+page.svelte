@@ -30,8 +30,8 @@
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
 
-	$: renderBecomeContributorBtn = false;
-	$: renderContributionSubmissionBtn = $contributorStore && loadJWT('contributor');
+	let renderBecomeContributorBtn = false;
+	let renderContributionSubmissionBtn = false;
 
 	let name = '';
 	let skill = 'beginner';
@@ -41,7 +41,31 @@
 
 	onMount(async () => {
 		try {
-			await loginContributor();
+			if (!$userStore) {
+				$notificationsStore = [
+					{
+						message: 'You tried to access the dashboard without logging in.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+
+				goto('/');
+				return;
+			}
+
+			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as string[];
+
+			if (json && json.includes('contributor')) {
+				renderBecomeContributorBtn = false;
+				renderContributionSubmissionBtn = true;
+			} else {
+				renderBecomeContributorBtn = true;
+				renderContributionSubmissionBtn = false;
+			}
 		} catch (err) {
 			$notificationsStore = [
 				{
@@ -53,80 +77,6 @@
 			];
 		}
 	});
-
-	async function loginContributor() {
-		try {
-			const token = sessionStorage.getItem('user');
-
-			if (!token) {
-				$notificationsStore = [
-					{
-						message: 'You must be logged in as a user to log in as a contributor.',
-						status: 'error',
-						loading: false
-					},
-					...$notificationsStore
-				];
-				return;
-			}
-
-			if (!$secretStore) {
-				$notificationsStore = [
-					{
-						message: 'Could not find Keplr connection. Plese try reconnecting',
-						status: 'error',
-						loading: false
-					},
-					...$notificationsStore
-				];
-				return;
-			}
-
-			const formData = new FormData();
-			formData.append('address', $secretStore.val.address);
-
-			const url = getBaseAPIUrl() + '/v1/contributors/login';
-			const res = await fetch(url, {
-				method: 'POST',
-				headers: {
-					Token: token
-				},
-				body: formData
-			});
-
-			if (res.status === 404) {
-				$notificationsStore = [
-					{
-						message: 'You are not yet a contributor. Please apply to become one.',
-						status: 'error',
-						loading: false
-					},
-					...$notificationsStore
-				];
-
-				renderBecomeContributorBtn = true;
-				return;
-			}
-
-			const cToken = res.headers.get('Token');
-			if (cToken) {
-				sessionStorage.setItem('contributor', cToken);
-			}
-
-			const json = await res.json();
-
-			$contributorStore = { val: json, exp };
-		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
-		}
-	}
 
 	// async function getBookmarks(): Promise<Array<Bookmark> | null> {
 	// 	return new Promise((res, rej) => {
@@ -171,19 +121,29 @@
 
 	async function submitContributorForm() {
 		try {
-			const url = getBaseAPIUrl() + '/v1/contributors';
+			if (!$userStore) {
+				$notificationsStore = [
+					{
+						message: 'You need to connect your Keplr wallet before becoming a contributor.',
+						status: 'error',
+						loading: false
+					},
+					...$notificationsStore
+				];
+				return;
+			}
+
+			const form = new FormData();
+			form.append('id', $userStore.val.id.toString());
+			form.append('name', name);
+			form.append('reason', reason);
+			form.append('skill_rating', skill);
+			form.append('discord', discord);
+			form.append('email', email);
+			const url = getBaseAPIUrl() + '/v1/users/register';
 			const res = await fetch(url, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					name,
-					skill,
-					reason,
-					discord,
-					email
-				})
+				body: form
 			});
 
 			if (res.status === 200) {
