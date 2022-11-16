@@ -5,7 +5,7 @@
 	import TagInput from '$lib/components/TagInput.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/developer.svg';
-	import { articleRequest, contributorStore, notificationsStore } from '$lib/stores';
+	import { articleRequest, notificationsStore, userStore } from '$lib/stores';
 	import {
 		getBaseAPIUrl,
 		getLessonBaseContent,
@@ -13,8 +13,6 @@
 		loadLocalDrafts,
 		saveLocalDraft
 	} from '$lib/helpers';
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit An Article';
 	const pageDescription = `For those with a knack for writing and endless curiousity, submit your article to 
@@ -37,21 +35,22 @@
 		}
 	];
 
-	onMount(() => {
-		if ($contributorStore && loadJWT('contributor')) {
-			$articleRequest.contributor = $contributorStore.val.id;
-			$articleRequest.content = getLessonBaseContent();
-		} else {
-			goto('/');
-		}
-	});
-
 	async function submit() {
-		let token = loadJWT('contributor');
+		let token = loadJWT('user');
 
-		if (!token || !$contributorStore) {
+		if (!token || !$userStore) {
+			$notificationsStore = [
+				{
+					message: 'You must be logged in to submit an article.',
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
 			return;
 		}
+
+		$articleRequest.contributor = $userStore.val.id;
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/articles';
@@ -68,15 +67,6 @@
 				$notificationsStore = [
 					{
 						message: 'Article submitted successfully!',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
-				];
-			} else {
-				$notificationsStore = [
-					{
-						message: 'There was an error submitting your article. Please try again.',
 						status: 'success',
 						loading: false
 					},
