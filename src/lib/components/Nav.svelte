@@ -4,7 +4,7 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
-	import { isExpired, retry, loadJWT, saveJWT } from '$lib/helpers/index';
+	import { isExpired, retry, loadJWT, saveJWT, getBaseAPIUrl } from '$lib/helpers/index';
 	import { notificationsStore, userStore, secretStore } from '$lib/stores';
 	import type { User } from '$lib/models';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
@@ -23,7 +23,8 @@
 
 	async function login(address: string): Promise<User> {
 		try {
-			const res = await fetch('/api/v1/users', {
+			const url = getBaseAPIUrl() + '/v1/users';
+			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -90,12 +91,6 @@
 			exp.setDate(exp.getDate() + 1);
 
 			$userStore = { val: res, exp: exp.getTime() };
-
-			console.table({
-				userStore: $userStore,
-				jwt: loadJWT('user'),
-				secretStore: $secretStore
-			});
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
