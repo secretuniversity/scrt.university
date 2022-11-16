@@ -37,7 +37,7 @@
 				<a
 					href="/submit/article"
 					type="button"
-					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm hover:bg-darker-blue"
 					>Submit an Article</a
 				>
 			</div>
@@ -62,7 +62,7 @@
 				<a
 					href="/submit/video"
 					type="button"
-					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm hover:bg-darker-blue"
 					>Submit a Video</a
 				>
 			</div>
@@ -84,7 +84,7 @@
 				<a
 					href="/submit/secret-box"
 					type="button"
-					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm hover:bg-darker-blue"
 					>Submit a Secret Box</a
 				>
 			</div>
@@ -108,7 +108,7 @@
 				<a
 					href="/submit/pathway"
 					type="button"
-					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm"
+					class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium shadow-sm hover:bg-darker-blue"
 					>Submit a Pathway</a
 				>
 			</div>
@@ -117,7 +117,7 @@
 </section>
 
 <section class="bg-dark-2 py-36 text-white">
-	<div class="mx-auto grid max-w-3xl gap-y-4">
+	<div class="mx-auto grid max-w-3xl gap-y-6">
 		<h2 class="text-center text-4xl font-bold">Ready to Contribute?</h2>
 		<p class="text-center">
 			If you're unsure of whether or not you're ready to contribute to Secret University. Reach out
@@ -126,11 +126,11 @@
 				class="m-1 rounded-md bg-dark-4 py-0.5 px-1 font-bold">#secret-university</span
 			>channel.
 		</p>
-		<div class="mx-auto w-min">
+		<div class="mx-auto mt-4 w-min">
 			<a
 				href="/submit/pathway"
 				type="button"
-				class="inline-flex w-max items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-black shadow-sm"
+				class="inline-flex w-max items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-darker-light-cream"
 				>Reach Out</a
 			>
 		</div>
