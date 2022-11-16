@@ -28,6 +28,7 @@
 			const json = await res.json();
 
 			if (res.status === 200) {
+				console.log(json);
 				$notificationsStore = [
 					...$notificationsStore,
 					{

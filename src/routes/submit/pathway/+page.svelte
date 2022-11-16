@@ -5,7 +5,7 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest, contributorStore, notificationsStore } from '$lib/stores';
+	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
 	import { getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { onMount } from 'svelte';
@@ -54,22 +54,25 @@
 		}
 	}
 
-	onMount(() => {
-		if ($contributorStore && loadJWT('contributor')) {
-			$pathwayRequest.contributor = $contributorStore.val.id;
-		} else {
-			goto('/');
-		}
-	});
-
 	async function submit() {
-		const token = loadJWT('contributor');
+		const token = loadJWT('user');
 
-		if (!token || !$contributorStore) {
+		if (!token || !$userStore) {
+			$notificationsStore = [
+				{
+					message: 'You must be logged in to submit a pathway.',
+					status: 'error',
+					loading: false
+				},
+				...$notificationsStore
+			];
 			return;
 		}
 
+		$pathwayRequest.contributor = $userStore.val.id;
+
 		try {
+			console.log(JSON.stringify($pathwayRequest));
 			const url = getBaseAPIUrl() + '/v1/pathways';
 			const res = await fetch(url, {
 				method: 'POST',
@@ -84,15 +87,6 @@
 					{
 						message: 'Pathway submitted successfully!',
 						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
-				];
-			} else {
-				$notificationsStore = [
-					{
-						message: 'Something went wrong. Please try again.',
-						status: 'error',
 						loading: false
 					},
 					...$notificationsStore
