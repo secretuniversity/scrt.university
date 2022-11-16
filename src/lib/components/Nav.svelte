@@ -34,7 +34,10 @@
 			const token = res.headers.get('token');
 			const json = await res.json();
 
-			console.log(res.headers);
+			// print headers
+			res.headers.forEach((value, key) => {
+				console.log(key, value);
+			});
 
 			if (token) {
 				sessionStorage.setItem('user', token);
