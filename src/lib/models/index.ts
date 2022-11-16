@@ -1,6 +1,7 @@
 export interface User {
 	id: number;
 	address: string;
+	name: string | null;
 }
 
 export interface Contributor {
