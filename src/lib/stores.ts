@@ -18,9 +18,11 @@ import type {
 } from './models/index';
 
 export interface Notification {
+	id: number;
 	message: string;
 	status: 'success' | 'error' | 'info';
 	loading: boolean;
+	close: boolean;
 }
 
 interface SecretStore {

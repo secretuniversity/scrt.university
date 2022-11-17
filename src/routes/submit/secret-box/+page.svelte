@@ -3,8 +3,9 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import { contributorStore, notificationsStore } from '$lib/stores';
-	import { getBaseAPIUrl } from '$lib/helpers';
+	import { userStore, notificationsStore } from '$lib/stores';
+	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
+	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -31,25 +32,31 @@
 	let url = '';
 	let difficulty = '';
 	let devEnv = '';
-	let bannerImg: FileList;
+	let files: FileList;
 	let tags: string[] = [];
 
 	async function submit() {
-		const token = sessionStorage.getItem('contributor');
+		const token = sessionStorage.getItem('user');
 
-		if (!$contributorStore || !token) {
+		if (!$userStore || !token) {
+			const n = getNotification('You must be logged in to submit a video.', 'error');
+			$notificationsStore = [n, ...$notificationsStore];
 			return;
 		}
 
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('description', description);
-		formData.append('contributor', $contributorStore.val.id.toString());
+		formData.append('repo_url', url);
+		formData.append('contributor', $userStore.val.id.toString());
 		formData.append('difficulty', difficulty);
 		formData.append('dev_env', devEnv);
-		formData.append('banner_img', bannerImg[0]);
-		formData.append('url', url);
+		formData.append('file', files[0]);
 		tags.forEach((tag) => formData.append('tags', tag));
+
+		for (let pair of formData.entries()) {
+			console.log(pair[0] + ', ' + pair[1]);
+		}
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/secret-boxes';
@@ -62,33 +69,17 @@
 			});
 
 			if (res.status === 200) {
-				$notificationsStore = [
-					{
-						message: 'Your Secret Box has been submitted!',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
-				];
+				const n = getNotification('Secret Box submitted successfully!', 'success');
+				$notificationsStore = [...$notificationsStore, n];
+
+				goto('/dashboard');
 			} else {
-				$notificationsStore = [
-					{
-						message: 'There was an error submitting your Secret Box.',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
-				];
+				const n = getNotification('There was an error submitting your Secret Box.', 'error');
+				$notificationsStore = [...$notificationsStore, n];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'success',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			const n = getNotification(err as string, 'error');
+			$notificationsStore = [...$notificationsStore, n];
 		}
 	}
 </script>
@@ -170,7 +161,7 @@
 			aria-describedby="file_input_help"
 			id="banner-img"
 			type="file"
-			bind:value={bannerImg}
+			bind:files
 		/>
 
 		<TagInput artifact={'secret box'} on:update={(e) => (tags = e.detail.tags)} />

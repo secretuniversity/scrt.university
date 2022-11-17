@@ -3,8 +3,9 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
-	import { contributorStore, notificationsStore } from '$lib/stores';
-	import { getBaseAPIUrl, loadJWT } from '$lib/helpers';
+	import { userStore, notificationsStore } from '$lib/stores';
+	import { getNotification, getBaseAPIUrl, loadJWT } from '$lib/helpers';
+	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -31,20 +32,25 @@
 	let tags: string[] = [];
 
 	async function submit() {
-		const token = loadJWT('contributor');
+		const token = loadJWT('user');
 
-		if (!$contributorStore || !token) {
+		if (!$userStore || !token) {
+			const n = getNotification('You must be logged in to submit a video.', 'error');
+			$notificationsStore = [...$notificationsStore, n];
 			return;
 		}
 
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('description', description);
-		formData.append('contributor', $contributorStore.val.id.toString());
+		formData.append('contributor', $userStore.val.id.toString());
 		formData.append('file', files[0]);
 		tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
+			const n = getNotification('Submitting video...', 'info', true);
+			$notificationsStore = [...$notificationsStore, n];
+
 			const url = getBaseAPIUrl() + '/v1/videos';
 			const res = await fetch(url, {
 				method: 'POST',
@@ -55,33 +61,24 @@
 			});
 
 			if (res.status === 200) {
+				$notificationsStore = $notificationsStore.filter((v) => v.id !== n.id);
+
 				$notificationsStore = [
 					...$notificationsStore,
-					{
-						message: 'Your video has been submitted!',
-						status: 'success',
-						loading: false
-					}
+					getNotification('Video submitted successfully!', 'success')
 				];
+
+				goto('/dashboard');
 			} else {
+				$notificationsStore = $notificationsStore.filter((v) => v.id !== n.id);
+
 				$notificationsStore = [
 					...$notificationsStore,
-					{
-						message: 'There was an error submitting your video',
-						status: 'error',
-						loading: false
-					}
+					getNotification('There was an error submitting your video.', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 </script>

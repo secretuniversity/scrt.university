@@ -4,7 +4,7 @@
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { getBaseAPIUrl, loadJWT, saveJWT } from '$lib/helpers';
+	import { getNotification, getBaseAPIUrl, loadJWT, saveJWT } from '$lib/helpers';
 	import { connect } from '$lib/helpers/keplr';
 	import { goto } from '$app/navigation';
 	import {
@@ -43,12 +43,8 @@
 		try {
 			if (!$userStore) {
 				$notificationsStore = [
-					{
-						message: 'You tried to access the dashboard without logging in.',
-						status: 'error',
-						loading: false
-					},
-					...$notificationsStore
+					...$notificationsStore,
+					getNotification('You must be logged in to view your dashboard.', 'error')
 				];
 
 				goto('/');
@@ -67,14 +63,7 @@
 				renderContributionSubmissionBtn = false;
 			}
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	});
 
@@ -123,12 +112,8 @@
 		try {
 			if (!$userStore) {
 				$notificationsStore = [
-					{
-						message: 'You need to connect your Keplr wallet before becoming a contributor.',
-						status: 'error',
-						loading: false
-					},
-					...$notificationsStore
+					...$notificationsStore,
+					getNotification('You must be logged in to become a contributor.', 'error')
 				];
 				return;
 			}
@@ -147,18 +132,13 @@
 			});
 
 			if (res.status === 200) {
-				$notificationsStore.push({
-					message: 'Thank you for your submission!',
-					status: 'success',
-					loading: false
-				});
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('Your application has been submitted.', 'success')
+				];
 			}
 		} catch (err) {
-			$notificationsStore.push({
-				message: err as string,
-				status: 'error',
-				loading: false
-			});
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 </script>

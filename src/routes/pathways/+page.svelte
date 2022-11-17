@@ -4,7 +4,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import type { Pathway } from '$lib/models/index';
 	import { notificationsStore } from '$lib/stores';
-	import { getBaseAPIUrl } from '$lib/helpers';
+	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Pathways';
 
@@ -28,36 +28,20 @@
 			const json = await res.json();
 
 			if (res.status === 200) {
-				console.log(json);
 				$notificationsStore = [
 					...$notificationsStore,
-					{
-						message: 'Pathways fetched successfully!',
-						status: 'success',
-						loading: false
-					}
+					getNotification('Pathways fetched successfully', 'success')
 				];
 
 				return Promise.resolve(json);
 			} else {
 				$notificationsStore = [
 					...$notificationsStore,
-					{
-						message: 'Pathways could not be fetched!',
-						status: 'success',
-						loading: false
-					}
+					getNotification('Error fetching pathways', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				}
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 
 		return Promise.reject();

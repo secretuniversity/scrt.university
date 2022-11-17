@@ -16,7 +16,7 @@
 		selectedVideo,
 		resourceTagsStore
 	} from '$lib/stores';
-	import { genExp, getBaseAPIUrl } from '$lib/helpers';
+	import { genExp, getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import type { Article, Video, Tag } from '$lib/models/index';
 	import { onMount } from 'svelte';
 
@@ -47,21 +47,10 @@
 
 			$notificationsStore = [
 				...$notificationsStore,
-				{
-					message: 'Successfully loaded resources',
-					status: 'success',
-					loading: false
-				}
+				getNotification('Resources fetched successfully', 'success')
 			];
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				}
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	});
 

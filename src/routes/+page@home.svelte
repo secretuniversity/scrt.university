@@ -7,8 +7,6 @@
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';
 
-	export const prerender = true;
-
 	const pageTitle = 'Home';
 </script>
 

@@ -4,7 +4,7 @@
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import { bountiesStore, notificationsStore } from '$lib/stores';
-	import { getBaseAPIUrl } from '$lib/helpers';
+	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Bounties';
 	const breadcrumbRoutes = [
@@ -36,24 +36,14 @@
 				};
 
 				$notificationsStore = [
-					{
-						message: 'Bounties fetched successfully',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
+					...$notificationsStore,
+					getNotification('Bounties fetched successfully', 'success')
 				];
+
 				return json;
 			}
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 </script>

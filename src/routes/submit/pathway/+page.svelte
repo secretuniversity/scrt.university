@@ -7,8 +7,7 @@
 	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';
 	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
-	import { getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
-	import { onMount } from 'svelte';
+	import { getNotification, getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit A Pathway';
@@ -59,12 +58,8 @@
 
 		if (!token || !$userStore) {
 			$notificationsStore = [
-				{
-					message: 'You must be logged in to submit a pathway.',
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
+				...$notificationsStore,
+				getNotification('You must be logged in to submit a pathway.', 'error')
 			];
 			return;
 		}
@@ -72,7 +67,6 @@
 		$pathwayRequest.contributor = $userStore.val.id;
 
 		try {
-			console.log(JSON.stringify($pathwayRequest));
 			const url = getBaseAPIUrl() + '/v1/pathways';
 			const res = await fetch(url, {
 				method: 'POST',
@@ -84,23 +78,19 @@
 
 			if (res.status === 200) {
 				$notificationsStore = [
-					{
-						message: 'Pathway submitted successfully!',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
+					...$notificationsStore,
+					getNotification('Pathway submitted successfully!', 'success')
+				];
+
+				goto('/dashboard');
+			} else {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('There was an error submitting your pathway.', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 
@@ -139,11 +129,10 @@
 		const options = $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options;
 
 		if (options.length > maxAnswers) {
-			$notificationsStore.push({
-				message: `You can only have up to ${maxAnswers} answers.`,
-				status: 'error',
-				loading: false
-			});
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('You cannot have more than 5 answers.', 'error')
+			];
 			return;
 		}
 

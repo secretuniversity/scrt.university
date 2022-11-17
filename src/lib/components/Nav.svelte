@@ -4,7 +4,14 @@
 	import { navigating } from '$app/stores';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { connect } from '$lib/helpers/keplr';
-	import { isExpired, retry, loadJWT, saveJWT, getBaseAPIUrl } from '$lib/helpers/index';
+	import {
+		getNotification,
+		isExpired,
+		retry,
+		loadJWT,
+		saveJWT,
+		getBaseAPIUrl
+	} from '$lib/helpers/index';
 	import { notificationsStore, userStore, secretStore } from '$lib/stores';
 	import type { User } from '$lib/models';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
@@ -40,23 +47,11 @@
 
 			$notificationsStore = [
 				...$notificationsStore,
-				{
-					message: 'Successfully connected to Secret University.',
-					status: 'success',
-					loading: false
-				}
+				getNotification('Successfully connected to Secret University', 'success')
 			];
-
 			return Promise.resolve(json.user);
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 			return Promise.reject(err);
 		}
 	}
@@ -70,13 +65,8 @@
 			if (!$secretStore) {
 				$notificationsStore = [
 					...$notificationsStore,
-					{
-						message: 'Something went wrong with Keplr. Please report this if you see this message.',
-						status: 'error',
-						loading: false
-					}
+					getNotification('Error connecting to Keplr', 'error')
 				];
-
 				return;
 			}
 
@@ -92,14 +82,7 @@
 
 			$userStore = { val: res, exp: exp.getTime() };
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				}
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 </script>

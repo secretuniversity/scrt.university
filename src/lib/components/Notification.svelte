@@ -1,0 +1,96 @@
+<script lang="ts">
+	import Spinner from '$lib/assets/spinner.svg';
+	import { fly, fade } from 'svelte/transition';
+	import { notificationsStore } from '$lib/stores';
+	import type { Notification } from '$lib/stores';
+	import { onDestroy, onMount } from 'svelte';
+
+	export let n: Notification;
+	export let i = 0;
+
+	let close = false;
+
+	$: if (n.close) {
+		close = true;
+	}
+
+	onMount(() => {
+		if (!n.loading) {
+			setTimeout(() => {
+				close = true;
+			}, 5000);
+		}
+	});
+
+	function getBGColor(n: Notification) {
+		switch (n.status) {
+			case 'error':
+				return 'bg-red-700';
+			case 'success':
+				return 'bg-green-700';
+			case 'info':
+				return 'bg-yellow-700';
+			default:
+				return 'bg-dark-1';
+		}
+	}
+
+	onDestroy(() => {
+		$notificationsStore = $notificationsStore.filter((_, index) => index !== i);
+	});
+
+	function handleClick() {
+		if (n.loading) return;
+
+		close = true;
+	}
+</script>
+
+{#if !close}
+	<div
+		in:fly={{ y: -200, duration: 1000 }}
+		out:fade
+		on:click={() => handleClick()}
+		class="cursor-pointer px-4 py-2 text-base text-white {getBGColor(n)} rounded-md shadow-md"
+	>
+		<div class="flex">
+			{#if n.loading}
+				<img class="loader" src={Spinner} alt="Loading your request" />
+			{/if}
+			<div>
+				{@html n.message}
+			</div>
+		</div>
+	</div>
+{/if}
+
+<style>
+	.loader {
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid blue;
+		border-bottom: 16px solid blue;
+		width: 120px;
+		height: 120px;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+	}
+
+	@-webkit-keyframes spin {
+		0% {
+			-webkit-transform: rotate(0deg);
+		}
+		100% {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+</style>

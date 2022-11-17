@@ -9,10 +9,12 @@
 	import {
 		getBaseAPIUrl,
 		getLessonBaseContent,
+		getNotification,
 		loadJWT,
 		loadLocalDrafts,
 		saveLocalDraft
 	} from '$lib/helpers';
+	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit An Article';
 	const pageDescription = `For those with a knack for writing and endless curiousity, submit your article to 
@@ -40,12 +42,8 @@
 
 		if (!token || !$userStore) {
 			$notificationsStore = [
-				{
-					message: 'You must be logged in to submit an article.',
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
+				...$notificationsStore,
+				getNotification('You must be logged in to submit an article.', 'error')
 			];
 			return;
 		}
@@ -65,23 +63,20 @@
 
 			if (res.status === 200) {
 				$notificationsStore = [
-					{
-						message: 'Article submitted successfully!',
-						status: 'success',
-						loading: false
-					},
-					...$notificationsStore
+					...$notificationsStore,
+					getNotification('Article submitted successfully!', 'success')
+				];
+
+				goto('/dashboard');
+			} else {
+				console.log(res);
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('Something wrong happened. Please try again in a bit.', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				}
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	}
 

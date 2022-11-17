@@ -8,7 +8,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
 	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
-	import { genExp, getBaseAPIUrl } from '$lib/helpers';
+	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Repositories';
@@ -37,22 +37,11 @@
 			$boxesStore = { val: boxesFetched, exp: genExp() };
 
 			$notificationsStore = [
-				{
-					message: 'Repositories fetched successfully',
-					status: 'success',
-					loading: false
-				},
-				...$notificationsStore
+				...$notificationsStore,
+				getNotification('Repositories fetched successfully', 'success')
 			];
 		} catch (err) {
-			$notificationsStore = [
-				{
-					message: err as string,
-					status: 'error',
-					loading: false
-				},
-				...$notificationsStore
-			];
+			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	});
 

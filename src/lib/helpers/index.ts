@@ -1,3 +1,5 @@
+import { get } from 'svelte/store';
+import { notificationsStore } from '../stores';
 import type { ArticleRequest, PathwayRequest } from '$lib/models/index';
 
 type Draft = PathwayRequest | ArticleRequest;
@@ -25,6 +27,22 @@ export function getBaseAPIUrl() {
 	} else {
 		return '/api';
 	}
+}
+
+export function getNotification(
+	message: string,
+	status: 'success' | 'error' | 'info',
+	loading = false
+) {
+	const n = get(notificationsStore);
+
+	return {
+		id: n.length,
+		message,
+		status,
+		loading,
+		close: false
+	};
 }
 
 export function unslugify(str: string) {
