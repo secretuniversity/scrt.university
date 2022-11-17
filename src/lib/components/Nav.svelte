@@ -31,13 +31,8 @@
 				},
 				body: JSON.stringify({ address })
 			});
-			const token = res.headers.get('token');
 			const json = await res.json();
-
-			// print headers
-			res.headers.forEach((value, key) => {
-				console.log(key, value);
-			});
+			const token = json.token;
 
 			if (token) {
 				sessionStorage.setItem('user', token);
@@ -52,7 +47,7 @@
 				}
 			];
 
-			return Promise.resolve(json);
+			return Promise.resolve(json.user);
 		} catch (err) {
 			$notificationsStore = [
 				{
