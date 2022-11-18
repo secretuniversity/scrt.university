@@ -63,7 +63,7 @@
 			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
-					Token: token
+					Authorization: `Bearer ${token}`
 				},
 				body: formData
 			});

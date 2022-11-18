@@ -56,7 +56,7 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Token: token
+					Authorization: `Bearer ${token}`
 				},
 				body: JSON.stringify($articleRequest)
 			});
