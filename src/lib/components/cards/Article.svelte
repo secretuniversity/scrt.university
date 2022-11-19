@@ -1,42 +1,45 @@
 <script lang="ts">
+	import Tag from '$lib/components/Tag.svelte';
 	import { selectedArticle } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
 	import type { Article } from '$lib/models/index';
 	export let article: Article;
+
+	console.log(article);
 </script>
 
 <a
-	class=" flex h-56 w-full"
+	class=" h-58 flex"
 	href={'/resources/articles/' + slugify(article.title)}
 	on:click={() => selectedArticle.set(article)}
 >
-	<div class="flex-col rounded-md bg-dark-4 p-6 text-white">
+	<div class="grid flex-col rounded-md bg-dark-4 p-6 text-white shadow-lg">
 		<div class="mb-4 grid h-fit w-full grid-cols-2">
 			<h3 class="text-2xl font-bold">
 				{article.title}
 			</h3>
 
 			<p
-				class="h-fit w-fit self-start justify-self-end rounded-full bg-dark-purple py-1 px-3 text-sm font-semibold"
+				class="h-fit w-fit self-start justify-self-end rounded-sm bg-dark-purple py-1 px-3 text-sm font-semibold"
 			>
 				Article
 			</p>
 		</div>
 
 		<p class="description">
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
-			Just as super long description of article. How are we gonna handle all of these words. IDk.
+			{article.description}
 		</p>
 
-		<!-- {#each article.tags as tag}
-									<div class="mt-2 w-min self-end">
-										<TagComponent tag={tag.name} />
-									</div>
-								{/each} -->
+		<div class="mt-8 flex space-x-2 self-end">
+			{#each article.tags as tag, i}
+				{#if i < 3}
+					<Tag {tag} />
+				{/if}
+			{/each}
+			{#if article.tags.length > 3}
+				<p class="ml-2 self-end text-gray">+ more</p>
+			{/if}
+		</div>
 	</div>
 </a>
 

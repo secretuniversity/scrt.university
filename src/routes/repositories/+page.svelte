@@ -33,6 +33,9 @@
 			let reposFetched = await getRepos();
 			let boxesFetched = await getSecretBoxes();
 
+			console.log(reposFetched);
+			console.log(boxesFetched);
+
 			$reposStore = { val: reposFetched, exp: genExp() };
 			$boxesStore = { val: boxesFetched, exp: genExp() };
 
@@ -188,7 +191,7 @@
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
 						{#if $boxesStore}
 							{#each $boxesStore.val as b}
-								<SecretBoxCard title={b.title} description={b.description} />
+								<SecretBoxCard secretBox={b} />
 							{/each}
 						{/if}
 

@@ -208,12 +208,13 @@
 						<div class="mt-4 text-center text-dark-5">Unable to find any community resources.</div>
 					{/if}
 
-					<div class="grid grid-cols-3 gap-4">
+					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 						{#each videos as video}
 							<VideoCard {video} />
 						{/each}
 
 						{#each articles as article}
+							<ArticleCard {article} />
 							<ArticleCard {article} />
 						{/each}
 					</div>

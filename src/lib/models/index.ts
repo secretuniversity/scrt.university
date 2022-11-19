@@ -22,7 +22,7 @@ export interface Article {
 	content: string;
 	created_at: string;
 	updated_at: string;
-	tags: Array<Tag>;
+	tags: Array<string>;
 }
 
 export interface Bookmark {
@@ -41,7 +41,7 @@ export interface Repo {
 	url: string;
 	created_at: string;
 	updated_at: string;
-	tags: Array<Tag>;
+	tags: Array<string>;
 }
 
 export interface SecretBox {
@@ -55,7 +55,7 @@ export interface SecretBox {
 	banner_img: string;
 	created_at: string;
 	updated_at: string;
-	tags: Array<Tag>;
+	tags: Array<string>;
 }
 
 export interface Video {
@@ -66,7 +66,7 @@ export interface Video {
 	file: string;
 	created_at: string;
 	updated_at: string;
-	tags: Array<Tag>;
+	tags: Array<string>;
 }
 
 export interface Bounty {
@@ -91,10 +91,9 @@ export interface Contributor {
 
 export interface Pathway {
 	id: string;
-	name: string;
+	title: string;
 	description: string;
 	difficulty: string;
-	tags: string[];
 	lessons: Lesson[]; // ordered by lesson number
 	createdAt: Date;
 	updatedAt: Date;
