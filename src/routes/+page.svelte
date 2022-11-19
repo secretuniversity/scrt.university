@@ -14,8 +14,6 @@
 
 <section class="relative overflow-hidden">
 	<div class="bg-dark-3">
-		<Nav />
-
 		<Hero />
 
 		<Stats />
