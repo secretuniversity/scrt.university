@@ -110,7 +110,7 @@ export interface Lesson {
 export interface Quiz {
 	id: string;
 	question: string;
-	answer: string;
+	answer: number;
 	hint: string;
 	options: QuizOption[];
 	lesson_id: number;
