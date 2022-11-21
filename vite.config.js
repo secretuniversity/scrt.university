@@ -13,6 +13,9 @@ const config = defineConfig(({ command, mode }) => ({
 			CELADON_URL: undefined
 		})
 	],
+	optimizeDeps: {
+		include: ['highlight.js', 'highlight.js/lib/core']
+	},
 	server: {
 		proxy: {
 			'/api': {
