@@ -18,8 +18,6 @@
 			return;
 		}
 
-		console.log($selectedArticle.tags);
-
 		fetchContributor();
 
 		hljs.highlightAll();
@@ -68,13 +66,3 @@
 		</div>
 	{/if}
 </section>
-
-<!-- <style>
-	#content :global(h1) {
-		@apply mb-2 text-4xl;
-	}
-
-	#content :global(pre) {
-		@apply my-2 rounded bg-dark-4 p-2;
-	}
-</style> -->
