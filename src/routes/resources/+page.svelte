@@ -215,7 +215,6 @@
 
 						{#each articles as article}
 							<ArticleCard {article} />
-							<ArticleCard {article} />
 						{/each}
 					</div>
 				</div>
