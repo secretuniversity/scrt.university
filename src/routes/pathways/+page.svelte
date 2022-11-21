@@ -3,8 +3,8 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import type { Pathway } from '$lib/models/index';
-	import { notificationsStore } from '$lib/stores';
-	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
+	import { notificationsStore, selectedPathway } from '$lib/stores';
+	import { getNotification, getBaseAPIUrl, slugify } from '$lib/helpers';
 
 	const pageTitle = 'Pathways';
 
@@ -21,7 +21,7 @@
 
 	let pathways: Pathway[] = [];
 
-	async function fetchPathways(): Promise<Pathway[]> {
+	onMount(async () => {
 		try {
 			const url = getBaseAPIUrl() + '/v1/pathways';
 			const res = await fetch(url);
@@ -33,7 +33,8 @@
 					getNotification('Pathways fetched successfully', 'success')
 				];
 
-				return Promise.resolve(json);
+				console.log(json);
+				pathways = json;
 			} else {
 				$notificationsStore = [
 					...$notificationsStore,
@@ -43,13 +44,6 @@
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
-
-		return Promise.reject();
-	}
-
-	onMount(async () => {
-		const p = await fetchPathways();
-		pathways = p;
 	});
 </script>
 
@@ -60,8 +54,8 @@
 </div>
 
 <section class="mx-24 min-h-home-hero">
-	<div class="mb-28 max-w-3xl">
-		<h1 class="mb-4 text-5xl font-bold text-white">Secret Pathways</h1>
+	<div class="my-20 max-w-3xl">
+		<p class="mb-4 text-5xl font-bold text-white">Secret Pathways</p>
 		<p class="mb-16 text-base text-gray">
 			Secret Pathways are self-contained lessons designed to help you build on Secret. Gain insight
 			into building on Secret Network by reading through the lessons of a pathway, and answer
@@ -76,6 +70,14 @@
 	{/if}
 
 	{#each pathways as p}
-		<div>Some data</div>
+		<a href={'/pathways/' + slugify(p.title)} on:click={() => selectedPathway.set(p)}>
+			<div class="mb-4 rounded-md bg-dark-4 p-6 text-white shadow-xl">
+				<div class="grid grid-cols-2 items-center">
+					<h2 class="text-2xl font-semibold">{p.title}</h2>
+					<p class="justify-self-end capitalize">{p.difficulty}</p>
+				</div>
+				<p>{p.description}</p>
+			</div>
+		</a>
 	{/each}
 </section>
