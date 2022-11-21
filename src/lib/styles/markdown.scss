@@ -1,0 +1,23 @@
+.markdown {
+	h1,
+	h2 {
+		@apply my-8 text-3xl font-bold;
+	}
+
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply my-6 text-2xl font-semibold;
+	}
+
+	p,
+	pre,
+	img {
+		@apply mb-4;
+	}
+
+	pre > code {
+		@apply rounded-lg;
+	}
+}
