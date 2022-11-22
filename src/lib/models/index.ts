@@ -1,3 +1,6 @@
+import { array, number, object, string } from 'yup';
+import type { InferType } from 'yup';
+
 export interface User {
 	id: number;
 	address: string;
@@ -127,7 +130,38 @@ export interface QuizOption {
 	quiz_id: number;
 }
 
-export interface PathwayRequest {
+export const pathwayRequestSchema = object({
+	title: string().required(),
+	contributor: number().required().positive().integer(),
+	description: string().required(),
+	difficulty: string().required(),
+	lessons: array().of<typeof lessonRequestSchema>(
+		object()
+			.shape({
+				name: string().required(),
+				content: string().required(),
+				quizzes: array().of<typeof quizRequestSchema>(
+					object()
+						.shape({
+							question: string().required(),
+							answer: number().required().positive().integer(),
+							hint: string().required(),
+							options: array().of<typeof quizOptionRequestSchema>(
+								object()
+									.shape({
+										content: string().required()
+									})
+									.required()
+							)
+						})
+						.required()
+				)
+			})
+			.required()
+	)
+});
+
+export interface PathwayRequest extends InferType<typeof pathwayRequestSchema> {
 	title: string;
 	contributor: number;
 	description: string;
@@ -135,20 +169,56 @@ export interface PathwayRequest {
 	lessons: LessonRequest[];
 }
 
-export interface LessonRequest {
+const lessonRequestSchema = object({
+	name: string().required(),
+	content: string().required(),
+	quizzes: array().of<typeof quizRequestSchema>(
+		object().shape({
+			question: string().required(),
+			answer: number().required().positive().integer(),
+			hint: string().required(),
+			options: array().of<typeof quizOptionRequestSchema>(
+				object()
+					.shape({
+						content: string().required()
+					})
+					.required()
+			)
+		})
+	)
+});
+
+export interface LessonRequest extends InferType<typeof lessonRequestSchema> {
 	name: string;
 	content: string;
 	quizzes: QuizRequest[];
 }
 
-export interface QuizRequest {
+const quizRequestSchema = object({
+	question: string().required(),
+	answer: number().required().positive().integer(),
+	hint: string(),
+	options: array().of<typeof quizOptionRequestSchema>(
+		object()
+			.shape({
+				content: string().required()
+			})
+			.required()
+	)
+});
+
+export interface QuizRequest extends InferType<typeof quizRequestSchema> {
 	question: string;
 	answer: number;
 	hint: string;
 	options: QuizOptionRequest[];
 }
 
-export interface QuizOptionRequest {
+const quizOptionRequestSchema = object({
+	content: string().required()
+});
+
+export interface QuizOptionRequest extends InferType<typeof quizOptionRequestSchema> {
 	content: string;
 }
 

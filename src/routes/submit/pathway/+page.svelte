@@ -8,12 +8,13 @@
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';
-	import type {
-		Pathway,
-		LessonRequest,
-		QuizOptionRequest,
-		QuizRequest,
-		PathwayRequest
+	import type { ValidationError } from 'yup';
+	import {
+		pathwayRequestSchema,
+		type LessonRequest,
+		type QuizOptionRequest,
+		type QuizRequest,
+		type PathwayRequest
 	} from '$lib/models';
 	import { getNotification, getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
@@ -53,6 +54,9 @@
 	let editorHeight = 0;
 	let editor: HTMLElement | null = null;
 
+	let hasError = false;
+	let errorMessage = '';
+
 	interface PathwayDraft {
 		val: PathwayRequest;
 		iso: string;
@@ -75,6 +79,17 @@
 	}
 
 	async function submit() {
+		try {
+			await pathwayRequestSchema.validate($pathwayRequest, {
+				strict: true
+			});
+		} catch (err) {
+			const e = err as ValidationError;
+			hasError = true;
+			errorMessage = e.errors[0];
+			return;
+		}
+
 		const token = loadJWT('user');
 
 		if (!token || !$userStore) {
@@ -238,21 +253,36 @@
 
 <Head {pageTitle} />
 
-<Modal active={submitModal} on:hide={() => (submitModal = false)}>
+<Modal
+	active={submitModal}
+	on:hide={() => {
+		submitModal = false;
+		hasError = false;
+		errorMessage = '';
+	}}
+>
 	<div class="px-4">
 		<h2 class="py-4 text-2xl font-bold text-white">Are you sure you'd like to submit?</h2>
 		<p class="mb-8 text-white">
 			Your pathway is looking good, but I thought I would check to make sure you're really ready to
 			submit.
 		</p>
-		<div class="flex space-x-2 pb-4 text-white">
+		<div class="flex items-center space-x-2 pb-4 text-white">
 			<button on:click={submit} class="rounded-md bg-dark-blue px-6 py-4 hover:bg-darker-blue"
 				>Submit</button
 			>
 			<button
-				on:click={() => (submitModal = false)}
-				class="rounded-md bg-dark-5 px-6 py-4 hover:bg-dark-3">Cancel</button
+				on:click={() => {
+					submitModal = false;
+					hasError = false;
+					errorMessage = '';
+				}}
+				class="mr-4 rounded-md bg-dark-5 px-6 py-4 hover:bg-dark-3">Cancel</button
 			>
+
+			{#if hasError}
+				<p class="capitalize italic text-dark-red">{errorMessage}</p>
+			{/if}
 		</div>
 	</div>
 </Modal>
