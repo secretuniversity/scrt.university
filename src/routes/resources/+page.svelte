@@ -194,18 +194,18 @@
 
 		<div class="col-span-3">
 			<Search on:search={handleSearch} />
-			<div class="my-6 flex gap-x-4">
+			<!-- <div class="my-6 flex gap-x-4">
 				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
 					&times<span class="pl-1 font-bold">tag:</span> secret-box
 				</p>
 				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
 					&times<span class="pl-1 font-bold">tag:</span> essential
 				</p>
-			</div>
+			</div> -->
 			<div class="-z-10 pt-4 pb-28">
 				<div class="relative mx-auto max-w-full">
 					{#if articles.length === 0 && videos.length === 0}
-						<div class="mt-4 text-center text-dark-5">Unable to find any community resources.</div>
+						<div class="mt-24 text-center text-dark-5">Unable to find any community resources.</div>
 					{/if}
 
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
