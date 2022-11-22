@@ -16,7 +16,7 @@
 				{@html description}
 			</p>
 			{#if image}
-				<div class="col-start-2 row-span-full max-h-full w-full">
+				<div class="col-start-2 row-span-full h-auto w-full">
 					<img src={image} alt="some banner illustration" />
 				</div>
 			{/if}
