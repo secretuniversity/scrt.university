@@ -66,7 +66,7 @@
 	</div>
 
 	{#if pathways.length === 0}
-		<div class="mt-20 text-center text-dark-5">Secret University could not find any pathways.</div>
+		<div class="mt-24 text-center text-dark-5">Secret University could not find any pathways.</div>
 	{/if}
 
 	{#each pathways as p}
