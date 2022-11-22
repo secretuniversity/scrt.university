@@ -27,14 +27,21 @@
 	let tags: Tag[] = [];
 	let limit = 25;
 	let offset = 0;
+	let hasBoxes = false;
+	let hasRepos = false;
 
 	onMount(async () => {
 		try {
 			let reposFetched = await getRepos();
 			let boxesFetched = await getSecretBoxes();
 
-			console.log(reposFetched);
-			console.log(boxesFetched);
+			if (reposFetched.length > 0) {
+				hasRepos = true;
+			}
+
+			if (boxesFetched.length > 0) {
+				hasBoxes = true;
+			}
 
 			$reposStore = { val: reposFetched, exp: genExp() };
 			$boxesStore = { val: boxesFetched, exp: genExp() };
@@ -173,16 +180,16 @@
 
 		<div class="col-span-3">
 			<Search on:search={handleSearch} />
-			<div class="mt-4 flex gap-x-4">
+			<!-- <div class="mt-4 flex gap-x-4">
 				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
 					&times<span class="pl-1 font-bold">tag:</span> secret-box
 				</p>
 				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
 					&times<span class="pl-1 font-bold">tag:</span> essential
 				</p>
-			</div>
-			{#if !$boxesStore && !$reposStore}
-				<div class="mt-4 text-center text-gray">Unable to find any repositories.</div>
+			</div> -->
+			{#if !hasBoxes && !hasRepos}
+				<div class="mt-24 text-center text-dark-5">Unable to find any repositories.</div>
 			{/if}
 
 			<!-- Repo Cards -->
