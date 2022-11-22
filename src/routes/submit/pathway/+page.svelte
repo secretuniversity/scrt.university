@@ -1,12 +1,19 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';
-	import type { LessonRequest, QuizOptionRequest, QuizRequest } from '$lib/models';
+	import type {
+		Pathway,
+		LessonRequest,
+		QuizOptionRequest,
+		QuizRequest,
+		PathwayRequest
+	} from '$lib/models';
 	import { getNotification, getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
 
@@ -34,12 +41,21 @@
 	let currentQuizIndex = -1;
 
 	let menu = 'pathway';
+	let draftModal = false;
+	let submitModal = false;
+	let drafts: PathwayDraft[] = [];
+	let selectedDraft: PathwayDraft | null;
 
 	const editorOffset = 16; // 1rem
 	let formHeight = 0;
 	let scrollY = 0;
 	let editorHeight = 0;
 	let editor: HTMLElement | null = null;
+
+	interface PathwayDraft {
+		val: PathwayRequest;
+		iso: string;
+	}
 
 	$: {
 		if (scrollY > editorHeight - editorOffset) {
@@ -50,6 +66,10 @@
 			if (editor && editor.style.paddingTop === '1rem') {
 				editor.style.paddingTop = '';
 			}
+		}
+
+		if (selectedDraft && !draftModal) {
+			selectedDraft = null;
 		}
 	}
 
@@ -95,11 +115,29 @@
 	}
 
 	function loadDraft() {
-		console.log('load draft');
+		draftModal = true;
+
+		const draftString = localStorage.getItem('pathway_drafts');
+		drafts = draftString ? JSON.parse(draftString) : [];
 	}
 
 	function saveDraft() {
-		console.log('save draft');
+		const draftString = localStorage.getItem('pathway_drafts');
+		const d = draftString ? JSON.parse(draftString) : [];
+
+		let clean = d.filter((d: PathwayDraft) => d.val.title !== $pathwayRequest.title);
+		let data = {
+			val: $pathwayRequest,
+			iso: new Date().toISOString()
+		};
+		clean = [data, ...clean];
+
+		localStorage.setItem('pathway_drafts', JSON.stringify(clean));
+
+		$notificationsStore = [
+			...$notificationsStore,
+			getNotification('Pathway draft saved successfully!', 'success')
+		];
 	}
 
 	function addNewLesson() {
@@ -177,14 +215,109 @@
 	function handleLessonContentChange(e: CustomEvent<{ content: string }>) {
 		$pathwayRequest.lessons[currentLessonIndex].content = e.detail.content;
 	}
+
+	function getLessonContent() {
+		if ($pathwayRequest.lessons[currentLessonIndex].content) {
+			return $pathwayRequest.lessons[currentLessonIndex].content;
+		}
+
+		return getLessonBaseContent();
+	}
+
+	function getQuizOptionContent(i: number) {
+		if ($pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options[i].content) {
+			return $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options[i]
+				.content;
+		}
+		return 'Write your answer here using <i>Markdown</i>.';
+	}
 </script>
 
 <svelte:window bind:scrollY />
 
 <Head {pageTitle} />
 
+<Modal active={submitModal} on:hide={() => (submitModal = false)}>
+	<div class="px-4">
+		<h2 class="py-4 text-2xl font-bold text-white">Are you sure you'd like to submit?</h2>
+		<p class="mb-8 text-white">
+			Your pathway is looking good, but I thought I would check to make sure you're really ready to
+			submit.
+		</p>
+		<div class="flex space-x-2 pb-4 text-white">
+			<button on:click={submit} class="rounded-md bg-dark-blue px-6 py-4 hover:bg-darker-blue"
+				>Submit</button
+			>
+			<button
+				on:click={() => (submitModal = false)}
+				class="rounded-md bg-dark-5 px-6 py-4 hover:bg-dark-3">Cancel</button
+			>
+		</div>
+	</div>
+</Modal>
+
+<Modal active={draftModal} on:hide={() => (draftModal = false)}>
+	<div class="grid min-h-[600px] w-[800px] auto-rows-max px-4 pt-6 text-white">
+		<h2 class="mb-8 text-2xl font-bold">Your Pathway Drafts</h2>
+		<div class="h-[28rem] overflow-auto">
+			<div class="grid w-full grid-cols-12 rounded-md p-2 font-bold">
+				<p class="cols-span-2">Title</p>
+				<p class="col-span-3 col-start-3">Difficulty</p>
+				<p class="col-start-8">Timestamp</p>
+				<p />
+			</div>
+
+			{#if drafts.length > 0}
+				<div class="grow flex-col rounded-md">
+					{#each drafts as d}
+						<div
+							on:click={() => (selectedDraft = d)}
+							class="grid w-full cursor-pointer grid-cols-12 rounded-md bg-dark-5 p-2"
+						>
+							<p class="cols-span-2">{d.val.title}</p>
+							<p class="col-span-3 col-start-3 capitalize">{d.val.difficulty}</p>
+							<p class="col-span-full col-start-8 capitalize">{d.iso}</p>
+						</div>
+					{/each}
+				</div>
+			{/if}
+		</div>
+
+		{#if !selectedDraft}
+			<button disabled class="justify-self-end rounded-md bg-gray px-6 py-4 text-dark-4">
+				Select a Draft
+			</button>
+		{:else}
+			<div class="flex items-center justify-self-end">
+				<p class="mr-4 max-w-xl italic text-gray">
+					Warning: This will overwrite any existing changes to your current pathway.
+				</p>
+				<button
+					on:click={() => {
+						if (selectedDraft) {
+							$pathwayRequest = selectedDraft.val;
+							selectedDraft = null;
+							draftModal = false;
+							$notificationsStore = [
+								...$notificationsStore,
+								getNotification('Draft loaded successfully.', 'success')
+							];
+						}
+					}}
+					class="rounded-md bg-dark-blue px-6 py-4 hover:bg-darker-blue"
+				>
+					<p>Load Draft</p>
+				</button>
+			</div>
+		{/if}
+	</div>
+</Modal>
+
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
+</section>
+
+<section class="mx-auto w-11/12 pb-8">
 	<PageHeader title={pageTitle} description={pageDescription} />
 </section>
 
@@ -458,7 +591,7 @@
 
 		<div class="grid w-full grid-cols-3 gap-x-2">
 			<button
-				on:click={submit}
+				on:click={() => (submitModal = true)}
 				class="w-full rounded-md bg-dark-blue py-2 text-white hover:bg-darker-blue">Submit</button
 			>
 			<button
@@ -485,7 +618,7 @@
 		{/if}
 		{#if menu === 'lesson'}
 			<div class="h-full overflow-hidden rounded-md border border-solid border-white text-white">
-				<TipTap value={getLessonBaseContent()} on:update={handleLessonContentChange} />
+				<TipTap value={getLessonContent()} on:update={handleLessonContentChange} />
 			</div>
 		{/if}
 
@@ -502,7 +635,7 @@
 					class="mb-4 h-[250px] overflow-hidden rounded-md border border-solid border-white text-white"
 				>
 					<TipTap
-						value={'Enter your answer option here as <i>markdown</i>.'}
+						value={getQuizOptionContent(i)}
 						on:update={(e) => {
 							handleQuizOptionContentChange(e.detail.content, i);
 						}}
