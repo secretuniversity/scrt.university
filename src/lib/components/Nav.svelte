@@ -138,7 +138,7 @@
 						>
 							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
 								<a href="/pathways">Secret Pathways</a>
-								<a href="/repositories">Repositores</a>
+								<a href="/repositories">Repositories</a>
 								<a href="/resources">Community Resources</a>
 								<a href="https://docs.scrt.network">Official Docs</a>
 							</div>
