@@ -144,7 +144,7 @@
 	// 	});
 	// }
 
-	async function getContributions() {}
+	// async function getContributions() {}
 
 	async function submitContributorForm() {
 		try {
