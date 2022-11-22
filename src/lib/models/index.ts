@@ -1,7 +1,12 @@
 export interface User {
 	id: number;
 	address: string;
-	name: string | null;
+	name: Username | null;
+}
+
+interface Username {
+	String: string;
+	Valid: boolean;
 }
 
 export interface Contributor {
