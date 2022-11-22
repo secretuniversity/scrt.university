@@ -13,8 +13,8 @@
 </script>
 
 {#if active}
-	<div class="absolute top-0 left-0 h-full w-full bg-black/[0.6]" />
-	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+	<div class="absolute top-0 left-0 z-10 h-full w-full bg-black/[0.6]" />
+	<div class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 		<div class="fixed inset-0 bg-opacity-75 transition-opacity" />
 
 		<div class="fixed inset-0 z-10 overflow-y-auto">
