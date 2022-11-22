@@ -4,18 +4,10 @@
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
-	import { getNotification, getBaseAPIUrl, loadJWT, saveJWT } from '$lib/helpers';
-	import { connect } from '$lib/helpers/keplr';
+	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import {
-		secretStore,
-		userStore,
-		contributionsStore,
-		contributorStore,
-		bookmarksStore,
-		notificationsStore
-	} from '$lib/stores';
-	import type { Bookmark, Contributor, Contribution } from '$lib/models';
+	import { userStore, contributionsStore, bookmarksStore, notificationsStore } from '$lib/stores';
+	import type { Article, Pathway, SecretBox, Video } from '$lib/models';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';
@@ -26,6 +18,7 @@
 	const exp = new Date().setHours(new Date().getHours() + 1);
 
 	let view = views.profile;
+	let tab = 'contributions';
 
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
@@ -39,6 +32,8 @@
 	let discord = '';
 	let email = '';
 
+	let profileButtonText = 'Edit Profile';
+
 	onMount(async () => {
 		try {
 			if (!$userStore) {
@@ -51,21 +46,88 @@
 				return;
 			}
 
-			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
-			const res = await fetch(url);
-			const json = (await res.json()) as string[];
-
-			if (json && json.includes('contributor')) {
-				renderBecomeContributorBtn = false;
-				renderContributionSubmissionBtn = true;
-			} else {
-				renderBecomeContributorBtn = true;
-				renderContributionSubmissionBtn = false;
-			}
+			await fetchRole();
+			await fetchArticles();
+			await fetchPathways();
+			await fetchSecretBoxes();
+			await fetchVideos();
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
 	});
+
+	async function fetchRole() {
+		if (!$userStore) return;
+
+		const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
+		const res = await fetch(url);
+		const json = (await res.json()) as string[];
+
+		if (json && json.includes('contributor')) {
+			renderBecomeContributorBtn = false;
+			renderContributionSubmissionBtn = true;
+		} else {
+			renderBecomeContributorBtn = true;
+			renderContributionSubmissionBtn = false;
+		}
+	}
+
+	async function fetchArticles() {
+		if (!$userStore) return;
+
+		try {
+			const url = getBaseAPIUrl() + '/v1/articles/contributor/' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as Article[];
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Failed to fetch articles.', 'error')
+			];
+		}
+	}
+
+	async function fetchPathways() {
+		try {
+			if (!$userStore) return;
+			const url = getBaseAPIUrl() + '/v1/pathways/contributor/' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as Pathway[];
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Failed to fetch pathways.', 'error')
+			];
+		}
+	}
+
+	async function fetchSecretBoxes() {
+		try {
+			if (!$userStore) return;
+			const url = getBaseAPIUrl() + '/v1/secret-boxes/contributor/' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as SecretBox[];
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Failed to fetch secret boxes.', 'error')
+			];
+		}
+	}
+
+	async function fetchVideos() {
+		try {
+			if (!$userStore) return;
+			const url = getBaseAPIUrl() + '/v1/videos/contributor/' + $userStore.val.id;
+			const res = await fetch(url);
+			const json = (await res.json()) as Video[];
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Failed to fetch videos.', 'error')
+			];
+		}
+	}
 
 	// async function getBookmarks(): Promise<Array<Bookmark> | null> {
 	// 	return new Promise((res, rej) => {
@@ -82,31 +144,7 @@
 	// 	});
 	// }
 
-	// async function getContributions(): Promise<Array<Contribution> | null> {
-	// 	return new Promise((res, rej) => {
-	// 		const token = loadJWT('contributor');
-
-	// 		if (!token) {
-	// 			return rej('No contributor token found');
-	// 		}
-
-	// 		if ($contributorStore) {
-	// 			fetch(`/api/v1/contributions/${$contributorStore.val.id}`, {
-	// 				headers: {
-	// 					Token: token
-	// 				}
-	// 			})
-	// 				.then((res) => res.json())
-	// 				.then((data) => {
-	// 					const c: Array<Contribution> = data.data;
-	// 					res(c);
-	// 				})
-	// 				.catch((err) => {
-	// 					rej('There was a problem finding your contributions');
-	// 				});
-	// 		}
-	// 	});
-	// }
+	async function getContributions() {}
 
 	async function submitContributorForm() {
 		try {
@@ -235,28 +273,30 @@
 	</form>
 </Modal>
 
-<section class="jusitfy-items-center relative mt-6 flex min-h-home-hero gap-x-6 px-8 text-white">
-	<section class="inline-block w-1/3" id="profile">
-		<div class="grid w-full justify-items-center">
-			<div class="h-48 w-48 rounded-full bg-dark-5" />
-			{#if $contributorStore}
-				<div class="py-2">Hey, {$contributorStore.val.name} 👋</div>
-			{:else}
-				<div class="py-2">Your Dashboard</div>
-			{/if}
+<section class="relative mt-12 min-h-home-hero px-36 text-white">
+	<div class="grid grid-cols-2 items-center">
+		{#if $userStore && $userStore.val.name}
+			<div class="py-24 text-4xl font-bold">Welcome Back, {$userStore.val.name.String} 👋</div>
+		{:else}
+			<div class="py-24 text-4xl">Your Dashboard</div>
+		{/if}
+
+		<div class="relative flex h-fit w-full justify-end">
 			<div
 				on:click={() => {
-					view = views.settings;
+					if (profileButtonText !== 'Back') {
+						view = views.settings;
+						profileButtonText = 'Back';
+					} else {
+						view = views.profile;
+						profileButtonText = 'Edit Profile';
+					}
 				}}
-				class="w-max cursor-pointer rounded-md bg-dark-4 py-2 px-4 text-center"
+				class="mr-4 mb-4 cursor-pointer rounded-md bg-dark-5 py-2 px-4 text-center hover:bg-dark-4"
 			>
-				Edit Profile
+				{profileButtonText}
 			</div>
-		</div>
-	</section>
 
-	<section class="inline-block w-2/3">
-		<div class="relative flex w-full justify-end">
 			{#if renderBecomeContributorBtn}
 				<button
 					on:click|preventDefault={() => (contributorModalActive = true)}
@@ -267,12 +307,12 @@
 			{#if renderContributionSubmissionBtn}
 				<!-- content here -->
 				<a
-					class="mb-4 box-border block rounded-tl-md rounded-bl-md border-r-2 border-dark-3 bg-dark-4 py-2 px-4"
+					class="mb-4 box-border block rounded-tl-md rounded-bl-md border-r-2 border-dark-3 bg-dark-5 py-2 px-4 hover:bg-dark-4"
 					href="/submit">&plus; New Contribution</a
 				>
 
 				<button
-					class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-4 py-2 px-4"
+					class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-5 py-2 px-4 hover:bg-dark-4"
 					on:click|preventDefault={() => (contributionDropdownActive = true)}
 				>
 					<img class="h-4 w-4" src={ChevronDown} alt="Choose your contribution" />
@@ -294,16 +334,32 @@
 				</div>
 			{/if}
 		</div>
-		{#if view === views.profile}
-			<div class="h-1/2">
-				<h2 class="w-full border-b-4 border-dark-4 text-lg">
-					<div class="w-fit rounded-tr-3xl bg-dark-4 px-8 py-2">
-						Contributions ({$contributionsStore ? $contributionsStore.val.length : 0})
-					</div>
-				</h2>
+	</div>
+	{#if view === views.profile}
+		<div class="h-1/2">
+			<h2 class="flex w-full border-b-4 border-dark-5 text-lg">
+				<div
+					on:click={() => (tab = 'bookmarks')}
+					class="w-fit rounded-tr-3xl {tab === 'bookmarks'
+						? 'bg-dark-5'
+						: ''} cursor-pointer px-8 py-2 hover:bg-dark-4"
+				>
+					Bookmarks ({$bookmarksStore ? $bookmarksStore.val.length : 0})
+				</div>
 
+				<div
+					on:click={() => (tab = 'contributions')}
+					class="w-fit {tab === 'contributions'
+						? 'bg-dark-5'
+						: ''} cursor-pointer rounded-t-3xl px-8 py-2 hover:bg-dark-4"
+				>
+					Contributions ({$contributionsStore ? $contributionsStore.val.length : 0})
+				</div>
+			</h2>
+
+			{#if tab === 'contributions'}
 				{#if !$contributionsStore}
-					<div class="mt-4 text-center text-gray">You have no published contributions yet.</div>
+					<div class="mt-24 text-center text-dark-5">Couldn't find any of your contributions.</div>
 				{:else}
 					<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-2 gap-6 px-8 pb-4">
 						{#each $contributionsStore.val as c}
@@ -315,11 +371,21 @@
 						{/each}
 					</div>
 				{/if}
-			</div>
-		{/if}
+			{/if}
 
-		{#if view === views.settings}
-			<h2>Profile Settings</h2>
-		{/if}
-	</section>
+			{#if tab === 'bookmarks'}
+				{#if !$bookmarksStore}
+					<div class="mt-24 text-center text-dark-5">Couldn't find any of your bookmarks.</div>
+				{:else}
+					<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-2 gap-6 px-8 pb-4">
+						{#each $bookmarksStore.val as c}{/each}
+					</div>
+				{/if}
+			{/if}
+		</div>
+	{/if}
+
+	{#if view === views.settings}
+		<h2>Profile Settings</h2>
+	{/if}
 </section>
