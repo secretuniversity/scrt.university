@@ -10,21 +10,20 @@
 </script>
 
 <a
-	class=" h-58 flex"
+	class="block h-56"
 	href={'/resources/secret-box/' + slugify(secretBox.title)}
 	on:click={() => selectedSecretBox.set(secretBox)}
 >
-	<div class="rounded-md bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg">
-		<div class="mx-auto grid flex-col rounded-md bg-dark-4 p-6 text-white">
-			<div class="mb-4 grid h-fit w-full grid-cols-2">
-				<h3 class="text-2xl font-bold">
+	<div
+		class="h-full rounded-md bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg"
+	>
+		<div class="mx-auto grid h-full flex-col rounded-md bg-dark-4 p-6 text-white">
+			<div class="mb-4 flex h-fit w-full items-center">
+				<h3 class="grow text-2xl font-bold">
 					{secretBox.title}
 				</h3>
 
-				<p
-					id="label"
-					class="h-fit w-fit self-start justify-self-end rounded-sm py-1 px-3 text-sm font-semibold "
-				>
+				<p id="label" class="h-fit w-fit shrink rounded-sm py-1 px-3 text-sm font-semibold ">
 					SECRET BOX
 				</p>
 			</div>

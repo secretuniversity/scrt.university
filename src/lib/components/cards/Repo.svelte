@@ -7,7 +7,7 @@
 	export let description = 'Description';
 </script>
 
-<a href="/repositories/repo/some-slug">
+<a class="block h-56" href="/repositories/repo/some-slug">
 	<div class="h-full overflow-hidden rounded-xl bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
 		<div class="grid h-full auto-rows-auto">
 			<div class="mb-1">

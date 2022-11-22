@@ -7,18 +7,18 @@
 </script>
 
 <a
-	class=" h-58 flex"
+	class="block h-56 w-full"
 	href={'/resources/videos/' + slugify(video.title)}
 	on:click={() => selectedVideo.set(video)}
 >
-	<div class="grid flex-col rounded-md bg-dark-4 p-6 text-white shadow-lg">
-		<div class="mb-4 grid h-fit w-full grid-cols-2">
-			<h3 class="text-2xl font-bold">
+	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
+		<div class="mb-4 flex h-fit w-full grid-cols-2">
+			<h3 class="grow text-2xl font-bold">
 				{video.title}
 			</h3>
 
 			<p
-				class="h-fit w-fit self-start justify-self-end rounded-sm bg-dark-orange py-1 px-3 text-sm font-semibold"
+				class="h-fit w-fit shrink self-start justify-self-end rounded-sm bg-dark-orange py-1 px-3 text-sm font-semibold"
 			>
 				Video
 			</p>
