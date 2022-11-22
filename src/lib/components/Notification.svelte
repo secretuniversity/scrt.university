@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Spinner from '$lib/assets/spinner.svg';
+	import { Shadow } from 'svelte-loading-spinners';
 	import { fly, fade } from 'svelte/transition';
 	import { notificationsStore } from '$lib/stores';
 	import type { Notification } from '$lib/stores';
@@ -53,12 +53,20 @@
 		on:click={() => handleClick()}
 		class="cursor-pointer px-4 py-2 text-base text-white {getBGColor(n)} rounded-md shadow-md"
 	>
-		<div class="flex">
+		<div class="flex items-center">
 			{#if n.loading}
-				<img class="loader" src={Spinner} alt="Loading your request" />
+				<div class="mr-4 p-2">
+					<Shadow size="20" color="#ffffff" unit="px" />
+				</div>
 			{/if}
 			<div>
-				{@html n.message}
+				<p>
+					{@html n.message}
+				</p>
+
+				{#if n.loading}
+					<p class="text-sm italic">This can take some time.</p>
+				{/if}
 			</div>
 		</div>
 	</div>

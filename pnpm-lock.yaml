@@ -41,6 +41,7 @@ specifiers:
   secretjs: 1.3.0-beta.25
   svelte: ^3.46.0
   svelte-check: ^2.7.1
+  svelte-loading-spinners: ^0.3.4
   svelte-preprocess: ^4.10.7
   tailwindcss: ^3.1.6
   terser: ^5.15.1
@@ -92,6 +93,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.1.12_prettier@2.7.1
   svelte: 3.49.0
   svelte-check: 2.8.0_yjnqtisx6ukedaxp5l6bt23kmu
+  svelte-loading-spinners: 0.3.4
   svelte-preprocess: 4.10.7_rss5sppn5tczd65jemp3g3tggy
   tailwindcss: 3.1.6_postcss@8.4.14
   terser: 5.15.1
@@ -2992,6 +2994,10 @@ packages:
       svelte: '>=3.19.0'
     dependencies:
       svelte: 3.49.0
+    dev: true
+
+  /svelte-loading-spinners/0.3.4:
+    resolution: {integrity: sha512-vKaW71QMCBcTNijAGc0mUl8k3DQ66iYmp6MB8BMGCXyWk82bTrcLy8FOnSm9fE+8q6TwzD6PLUoYFHt0II93Xw==}
     dev: true
 
   /svelte-preprocess/4.10.7_rss5sppn5tczd65jemp3g3tggy:

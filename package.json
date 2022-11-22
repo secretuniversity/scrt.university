@@ -35,6 +35,7 @@
 		"prettier-plugin-tailwindcss": "^0.1.12",
 		"svelte": "^3.46.0",
 		"svelte-check": "^2.7.1",
+		"svelte-loading-spinners": "^0.3.4",
 		"svelte-preprocess": "^4.10.7",
 		"tailwindcss": "^3.1.6",
 		"terser": "^5.15.1",
