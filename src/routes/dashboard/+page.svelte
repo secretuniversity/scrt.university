@@ -18,7 +18,7 @@
 	const exp = new Date().setHours(new Date().getHours() + 1);
 
 	let view = views.profile;
-	let tab = 'contributions';
+	let tab = 'bookmarks';
 
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
