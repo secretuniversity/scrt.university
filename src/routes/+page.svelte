@@ -7,6 +7,10 @@
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';
 
+	import SNImage1 from '$lib/assets/illustrations/sn-1.png';
+	import SNImage2 from '$lib/assets/illustrations/sn-2.svg';
+	import SNImage3 from '$lib/assets/illustrations/sn-3.png';
+
 	const pageTitle = 'Home';
 </script>
 
@@ -96,12 +100,12 @@
 		</div>
 
 		<div
-			class="mx-auto max-w-xl flex-col justify-center sm:px-6 md:flex-col md:gap-y-8 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-12"
+			class="mx-auto max-w-xl flex-col justify-center sm:px-6 md:flex-col md:gap-y-8 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-16"
 		>
-			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
-				<div>
+			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
+				<div class="h-[50%] bg-dark-5">
 					<!-- Image goes here -->
-					<img src="./test-image.jpg" alt="Space" />
+					<img class="h-auto w-full" src={SNImage3} alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->
@@ -116,10 +120,10 @@
 				</div>
 			</div>
 
-			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
-				<div>
+			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
+				<div class="flex h-[50%] items-center bg-dark-5">
 					<!-- Image goes here -->
-					<img src="./test-image.jpg" alt="Space" />
+					<img class="h-auto w-full" src={SNImage1} alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->
@@ -134,10 +138,10 @@
 				</div>
 			</div>
 
-			<div class="divide-gray-200 mb-12 divide-y overflow-hidden rounded-lg bg-dark-4 shadow">
-				<div>
+			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
+				<div class="h-[50%] bg-dark-5">
 					<!-- Image goes here -->
-					<img src="./test-image.jpg" alt="Space" />
+					<img class="h-full w-auto" src={SNImage2} alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->
