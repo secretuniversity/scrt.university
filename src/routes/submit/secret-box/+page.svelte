@@ -88,6 +88,9 @@
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
+</section>
+
+<section class="mx-auto w-11/12 pb-8">
 	<PageHeader title={pageTitle} description={pageDescription} />
 </section>
 
