@@ -8,7 +8,7 @@
 
 	let commonTags: string[] = ['gaming', 'defi', 'smart-contract', 'secret-box', 'privacy'];
 	let tag = '';
-	let tags: string[] = [];
+	export let tags: string[] = [];
 
 	function handleTagInput(e: KeyboardEvent) {
 		if (e.key === ' ' || e.key === 'Enter') {
