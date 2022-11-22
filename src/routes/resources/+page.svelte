@@ -4,18 +4,10 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Filter from '$lib/components/Filter.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import TagComponent from '$lib/components/Tag.svelte';
 
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
-	import {
-		articlesStore,
-		selectedArticle,
-		notificationsStore,
-		videosStore,
-		selectedVideo,
-		resourceTagsStore
-	} from '$lib/stores';
+	import { articlesStore, notificationsStore, videosStore } from '$lib/stores';
 	import { genExp, getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import type { Article, Video, Tag } from '$lib/models/index';
 	import { onMount } from 'svelte';
@@ -33,7 +25,6 @@
 	];
 	const filterSections = ['Date', 'Type', 'Tags'];
 
-	// let tags: Tag[];
 	let articles: Article[] = [];
 	let videos: Video[] = [];
 
@@ -44,11 +35,6 @@
 		try {
 			articles = await getArticles();
 			videos = await getVideos();
-
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Resources fetched successfully', 'success')
-			];
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
@@ -169,18 +155,6 @@
 				{/if}
 
 				{#if index === 2}
-					<!-- {#each tags as tag}
-						<div class="py-2">
-							<input
-								class="mr-2 rounded-sm border-white bg-dark-4"
-								type="checkbox"
-								name="{tag}-input"
-								id="{tag}-input"
-							/>
-							<label class="text-white" for="{tag}-input">{tag.name}</label>
-						</div>
-					{/each} -->
-
 					<div class="mx-auto w-fit">
 						<button
 							type="button"
@@ -194,15 +168,7 @@
 
 		<div class="col-span-3">
 			<Search on:search={handleSearch} />
-			<!-- <div class="my-6 flex gap-x-4">
-				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
-					&times<span class="pl-1 font-bold">tag:</span> secret-box
-				</p>
-				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
-					&times<span class="pl-1 font-bold">tag:</span> essential
-				</p>
-			</div> -->
-			<div class="-z-10 pt-4 pb-28">
+			<div class="-z-10 pt-6 pb-28">
 				<div class="relative mx-auto max-w-full">
 					{#if articles.length === 0 && videos.length === 0}
 						<div class="mt-24 text-center text-dark-5">Unable to find any community resources.</div>
