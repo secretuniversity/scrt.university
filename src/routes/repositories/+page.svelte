@@ -45,11 +45,6 @@
 
 			$reposStore = { val: reposFetched, exp: genExp() };
 			$boxesStore = { val: boxesFetched, exp: genExp() };
-
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Repositories fetched successfully', 'success')
-			];
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
@@ -180,19 +175,10 @@
 
 		<div class="col-span-3">
 			<Search on:search={handleSearch} />
-			<!-- <div class="mt-4 flex gap-x-4">
-				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
-					&times<span class="pl-1 font-bold">tag:</span> secret-box
-				</p>
-				<p class="inline-block rounded-full bg-dark-blue py-1 px-4 text-white">
-					&times<span class="pl-1 font-bold">tag:</span> essential
-				</p>
-			</div> -->
 			{#if !hasBoxes && !hasRepos}
 				<div class="mt-24 text-center text-dark-5">Unable to find any repositories.</div>
 			{/if}
 
-			<!-- Repo Cards -->
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
@@ -203,7 +189,6 @@
 						{/if}
 
 						{#if $reposStore}
-							<!-- content here -->
 							{#each $reposStore.val as r}
 								<div>repos</div>
 							{/each}
