@@ -5,7 +5,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TagInput from '$lib/components/TagInput.svelte';
 	import TipTap from '$lib/components/TipTap.svelte';
-	import PageHeaderImage from '$lib/assets/illustrations/developer.svg';
+	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
 	import { articleRequest, notificationsStore, userStore } from '$lib/stores';
 	import {
 		getBaseAPIUrl,
@@ -131,7 +131,7 @@
 			</div>
 
 			{#if drafts.length > 0}
-				<div class="grow flex-col rounded-md">
+				<div class="grow flex-col space-y-2 rounded-md">
 					{#each drafts as d}
 						<div
 							on:click={() => (selectedDraft = d)}
@@ -211,7 +211,8 @@
 
 		<TagInput
 			artifact={'article'}
-			on:update={(e) => ($articleRequest.tags = [...$articleRequest.tags, ...e.detail.tags])}
+			tags={$articleRequest.tags}
+			on:update={(e) => ($articleRequest.tags = e.detail.tags)}
 		/>
 
 		<p class="mb-4 text-sm italic text-gray">
@@ -235,7 +236,7 @@
 			class="h-[800px] max-h-[800px] overflow-hidden rounded-md border border-solid border-white text-white"
 		>
 			<TipTap
-				value={getLessonBaseContent()}
+				value={$articleRequest.content}
 				on:update={(e) => ($articleRequest.content = e.detail.content)}
 			/>
 		</div>

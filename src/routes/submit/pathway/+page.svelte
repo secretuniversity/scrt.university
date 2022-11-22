@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Image from '$lib/assets/illustrations/professor.svg';
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -268,7 +269,7 @@
 			</div>
 
 			{#if drafts.length > 0}
-				<div class="grow flex-col rounded-md">
+				<div class="grow flex-col space-y-2 rounded-md">
 					{#each drafts as d}
 						<div
 							on:click={() => (selectedDraft = d)}
@@ -318,7 +319,7 @@
 </section>
 
 <section class="mx-auto w-11/12 pb-8">
-	<PageHeader title={pageTitle} description={pageDescription} />
+	<PageHeader image={Image} title={pageTitle} description={pageDescription} />
 </section>
 
 <section

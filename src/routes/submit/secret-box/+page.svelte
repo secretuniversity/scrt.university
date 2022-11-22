@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Image from '$lib/assets/illustrations/developer.svg';
 	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -91,7 +92,7 @@
 </section>
 
 <section class="mx-auto w-11/12 pb-8">
-	<PageHeader title={pageTitle} description={pageDescription} />
+	<PageHeader image={Image} title={pageTitle} description={pageDescription} />
 </section>
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
