@@ -7,16 +7,10 @@
 	import TipTap from '$lib/components/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
 	import { articleRequest, notificationsStore, userStore } from '$lib/stores';
-	import {
-		getBaseAPIUrl,
-		getLessonBaseContent,
-		getNotification,
-		loadJWT,
-		loadLocalDrafts,
-		saveLocalDraft
-	} from '$lib/helpers';
+	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import type { ArticleRequest } from '$lib/models';
+	import { articleRequestSchema, type ArticleRequest } from '$lib/models';
+	import type { ValidationError } from 'yup';
 
 	const pageTitle = 'Submit An Article';
 	const pageDescription = `For those with a knack for writing and endless curiousity, submit your article to 
@@ -47,7 +41,38 @@
 	let drafts: ArticleDraft[] = [];
 	let selectedDraft: ArticleDraft | null = null;
 
+	let hasTitleError = false;
+	let hasDescriptionError = false;
+	let hasContentError = false;
+
 	async function submit() {
+		try {
+			await articleRequestSchema.validate($articleRequest, { abortEarly: false, strict: true });
+		} catch (err) {
+			const e = err as ValidationError;
+
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Your article has some errors.', 'error')
+			];
+
+			for (const error of e.inner) {
+				switch (error.path) {
+					case 'title':
+						hasTitleError = true;
+						break;
+					case 'description':
+						hasDescriptionError = true;
+						break;
+					case 'content':
+						hasContentError = true;
+						break;
+				}
+			}
+
+			return;
+		}
+
 		let token = loadJWT('user');
 
 		if (!token || !$userStore) {
@@ -186,23 +211,33 @@
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
 	<div class="col-start-1 h-fit flex-col space-y-6">
+		{#if hasTitleError}
+			<p class="italic text-dark-red">Title is required</p>
+		{/if}
+
 		<div class="inline-flex w-full items-center">
 			<label for="title" class="mr-4 block text-sm font-medium text-white">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
+				on:focus={() => (hasTitleError = false)}
 				bind:value={$articleRequest.title}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Article..."
 			/>
 		</div>
 
+		{#if hasDescriptionError}
+			<p class="italic text-dark-red">Description is required</p>
+		{/if}
+
 		<label for="description" class="block text-sm font-medium text-white">Description</label>
 		<div>
 			<textarea
 				name="description"
 				id="description"
+				on:focus={() => (hasDescriptionError = false)}
 				bind:value={$articleRequest.description}
 				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="Enter a brief introduction of your article..."
@@ -232,7 +267,12 @@
 	</div>
 
 	<div class="col-span-full col-start-2">
+		{#if hasContentError}
+			<p class="mb-2 italic text-dark-red">Content is required</p>
+		{/if}
+
 		<div
+			on:click={() => (hasContentError = false)}
 			class="h-[800px] max-h-[800px] overflow-hidden rounded-md border border-solid border-white text-white"
 		>
 			<TipTap

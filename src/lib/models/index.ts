@@ -222,7 +222,15 @@ export interface QuizOptionRequest extends InferType<typeof quizOptionRequestSch
 	content: string;
 }
 
-export interface ArticleRequest {
+export const articleRequestSchema = object({
+	title: string().required(),
+	description: string().required(),
+	contributor: number().required().positive().integer(),
+	content: string().required(),
+	tags: array().of(string().required())
+});
+
+export interface ArticleRequest extends InferType<typeof articleRequestSchema> {
 	title: string;
 	description: string;
 	contributor: number;
