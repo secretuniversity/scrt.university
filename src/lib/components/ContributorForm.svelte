@@ -11,13 +11,11 @@
 		skill: string().required('Skill is required'),
 		reason: string().required('Reason is required'),
 		email: string().test((val) => {
-			// @ts-ignore
 			const { discord } = this.parent;
 			if (!discord) return val != null;
 			return true;
 		}),
 		discord: string().test((val) => {
-			// @ts-ignore
 			const { email } = this.parent;
 			if (!email) return val != null;
 			return true;
