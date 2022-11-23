@@ -1,39 +1,62 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/staking.svg';
+	import { getNotification } from '$lib/helpers';
 	import { notificationsStore, secretStore } from '$lib/stores';
 
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
 
-	let disabled = $secretStore === null;
-	let scrtAmount: number | null = null;
+	let scrtAmount: number;
 
 	async function handleStake() {
 		try {
-			if ($secretStore && scrtAmount) {
-				console.log('Staking amount and client found. simulating tx');
-				const sim = await $secretStore.val.tx.staking.delegate.simulate({
-					delegatorAddress: $secretStore.val.address,
-					validatorAddress,
+			if (!$secretStore) {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('Please connect your Keplr wallet first', 'error')
+				];
+				return;
+			}
+
+			if (!scrtAmount || scrtAmount <= 0) {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('Please enter a valid amount', 'error')
+				];
+				return;
+			}
+
+			if (process.env.APP_ENV === 'development') {
+				await $secretStore.val.tx.staking.delegate.simulate({
+					delegator_address: $secretStore.val.address,
+					validator_address: validatorAddress,
 					amount: {
 						amount: getSCRTasUSCRT(scrtAmount),
 						denom: 'uscrt'
 					}
 				});
+			}
 
-				console.log(sim);
-
-				$notificationsStore.push({
-					message: 'Succesfully staked with Secret University. Tyvm!',
-					status: 'success',
-					loading: false
+			if (process.env.APP_ENV === 'production') {
+				await $secretStore.val.tx.staking.delegate({
+					delegator_address: $secretStore.val.address,
+					validator_address: validatorAddress,
+					amount: {
+						amount: getSCRTasUSCRT(scrtAmount),
+						denom: 'uscrt'
+					}
 				});
 			}
+
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Succesfully staked with Secret University! Tyvm!', 'success')
+			];
 		} catch (err) {
-			$notificationsStore.push({
-				message: err as string,
-				status: 'error',
-				loading: false
-			});
+			console.log(err);
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Error staking with Secret University.', 'error')
+			];
 		}
 	}
 
@@ -79,8 +102,7 @@
 
 			<button
 				on:click={handleStake}
-				{disabled}
-				class="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-dark-blue px-4 py-2 text-base font-medium text-white hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+				class="inline-flex cursor-pointer items-center rounded-md bg-dark-blue px-4 py-2 text-base font-medium text-white hover:bg-darker-blue"
 				>Stake</button
 			>
 		</div>
