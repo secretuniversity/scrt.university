@@ -7,6 +7,9 @@
 	import { userStore, notificationsStore } from '$lib/stores';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { goto } from '$app/navigation';
+	import { array, number, object, string, mixed } from 'yup';
+	import type { InferType, ValidationError } from 'yup';
+	import SecretBox from '$lib/components/cards/SecretBox.svelte';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -28,13 +31,45 @@
 		}
 	];
 
-	let title = '';
-	let description = '';
-	let url = '';
-	let difficulty = '';
-	let devEnv = '';
+	const secretBoxSchema = object({
+		title: string().required('Title is required'),
+		description: string().required('Description is required'),
+		url: string().required('URL is required'),
+		contributor: number().required('Contributor is required'),
+		devEnv: string().required('Development Environment is required'),
+		difficulty: string().required('Difficulty is required'),
+		file: mixed().nullable(),
+		tags: array().of(string()).required('Tags are required')
+	});
+
+	interface SecretBox extends InferType<typeof secretBoxSchema> {
+		title: string;
+		description: string;
+		url: string;
+		difficulty: string;
+		devEnv: string;
+		file: File | null;
+		tags: string[];
+	}
+
+	let secretBox: SecretBox = {
+		title: '',
+		description: '',
+		url: '',
+		contributor: -1,
+		difficulty: '',
+		devEnv: '',
+		file: null,
+		tags: []
+	};
+
 	let files: FileList;
-	let tags: string[] = [];
+
+	let hasTitleError = false;
+	let hasDescriptionError = false;
+	let hasUrlError = false;
+	let hasDifficultyError = false;
+	let hasDevEnvError = false;
 
 	async function submit() {
 		const token = sessionStorage.getItem('user');
@@ -45,19 +80,57 @@
 			return;
 		}
 
-		const formData = new FormData();
-		formData.append('title', title);
-		formData.append('description', description);
-		formData.append('repo_url', url);
-		formData.append('contributor', $userStore.val.id.toString());
-		formData.append('difficulty', difficulty);
-		formData.append('dev_env', devEnv);
-		formData.append('file', files[0]);
-		tags.forEach((tag) => formData.append('tags', tag));
-
-		for (let pair of formData.entries()) {
-			console.log(pair[0] + ', ' + pair[1]);
+		if (files && files.length > 0) {
+			secretBox.file = files[0];
 		}
+
+		secretBox.contributor = $userStore.val.id;
+
+		try {
+			await secretBoxSchema.validate(secretBox, { abortEarly: false });
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Your Secret Box has some errors!', 'error')
+			];
+
+			const e = err as ValidationError;
+
+			for (const error of e.inner) {
+				console.log(error.path);
+				switch (error.path) {
+					case 'title':
+						hasTitleError = true;
+						break;
+					case 'description':
+						hasDescriptionError = true;
+						break;
+					case 'url':
+						hasUrlError = true;
+						break;
+					case 'difficulty':
+						hasDifficultyError = true;
+						break;
+					case 'devEnv':
+						hasDevEnvError = true;
+						break;
+				}
+			}
+
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append('title', secretBox.title);
+		formData.append('description', secretBox.description);
+		formData.append('repo_url', secretBox.url);
+		formData.append('contributor', secretBox.contributor.toString());
+		formData.append('difficulty', secretBox.difficulty);
+		formData.append('dev_env', secretBox.devEnv);
+		if (secretBox.file) {
+			formData.append('file', secretBox.file);
+		}
+		secretBox.tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/secret-boxes';
@@ -97,28 +170,42 @@
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
 	<div class="col-start-2 h-fit flex-col space-y-6">
+		{#if hasTitleError}
+			<p class="italic text-dark-red">Title is required</p>
+		{/if}
+
 		<div class="inline-flex w-full items-center">
 			<label for="title" class="mr-4 block text-sm font-medium text-white">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
-				bind:value={title}
+				on:focus={() => (hasTitleError = false)}
+				bind:value={secretBox.title}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Box"
 			/>
 		</div>
+
+		{#if hasDescriptionError}
+			<p class="italic text-dark-red">Description is required</p>
+		{/if}
 
 		<label for="description" class="block text-sm font-medium text-white">Description</label>
 		<div>
 			<textarea
 				name="description"
 				id="description"
-				bind:value={description}
+				on:focus={() => (hasDescriptionError = false)}
+				bind:value={secretBox.description}
 				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="What's in your Secet Box?"
 			/>
 		</div>
+
+		{#if hasUrlError}
+			<p class="italic text-dark-red">Github URL is required</p>
+		{/if}
 
 		<div class="inline-flex w-full items-center">
 			<label for="github" class="mr-4 block text-sm font-medium text-white">Repo</label>
@@ -126,11 +213,16 @@
 				type="text"
 				name="github"
 				id="github"
-				bind:value={url}
+				on:focus={() => (hasUrlError = false)}
+				bind:value={secretBox.url}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="https://github.com/you/your-repo"
 			/>
 		</div>
+
+		{#if hasDevEnvError}
+			<p class="italic text-dark-red">Developer Environment is required</p>
+		{/if}
 
 		<div class="inline-flex w-full items-center">
 			<label for="dev-env" class="mr-4 block text-sm font-medium text-white">Deployment</label>
@@ -138,15 +230,21 @@
 				type="text"
 				name="dev-env"
 				id="dev-env"
-				bind:value={devEnv}
+				on:focus={() => (hasDevEnvError = false)}
+				bind:value={secretBox.devEnv}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="https://gitpod.com/you/your-gitpod-url"
 			/>
 		</div>
 
+		{#if hasDifficultyError}
+			<p class="italic text-dark-red">Difficulty is required</p>
+		{/if}
+
 		<label for="difficulty" class="block text-sm font-medium text-white">Difficulty</label>
 		<select
-			bind:value={difficulty}
+			bind:value={secretBox.difficulty}
+			on:focus={() => (hasDifficultyError = false)}
 			id="difficulty"
 			name="difficulty"
 			class="mt-1 block w-full rounded-md border-2 border-white bg-dark-3 py-2 pl-3 pr-10 text-base text-white focus:border-dark-blue focus:outline-none focus:ring-dark-blue"
@@ -168,7 +266,7 @@
 			bind:files
 		/>
 
-		<TagInput artifact={'secret box'} on:update={(e) => (tags = e.detail.tags)} />
+		<TagInput artifact={'secret box'} on:update={(e) => (secretBox.tags = e.detail.tags)} />
 
 		<p class="mb-4 text-sm italic text-gray">
 			Before submitting, be sure you have read the standards and practices for creating Secret Boxes
