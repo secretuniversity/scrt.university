@@ -46,6 +46,18 @@
 	let hasContentError = false;
 
 	async function submit() {
+		let token = loadJWT('user');
+
+		if (!token || !$userStore) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('You must be logged in to submit an article.', 'error')
+			];
+			return;
+		}
+
+		$articleRequest.contributor = $userStore.val.id;
+
 		try {
 			await articleRequestSchema.validate($articleRequest, { abortEarly: false, strict: true });
 		} catch (err) {
@@ -72,18 +84,6 @@
 
 			return;
 		}
-
-		let token = loadJWT('user');
-
-		if (!token || !$userStore) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You must be logged in to submit an article.', 'error')
-			];
-			return;
-		}
-
-		$articleRequest.contributor = $userStore.val.id;
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/articles';

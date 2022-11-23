@@ -79,17 +79,6 @@
 	}
 
 	async function submit() {
-		try {
-			await pathwayRequestSchema.validate($pathwayRequest, {
-				strict: true
-			});
-		} catch (err) {
-			const e = err as ValidationError;
-			hasError = true;
-			errorMessage = e.errors[0];
-			return;
-		}
-
 		const token = loadJWT('user');
 
 		if (!token || !$userStore) {
@@ -101,6 +90,17 @@
 		}
 
 		$pathwayRequest.contributor = $userStore.val.id;
+
+		try {
+			await pathwayRequestSchema.validate($pathwayRequest, {
+				strict: true
+			});
+		} catch (err) {
+			const e = err as ValidationError;
+			hasError = true;
+			errorMessage = e.errors[0];
+			return;
+		}
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/pathways';
