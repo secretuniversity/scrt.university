@@ -10,16 +10,18 @@
 		name: string().required('Name is required'),
 		skill: string().required('Skill is required'),
 		reason: string().required('Reason is required'),
-		email: string()
-			.required('Email is required')
-			.when('discord', {
-				is: (discord: string) => discord === ''
-			}),
-		discord: string()
-			.required('Discord is required')
-			.when('email', {
-				is: (email: string) => email === ''
-			})
+		email: string().test((val) => {
+			// @ts-ignore
+			const { discord } = this.parent;
+			if (!discord) return val != null;
+			return true;
+		}),
+		discord: string().test((val) => {
+			// @ts-ignore
+			const { email } = this.parent;
+			if (!email) return val != null;
+			return true;
+		})
 	});
 
 	interface ContributorForm extends InferType<typeof contributorFormSchema> {
