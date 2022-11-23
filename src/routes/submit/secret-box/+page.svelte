@@ -9,7 +9,6 @@
 	import { goto } from '$app/navigation';
 	import { array, number, object, string, mixed } from 'yup';
 	import type { InferType, ValidationError } from 'yup';
-	import SecretBox from '$lib/components/cards/SecretBox.svelte';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 

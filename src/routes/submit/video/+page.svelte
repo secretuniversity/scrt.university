@@ -7,6 +7,8 @@
 	import { userStore, notificationsStore } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
+	import { array, number, object, string, mixed } from 'yup';
+	import type { InferType, ValidationError } from 'yup';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -27,10 +29,35 @@
 		}
 	];
 
-	let title = '';
-	let description = '';
+	const videoSchema = object({
+		title: string().required('Title is required'),
+		description: string().required('Description is required'),
+		contributor: number().required('Contributor is required'),
+		file: mixed().required('File is required'),
+		tags: array().of(string()).required('Tags are required')
+	});
+
+	interface Video {
+		title: string;
+		description: string;
+		contributor: number;
+		file: File | null;
+		tags: string[];
+	}
+
 	let files: FileList;
-	let tags: string[] = [];
+
+	let video: Video = {
+		title: '',
+		description: '',
+		contributor: -1,
+		file: null,
+		tags: []
+	};
+
+	let hasTitleError = false;
+	let hasDescriptionError = false;
+	let hasFileError = false;
 
 	async function submit() {
 		const token = loadJWT('user');
@@ -41,12 +68,44 @@
 			return;
 		}
 
+		video.contributor = $userStore.val.id;
+		if (files && files.length > 0) {
+			video.file = files[0];
+		}
+
+		try {
+			await videoSchema.validate(video, { abortEarly: false });
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Your video has some errors!', 'error')
+			];
+
+			const e = err as ValidationError;
+
+			for (const error of e.inner) {
+				switch (error.path) {
+					case 'title':
+						hasTitleError = true;
+						break;
+					case 'description':
+						hasDescriptionError = true;
+						break;
+					case 'file':
+						hasFileError = true;
+						break;
+				}
+			}
+
+			return;
+		}
+
 		const formData = new FormData();
-		formData.append('title', title);
-		formData.append('description', description);
-		formData.append('contributor', $userStore.val.id.toString());
-		formData.append('file', files[0]);
-		tags.forEach((tag) => formData.append('tags', tag));
+		formData.append('title', video.title);
+		formData.append('description', video.description);
+		formData.append('contributor', video.contributor.toString());
+		if (video.file) formData.append('file', video.file);
+		video.tags.forEach((tag) => formData.append('tags', tag));
 
 		try {
 			const n = getNotification('Submitting video...', 'info', true);
@@ -96,28 +155,41 @@
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
 	<div class="col-start-2 h-fit flex-col space-y-6">
+		{#if hasTitleError}
+			<p class="italic text-dark-red">Title is required</p>
+		{/if}
 		<div class="inline-flex w-full items-center">
 			<label for="title" class="mr-4 block text-base font-medium text-white">Title</label>
 			<input
 				type="text"
 				name="title"
 				id="title"
-				bind:value={title}
+				on:focus={() => (hasTitleError = false)}
+				bind:value={video.title}
 				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="My Secret Video..."
 			/>
 		</div>
+
+		{#if hasDescriptionError}
+			<p class="italic text-dark-red">Description is required</p>
+		{/if}
 
 		<label for="description" class="block text-base font-medium text-white">Description</label>
 		<div>
 			<textarea
 				name="description"
 				id="description"
-				bind:value={description}
+				on:focus={() => (hasDescriptionError = false)}
+				bind:value={video.description}
 				class="block h-36 w-full resize-none rounded-md border-white bg-dark-3 text-white shadow-sm"
 				placeholder="Enter a brief introduction of your article..."
 			/>
 		</div>
+
+		{#if hasFileError}
+			<p class="italic text-dark-red">Video file is required</p>
+		{/if}
 
 		<label class="block cursor-pointer text-sm font-medium text-white" for="file_input"
 			>Upload video <span class="text-dark-5">MP4</span></label
@@ -126,11 +198,12 @@
 			class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
 			aria-describedby="file_input_help"
 			id="file_input"
+			on:change={() => (hasFileError = false)}
 			type="file"
 			bind:files
 		/>
 
-		<TagInput artifact={'video'} on:update={(e) => (tags = e.detail.tags)} />
+		<TagInput artifact={'video'} on:update={(e) => (video.tags = e.detail.tags)} />
 
 		<p class="mb-4 text-sm italic text-gray">
 			Before submitting, be sure you have read the standards and practices for creating videos on
