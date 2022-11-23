@@ -4,7 +4,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Filter from '$lib/components/Filter.svelte';
 	import Search from '$lib/components/Search.svelte';
-
+	import Image from '$lib/assets/illustrations/code.svg';
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import { articlesStore, notificationsStore, videosStore } from '$lib/stores';
@@ -105,6 +105,7 @@
 
 <section class="mx-24">
 	<PageHeader
+		image={Image}
 		title={'Community Resources'}
 		description={'Learn from the community. Find guides, courses, videos, and more— each made by developers on Secret Network.'}
 	/>

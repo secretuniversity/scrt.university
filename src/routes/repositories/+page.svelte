@@ -3,6 +3,7 @@
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
 	import Filter from '$lib/components/Filter.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Image from '$lib/assets/illustrations/dev.svg';
 	import RepoCard from '$lib/components/cards/Repo.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
@@ -111,6 +112,7 @@
 
 <section class="lg:mx-24">
 	<PageHeader
+		image={Image}
 		title={PAGE_TITLE}
 		description={'Learn from the source. Find inspiration for you next project by looking at these repositories.'}
 	/>
