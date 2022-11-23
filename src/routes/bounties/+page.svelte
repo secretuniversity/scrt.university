@@ -35,11 +35,6 @@
 					exp: new Date().setHours(new Date().getHours() + 1)
 				};
 
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Bounties fetched successfully', 'success')
-				];
-
 				return json;
 			}
 		} catch (err) {
@@ -133,7 +128,12 @@
 			{#await getBounties()}
 				<!-- promise is pending -->
 			{:then list}
-				<!-- promise was fulfilled -->
+				{#if list.length === 0}
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
+						Secret University found no bounties.
+					</p>
+				{/if}
+
 				{#each list as bounty, index}
 					<BountyCard {bounty} {index} />
 				{/each}
