@@ -75,5 +75,8 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
+      - name: Install Beta Components
+        run: gcloud components install beta
+
       - name: Trigger build
         run: gcloud beta builds triggers run build-$SERVICE_NAME --region=global

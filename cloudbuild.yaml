@@ -15,7 +15,7 @@ steps:
       - '.'
   # Push the container
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us.gcr.io/$PROJECT_ID/${_BUILD_ENV}:$COMMIT_SHA']
+    args: ['push', 'us.gcr.io/$PROJECT_ID/web-${_BUILD_ENV}:$COMMIT_SHA']
   # Deploy to cloud run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
