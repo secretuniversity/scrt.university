@@ -2,6 +2,7 @@
 	import Image from '$lib/assets/illustrations/staking.svg';
 	import { getNotification } from '$lib/helpers';
 	import { notificationsStore, secretStore } from '$lib/stores';
+	import type { MsgDelegateParams } from 'secretjs';
 
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
 
@@ -26,6 +27,7 @@
 			}
 
 			if (process.env.APP_ENV === 'development') {
+				console.log('Simulating staking');
 				await $secretStore.val.tx.staking.delegate.simulate({
 					delegator_address: $secretStore.val.address,
 					validator_address: validatorAddress,
@@ -33,7 +35,7 @@
 						amount: getSCRTasUSCRT(scrtAmount),
 						denom: 'uscrt'
 					}
-				});
+				} as MsgDelegateParams);
 			}
 
 			if (process.env.APP_ENV === 'production') {
@@ -44,7 +46,7 @@
 						amount: getSCRTasUSCRT(scrtAmount),
 						denom: 'uscrt'
 					}
-				});
+				} as MsgDelegateParams);
 			}
 
 			$notificationsStore = [
@@ -89,7 +91,7 @@
 						type="number"
 						name="amount"
 						id="amount"
-						class="border-gray-300 block w-full rounded-md pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+						class="block w-full rounded-md border-dark-4 bg-dark-3 pr-12 text-white"
 						placeholder="0.00"
 						bind:value={scrtAmount}
 						aria-describedby="price-currency"
