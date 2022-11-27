@@ -8,6 +8,9 @@ on:
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   SERVICE_NAME: scrt_university_web_staging
+  PUBLIC_SECRET_NETWORK_CHAIN_ID: 'secret-4'
+  PUBLIC_SECRET_NETWORK_GRPC_URL: 'https://grpc.mainnet.secretsaturn.net'
+  CELADON_URL: 'http://127.0.0.1:3000'
 
 jobs:
   lint:
