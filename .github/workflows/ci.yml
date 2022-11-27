@@ -1,0 +1,79 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
+  SERVICE_NAME: scrt_university_web_staging
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0.0
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm run lint
+
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - name: Use Node.js 18.0.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0.0
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: |
+          pnpm install
+          npx playwright install-deps
+          npx playwright install
+      - name: Test
+        run: pnpm run test
+
+  setup-build-deploy:
+    needs: [lint, e2e]
+    name: Setup, Build, and Deploy
+    runs-on: ubuntu-latest
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.RUN_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Build
+        run: |-
+          gcloud builds submit \
+            --quiet \
+            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
