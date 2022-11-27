@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
 	import SectionHeader from '$lib/components/SectionHeader.svelte';
-	import SupportTicket from '$lib/components/support-ticket/SupportTicket.svelte';
+	import SupportTicket from '$lib/components/SupportTicket.svelte';
 	import DiscordLogo from '$lib/assets/discord_logo.svg';
 	import GithubLogo from '$lib/assets/github_logo_white.svg';
 	import SecretLogo from '$lib/assets/secret_white.svg';
