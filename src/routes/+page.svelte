@@ -2,7 +2,6 @@
 	import Head from '$lib/components/Head.svelte';
 	import Hero from '$lib/components/hero/Hero.svelte';
 	import Nav from '$lib/components/Nav.svelte';
-	import Stats from '$lib/components/Stats.svelte';
 	import RoadImage from '$lib/assets/illustrations/road.svg';
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';
@@ -20,7 +19,21 @@
 	<div class="bg-dark-3">
 		<Hero />
 
-		<Stats />
+		<div class="mx-auto flex w-fit space-x-4 text-center text-5xl">
+			<span>🎓</span>
+			<span>🧠</span>
+			<span>🤫</span>
+		</div>
+
+		<div class="mx-auto mt-8 max-w-4xl text-center text-white">
+			<h2 class="text-2xl font-bold">Educating developers</h2>
+			<p class="mx-auto mt-3 mb-28 max-w-xl text-gray">
+				Secret University is actively committed to supporting development on Secret Network by
+				providing developers with <span class="font-bold text-dark-blue"
+					>education, bounties, and opportunities</span
+				>—all in the name of building a better, more private, and more secure internet.
+			</p>
+		</div>
 	</div>
 
 	<div class="bg-dark-2 text-white">
