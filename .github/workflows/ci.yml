@@ -75,6 +75,9 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
+      - name: Set Project
+        run: gcloud config set project $PROJECT_ID
+
       - name: Build
         run: |-
           gcloud builds submit \
