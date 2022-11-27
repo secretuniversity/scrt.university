@@ -1,4 +1,8 @@
 <script lang="ts">
+	import ArticleCard from '$lib/components/cards/Article.svelte';
+	import PathwayCard from '$lib/components/cards/Pathway.svelte';
+	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
+	import VideoCard from '$lib/components/cards/Video.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import ContributorForm from '$lib/components/ContributorForm.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -18,8 +22,14 @@
 	};
 	const exp = new Date().setHours(new Date().getHours() + 1);
 
+	let articles: Article[] = [];
+	let pathways: Pathway[] = [];
+	let secretBoxes: SecretBox[] = [];
+	let videos: Video[] = [];
+	let totalContributions = 0;
+
 	let view = views.profile;
-	let tab = 'bookmarks';
+	let tab = 'contributions';
 
 	let contributionDropdownActive = false;
 	let contributorModalActive = false;
@@ -42,10 +52,13 @@
 			}
 
 			await fetchRole();
-			await fetchArticles();
-			await fetchPathways();
-			await fetchSecretBoxes();
-			await fetchVideos();
+
+			articles = await fetchArticles();
+			pathways = await fetchPathways();
+			secretBoxes = await fetchSecretBoxes();
+			videos = await fetchVideos();
+
+			totalContributions = articles.length + pathways.length + secretBoxes.length + videos.length;
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
@@ -67,60 +80,75 @@
 		}
 	}
 
-	async function fetchArticles() {
-		if (!$userStore) return;
+	async function fetchArticles(): Promise<Article[]> {
+		if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/articles/contributor/' + $userStore.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as Article[];
+
+			return json;
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('Failed to fetch articles.', 'error')
 			];
+
+			return Promise.reject(err);
 		}
 	}
 
-	async function fetchPathways() {
+	async function fetchPathways(): Promise<Pathway[]> {
 		try {
-			if (!$userStore) return;
+			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
 			const url = getBaseAPIUrl() + '/v1/pathways/contributor/' + $userStore.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as Pathway[];
+
+			return json;
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('Failed to fetch pathways.', 'error')
 			];
+			return Promise.reject(err);
 		}
 	}
 
-	async function fetchSecretBoxes() {
+	async function fetchSecretBoxes(): Promise<SecretBox[]> {
 		try {
-			if (!$userStore) return;
+			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
 			const url = getBaseAPIUrl() + '/v1/secret-boxes/contributor/' + $userStore.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as SecretBox[];
+
+			return json;
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('Failed to fetch secret boxes.', 'error')
 			];
+
+			return Promise.reject(err);
 		}
 	}
 
 	async function fetchVideos() {
 		try {
-			if (!$userStore) return;
+			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
 			const url = getBaseAPIUrl() + '/v1/videos/contributor/' + $userStore.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as Video[];
+
+			return json;
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('Failed to fetch videos.', 'error')
 			];
+
+			return Promise.reject(err);
 		}
 	}
 
@@ -226,25 +254,47 @@
 						? 'bg-dark-5'
 						: ''} cursor-pointer rounded-t-3xl px-8 py-2 hover:bg-dark-4"
 				>
-					Contributions ({$contributionsStore ? $contributionsStore.val.length : 0})
+					Contributions ({totalContributions})
 				</div>
 			</h2>
 
-			{#if tab === 'contributions'}
-				{#if !$contributionsStore}
-					<div class="mt-24 text-center text-dark-5">Couldn't find any of your contributions.</div>
-				{:else}
-					<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-2 gap-6 px-8 pb-4">
-						{#each $contributionsStore.val as c}
-							<div class="grid h-32 w-full grid-rows-3 rounded-xl bg-dark-4 py-4 px-6">
-								<p class="h-min justify-self-end rounded-full bg-dark-blue py-2 px-4">{c.kind}</p>
-								<h3 class="text-lg font-semibold">{c.title}</h3>
-								<p class="max-w-[80%]">{c.description}</p>
-							</div>
-						{/each}
-					</div>
+			<div class="pb-56">
+				{#if tab === 'contributions'}
+					{#if totalContributions === 0}
+						<div class="mt-24 text-center text-dark-5">
+							Couldn't find any of your contributions.
+						</div>
+					{:else}
+						<h2 class="mt-16 font-bold text-dark-5">Articles ({articles.length})</h2>
+						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
+							{#each articles as article}
+								<ArticleCard {article} />
+							{/each}
+						</div>
+
+						<h2 class="mt-16 font-bold text-dark-5">Pathways ({pathways.length})</h2>
+						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
+							{#each pathways as pathway}
+								<PathwayCard {pathway} />
+							{/each}
+						</div>
+
+						<h2 class="mt-16 font-bold text-dark-5">Secret Boxes ({secretBoxes.length})</h2>
+						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
+							{#each secretBoxes as secretBox}
+								<SecretBoxCard {secretBox} />
+							{/each}
+						</div>
+
+						<h2 class="mt-16 font-bold text-dark-5">Videos ({videos.length})</h2>
+						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
+							{#each videos as video}
+								<VideoCard {video} />
+							{/each}
+						</div>
+					{/if}
 				{/if}
-			{/if}
+			</div>
 
 			{#if tab === 'bookmarks'}
 				{#if !$bookmarksStore}
