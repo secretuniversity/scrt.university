@@ -53,9 +53,9 @@ jobs:
       - name: Test
         run: pnpm run test
 
-  setup-build-deploy:
+  trigger-build:
     needs: [lint, e2e]
-    name: Setup, Build, and Deploy
+    name: Build & Deploy
     runs-on: ubuntu-latest
 
     # Add "id-token" with the intended permissions.
@@ -75,17 +75,5 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Set Project
-        run: gcloud config set project $PROJECT_ID
-
-      - name: Build
-        run: |-
-          gcloud builds submit \
-            --quiet \
-            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-
-      - id: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v0'
-        with:
-          service: $SERVICE_NAME
-          image: 'gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA'
+      - name: Trigger build
+        run: gcloud beta builds triggers run build-$SERVICE_NAME --region=global

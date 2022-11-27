@@ -11,21 +11,21 @@ steps:
       - 'CHAIN_GRPC=${_CHAIN_GRPC}'
 
       - '-t'
-      - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
+      - 'us.gcr.io/$PROJECT_ID/web-${_BUILD_ENV}:$COMMIT_SHA'
       - '.'
   # Push the container
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA']
+    args: ['push', 'us.gcr.io/$PROJECT_ID/${_BUILD_ENV}:$COMMIT_SHA']
   # Deploy to cloud run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'web-client'
+      - 'web-${_BUILD_ENV}'
       - '--image'
-      - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
+      - 'us.gcr.io/$PROJECT_ID/web-${_BUILD_ENV}:$COMMIT_SHA'
       - '--region'
       - 'us-central1'
 images:
-  - 'us.gcr.io/$PROJECT_ID/web-client:$COMMIT_SHA'
+  - 'us.gcr.io/$PROJECT_ID/web-${_BUILD_ENV}:$COMMIT_SHA'
