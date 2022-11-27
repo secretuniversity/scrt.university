@@ -83,3 +83,9 @@ jobs:
           gcloud builds submit \
             --quiet \
             --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v0'
+        with:
+          service: $SERVICE_NAME
+          image: 'gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA'
