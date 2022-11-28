@@ -22,6 +22,8 @@
 	}
 
 	function addCommonTag(tag: string) {
+		tags = tags.filter((t) => t !== tag);
+
 		tags = [...tags, tag];
 		dispatch('update', { tags });
 	}
