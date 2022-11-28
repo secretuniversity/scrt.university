@@ -5,13 +5,12 @@
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import ContributorForm from '$lib/components/ContributorForm.svelte';
-	import Modal from '$lib/components/Modal.svelte';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';
 	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import { userStore, contributionsStore, bookmarksStore, notificationsStore } from '$lib/stores';
+	import { userStore, bookmarksStore, notificationsStore } from '$lib/stores';
 	import type { Article, Pathway, SecretBox, Video } from '$lib/models';
 
 	const title = 'Your Dashboard';
@@ -28,6 +27,8 @@
 	let videos: Video[] = [];
 	let totalContributions = 0;
 
+	$: namePlaceholder = 'Your name';
+
 	let view = views.profile;
 	let tab = 'contributions';
 
@@ -39,6 +40,8 @@
 
 	let profileButtonText = 'Edit Profile';
 
+	let nameChange = '';
+
 	onMount(async () => {
 		try {
 			if (!$userStore) {
@@ -49,6 +52,12 @@
 
 				goto('/');
 				return;
+			}
+
+			if ($userStore.val.name) {
+				console.log(namePlaceholder);
+				namePlaceholder = $userStore.val.name.String;
+				console.log(namePlaceholder);
 			}
 
 			await fetchRole();
@@ -150,6 +159,48 @@
 
 			return Promise.reject(err);
 		}
+	}
+
+	async function changeName() {
+		if (!$userStore) return;
+
+		// const url = getBaseAPIUrl() + '/v1/users/name';
+		// const res = await fetch(url, {
+		// 	method: 'PUT',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: 'Bearer ' + $userStore.token
+		// 	},
+		// 	body: JSON.stringify({
+		// 		id: $userStore.val.id,
+		// 		name: nameChange
+		// 	})
+		// });
+
+		// if (res.status === 200) {
+		// 	$notificationsStore = [
+		// 		...$notificationsStore,
+		// 		getNotification('Successfully changed your name.', 'success')
+		// 	];
+
+		// 	$userStore = {
+		// 		...$userStore,
+		// 		val: {
+		// 			...$userStore.val,
+		// 			name: {
+		// 				String: nameChange
+		// 			}
+		// 		}
+		// 	};
+
+		// 	namePlaceholder = nameChange;
+		// 	nameChange = '';
+		// } else {
+		// 	$notificationsStore = [
+		// 		...$notificationsStore,
+		// 		getNotification('Failed to change your name.', 'error')
+		// 	];
+		// }
 	}
 
 	// async function getBookmarks(): Promise<Array<Bookmark> | null> {
@@ -309,6 +360,48 @@
 	{/if}
 
 	{#if view === views.settings}
-		<h2>Profile Settings</h2>
+		<h2 class="mb-20 text-2xl font-bold text-white">Profile Settings</h2>
+		<div class="mx-auto mb-6 max-w-lg">
+			<label class="mb-2 block" for="name-change">Change Name</label>
+			<div class="flex w-full space-x-2">
+				<input
+					bind:value={nameChange}
+					class="w-[80%] rounded-md border-dark-5 bg-dark-4 text-white placeholder:text-gray"
+					placeholder={namePlaceholder}
+					type="text"
+				/>
+
+				<button
+					on:click={() => changeName()}
+					class="rounded-md bg-dark-blue py-4 px-6 text-white hover:bg-darker-blue">Change</button
+				>
+			</div>
+		</div>
+
+		<!-- <div class="max-w-lg mx-auto">
+			<p class="block mb-2" for="bookmarks-checkbox">Change Default Dashboard Tab</p>
+
+			<input
+				checked={tab === 'bookmarks'}
+				on:change={() => (tab = 'contributions')}
+				class="rounded-md"
+				type="radio"
+				name="bookmarks-checkbox"
+				id="bookmarks-checkbox"
+				value="bookmarks"
+			/>
+			<label class="inline-block mr-4" for="bookmarks-checkbox">Bookmarks</label>
+
+			<input
+				checked={tab === 'contributions'}
+				on:change={() => (tab = 'contributions')}
+				class="rounded-md"
+				type="radio"
+				name="contributions-checkbox"
+				id="contributions-checkbox"
+				value="contributions"
+			/>
+			<label class="" for="contributions-checkbox">Contributions</label>
+		</div> -->
 	{/if}
 </section>
