@@ -36,6 +36,8 @@
 			let reposFetched = await getRepos();
 			let boxesFetched = await getSecretBoxes();
 
+			console.log(reposFetched);
+
 			if (reposFetched.length > 0) {
 				hasRepos = true;
 			}
@@ -192,7 +194,7 @@
 
 						{#if $reposStore}
 							{#each $reposStore.val as r}
-								<div>repos</div>
+								<RepoCard repo={r} />
 							{/each}
 						{/if}
 					</div>

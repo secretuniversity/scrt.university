@@ -46,7 +46,7 @@ export interface Repo {
 	title: string;
 	description: string;
 	github_username: string;
-	url: string;
+	github_repo: string;
 	created_at: string;
 	updated_at: string;
 	tags: Array<string>;
