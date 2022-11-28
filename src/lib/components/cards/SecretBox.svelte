@@ -1,7 +1,5 @@
 <script lang="ts">
 	import Tag from '$lib/components/Tag.svelte';
-	import GithubLogo from '$lib/assets/github_logo_white.svg';
-	import TagComponent from '$lib/components/Tag.svelte';
 	import { slugify } from '$lib/helpers';
 	import type { SecretBox } from '$lib/models';
 	import { selectedSecretBox } from '$lib/stores';
@@ -33,13 +31,16 @@
 			</p>
 
 			<div class="mt-8 flex space-x-2 self-end">
-				{#each secretBox.tags as tag, i}
-					{#if i < 3}
-						<Tag {tag} />
+				{#if secretBox.tags}
+					<!-- content here -->
+					{#each secretBox.tags as tag, i}
+						{#if i < 3}
+							<Tag {tag} />
+						{/if}
+					{/each}
+					{#if secretBox.tags.length > 3}
+						<p class="ml-2 self-end text-gray">+ more</p>
 					{/if}
-				{/each}
-				{#if secretBox.tags.length > 3}
-					<p class="ml-2 self-end text-gray">+ more</p>
 				{/if}
 			</div>
 		</div>
