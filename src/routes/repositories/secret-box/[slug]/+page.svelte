@@ -49,11 +49,13 @@
 							>View on Github</a
 						>
 
-						<a
-							href={$selectedSecretBox.dev_env}
-							class="bg-[] mt-3 w-max cursor-pointer rounded-md bg-[#FFAE33] px-6 py-3 text-base font-medium text-dark-2 hover:bg-[#ffa319]"
-							>Launch Gitpod</a
-						>
+						{#if $selectedSecretBox.dev_env}
+							<a
+								href={$selectedSecretBox.dev_env}
+								class="bg-[] mt-3 w-max cursor-pointer rounded-md bg-[#FFAE33] px-6 py-3 text-base font-medium text-dark-2 hover:bg-[#ffa319]"
+								>Launch Gitpod</a
+							>
+						{/if}
 					</div>
 				</div>
 

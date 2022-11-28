@@ -35,7 +35,7 @@
 		description: string().required('Description is required'),
 		url: string().required('URL is required'),
 		contributor: number().required('Contributor is required'),
-		devEnv: string().required('Development Environment is required'),
+		devEnv: string(),
 		difficulty: string().required('Difficulty is required'),
 		file: mixed().nullable(),
 		tags: array().of(string()).required('Tags are required')
@@ -224,7 +224,9 @@
 		{/if}
 
 		<div class="inline-flex w-full items-center">
-			<label for="dev-env" class="mr-4 block text-sm font-medium text-white">Deployment</label>
+			<label for="dev-env" class="mr-4 block text-sm font-medium text-white"
+				>Deployment (Optional)</label
+			>
 			<input
 				type="text"
 				name="dev-env"
@@ -254,13 +256,14 @@
 		</select>
 
 		<label for="banner-img" class="block text-sm font-medium text-white"
-			>Banner Image (optional)</label
+			>Banner Image (optional .JPG)</label
 		>
 
 		<input
 			class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
 			aria-describedby="file_input_help"
 			id="banner-img"
+			accept="image/jpg"
 			type="file"
 			bind:files
 		/>
