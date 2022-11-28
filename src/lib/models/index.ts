@@ -57,7 +57,7 @@ export interface SecretBox {
 	title: string;
 	description: string;
 	contributor: string;
-	url: string;
+	repo_url: string;
 	difficulty: string;
 	dev_env: string;
 	banner_img: string;

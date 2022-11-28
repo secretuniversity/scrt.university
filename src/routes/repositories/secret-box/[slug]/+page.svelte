@@ -1,48 +1,68 @@
 <script>
-	import { page } from '$app/stores';
 	import Head from '$lib/components/Head.svelte';
+	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
+	import { selectedSecretBox } from '$lib/stores';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
-	const pageTitle = $page.params.slug + ' | Secret Box';
+	let pageTitle = $page.params.slug + ' | Secret Box';
+	let bgImage = '';
+	$: bgStyles = `bg-[url('${bgImage}')] bg-cover bg-center`;
 
-	const box = {
-		title: 'Secret Counter',
-		subtitle: 'A quick introduction to building private smart contracts on Secret Network',
-		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec dapibus mauris. Cras sed hendrerit mauris. Morbi euismod dui quis fermentum faucibus. Sed fringilla felis eget accumsan volutpat. Sed molestie eget quam id bibendum. Integer et nibh sodales, posuere arcu id, rhoncus nibh. Suspendisse finibus augue mattis purus consequat, euismod fringilla arcu viverra. Integer aliquet diam mauris, et vestibulum nisi cursus a. Maecenas dapibus, ante sed aliquet fermentum, lacus ipsum laoreet neque, a fringilla massa orci eu metus.',
-		tags: ['tag1', 'tag2']
-	};
+	onMount(() => {
+		if (!$selectedSecretBox) return goto('/repositories');
+
+		const urlSafeTitle = $selectedSecretBox.title.replace(/ /g, '%20');
+		pageTitle = $selectedSecretBox.title + ' | Secret Box';
+
+		bgImage = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/secret-box/${$selectedSecretBox.id}/${urlSafeTitle}.jpg`;
+	});
 </script>
 
 <Head {pageTitle} />
 
-<section class="min-h-content pb-32">
-	<!-- <h1 class="text-3xl font-bold text-white my-8">Secret Boxes</h1> -->
-
-	<div class="container mx-auto mt-16 rounded-lg bg-dark-4 px-12 py-16">
-		<div class="">
-			<h2 class="text-3xl font-semibold uppercase tracking-wide text-white">
-				{box.title}
-			</h2>
-			<p class="mt-1 text-lg font-bold text-gray sm:tracking-tight">
-				{box.subtitle}
-			</p>
-			<p class="mt-4 max-w-2xl text-base text-gray">
-				{box.description}
-			</p>
+{#if $selectedSecretBox}
+	<section class="relative min-h-[650px] pb-32">
+		<div class="h-72 w-full overflow-hidden">
+			<img class="h-auto w-full" src={bgImage} alt="Learn with Secret Boxes" />
 		</div>
 
-		<div class="mt-4 flex gap-x-3 self-start">
-			<button
-				type="button"
-				class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm shadow-dark-blue/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
-				>View on Github</button
+		<div
+			class="h-full rounded-md bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg"
+		>
+			<div
+				class="container absolute top-0 left-0 right-0 z-10 mx-auto mt-32 grid grid-cols-2 justify-items-center rounded-lg bg-dark-4 px-12 py-32 shadow-lg"
 			>
+				<div class="col-start-1">
+					<h2 class="text-3xl font-semibold uppercase tracking-wide text-white">
+						{$selectedSecretBox.title}
+					</h2>
+					<p class="mt-4 max-w-2xl text-base text-gray">
+						{$selectedSecretBox.description}
+					</p>
 
-			<button
-				type="button"
-				class="hover:bg-gray-900 mt-3 w-full rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm shadow-dark-blue/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:inline-flex sm:w-auto sm:flex-shrink-0 sm:items-center"
-				>Launch</button
-			>
+					<div class="mt-4 flex gap-x-3 self-start">
+						<a
+							href={$selectedSecretBox.repo_url}
+							class="mt-3 w-max cursor-pointer rounded-md bg-dark-3 px-6 py-3 text-base font-medium text-white hover:bg-dark-2"
+							>View on Github</a
+						>
+
+						<a
+							href={$selectedSecretBox.dev_env}
+							class="bg-[] mt-3 w-max cursor-pointer rounded-md bg-[#FFAE33] px-6 py-3 text-base font-medium text-dark-2 hover:bg-[#ffa319]"
+							>Launch Gitpod</a
+						>
+					</div>
+				</div>
+
+				<img
+					class="h-full w-auto"
+					src={SecretBoxImage}
+					alt="Support development on Secret by using Secret Boxes"
+				/>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+{/if}
