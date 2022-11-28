@@ -17,7 +17,7 @@ export function slugify(str: string) {
 }
 
 export function getBaseAPIUrl() {
-	if (process.env.APP_ENV === 'production') {
+	if (process.env.APP_ENV === 'production' || process.env.APP_ENV === 'staging') {
 		if (process.env.CELADON_URL) {
 			return process.env.CELADON_URL;
 		}
