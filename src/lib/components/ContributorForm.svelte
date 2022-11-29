@@ -1,25 +1,20 @@
 <script lang="ts">
 	import Modal from '$lib/components/Modal.svelte';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { notificationsStore, userStore } from '$lib/stores';
+	import { contributorModal, notificationsStore, userStore } from '$lib/stores';
 	import { number, object, string } from 'yup';
+	import { createEventDispatcher, onDestroy } from 'svelte';
 	import type { InferType, ValidationError } from 'yup';
+
+	const dispatch = createEventDispatcher();
 
 	const contributorFormSchema = object({
 		id: number().positive().integer().required('id is required'),
 		name: string().required('Name is required'),
 		skill: string().required('Skill is required'),
 		reason: string().required('Reason is required'),
-		email: string().test((val) => {
-			const { discord } = this.parent;
-			if (!discord) return val != null;
-			return true;
-		}),
-		discord: string().test((val) => {
-			const { email } = this.parent;
-			if (!email) return val != null;
-			return true;
-		})
+		email: string(),
+		discord: string()
 	});
 
 	interface ContributorForm extends InferType<typeof contributorFormSchema> {
@@ -40,8 +35,6 @@
 		discord: ''
 	};
 
-	export let active = false;
-
 	let hasNameError = false;
 	let hasSkillError = false;
 	let hasReasonError = false;
@@ -54,23 +47,25 @@
 		} catch (err) {
 			const e = err as ValidationError;
 
-			for (const error of e.inner) {
-				switch (error.path) {
-					case 'name':
-						hasNameError = true;
-						break;
-					case 'skill':
-						hasSkillError = true;
-						break;
-					case 'reason':
-						hasReasonError = true;
-						break;
-					case 'email':
-						hasEmailError = true;
-						break;
-					case 'discord':
-						hasDiscordError = true;
-						break;
+			if (e.inner) {
+				for (const error of e.inner) {
+					switch (error.path) {
+						case 'name':
+							hasNameError = true;
+							break;
+						case 'skill':
+							hasSkillError = true;
+							break;
+						case 'reason':
+							hasReasonError = true;
+							break;
+						case 'email':
+							hasEmailError = true;
+							break;
+						case 'discord':
+							hasDiscordError = true;
+							break;
+					}
 				}
 			}
 
@@ -106,21 +101,27 @@
 			});
 
 			if (res.status === 200) {
+				$contributorModal = false;
 				$notificationsStore = [
 					...$notificationsStore,
 					getNotification('Successfully submitted contributor form.', 'success')
 				];
 			}
 		} catch (err) {
+			console.log(err);
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('There was a problem submitting your form.', 'error')
 			];
 		}
 	}
+
+	onDestroy(() => {
+		$contributorModal = false;
+	});
 </script>
 
-<Modal {active} on:hide={() => (active = false)}>
+<Modal active={$contributorModal} on:hide={() => ($contributorModal = false)}>
 	<form class="grid grid-cols-1 text-white">
 		<h2 class="mx-auto max-w-xs text-center text-2xl font-semibold">
 			Become A Contributor for Secret University

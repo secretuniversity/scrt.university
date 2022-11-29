@@ -120,3 +120,5 @@ export const articleRequest: Writable<ArticleRequest> = writable({
 	content: '',
 	tags: []
 });
+
+export const contributorModal: Writable<boolean> = writable(false);

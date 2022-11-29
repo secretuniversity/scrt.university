@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import { userStore, bookmarksStore, notificationsStore } from '$lib/stores';
+	import { contributorModal, userStore, bookmarksStore, notificationsStore } from '$lib/stores';
 	import type { Article, Pathway, SecretBox, Video } from '$lib/models';
 
 	const title = 'Your Dashboard';
@@ -223,7 +223,7 @@
 
 <Head pageTitle={title} />
 
-<ContributorForm active={contributorModalActive} />
+<ContributorForm />
 
 <section class="relative mt-12 min-h-home-hero px-36 text-white">
 	<div class="grid grid-cols-2 items-center">
@@ -251,7 +251,7 @@
 
 			{#if renderBecomeContributorBtn}
 				<button
-					on:click|preventDefault={() => (contributorModalActive = true)}
+					on:click|preventDefault={() => ($contributorModal = true)}
 					class="mb-4 mr-4 rounded-md bg-dark-4 py-2 px-4">Become A Contributor</button
 				>
 			{/if}

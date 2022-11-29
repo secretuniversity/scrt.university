@@ -6,7 +6,7 @@
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { notificationsStore, userStore } from '$lib/stores';
+	import { contributorModal, notificationsStore, userStore } from '$lib/stores';
 
 	const pageTitle = 'Build';
 
@@ -20,6 +20,10 @@
 			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as string[];
+
+			if (!json) {
+				return Promise.resolve(false);
+			}
 
 			if (json.includes('contributor')) {
 				return Promise.resolve(true);
@@ -36,7 +40,7 @@
 		try {
 			const is = await isContributor();
 			if (!is) {
-				isModalActive = true;
+				$contributorModal = true;
 			} else {
 				$notificationsStore = [
 					...$notificationsStore,
@@ -49,7 +53,7 @@
 	}
 </script>
 
-<ContributorForm active={isModalActive} />
+<ContributorForm />
 
 <Head {pageTitle} />
 
