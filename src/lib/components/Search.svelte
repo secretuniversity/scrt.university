@@ -28,11 +28,11 @@
 			type="search"
 			name="search"
 			id="search"
-			class="block w-full rounded-md border-gray bg-dark-3 text-off-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-			placeholder="Search for term [or #tag]"
+			class="block w-full rounded-md border-dark-5 bg-dark-3 text-off-white shadow-sm"
+			placeholder="Search for term... Press [Enter] to search"
 		/>
 	</div>
-	<button on:click|preventDefault={handleSearch} class="rounded-md bg-dark-4 py-2 px-3 shadow-md">
+	<!-- <button on:click|preventDefault={handleSearch} class="rounded-md bg-dark-4 py-2 px-3 shadow-md">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"
@@ -47,5 +47,5 @@
 				d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
 			/>
 		</svg>
-	</button>
+	</button> -->
 </div>
