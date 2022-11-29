@@ -22,6 +22,7 @@
 	let quizIndex = 0;
 	let progressCount = 0;
 	let totalObjectives = 0;
+	let hasMounted = false;
 
 	$: pageTitle = '' + ' | Pathways';
 
@@ -48,6 +49,14 @@
 			return;
 		}
 
+		$selectedPathway.lessons.forEach((lesson) => {
+			if (!lesson.quizzes) {
+				lesson.quizzes = [];
+			}
+		});
+
+		console.log($selectedPathway);
+
 		pageTitle = $selectedPathway.title + ' | Pathways';
 		currentLesson = $selectedPathway.lessons[0];
 		progressCount = 1;
@@ -58,6 +67,7 @@
 		}
 
 		hljs.highlightAll();
+		hasMounted = true;
 	});
 
 	function goBack() {
@@ -205,7 +215,7 @@
 				</p> -->
 			</div>
 
-			{#if $selectedPathway}
+			{#if $selectedPathway && hasMounted}
 				{#each $selectedPathway.lessons as l, j}
 					<div
 						class="min-h-22 mt-1 grid grid-cols-5 grid-rows-2 p-4 {selected(j, 0, 'lesson')
