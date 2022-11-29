@@ -8,6 +8,7 @@
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/Search.svelte';
+	import Fuse from 'fuse.js';
 	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
 	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';
 	import type { Repo, SecretBox, Tag } from '$lib/models/index';
@@ -30,13 +31,18 @@
 	let offset = 0;
 	let hasBoxes = false;
 	let hasRepos = false;
+	let cache = {
+		boxes: [],
+		repos: []
+	} as {
+		boxes: SecretBox[];
+		repos: Repo[];
+	};
 
 	onMount(async () => {
 		try {
 			let reposFetched = await getRepos();
 			let boxesFetched = await getSecretBoxes();
-
-			console.log(reposFetched);
 
 			if (reposFetched.length > 0) {
 				hasRepos = true;
@@ -46,6 +52,9 @@
 				hasBoxes = true;
 			}
 
+			cache.boxes = boxesFetched;
+			cache.repos = reposFetched;
+
 			$reposStore = { val: reposFetched, exp: genExp() };
 			$boxesStore = { val: boxesFetched, exp: genExp() };
 		} catch (err) {
@@ -54,7 +63,48 @@
 	});
 
 	function handleSearch(e: CustomEvent) {
-		console.log(e.detail.val);
+		if (!$boxesStore || !$reposStore) return;
+
+		if (e.detail.val === '') {
+			$boxesStore.val = cache.boxes;
+			$reposStore.val = cache.repos;
+			setHasBoxes();
+			setHasRepos();
+			return;
+		}
+
+		const boxesFuse = new Fuse([...$boxesStore.val], {
+			keys: ['title', 'description', 'tags'],
+			threshold: 0.3
+		});
+		const reposFuse = new Fuse([...$reposStore.val], {
+			keys: ['title', 'description', 'tags'],
+			threshold: 0.3
+		});
+		const boxesRes = boxesFuse.search(e.detail.val);
+		const repoRes = reposFuse.search(e.detail.val);
+
+		$boxesStore.val = boxesRes.map((res) => res.item);
+		$reposStore.val = repoRes.map((res) => res.item);
+
+		setHasBoxes();
+		setHasRepos();
+	}
+
+	function setHasBoxes() {
+		if ($boxesStore && $boxesStore.val.length > 0) {
+			hasBoxes = true;
+		} else {
+			hasBoxes = false;
+		}
+	}
+
+	function setHasRepos() {
+		if ($reposStore && $reposStore.val.length > 0) {
+			hasRepos = true;
+		} else {
+			hasRepos = false;
+		}
 	}
 
 	async function getRepos(): Promise<Repo[]> {

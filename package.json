@@ -61,12 +61,13 @@
 		"@tiptap/extension-underline": "2.0.0-beta.198",
 		"@tiptap/starter-kit": "2.0.0-beta.191",
 		"cookie": "^0.4.1",
+		"fuse.js": "^6.6.2",
 		"google-protobuf": "^3.14.0",
 		"highlight.js": "^11.6.0",
 		"lottie-web": "^5.9.6",
 		"lowlight": "^2.7.0",
 		"sass": "^1.55.0",
-		"secretjs": "v1.5.0-beta.1"
+		"secretjs": "v1.4.5"
 	},
 	"lint-staged": {
 		"*.{js,ts,css,scss,md,svelte}": [

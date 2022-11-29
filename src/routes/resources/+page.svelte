@@ -7,6 +7,7 @@
 	import Image from '$lib/assets/illustrations/code.svg';
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
+	import Fuse from 'fuse.js';
 	import { articlesStore, notificationsStore, videosStore } from '$lib/stores';
 	import { genExp, getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import type { Article, Video, Tag } from '$lib/models/index';
@@ -27,6 +28,13 @@
 
 	let articles: Article[] = [];
 	let videos: Video[] = [];
+	const cache = {
+		articles: [],
+		videos: []
+	} as {
+		articles: Article[];
+		videos: Video[];
+	};
 
 	let limit = 25;
 	let offset = 0;
@@ -35,6 +43,9 @@
 		try {
 			articles = await getArticles();
 			videos = await getVideos();
+
+			cache.articles = articles;
+			cache.videos = videos;
 		} catch (err) {
 			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
 		}
@@ -51,7 +62,25 @@
 	}
 
 	function handleSearch(e: CustomEvent) {
-		console.log(e.detail.val);
+		if (e.detail.val === '') {
+			articles = cache.articles;
+			videos = cache.videos;
+			return;
+		}
+
+		const articleFuse = new Fuse([...articles], {
+			keys: ['title', 'description', 'tags'],
+			threshold: 0.3
+		});
+		const videoFuse = new Fuse([...videos], {
+			keys: ['title', 'description', 'tags'],
+			threshold: 0.3
+		});
+		const articleRes = articleFuse.search(e.detail.val);
+		const videoRes = videoFuse.search(e.detail.val);
+
+		articles = articleRes.map((res) => res.item);
+		videos = videoRes.map((res) => res.item);
 	}
 
 	async function getVideos(): Promise<Video[]> {
