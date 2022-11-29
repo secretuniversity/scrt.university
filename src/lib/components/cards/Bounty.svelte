@@ -21,13 +21,9 @@
 
 	const getBGColor = () => {
 		if (bounty.status === 'complete') {
-			return 'bg-dark-2';
-		}
-
-		if (index % 2 === 0) {
-			return 'bg-dark-4';
+			return 'bg-dark-3 border-4 border-dark-4';
 		} else {
-			return 'bg-dark-5';
+			return 'bg-dark-4';
 		}
 	};
 </script>
@@ -36,10 +32,10 @@
 	<div class="grid-col-5 grid auto-rows-auto">
 		<div class="col-span-3 mt-2 text-white">
 			<div>
-				<p class="text-2xl font-semibold">{bounty.title}</p>
-				<p>Reward: <span class="font-bold">{bounty.reward_amount}</span></p>
+				<p class="my-2 text-2xl font-semibold">{bounty.title}</p>
+				<p>Reward: <span class="my-1 font-bold">{bounty.reward_amount}</span></p>
 			</div>
-			<p>{bounty.description}</p>
+			<p class="mb-6 max-w-lg">{bounty.description}</p>
 			<div class="mt-2 flex">
 				<a
 					href={bounty.forum_url}
@@ -67,9 +63,9 @@
 		</div>
 
 		<div
-			class="col-start-5 mx-auto h-min w-max self-center rounded-lg text-white {getStatusColor()}"
+			class="col-start-5 h-min w-max self-start justify-self-end rounded-lg text-white {getStatusColor()}"
 		>
-			<div class="h-fit rounded-lg px-2 py-1 capitalize {getStatusColor()}">
+			<div class="h-fit rounded-lg px-3 py-2 capitalize {getStatusColor()}">
 				{bounty.status}
 			</div>
 		</div>

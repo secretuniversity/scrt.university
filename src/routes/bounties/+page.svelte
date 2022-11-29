@@ -134,7 +134,7 @@
 					</p>
 				{/if}
 
-				<div class="flex-col space-y-4">
+				<div class="flex-col space-y-4 pb-36">
 					{#each list as bounty, index}
 						<BountyCard {bounty} {index} />
 					{/each}
