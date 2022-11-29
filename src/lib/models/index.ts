@@ -145,7 +145,7 @@ export const pathwayRequestSchema = object({
 						.shape({
 							question: string().required(),
 							answer: number().required().positive().integer(),
-							hint: string().required(),
+							hint: string(),
 							options: array().of<typeof quizOptionRequestSchema>(
 								object()
 									.shape({
