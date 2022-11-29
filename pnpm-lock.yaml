@@ -27,6 +27,7 @@ specifiers:
   eslint: ^8.16.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
+  fuse.js: ^6.6.2
   google-protobuf: ^3.14.0
   highlight.js: ^11.6.0
   husky: ^8.0.0
@@ -66,6 +67,7 @@ dependencies:
   '@tiptap/extension-underline': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
   '@tiptap/starter-kit': 2.0.0-beta.191
   cookie: 0.4.2
+  fuse.js: 6.6.2
   google-protobuf: 3.21.0
   highlight.js: 11.6.0
   lottie-web: 5.9.6
@@ -1798,6 +1800,11 @@ packages:
   /functional-red-black-tree/1.0.1:
     resolution: {integrity: sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==}
     dev: true
+
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /get-stream/6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
