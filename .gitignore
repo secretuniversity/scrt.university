@@ -13,3 +13,4 @@ pnpm-lock.yaml
 .projectile
 .VSCodeCounter
 todos.txt
+bounties.json
