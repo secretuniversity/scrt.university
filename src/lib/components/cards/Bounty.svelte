@@ -37,7 +37,7 @@
 		<div class="col-span-3 mt-2 text-white">
 			<div>
 				<p class="text-2xl font-semibold">{bounty.title}</p>
-				<p>Reward: <span class="font-bold">{bounty.reward_amount}</span> SCRT</p>
+				<p>Reward: <span class="font-bold">{bounty.reward_amount}</span></p>
 			</div>
 			<p>{bounty.description}</p>
 			<div class="mt-2 flex">

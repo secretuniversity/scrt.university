@@ -134,9 +134,11 @@
 					</p>
 				{/if}
 
-				{#each list as bounty, index}
-					<BountyCard {bounty} {index} />
-				{/each}
+				<div class="flex-col space-y-4">
+					{#each list as bounty, index}
+						<BountyCard {bounty} {index} />
+					{/each}
+				</div>
 			{:catch error}
 				<!-- promise was rejected -->
 				<p class="block self-center text-center text-sm font-medium text-dark-5">
