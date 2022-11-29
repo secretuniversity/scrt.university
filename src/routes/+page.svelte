@@ -20,8 +20,9 @@
 		<Hero />
 
 		<div class="mx-auto flex w-fit space-x-4 text-center text-5xl">
-			<span>🎓</span>
+			<span>💻</span>
 			<span>🧠</span>
+			<span>🎓</span>
 			<span>🤫</span>
 		</div>
 
