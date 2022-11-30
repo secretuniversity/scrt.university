@@ -24,12 +24,12 @@
 
 {#if $selectedSecretBox}
 	<section class="relative min-h-[650px] pb-32">
-		<div class="h-72 w-full overflow-hidden">
+		<!-- <div class="h-72 w-full overflow-hidden">
 			<img class="h-auto w-full" src={bgImage} alt="Learn with Secret Boxes" />
 		</div>
-
+ -->
 		<div
-			class="h-full rounded-md bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg"
+			class="h-64 rounded-b-lg bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg"
 		>
 			<div
 				class="container absolute top-0 left-0 right-0 z-10 mx-auto mt-32 grid grid-cols-2 justify-items-center rounded-lg bg-dark-4 px-12 py-32 shadow-lg"
