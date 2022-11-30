@@ -78,11 +78,11 @@
 			</p>
 		</div>
 
-		{#if pathways.length === 0}
+		<!-- {#if pathways.length === 0}
 			<div class="mt-24 text-center text-dark-5">
 				Secret University could not find any pathways.
 			</div>
-		{/if}
+		{/if} -->
 
 		<div class="w-full flex-col space-y-36 pb-36">
 			{#each pathways as p, i}
