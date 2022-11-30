@@ -144,7 +144,7 @@ export const pathwayRequestSchema = object({
 					object()
 						.shape({
 							question: string().required(),
-							answer: number().required().positive().integer(),
+							answer: number().required().integer().min(0),
 							hint: string(),
 							options: array().of<typeof quizOptionRequestSchema>(
 								object()
@@ -196,7 +196,7 @@ export interface LessonRequest extends InferType<typeof lessonRequestSchema> {
 
 const quizRequestSchema = object({
 	question: string().required(),
-	answer: number().required().positive().integer(),
+	answer: number().required(),
 	hint: string(),
 	options: array().of<typeof quizOptionRequestSchema>(
 		object()
