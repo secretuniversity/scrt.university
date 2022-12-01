@@ -7,7 +7,7 @@
 
 <a
 	class=" block h-56 w-full"
-	href={'/resources/articles/' + slugify(pathway.title)}
+	href={'/pathways/' + slugify(pathway.title)}
 	on:click={() => selectedPathway.set(pathway)}
 >
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">

@@ -27,11 +27,7 @@
 	$: pageTitle = '' + ' | Pathways';
 
 	$: selected = (l: number, q: number, v: string) => {
-		if (v === 'lesson') {
-			return l === lessonIndex && q === quizIndex && v === view;
-		} else {
-			return l + 1 === lessonIndex && q + 1 === quizIndex && v === view;
-		}
+		return l === lessonIndex && q === quizIndex && v === view;
 	};
 
 	afterUpdate(async () => {
@@ -73,9 +69,11 @@
 	function goBack() {
 		if (!$selectedPathway) return;
 
-		if (lessonIndex === 0 && quizIndex === 0) {
+		if (currentLesson === $selectedPathway.lessons[0] && view === 'lesson') {
 			return;
 		}
+
+		console.table({ lessonIndex, quizIndex });
 
 		let hasChangedViews = false;
 
@@ -94,14 +92,18 @@
 			if (quizIndex !== 0 && currentLesson) {
 				quizIndex = quizIndex - 1;
 				currentQuiz = currentLesson.quizzes[quizIndex];
-			}
+			} else if (quizIndex === 0) {
+				if (lessonIndex !== 0) {
+					lessonIndex = lessonIndex - 1;
+				}
 
-			if (quizIndex === 0) {
+				currentLesson = $selectedPathway.lessons[lessonIndex];
+
 				view = 'lesson';
-				lessonIndex = lessonIndex - 1;
 			}
 		}
 
+		console.table({ lessonIndex, quizIndex });
 		progressCount = progressCount - 1;
 		hasChangedViews = false;
 	}
@@ -109,16 +111,17 @@
 	async function goForward() {
 		if (!$selectedPathway) return;
 
-		const hasLessons = $selectedPathway.lessons.length > lessonIndex;
-		let hasQuizzes = false;
+		console.table({ lessonIndex, quizIndex });
 
-		if (!hasLessons) {
-			hasQuizzes = $selectedPathway.lessons[lessonIndex - 1].quizzes.length > quizIndex;
-		} else {
-			hasQuizzes = $selectedPathway.lessons[lessonIndex].quizzes.length > quizIndex;
-		}
+		const hasMoreLessons = $selectedPathway.lessons.length > lessonIndex + 1;
+		const hasMoreQuizzes =
+			$selectedPathway.lessons[lessonIndex].quizzes &&
+			$selectedPathway.lessons[lessonIndex].quizzes.length > quizIndex + 1;
 
-		if (!hasLessons && !hasQuizzes) {
+		if (
+			(!hasMoreLessons && !hasMoreQuizzes) ||
+			($selectedPathway.lessons.length === 1 && !hasMoreQuizzes)
+		) {
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('You have completed this pathway! Congratulations!', 'success')
@@ -130,44 +133,47 @@
 		let hasChangedViews = false;
 
 		if (view === 'lesson') {
-			if (hasQuizzes) {
+			if (hasMoreQuizzes) {
+				quizIndex = 0;
 				currentQuiz = quizzes[quizIndex];
-
-				lessonIndex = lessonIndex + 1;
-				quizIndex = quizIndex + 1;
 
 				view = 'quiz';
 				hasChangedViews = true;
-			}
+			} else if (!hasMoreQuizzes && hasMoreLessons) {
+				if (lessonIndex < $selectedPathway.lessons.length - 1) {
+					lessonIndex = lessonIndex + 1;
+					currentLesson = $selectedPathway.lessons[lessonIndex];
+				}
 
-			if (!hasQuizzes && hasLessons) {
 				quizIndex = 0;
-				currentLesson = $selectedPathway.lessons[lessonIndex];
-
 				view = 'lesson';
+				hasChangedViews = true;
 			}
 		}
 
 		if (view === 'quiz' && !hasChangedViews) {
-			if (hasQuizzes) {
-				quizIndex = quizIndex + 1;
-				currentQuiz = quizzes[quizIndex];
-			}
+			if (hasMoreQuizzes) {
+				if (quizIndex < quizzes.length - 1) {
+					quizIndex = quizIndex + 1;
+				}
 
-			if (!hasQuizzes && hasLessons) {
-				lessonIndex = lessonIndex + 1;
+				currentQuiz = quizzes[quizIndex];
+			} else if (!hasMoreQuizzes && hasMoreLessons) {
 				quizIndex = 0;
 
-				currentLesson = $selectedPathway.lessons[lessonIndex];
+				if (lessonIndex < $selectedPathway.lessons.length - 1) {
+					lessonIndex = lessonIndex + 1;
+					currentLesson = $selectedPathway.lessons[lessonIndex];
+				}
 
 				view = 'lesson';
-			} else if (!hasQuizzes && !hasLessons) {
-				lessonIndex = lessonIndex + 1;
+				hasChangedViews = true;
 			}
 		}
 
-		hasChangedViews = false;
 		progressCount = progressCount + 1;
+
+		console.table({ lessonIndex, quizIndex });
 
 		await tick();
 	}
@@ -180,8 +186,8 @@
 	}
 
 	function setCurrentQuiz(l: number, q: number, quiz: Quiz) {
-		lessonIndex = l + 1;
-		quizIndex = q + 1;
+		lessonIndex = l;
+		quizIndex = q;
 		currentQuiz = quiz;
 		view = 'quiz';
 	}
@@ -261,8 +267,11 @@
 
 		<div class="col-span-full col-start-4">
 			<div class="max-h-content grid grid-cols-10 rounded-lg pb-24">
-				<div class="cursor-pointer self-center justify-self-center p-4" on:click={() => goBack()}>
-					<img class="h-auto w-4" src={LeftArrowIcon} alt="Left reading arrow" />
+				<div
+					class="sticky top-0 flex h-home-hero cursor-pointer items-center justify-self-center p-4"
+					on:click={() => goBack()}
+				>
+					<img class="h-8 w-auto" src={LeftArrowIcon} alt="Left reading arrow" />
 				</div>
 				<div class="col-span-8 col-start-2">
 					{#if $selectedPathway}
@@ -278,7 +287,7 @@
 						{/if}
 
 						{#if view === 'quiz' && currentQuiz}
-							<h1 class="my-8 p-4 text-3xl font-bold text-white">Quiz #{quizIndex}</h1>
+							<h1 class="my-8 p-4 text-3xl font-bold text-white">Quiz #{quizIndex + 1}</h1>
 							<p class="mx-auto mb-32 max-w-xl p-4 text-center text-xl text-white">
 								{currentQuiz.question}
 							</p>
@@ -299,10 +308,10 @@
 				</div>
 
 				<div
-					class="cursor-pointer self-center justify-self-center p-4"
+					class="sticky top-0 flex h-home-hero cursor-pointer items-center justify-self-center p-4"
 					on:click={() => goForward()}
 				>
-					<img class="h-auto w-4" src={RightArrowIcon} alt="Right reading arrow" />
+					<img class="h-8 w-auto" src={RightArrowIcon} alt="Right reading arrow" />
 				</div>
 			</div>
 		</div>
