@@ -4,6 +4,10 @@
 		margin-top: 0.75em;
 	}
 
+	a {
+		@apply text-light-blue underline;
+	}
+
 	pre {
 		background: #0d0d0d;
 		color: #fff;

@@ -14,6 +14,7 @@ specifiers:
   '@tiptap/extension-document': 2.0.0-beta.198
   '@tiptap/extension-highlight': 2.0.0-beta.198
   '@tiptap/extension-image': 2.0.0-beta.202
+  '@tiptap/extension-link': 2.0.0-beta.204
   '@tiptap/extension-placeholder': 2.0.0-beta.198
   '@tiptap/extension-typography': 2.0.0-beta.198
   '@tiptap/extension-underline': 2.0.0-beta.198
@@ -62,6 +63,7 @@ dependencies:
   '@tiptap/extension-document': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
   '@tiptap/extension-highlight': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
   '@tiptap/extension-image': 2.0.0-beta.202_4focsuckzeocqotdxlryrtksam
+  '@tiptap/extension-link': 2.0.0-beta.204_4focsuckzeocqotdxlryrtksam
   '@tiptap/extension-placeholder': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
   '@tiptap/extension-typography': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
   '@tiptap/extension-underline': 2.0.0-beta.198_4focsuckzeocqotdxlryrtksam
@@ -557,6 +559,17 @@ packages:
       '@tiptap/core': ^2.0.0-beta.1
     dependencies:
       '@tiptap/core': 2.0.0-beta.199
+    dev: false
+
+  /@tiptap/extension-link/2.0.0-beta.204_4focsuckzeocqotdxlryrtksam:
+    resolution: {integrity: sha512-maHG0otu8cO6dsDlloid23t2W5bYsB06t2Tz6snaaWuOEeYyX76XfMXwI6HVSwRbrJi/G+WX41WiKV9ShFPfrg==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0-beta.193
+    dependencies:
+      '@tiptap/core': 2.0.0-beta.199
+      linkifyjs: 3.0.5
+      prosemirror-model: 1.18.1
+      prosemirror-state: 1.4.1
     dev: false
 
   /@tiptap/extension-list-item/2.0.0-beta.23_4focsuckzeocqotdxlryrtksam:
@@ -2049,6 +2062,10 @@ packages:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
     dev: true
+
+  /linkifyjs/3.0.5:
+    resolution: {integrity: sha512-1Y9XQH65eQKA9p2xtk+zxvnTeQBG7rdAXSkUG97DmuI/Xhji9uaUzaWxRj6rf9YC0v8KKHkxav7tnLX82Sz5Fg==}
+    dev: false
 
   /lint-staged/13.0.3:
     resolution: {integrity: sha512-9hmrwSCFroTSYLjflGI8Uk+GWAwMB4OlpU4bMJEAT5d/llQwtYKoim4bLOyLCuWFAhWEupE0vkIFqtw/WIsPug==}

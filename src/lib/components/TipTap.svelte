@@ -11,6 +11,7 @@
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
 	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 	import Image from '@tiptap/extension-image';
+	import Link from '@tiptap/extension-link';
 
 	import html from 'highlight.js/lib/languages/xml';
 	import css from 'highlight.js/lib/languages/css';
@@ -23,12 +24,18 @@
 
 	import ClearIcon from '$lib/assets/clear-icon.svg';
 	import ImageIcon from '$lib/assets/image_icon_white.svg';
+	import LinkIcon from '$lib/assets/link-icon.svg';
+
 	import '$lib/styles/tiptap.scss';
 
 	export let value = '';
 
 	let imageUrl = '';
 	let isAddingImage = false;
+
+	let linkUrl = '';
+	let isAddingLink = false;
+
 	let mainMenu: HTMLElement | null;
 	let bubbleMenuElement: HTMLElement | null = null;
 	let editorElement: HTMLElement;
@@ -47,6 +54,11 @@
 		editor = new Editor({
 			element: editorElement,
 			extensions: [
+				Link.configure({
+					autolink: true,
+					openOnClick: true,
+					linkOnPaste: true
+				}),
 				StarterKit,
 				Underline,
 				Image,
@@ -75,6 +87,14 @@
 		}
 	}
 
+	function addLink() {
+		if (linkUrl) {
+			editor.commands.setLink({ href: linkUrl });
+			isAddingLink = false;
+			linkUrl = '';
+		}
+	}
+
 	onDestroy(() => {
 		if (editor) {
 			editor.destroy();
@@ -99,6 +119,10 @@
 				S
 			</button>
 
+			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
+				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
+			</button>
+
 			{#if isAddingImage}
 				<div class="flex h-full items-center">
 					<input
@@ -107,6 +131,10 @@
 						class="h-7 w-72 rounded-md bg-dark-4"
 						placeholder="Enter image url here"
 					/>
+					<button
+						class="ml-2 h-6 rounded-sm border border-white text-xs leading-none hover:bg-dark-3"
+						on:click={() => (isAddingImage = false)}>Cancel</button
+					>
 					<button
 						class="ml-2 h-6 rounded-sm border border-white text-xs leading-none hover:bg-dark-3"
 						on:click={() => addImage()}>Add Image</button
@@ -118,9 +146,26 @@
 				</button>
 			{/if}
 
-			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
-				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
-			</button>
+			{#if isAddingLink}
+				<input
+					bind:value={linkUrl}
+					type="text"
+					class="h-7 w-72 rounded-md bg-dark-4"
+					placeholder="Enter url here"
+				/>
+				<button
+					class="ml-2 h-6 rounded-sm border border-white text-xs leading-none hover:bg-dark-3"
+					on:click={() => (isAddingLink = false)}>Cancel</button
+				>
+				<button
+					class="ml-2 h-6 rounded-sm border border-white text-xs leading-none hover:bg-dark-3"
+					on:click={() => addLink()}>Add Link</button
+				>
+			{:else}
+				<button on:click={() => (isAddingLink = true)}>
+					<img class="h-4 w-4" src={LinkIcon} alt="Add link" />
+				</button>
+			{/if}
 		</div>
 	{/if}
 
