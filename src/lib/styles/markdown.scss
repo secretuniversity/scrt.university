@@ -4,6 +4,15 @@
 		@apply my-8 text-3xl font-bold;
 	}
 
+	ul {
+		list-style-type: disc;
+		@apply ml-8;
+	}
+
+	a {
+		@apply text-light-blue underline;
+	}
+
 	h3,
 	h4,
 	h5,
@@ -19,5 +28,9 @@
 
 	pre > code {
 		@apply rounded-lg;
+	}
+
+	ul {
+		list-style-type: bullet;
 	}
 }
