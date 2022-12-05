@@ -9,20 +9,19 @@
 <a class="block h-56" href={repo.github_repo}>
 	<div class="h-full overflow-hidden rounded-md bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
 		<div class="grid h-full auto-rows-auto">
-			<div class="flex items-center">
-				<p class="grow text-2xl font-semibold text-white">{repo.title}</p>
-				<div class="col-span-1 mt-2 mb-4 flex shrink gap-x-2">
-					<img
-						class="h-6 w-6 self-center"
-						src={GithubLogo}
-						alt="Learn more about the author of this Secret Box on Github"
-					/>
-					<a href={`https://github.com/${repo.github_username}`} class="font-semibold text-white"
-						>{repo.github_username}</a
-					>
-				</div>
+			<p class="grow text-2xl font-semibold text-white">{repo.title}</p>
+			<div class="mb-3 flex items-center space-x-2">
+				<img
+					class="h-6 w-6 self-center"
+					src={GithubLogo}
+					alt="Learn more about the author of this Secret Box on Github"
+				/>
+				<a
+					href={`https://github.com/${repo.github_username}`}
+					class="mt-2 block font-semibold text-white">{repo.github_username}</a
+				>
 			</div>
-			<p class="my-3 max-w-md text-base text-gray">
+			<p class="mb-2 max-w-md text-base text-gray">
 				{repo.description}
 			</p>
 
