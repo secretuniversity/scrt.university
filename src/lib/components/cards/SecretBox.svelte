@@ -4,6 +4,8 @@
 	import type { SecretBox } from '$lib/models';
 	import { selectedSecretBox } from '$lib/stores';
 
+	import SecretBoxLogo from '$lib/assets/secret_box_logo.png';
+
 	export let secretBox: SecretBox;
 </script>
 
@@ -21,9 +23,12 @@
 					{secretBox.title}
 				</h3>
 
-				<p id="label" class="h-fit w-fit shrink rounded-sm py-1 px-3 text-sm font-semibold ">
-					SECRET BOX
-				</p>
+				<div class="flex items-center space-x-2">
+					<img src={SecretBoxLogo} alt="Learn today with Secret Boxes" />
+					<!-- <p id="label" class="h-fit w-fit shrink rounded-sm py-1 px-3 text-sm font-semibold ">
+						SECRET BOX
+					</p> -->
+				</div>
 			</div>
 
 			<p class="description">
@@ -48,9 +53,4 @@
 </a>
 
 <style>
-	#label {
-		background: -webkit-linear-gradient(left, #60a0dc, #eb8045);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
 </style>

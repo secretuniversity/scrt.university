@@ -10,7 +10,7 @@
 	<div class="h-full overflow-hidden rounded-md bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
 		<div class="grid h-full auto-rows-auto">
 			<p class="grow text-2xl font-semibold text-white">{repo.title}</p>
-			<div class="mb-3 flex items-center space-x-2">
+			<div class="mb-3 mt-1 flex items-center space-x-2">
 				<img
 					class="h-6 w-6 self-center"
 					src={GithubLogo}
