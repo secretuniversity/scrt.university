@@ -51,8 +51,6 @@
 			}
 		});
 
-		console.log($selectedPathway);
-
 		pageTitle = $selectedPathway.title + ' | Pathways';
 		currentLesson = $selectedPathway.lessons[0];
 		progressCount = 1;
@@ -72,8 +70,6 @@
 		if (currentLesson === $selectedPathway.lessons[0] && view === 'lesson') {
 			return;
 		}
-
-		console.table({ lessonIndex, quizIndex });
 
 		let hasChangedViews = false;
 
@@ -103,15 +99,14 @@
 			}
 		}
 
-		console.table({ lessonIndex, quizIndex });
 		progressCount = progressCount - 1;
+
+		scrollTo(0, 0);
 		hasChangedViews = false;
 	}
 
 	async function goForward() {
 		if (!$selectedPathway) return;
-
-		console.table({ lessonIndex, quizIndex });
 
 		const hasMoreLessons = $selectedPathway.lessons.length > lessonIndex + 1;
 		const hasMoreQuizzes =
@@ -173,7 +168,7 @@
 
 		progressCount = progressCount + 1;
 
-		console.table({ lessonIndex, quizIndex });
+		scrollTo(0, 0);
 
 		await tick();
 	}
@@ -183,6 +178,8 @@
 		quizIndex = q;
 		currentLesson = lesson;
 		view = 'lesson';
+
+		scrollTo(0, 0);
 	}
 
 	function setCurrentQuiz(l: number, q: number, quiz: Quiz) {
@@ -190,6 +187,8 @@
 		quizIndex = q;
 		currentQuiz = quiz;
 		view = 'quiz';
+
+		scrollTo(0, 0);
 	}
 
 	function checkAnswer(i: number) {
