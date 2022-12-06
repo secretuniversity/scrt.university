@@ -55,6 +55,8 @@
 
 					<div class="mt-4 flex gap-x-3 self-start">
 						<a
+							target="_blank"
+							rel="noopener noreferrer"
 							href={$selectedSecretBox.repo_url}
 							class="mt-3 w-max cursor-pointer rounded-md bg-dark-3 px-6 py-3 text-base font-medium text-white hover:bg-dark-2"
 							>View on Github</a
@@ -62,6 +64,8 @@
 
 						{#if $selectedSecretBox.dev_env}
 							<a
+								target="_blank"
+								rel="noopener noreferrer"
 								href={$selectedSecretBox.dev_env}
 								class="bg-[] mt-3 w-max cursor-pointer rounded-md bg-[#FFAE33] px-6 py-3 text-base font-medium text-dark-2 hover:bg-[#ffa319]"
 								>Launch Sandbox</a

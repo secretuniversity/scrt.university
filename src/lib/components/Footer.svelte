@@ -13,7 +13,12 @@
 					Secret University is built to support development on Secret Network.
 				</p>
 				<div class="flex space-x-6">
-					<a href="https://twitter.com/SecretNetwork" class="text-white hover:text-off-white">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://twitter.com/SecretNetwork"
+						class="text-white hover:text-off-white"
+					>
 						<span class="sr-only">Twitter</span>
 						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path
@@ -22,7 +27,12 @@
 						</svg>
 					</a>
 
-					<a href="https://github.com/secretuniversity" class="text-white hover:text-off-white">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://github.com/secretuniversity"
+						class="text-white hover:text-off-white"
+					>
 						<span class="sr-only">GitHub</span>
 						<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path

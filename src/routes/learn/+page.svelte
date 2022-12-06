@@ -67,6 +67,8 @@
 		</a>
 
 		<a
+			target="_blank"
+			rel="noopener noreferrer"
 			class="col-span-4 h-80 flex-col rounded-t-3xl rounded-bl-[100px] rounded-br-3xl bg-dark-2 py-24 px-12"
 			href="https://docs.scrt.network"
 		>

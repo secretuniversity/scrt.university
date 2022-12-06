@@ -38,6 +38,8 @@
 			<p class="mb-6 max-w-lg">{bounty.description}</p>
 			<div class="mt-2 flex">
 				<a
+					target="_blank"
+					rel="noopener noreferrer"
 					href={bounty.forum_url}
 					disabled={bounty.forum_url ? true : false}
 					class="mr-2 inline-block"
@@ -49,6 +51,8 @@
 					</span>
 				</a>
 				<a
+					target="_blank"
+					rel="noopener noreferrer"
 					href={bounty.proposal_url}
 					disabled={bounty.proposal_url ? true : false}
 					class="inline-block"
