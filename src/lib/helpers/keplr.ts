@@ -12,6 +12,11 @@ export async function connect() {
 	try {
 		const CHAIN_ID = process.env.PUBLIC_SECRET_NETWORK_CHAIN_ID;
 		const grpcWebUrl = process.env.PUBLIC_SECRET_NETWORK_GRPC_URL;
+
+		if (CHAIN_ID === undefined || grpcWebUrl === undefined) {
+			return Promise.reject('Could not create secretjs client. Chain ID or GRPC URL not set.');
+		}
+
 		await window.keplr.enable(CHAIN_ID);
 
 		const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(CHAIN_ID);
