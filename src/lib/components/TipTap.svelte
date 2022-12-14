@@ -151,7 +151,7 @@
 <div class="h-full">
 	{#if editor}
 		<div
-			class="editor-menu flex items-center space-x-2 border-b border-white bg-dark-4 px-2"
+			class="editor-menu sticky top-0 z-10 flex items-center space-x-2 border-b border-white bg-dark-4 px-2"
 			bind:this={mainMenu}
 		>
 			<button class="bold" on:click={() => editor.chain().focus().toggleBold().run()}> B </button>

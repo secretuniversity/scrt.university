@@ -210,7 +210,7 @@
 </section>
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">
-	<div class="col-start-1 h-fit flex-col space-y-6">
+	<div class="sticky top-5 col-start-1 h-fit flex-col space-y-6">
 		{#if hasTitleError}
 			<p class="italic text-dark-red">Title is required</p>
 		{/if}
@@ -273,7 +273,7 @@
 
 		<div
 			on:click={() => (hasContentError = false)}
-			class="h-[800px] max-h-[800px] overflow-y-auto rounded-md border border-solid border-white text-white"
+			class="rounded-md border border-solid border-white text-white"
 		>
 			<TipTap
 				value={$articleRequest.content}
