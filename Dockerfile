@@ -11,6 +11,7 @@ ENV PUBLIC_SECRET_NETWORK_GRPC_URL=$CHAIN_GRPC
 ENV CELADON_URL=$CELADON_URL
 
 COPY package.json ./
+RUN npm install -g npm
 RUN npm install
 COPY . .
 RUN npm run build
