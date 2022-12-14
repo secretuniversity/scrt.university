@@ -279,7 +279,6 @@
 				value={$articleRequest.content}
 				on:update={(e) => {
 					$articleRequest.content = e.detail.content;
-					console.log($articleRequest.content);
 				}}
 			/>
 		</div>

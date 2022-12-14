@@ -123,21 +123,6 @@
 				dispatch('update', { content: editor.getHTML() });
 			}
 		});
-
-		// editorElement.addEventListener('paste', (e) => {
-		// 	e.preventDefault();
-		// 	if (e.clipboardData) {
-		// 		const content = e.clipboardData.getData('text/plain');
-		// 		const clean = DOMPurify.sanitize(content);
-		// 		const parsed = marked.parse(clean);
-
-		// 		editor.commands.insertContent(parsed, {
-		// 			parseOptions: {
-		// 				preserveWhitespace: false
-		// 			}
-		// 		});
-		// 	}
-		// });
 	});
 
 	function addImage() {
