@@ -273,11 +273,14 @@
 
 		<div
 			on:click={() => (hasContentError = false)}
-			class="h-[800px] max-h-[800px] overflow-hidden rounded-md border border-solid border-white text-white"
+			class="h-[800px] max-h-[800px] overflow-y-auto rounded-md border border-solid border-white text-white"
 		>
 			<TipTap
 				value={$articleRequest.content}
-				on:update={(e) => ($articleRequest.content = e.detail.content)}
+				on:update={(e) => {
+					$articleRequest.content = e.detail.content;
+					console.log($articleRequest.content);
+				}}
 			/>
 		</div>
 	</div>

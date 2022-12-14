@@ -4,14 +4,23 @@
 
 	const dispatch = createEventDispatcher<{ update: { content: string } }>();
 
-	import { Editor } from '@tiptap/core';
+	import { Editor, Extension } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Typography from '@tiptap/extension-typography';
 	import Underline from '@tiptap/extension-underline';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import Table from '@tiptap/extension-table';
+	import TableCell from '@tiptap/extension-table-cell';
+	import TableHeader from '@tiptap/extension-table-header';
+	import TableRow from '@tiptap/extension-table-row';
 	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 	import Image from '@tiptap/extension-image';
 	import Link from '@tiptap/extension-link';
+	import { Node } from 'prosemirror-model';
+	import { Plugin } from 'prosemirror-state';
+
+	import { marked } from 'marked';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	import html from 'highlight.js/lib/languages/xml';
 	import css from 'highlight.js/lib/languages/css';
@@ -20,6 +29,7 @@
 	import rust from 'highlight.js/lib/languages/rust';
 	import bash from 'highlight.js/lib/languages/bash';
 	import python from 'highlight.js/lib/languages/python';
+	import csharp from 'highlight.js/lib/languages/csharp';
 	import { lowlight } from 'lowlight';
 
 	import ClearIcon from '$lib/assets/clear-icon.svg';
@@ -41,8 +51,37 @@
 	let editorElement: HTMLElement;
 	let editor: Editor;
 
+	const PasteExtenstion = Extension.create({
+		name: 'customExtension',
+
+		addProseMirrorPlugins() {
+			return [
+				new Plugin({
+					props: {
+						handlePaste(view, event) {
+							if (event.clipboardData) {
+								const content = event.clipboardData.getData('text/plain');
+								const clean = DOMPurify.sanitize(content);
+								const parsed = marked.parse(content);
+
+								editor.commands.insertContent(parsed, {
+									parseOptions: {
+										preserveWhitespace: false
+									}
+								});
+
+								return true;
+							}
+						}
+					}
+				})
+			];
+		}
+	});
+
 	onMount(() => {
 		lowlight.registerLanguage('html', html);
+		lowlight.registerLanguage('xml', html);
 		lowlight.registerLanguage('css', css);
 		lowlight.registerLanguage('js', js);
 		lowlight.registerLanguage('ts', ts);
@@ -50,23 +89,30 @@
 		lowlight.registerLanguage('bash', bash);
 		lowlight.registerLanguage('sh', bash);
 		lowlight.registerLanguage('py', python);
+		lowlight.registerLanguage('csharp', csharp);
 
 		editor = new Editor({
 			element: editorElement,
 			extensions: [
 				Link.configure({
 					autolink: true,
-					openOnClick: true,
-					linkOnPaste: true
+					openOnClick: true
 				}),
 				StarterKit,
 				Underline,
 				Image,
 				Typography,
+				Table.configure({
+					resizable: true
+				}),
+				TableCell,
+				TableHeader,
+				TableRow,
 				BubbleMenu.configure({
 					element: bubbleMenuElement
 				}),
-				CodeBlockLowlight.configure({ lowlight })
+				CodeBlockLowlight.configure({ lowlight }),
+				PasteExtenstion
 			],
 			content: value,
 			onTransaction: () => {
@@ -77,6 +123,21 @@
 				dispatch('update', { content: editor.getHTML() });
 			}
 		});
+
+		// editorElement.addEventListener('paste', (e) => {
+		// 	e.preventDefault();
+		// 	if (e.clipboardData) {
+		// 		const content = e.clipboardData.getData('text/plain');
+		// 		const clean = DOMPurify.sanitize(content);
+		// 		const parsed = marked.parse(clean);
+
+		// 		editor.commands.insertContent(parsed, {
+		// 			parseOptions: {
+		// 				preserveWhitespace: false
+		// 			}
+		// 		});
+		// 	}
+		// });
 	});
 
 	function addImage() {
