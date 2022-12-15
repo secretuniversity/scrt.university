@@ -4,13 +4,11 @@
 	import { slugify } from '$lib/helpers';
 	import type { Article } from '$lib/models/index';
 	export let article: Article;
-
-	console.log(article);
 </script>
 
 <a
 	class=" block h-56 w-full"
-	href={'/resources/articles/' + slugify(article.title)}
+	href={'/resources/articles/' + article.id + '/' + slugify(article.title)}
 	on:click={() => selectedArticle.set(article)}
 >
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">

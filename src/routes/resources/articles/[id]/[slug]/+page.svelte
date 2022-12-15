@@ -1,25 +1,50 @@
 <script lang="ts">
 	import Tag from '$lib/components/Tag.svelte';
 	import hljs from 'highlight.js';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { getNotification } from '$lib/helpers';
 	import { notificationsStore, selectedArticle } from '$lib/stores';
-	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
 	import { getBaseAPIUrl } from '$lib/helpers';
+	import { goto } from '$app/navigation';
 
 	let author = '';
 
-	onMount(() => {
-		if (!$selectedArticle) {
+	onMount(async () => {
+		try {
+			if (!$selectedArticle) {
+				const url = getBaseAPIUrl() + '/v1/articles/' + $page.params.id;
+				const res = await fetch(url);
+				const json = await res.json();
+
+				if (Object.keys(json).length === 0) {
+					$notificationsStore = [
+						...$notificationsStore,
+						getNotification('Unable to find article', 'error')
+					];
+
+					goto('/resources');
+
+					return;
+				} else {
+					$selectedArticle = json;
+				}
+			}
+		} catch (err) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('There was a problem finding that article.', 'error')
+			];
+
 			goto('/resources');
-			return;
 		}
 
 		fetchContributor();
 
+		await tick();
 		hljs.highlightAll();
 	});
 
