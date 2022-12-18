@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Head from '$lib/components/Head.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import hljs from 'highlight.js';
 	import { onMount, tick } from 'svelte';
@@ -12,6 +13,7 @@
 	import { goto } from '$app/navigation';
 
 	let author = '';
+	let pageTitle = '';
 
 	onMount(async () => {
 		try {
@@ -31,7 +33,10 @@
 					return;
 				} else {
 					$selectedArticle = json;
+					pageTitle = json.title;
 				}
+			} else {
+				pageTitle = $selectedArticle.title;
 			}
 		} catch (err) {
 			$notificationsStore = [
@@ -65,6 +70,8 @@
 		}
 	}
 </script>
+
+<Head {pageTitle} />
 
 <section class="min-h-screen py-16 text-white">
 	{#if $selectedArticle}
