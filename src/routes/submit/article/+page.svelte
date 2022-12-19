@@ -273,7 +273,7 @@
 
 		<div
 			on:click={() => (hasContentError = false)}
-			class="rounded-md border border-solid border-white text-white"
+			class="min-h-[800px] rounded-md border border-solid border-white text-white"
 		>
 			<TipTap
 				value={$articleRequest.content}
