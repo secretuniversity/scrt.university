@@ -356,7 +356,7 @@
 	bind:clientHeight={formHeight}
 	class="mx-auto grid min-h-screen w-11/12 grid-cols-3 gap-x-6 gap-y-4 pt-8 pb-32"
 >
-	<div class="h-fit flex-col space-y-4">
+	<div class="sticky top-5 h-fit flex-col space-y-4">
 		{#if menu === 'pathway'}
 			<h2 class="mb-8 w-full rounded-t-md bg-dark-4 px-6 py-4 text-lg font-semibold text-white">
 				Create Your Pathway
@@ -640,7 +640,7 @@
 		id="editor-wrapper"
 		bind:clientHeight={editorHeight}
 		bind:this={editor}
-		class="sticky top-0 col-span-full col-start-2 {menu === 'quiz' ? 'h-full' : 'h-[800px]'}"
+		class="sticky top-0 col-span-full col-start-2 h-full"
 	>
 		{#if menu === 'pathway'}
 			<div class="grid h-full w-full items-center justify-items-center rounded-md bg-dark-5">
@@ -648,7 +648,7 @@
 			</div>
 		{/if}
 		{#if menu === 'lesson'}
-			<div class="h-full overflow-hidden rounded-md border border-solid border-white text-white">
+			<div class="min-h-[800px] rounded-md border border-solid border-white text-white">
 				<TipTap value={getLessonContent()} on:update={handleLessonContentChange} />
 			</div>
 		{/if}
@@ -663,7 +663,7 @@
 			{#each $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options as _, i}
 				<h3 class="mb-2 font-semibold text-white">Answer {getIndexAsLetter(i)}</h3>
 				<div
-					class="mb-4 h-[250px] overflow-hidden rounded-md border border-solid border-white text-white"
+					class="mb-4 h-[250px] overflow-y-auto rounded-md border border-solid border-white text-white"
 				>
 					<TipTap
 						value={getQuizOptionContent(i)}
