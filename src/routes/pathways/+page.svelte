@@ -106,7 +106,7 @@
 								<button
 									on:click={() => {
 										selectedPathway.set(p);
-										goto(`/pathways/${slugify(p.title)}`);
+										goto(`/pathways/${slugify(p.id)}/${slugify(p.title)}`);
 									}}
 									class="justify-self-end rounded-md bg-dark-blue px-6 py-2 text-white hover:bg-darker-blue"
 									>Start</button
@@ -138,7 +138,7 @@
 						</div>
 						<p class="mt-2 max-w-xl">
 							In this pathway you'll learn all about developing private smart contracts and some the
-							key benifits of developing them on Secret. Learn to build a dice rolling smart
+							key benefits of developing them on Secret. Learn to build a dice rolling smart
 							contract using CosmWasm 1.0 and Secret Network.
 						</p>
 
@@ -161,7 +161,7 @@
 							<p class="justify-self-end capitalize">Intermediate</p>
 						</div>
 						<p class="mt-2 max-w-xl">
-							In this pathway you'll learn how to develop effecient, lightweight web interfaces for
+							In this pathway you'll learn how to develop efficient, lightweight web interfaces for
 							secret smart contracts. Using TypeScript we'll make a working front end for our dice
 							rolling smart contract and learn the ins and outs of interfacing with Secret Network.
 						</p>

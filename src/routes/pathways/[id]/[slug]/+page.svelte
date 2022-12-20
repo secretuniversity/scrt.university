@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import Review from '$lib/components/Review.svelte';
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
 	import { afterUpdate, onMount, tick } from 'svelte';
 	import { notificationsStore, selectedPathway } from '$lib/stores';
 	import { goto } from '$app/navigation';
-	import { getNotification } from '$lib/helpers';
+	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
+	import { page } from '$app/stores';
 	import hljs from 'highlight.js';
 	import type { Lesson, Quiz } from '$lib/models/index';
 	import 'highlight.js/styles/tokyo-night-dark.css';
@@ -35,33 +35,52 @@
 		hljs.highlightAll();
 	});
 
-	onMount(() => {
+	onMount(async () => {
 		if (!$selectedPathway) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Problem loading that pathway. Report it if you see this message.', 'error')
-			];
-			goto('/pathways');
-			return;
-		}
+			const api = getBaseAPIUrl() + '/v1/pathways/' + $page.params.id;
+			const res = await fetch(api);
+			const json = await res.json();
 
-		$selectedPathway.lessons.forEach((lesson) => {
-			if (!lesson.quizzes) {
-				lesson.quizzes = [];
+			console.log(json);
+
+			if (Object.keys(json).length === 0) {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification('Unable to find article', 'error')
+				];
+
+				goto('/pathways');
+
+				return;
+			} else {
+				$selectedPathway = json;
+				pageTitle = json.title;
 			}
-		});
-
-		pageTitle = $selectedPathway.title + ' | Pathways';
-		currentLesson = $selectedPathway.lessons[0];
-		progressCount = 1;
-
-		totalObjectives = $selectedPathway.lessons.length;
-		for (const lesson of $selectedPathway.lessons) {
-			totalObjectives += lesson.quizzes.length;
 		}
 
-		hljs.highlightAll();
-		hasMounted = true;
+		if ($selectedPathway) {
+			if ($selectedPathway.lessons) {
+				$selectedPathway.lessons.forEach((lesson) => {
+					if (!lesson.quizzes) {
+						lesson.quizzes = [];
+					}
+				});
+
+				currentLesson = $selectedPathway.lessons[0];
+
+				totalObjectives = $selectedPathway.lessons.length;
+
+				for (const lesson of $selectedPathway.lessons) {
+					totalObjectives += lesson.quizzes.length;
+				}
+			}
+
+			pageTitle = $selectedPathway.title + ' | Pathways';
+			progressCount = 1;
+
+			hljs.highlightAll();
+			hasMounted = true;
+		}
 	});
 
 	function goBack() {
