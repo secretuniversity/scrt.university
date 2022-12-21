@@ -133,28 +133,6 @@
 						class="mb-4 rounded-md border-2 border-dark-4 bg-dark-3 p-6 px-8 text-white shadow-lg"
 					>
 						<div class="grid grid-cols-2 items-center">
-							<h2 class="pt-4 text-2xl font-semibold">Rolling Dice and Writing Smart Contracts</h2>
-							<p class="justify-self-end capitalize">Intermediate</p>
-						</div>
-						<p class="mt-2 max-w-xl">
-							In this pathway you'll learn all about developing private smart contracts and some the
-							key benefits of developing them on Secret. Learn to build a dice rolling smart
-							contract using CosmWasm 1.0 and Secret Network.
-						</p>
-
-						<div class="grid w-full grid-cols-2 pb-4">
-							<p class="mt-2 cursor-pointer text-light-blue">Coming Soon</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="flex w-full {(placeholderIndex + 1) % 2 === 0 ? 'justify-start' : 'justify-end'}">
-				<div class="w-[65%]">
-					<div
-						class="mb-4 rounded-md border-2 border-dark-4 bg-dark-3 p-6 px-8 text-white shadow-lg"
-					>
-						<div class="grid grid-cols-2 items-center">
 							<h2 class="pt-4 text-2xl font-semibold">
 								Leveling Up Your Front End with Secret University
 							</h2>
