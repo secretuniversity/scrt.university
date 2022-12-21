@@ -1,13 +1,12 @@
 <script lang="ts">
 	export let pageTitle = '';
+	export let pageDescription =
+		'Secret University is providing devs with the knowledge to build a private, decentralized web. Learn how you can join the university and help us to support our developers.';
 </script>
 
 <svelte:head>
 	<title>{pageTitle} | Secret University</title>
-	<meta
-		name="description"
-		content="Secret University is providing devs with the knowledge to build a private, decentralized web. Learn how you can join the university and help us to support our developers."
-	/>
+	<meta name="description" content={pageDescription} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link

@@ -25,6 +25,7 @@
 	let hasMounted = false;
 
 	$: pageTitle = '' + ' | Pathways';
+	let pageDescription = '';
 
 	$: selected = (l: number, q: number, v: string) => {
 		return l === lessonIndex && q === quizIndex && v === view;
@@ -41,8 +42,6 @@
 			const res = await fetch(api);
 			const json = await res.json();
 
-			console.log(json);
-
 			if (Object.keys(json).length === 0) {
 				$notificationsStore = [
 					...$notificationsStore,
@@ -55,6 +54,7 @@
 			} else {
 				$selectedPathway = json;
 				pageTitle = json.title;
+				pageDescription = json.description;
 			}
 		}
 
@@ -76,6 +76,7 @@
 			}
 
 			pageTitle = $selectedPathway.title + ' | Pathways';
+			pageDescription = $selectedPathway.description;
 			progressCount = 1;
 
 			hljs.highlightAll();
@@ -225,7 +226,7 @@
 	}
 </script>
 
-<Head {pageTitle} />
+<Head {pageTitle} {pageDescription} />
 
 <section class="mx-4 grid min-h-screen pb-36">
 	<div class="mt-8 grid grid-cols-12 gap-x-4">
