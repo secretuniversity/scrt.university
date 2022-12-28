@@ -27,11 +27,4 @@ const config = defineConfig(({ command, mode }) => ({
 	}
 }));
 
-console.log({
-	APP_ENV: process.env.APP_ENV,
-	CELADON_URL: process.env.CELADON_URL,
-	PUBLIC_SECRET_NETWORK_GRPC_URL: process.env.PUBLIC_SECRET_NETWORK_GRPC_URL,
-	PUBLIC_SECRET_NETWORK_CHAIN_ID: process.env.PUBLIC_SECRET_NETWORK_CHAIN_ID
-});
-
 export default config;

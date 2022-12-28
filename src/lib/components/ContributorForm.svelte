@@ -108,7 +108,6 @@
 				];
 			}
 		} catch (err) {
-			console.log(err);
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('There was a problem submitting your form.', 'error')

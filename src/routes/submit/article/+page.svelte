@@ -104,7 +104,6 @@
 
 				goto('/dashboard');
 			} else {
-				console.log(res);
 				$notificationsStore = [
 					...$notificationsStore,
 					getNotification('Something wrong happened. Please try again in a bit.', 'error')

@@ -27,7 +27,6 @@
 			}
 
 			if (process.env.APP_ENV === 'development') {
-				console.log('Simulating staking');
 				await $secretStore.val.tx.staking.delegate.simulate({
 					delegator_address: $secretStore.val.address,
 					validator_address: validatorAddress,
@@ -54,7 +53,6 @@
 				getNotification('Succesfully staked with Secret University! Tyvm!', 'success')
 			];
 		} catch (err) {
-			console.log(err);
 			$notificationsStore = [
 				...$notificationsStore,
 				getNotification('Error staking with Secret University.', 'error')

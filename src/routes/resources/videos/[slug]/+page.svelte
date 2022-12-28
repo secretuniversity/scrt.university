@@ -20,13 +20,10 @@
 			const json = await res.json();
 
 			author = json;
-			console.log(process.env.APP_ENV);
 
 			const videoUrl = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/videos/${$selectedVideo.id}/${$selectedVideo.title}.mp4`;
 			const clean = videoUrl.replace(/ /g, '%20');
 			src = clean;
-
-			console.log(src);
 		} catch (err) {
 			$notificationsStore = [
 				...$notificationsStore,

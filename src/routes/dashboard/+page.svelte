@@ -55,9 +55,7 @@
 			}
 
 			if ($userStore.val.name) {
-				console.log(namePlaceholder);
 				namePlaceholder = $userStore.val.name.String;
-				console.log(namePlaceholder);
 			}
 
 			await fetchRole();

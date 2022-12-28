@@ -96,7 +96,6 @@
 			const e = err as ValidationError;
 
 			for (const error of e.inner) {
-				console.log(error.path);
 				switch (error.path) {
 					case 'title':
 						hasTitleError = true;
