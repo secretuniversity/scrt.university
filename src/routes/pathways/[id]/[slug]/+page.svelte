@@ -12,24 +12,46 @@
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
 
-	type View = 'lesson' | 'quiz';
-	let view: View = 'lesson';
+	type Module = Lesson | Quiz;
 
-	let currentLesson: Lesson | null = null;
-	let currentQuiz: Quiz | null = null;
+	let modules = [] as Module[];
+	let moduleIndex = 0;
+	$: currentModule = modules[moduleIndex];
 
-	let lessonIndex = 0;
-	let quizIndex = 0;
-	let progressCount = 0;
-	let totalObjectives = 0;
-	let hasMounted = false;
+	async function handleFetch() {
+		const api = getBaseAPIUrl() + '/v1/pathways/' + $page.params.id;
+		const res = await fetch(api);
+		const json = await res.json();
 
-	$: pageTitle = '' + ' | Pathways';
-	let pageDescription = '';
+		if (Object.keys(json).length === 0) {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('Unable to find article', 'error')
+			];
 
-	$: selected = (l: number, q: number, v: string) => {
-		return l === lessonIndex && q === quizIndex && v === view;
-	};
+			goto('/pathways');
+
+			return;
+		} else {
+			$selectedPathway = json;
+		}
+	}
+
+	function makeModules() {
+		if (!$selectedPathway) return;
+
+		$selectedPathway.lessons.forEach((lesson: Lesson) => {
+			lesson.kind = 'lesson';
+			modules = [...modules, lesson];
+
+			if (lesson.quizzes) {
+				lesson.quizzes.forEach((quiz: Module) => {
+					quiz.kind = 'quiz';
+					modules = [...modules, quiz];
+				});
+			}
+		});
+	}
 
 	afterUpdate(async () => {
 		await tick();
@@ -38,195 +60,92 @@
 
 	onMount(async () => {
 		if (!$selectedPathway) {
-			const api = getBaseAPIUrl() + '/v1/pathways/' + $page.params.id;
-			const res = await fetch(api);
-			const json = await res.json();
+			await handleFetch();
 
-			if (Object.keys(json).length === 0) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Unable to find article', 'error')
-				];
-
-				goto('/pathways');
-
-				return;
-			} else {
-				$selectedPathway = json;
-				pageTitle = json.title;
-				pageDescription = json.description;
-			}
+			if (!$selectedPathway) return;
 		}
 
-		if ($selectedPathway) {
-			if ($selectedPathway.lessons) {
-				$selectedPathway.lessons.forEach((lesson) => {
-					if (!lesson.quizzes) {
-						lesson.quizzes = [];
-					}
-				});
-
-				currentLesson = $selectedPathway.lessons[0];
-
-				totalObjectives = $selectedPathway.lessons.length;
-
-				for (const lesson of $selectedPathway.lessons) {
-					totalObjectives += lesson.quizzes.length;
+		if ($selectedPathway.lessons) {
+			$selectedPathway.lessons.forEach((lesson) => {
+				if (!lesson.quizzes) {
+					lesson.quizzes = [];
 				}
-			}
-
-			pageTitle = $selectedPathway.title + ' | Pathways';
-			pageDescription = $selectedPathway.description;
-			progressCount = 1;
-
-			hljs.highlightAll();
-			hasMounted = true;
+			});
 		}
+
+		makeModules();
+
+		await tick();
+		hljs.highlightAll();
 	});
 
 	function goBack() {
 		if (!$selectedPathway) return;
 
-		if (currentLesson === $selectedPathway.lessons[0] && view === 'lesson') {
-			return;
+		if (moduleIndex > 0) {
+			moduleIndex--;
+		} else {
+			$notificationsStore = [
+				...$notificationsStore,
+				getNotification('You are at the beginning of the pathway', 'info')
+			];
 		}
-
-		let hasChangedViews = false;
-
-		if (view === 'lesson') {
-			if (lessonIndex !== 0 && quizIndex === 0) {
-				lessonIndex = lessonIndex - 1;
-				currentLesson = $selectedPathway.lessons[lessonIndex];
-
-				quizIndex = currentLesson.quizzes.length - 1;
-				view = 'quiz';
-				hasChangedViews = true;
-			}
-		}
-
-		if (view === 'quiz' && !hasChangedViews) {
-			if (quizIndex !== 0 && currentLesson) {
-				quizIndex = quizIndex - 1;
-				currentQuiz = currentLesson.quizzes[quizIndex];
-			} else if (quizIndex === 0) {
-				if (lessonIndex !== 0) {
-					lessonIndex = lessonIndex - 1;
-				}
-
-				currentLesson = $selectedPathway.lessons[lessonIndex];
-
-				view = 'lesson';
-			}
-		}
-
-		progressCount = progressCount - 1;
 
 		scrollTo(0, 0);
-		hasChangedViews = false;
 	}
 
 	async function goForward() {
 		if (!$selectedPathway) return;
 
-		const hasMoreLessons = $selectedPathway.lessons.length > lessonIndex + 1;
-		const hasMoreQuizzes =
-			$selectedPathway.lessons[lessonIndex].quizzes &&
-			$selectedPathway.lessons[lessonIndex].quizzes.length > quizIndex + 1;
-
-		if (
-			(!hasMoreLessons && !hasMoreQuizzes) ||
-			($selectedPathway.lessons.length === 1 && !hasMoreQuizzes)
-		) {
+		if (moduleIndex < modules.length - 1) {
+			moduleIndex++;
+		} else {
 			$notificationsStore = [
 				...$notificationsStore,
-				getNotification('You have completed this pathway! Congratulations!', 'success')
+				getNotification('You have completed the pathway!', 'success')
 			];
-			return;
 		}
-
-		const quizzes = $selectedPathway.lessons[lessonIndex].quizzes;
-		let hasChangedViews = false;
-
-		if (view === 'lesson') {
-			if (hasMoreQuizzes) {
-				quizIndex = 0;
-				currentQuiz = quizzes[quizIndex];
-
-				view = 'quiz';
-				hasChangedViews = true;
-			} else if (!hasMoreQuizzes && hasMoreLessons) {
-				if (lessonIndex < $selectedPathway.lessons.length - 1) {
-					lessonIndex = lessonIndex + 1;
-					currentLesson = $selectedPathway.lessons[lessonIndex];
-				}
-
-				quizIndex = 0;
-				view = 'lesson';
-				hasChangedViews = true;
-			}
-		}
-
-		if (view === 'quiz' && !hasChangedViews) {
-			if (hasMoreQuizzes) {
-				if (quizIndex < quizzes.length - 1) {
-					quizIndex = quizIndex + 1;
-				}
-
-				currentQuiz = quizzes[quizIndex];
-			} else if (!hasMoreQuizzes && hasMoreLessons) {
-				quizIndex = 0;
-
-				if (lessonIndex < $selectedPathway.lessons.length - 1) {
-					lessonIndex = lessonIndex + 1;
-					currentLesson = $selectedPathway.lessons[lessonIndex];
-				}
-
-				view = 'lesson';
-				hasChangedViews = true;
-			}
-		}
-
-		progressCount = progressCount + 1;
-
-		scrollTo(0, 0);
-
-		await tick();
-	}
-
-	function setCurrentLesson(l: number, q: number, lesson: Lesson) {
-		lessonIndex = l;
-		quizIndex = q;
-		currentLesson = lesson;
-		view = 'lesson';
-
-		scrollTo(0, 0);
-	}
-
-	function setCurrentQuiz(l: number, q: number, quiz: Quiz) {
-		lessonIndex = l;
-		quizIndex = q;
-		currentQuiz = quiz;
-		view = 'quiz';
 
 		scrollTo(0, 0);
 	}
 
 	function checkAnswer(i: number) {
-		if (!currentQuiz) return;
-
-		if (i === currentQuiz.answer) {
-			$notificationsStore = [...$notificationsStore, getNotification("That's correct!", 'success')];
-			goForward();
-		} else {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification("Sorry! That's not quite right! Please try again.", 'error')
-			];
+		if (currentModule.kind === 'quiz') {
+			if (i === currentModule.answer) {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification("That's correct!", 'success')
+				];
+				goForward();
+			} else {
+				$notificationsStore = [
+					...$notificationsStore,
+					getNotification("Sorry! That's not quite right! Please try again.", 'error')
+				];
+			}
 		}
 	}
-</script>
 
-<Head {pageTitle} {pageDescription} />
+	function getQuizNumber(n: number) {
+		const quizIndexes = modules.map((m, i) => {
+			if (m.kind === 'quiz') return i;
+			return null;
+		});
+
+		const clean = quizIndexes.filter((i) => i !== null);
+		return clean.indexOf(n) + 1;
+	}
+
+	function getLessonNumber(n: number) {
+		const lessonIndexes = modules.map((m, i) => {
+			if (m.kind === 'lesson') return i;
+			return null;
+		});
+
+		const clean = lessonIndexes.filter((i) => i !== null);
+		return clean.indexOf(n) + 1;
+	}
+</script>
 
 <section class="mx-4 grid min-h-screen pb-36">
 	<div class="mt-8 grid grid-cols-12 gap-x-4">
@@ -240,43 +159,54 @@
 				</p> -->
 			</div>
 
-			{#if $selectedPathway && hasMounted}
-				{#each $selectedPathway.lessons as l, j}
+			{#each modules as m, i}
+				{#if m.kind === 'lesson'}
 					<div
-						class="min-h-22 mt-1 grid grid-cols-5 grid-rows-2 p-4 {selected(j, 0, 'lesson')
+						on:keypress={(e) => {
+							if (e.key === 'Enter') {
+								moduleIndex = i;
+								scrollTo(0, 0);
+							}
+						}}
+						on:click={() => {
+							moduleIndex = i;
+							scrollTo(0, 0);
+						}}
+						class="min-h-22 mt-1 grid grid-cols-5 grid-rows-2 p-4 {i === moduleIndex
 							? 'border-l-8 border-dark-blue bg-dark-5'
 							: 'bg-dark-4'} cursor-pointer hover:bg-dark-5"
-						on:click={(e) => setCurrentLesson(j, 0, l)}
 					>
 						<p
 							class="col-span-full col-start-1 row-span-1 self-center text-sm italic text-off-white"
 						>
-							Lesson {j + 1}
+							Lesson {getLessonNumber(i)}
 						</p>
 						<p class="col-span-full col-start-1 self-center font-semibold text-white">
-							{l.name}
+							{m.name}
 						</p>
 					</div>
-
-					{#each l.quizzes as q, i}
-						<div
-							class="min-h-22 mt-1 grid grid-cols-5 grid-rows-2 {selected(j, i, 'quiz')
-								? 'border-l-8 border-dark-blue bg-dark-5'
-								: 'bg-dark-4'} cursor-pointer p-4 hover:bg-dark-5"
-							on:click={() => setCurrentQuiz(j, i, q)}
-						>
-							<p
-								class="col-span-full col-start-1 row-span-1 self-center text-sm italic text-off-white"
-							>
-								Lesson {j + 1} Quiz {i + 1}
-							</p>
-							<p class="col-span-full col-start-1 self-center font-semibold text-white">
-								Quiz {i + 1}
-							</p>
-						</div>
-					{/each}
-				{/each}
-			{/if}
+				{:else if m.kind === 'quiz'}
+					<div
+						on:keypress={(e) => {
+							if (e.key === 'Enter') {
+								moduleIndex = i;
+								scrollTo(0, 0);
+							}
+						}}
+						on:click={() => {
+							moduleIndex = i;
+							scrollTo(0, 0);
+						}}
+						class="min-h-22 mt-1 grid grid-cols-5 {i === moduleIndex
+							? 'border-l-8 border-dark-blue bg-dark-5'
+							: 'bg-dark-4'} cursor-pointer p-4 hover:bg-dark-5"
+					>
+						<p class="col-span-full col-start-1 self-center font-semibold text-white">
+							Quiz {getQuizNumber(i)}
+						</p>
+					</div>
+				{/if}
+			{/each}
 
 			<!-- Pathway Map Footer -->
 			<div
@@ -288,32 +218,41 @@
 			<div class="max-h-content grid grid-cols-10 rounded-lg pb-24">
 				<div
 					class="sticky top-0 flex h-home-hero cursor-pointer items-center justify-self-center p-4"
+					on:keypress={(e) => {
+						if (e.key === 'Enter') {
+							goBack();
+						}
+					}}
 					on:click={() => goBack()}
 				>
 					<img class="h-8 w-auto" src={LeftArrowIcon} alt="Left reading arrow" />
 				</div>
 				<div class="col-span-8 col-start-2">
-					{#if $selectedPathway}
-						{#if view === 'lesson' && currentLesson}
-							<!-- content here -->
+					{#if modules.length !== 0}
+						{#if currentModule.kind === 'lesson'}
 							<h1 class="my-12 text-4xl font-bold text-white">
-								{currentLesson.name}
+								{currentModule.name}
 							</h1>
 
 							<div class="markdown text-white">
-								{@html currentLesson.content}
+								{@html currentModule.content}
 							</div>
 						{/if}
 
-						{#if view === 'quiz' && currentQuiz}
-							<h1 class="my-8 p-4 text-3xl font-bold text-white">Quiz #{quizIndex + 1}</h1>
+						{#if currentModule.kind === 'quiz'}
+							<h1 class="my-8 p-4 text-3xl font-bold text-white">Quiz</h1>
 							<p class="mx-auto mb-32 max-w-xl p-4 text-center text-xl text-white">
-								{currentQuiz.question}
+								{currentModule.question}
 							</p>
 
 							<div class="justify-content-center grid grid-cols-2 gap-4">
-								{#each currentQuiz.options as o, k}
+								{#each currentModule.options as o, k}
 									<div
+										on:keypress={(e) => {
+											if (e.key === 'Enter') {
+												checkAnswer(k);
+											}
+										}}
 										on:click={() => checkAnswer(k)}
 										class="markdown cursor-pointer rounded-md bg-dark-4 py-8 px-12 text-center text-white shadow-lg hover:bg-dark-5"
 									>
@@ -327,6 +266,11 @@
 				</div>
 
 				<div
+					on:keypress={(e) => {
+						if (e.key === 'Enter') {
+							goForward();
+						}
+					}}
 					class="sticky top-0 flex h-home-hero cursor-pointer items-center justify-self-center p-4"
 					on:click={() => goForward()}
 				>

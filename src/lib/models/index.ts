@@ -113,6 +113,7 @@ export interface Lesson {
 	content: string;
 	quizzes: Quiz[];
 	pathway_id: number;
+	kind: 'lesson';
 }
 
 export interface Quiz {
@@ -122,6 +123,7 @@ export interface Quiz {
 	hint: string;
 	options: QuizOption[];
 	lesson_id: number;
+	kind: 'quiz';
 }
 
 export interface QuizOption {
