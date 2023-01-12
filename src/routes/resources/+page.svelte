@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Filter from '$lib/components/Filter.svelte';
-	import Search from '$lib/components/Search.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import Filter from '$lib/components/forms/Filter.svelte';
+	import Search from '$lib/components/forms/Search.svelte';
 	import Image from '$lib/assets/illustrations/code.svg';
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';

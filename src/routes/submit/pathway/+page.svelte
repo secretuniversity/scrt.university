@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/professor.svg';
 	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import TipTap from '$lib/components/TipTap.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Modal from '$lib/components/page/Modal.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';

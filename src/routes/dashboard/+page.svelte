@@ -4,7 +4,7 @@
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import ContributorForm from '$lib/components/ContributorForm.svelte';
+	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { onMount } from 'svelte';

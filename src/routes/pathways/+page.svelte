@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import type { Pathway } from '$lib/models/index';
 	import { notificationsStore, selectedPathway } from '$lib/stores';

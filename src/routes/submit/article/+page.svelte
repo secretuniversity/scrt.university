@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import TagInput from '$lib/components/TagInput.svelte';
-	import TipTap from '$lib/components/TipTap.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Modal from '$lib/components/page/Modal.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import TagInput from '$lib/components/forms/TagInput.svelte';
+	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
 	import { articleRequest, notificationsStore, userStore } from '$lib/stores';
 	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';

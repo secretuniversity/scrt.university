@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import SectionHeader from '$lib/components/SectionHeader.svelte';
-	import SupportTicket from '$lib/components/SupportTicket.svelte';
+	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
+	import SupportTicket from '$lib/components/forms/SupportTicket.svelte';
 	import DiscordLogo from '$lib/assets/discord_logo.svg';
 	import GithubLogo from '$lib/assets/github_logo_white.svg';
 	import SecretLogo from '$lib/assets/secret_white.svg';
-	import Staking from '$lib/components/Staking.svelte';
+	import Staking from '$lib/components/forms/Staking.svelte';
 	import Image from '$lib/assets/illustrations/support.svg';
 
 	const pageTitle = 'Support';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher<{ update: { tags: string[] } }>();

@@ -41,7 +41,6 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					href={bounty.forum_url}
-					disabled={bounty.forum_url ? true : false}
 					class="mr-2 inline-block"
 				>
 					<span
@@ -54,7 +53,6 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					href={bounty.proposal_url}
-					disabled={bounty.proposal_url ? true : false}
 					class="inline-block"
 				>
 					<span

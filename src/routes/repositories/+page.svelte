@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import Filter from '$lib/components/Filter.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Filter from '$lib/components/forms/Filter.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import Image from '$lib/assets/illustrations/dev.svg';
 	import RepoCard from '$lib/components/cards/Repo.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import Search from '$lib/components/Search.svelte';
+	import Search from '$lib/components/forms/Search.svelte';
 	import Fuse from 'fuse.js';
 	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
 	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';

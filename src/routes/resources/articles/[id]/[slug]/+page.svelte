@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import hljs from 'highlight.js';
 	import { onMount, tick } from 'svelte';
 	import { getNotification } from '$lib/helpers';

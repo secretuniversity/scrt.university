@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import { slugify } from '$lib/helpers';
 	import type { SecretBox } from '$lib/models';
 	import { selectedSecretBox } from '$lib/stores';

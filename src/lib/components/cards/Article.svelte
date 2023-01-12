@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedArticle } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
 	import type { Article } from '$lib/models/index';

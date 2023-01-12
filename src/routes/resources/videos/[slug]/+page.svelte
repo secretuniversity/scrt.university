@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import { goto } from '$app/navigation';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { notificationsStore, selectedVideo } from '$lib/stores';

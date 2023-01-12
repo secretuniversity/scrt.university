@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import ContributorForm from '$lib/components/ContributorForm.svelte';
+	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
 	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';

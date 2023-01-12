@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Filter from '$lib/components/Filter.svelte';
+	import Filter from '$lib/components/forms/Filter.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import { bountiesStore, notificationsStore } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 

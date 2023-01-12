@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageHeader from '$lib/components/PageHeader.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import DevImage from '$lib/assets/illustrations/dev.svg';
 	import WriterImage from '$lib/assets/illustrations/writing.svg';

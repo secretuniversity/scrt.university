@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import Head from '$lib/components/Head.svelte';
 	import Hero from '$lib/components/hero/Hero.svelte';
-	import Nav from '$lib/components/Nav.svelte';
+	import Nav from '$lib/components/page/Nav.svelte';
 	import RoadImage from '$lib/assets/illustrations/road.svg';
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';

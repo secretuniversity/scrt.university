@@ -1,7 +1,7 @@
 <script>
 	import Head from '$lib/components/Head.svelte';
 	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedSecretBox } from '$lib/stores';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';

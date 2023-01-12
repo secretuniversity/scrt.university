@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NotificationEle from '$lib/components/Notification.svelte';
+	import NotificationEle from './Notification.svelte';
 	import { notificationsStore } from '$lib/stores';
 	import { onDestroy } from 'svelte';
 

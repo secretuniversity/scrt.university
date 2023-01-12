@@ -8,7 +8,7 @@
 		url: string | null;
 	}
 
-	import FeatureComponent from '$lib/components/Feature.svelte';
+	import FeatureComponent from '$lib/components/page/Feature.svelte';
 
 	export let features: Feature[] = [];
 	export let srText = '';

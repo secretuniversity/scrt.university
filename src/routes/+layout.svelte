@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Banner from '$lib/components/Banner.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import Nav from '$lib/components/Nav.svelte';
-	import Notification from '$lib/components/Notifications.svelte';
+	import Banner from '$lib/components/page/Banner.svelte';
+	import Footer from '$lib/components/page/Footer.svelte';
+	import Nav from '$lib/components/page/Nav.svelte';
+	import Notification from '$lib/components/notify/Notifications.svelte';
 	import MobileImage from '$lib/assets/illustrations/mobile.svg';
 	import '../app.css';
 

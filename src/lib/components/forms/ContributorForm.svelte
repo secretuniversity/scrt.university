@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Modal from '$lib/components/Modal.svelte';
+	import Modal from '$lib/components/page/Modal.svelte';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { contributorModal, notificationsStore, userStore } from '$lib/stores';
 	import { number, object, string } from 'yup';
@@ -182,7 +182,6 @@
 				id="reason"
 				name="reason"
 				class="h-40 w-full resize-none rounded-md border border-white bg-dark-4 outline-none placeholder:text-gray"
-				type="text"
 				placeholder="In a couple of sentences, please describe why or what you'd like to contribute to Secret University (Remember Secret University is actively looking for technical articles/guides, developer screencasts, courses, and templates projects that utilize Secret)"
 			/>
 		</div>

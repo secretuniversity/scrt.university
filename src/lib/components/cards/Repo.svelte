@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tag from '$lib/components/Tag.svelte';
+	import Tag from '$lib/components/page/Tag.svelte';
 	import GithubLogo from '$lib/assets/github_logo_gray.svg';
 	import type { Repo } from '$lib/models/index';
 

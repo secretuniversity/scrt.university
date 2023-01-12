@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/content_creator.svg';
 	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
-	import PageHeader from '$lib/components/PageHeader.svelte';
-	import TagInput from '$lib/components/TagInput.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import TagInput from '$lib/components/forms/TagInput.svelte';
 	import { userStore, notificationsStore } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
