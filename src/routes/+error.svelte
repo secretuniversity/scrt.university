@@ -1,12 +1,22 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import { page } from '$app/stores';
 	import Image from '$lib/assets/illustrations/404.svg';
-
-	const pageTitle = '404';
 </script>
 
-<Head {pageTitle} />
+<!-- TODO: This will render a second head tag, which is not good. We should probably move the head tag to the layout component. -->
+<svelte:head>
+	<title>Page Not Found</title>
+	<meta
+		name="description"
+		content="Secret University couldn't find this page, but we'd love for you to check out our learning materials."
+	/>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
 
 <section class="h-home-hero">
 	<div class="grid h-full w-full justify-items-center">
