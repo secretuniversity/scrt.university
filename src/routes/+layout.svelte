@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
+	import Head from '$lib/components/Head.svelte';
 	import Banner from '$lib/components/page/Banner.svelte';
 	import Footer from '$lib/components/page/Footer.svelte';
 	import Nav from '$lib/components/page/Nav.svelte';
@@ -12,9 +15,18 @@
 	$: isMobile = width < minScreenWidth;
 </script>
 
-<svelte:window bind:innerWidth={width} />
+<svelte:head>
+	<title>{$page.data.title} | Secret University</title>
+	<meta name="description" content={$page.data.description} />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
 
-<header />
+<svelte:window bind:innerWidth={width} />
 
 {#if isMobile}
 	<section class="h-screen bg-dark-4 text-white">
