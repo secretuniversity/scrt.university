@@ -5,6 +5,8 @@ declare type QuizOptionRequestSchema = import('./schemas/pathways').QuizOptionRe
 declare type ArticleRequestSchema = import('./schemas/articles').ArticleRequestSchema;
 
 declare namespace Contributions {
+	declare type Contribution = Article.Self | Video.Self | Repo.Self | SecretBox.Self | Pathway.Self;
+
 	interface Tag {
 		id: string;
 		name: string;
@@ -75,6 +77,7 @@ declare namespace Contributions {
 		interface Self {
 			id: string;
 			title: string;
+			contributor: string;
 			description: string;
 			content: string;
 			tags: string[];
@@ -117,7 +120,7 @@ declare namespace Contributions {
 			banner_img: string;
 			created_at: string;
 			updated_at: string;
-			tags: Array<string>;
+			tags: string[];
 		}
 	}
 
@@ -130,7 +133,20 @@ declare namespace Contributions {
 			github_repo: string;
 			created_at: string;
 			updated_at: string;
-			tags: Array<string>;
+			tags: string[];
+		}
+	}
+
+	declare namespace Video {
+		interface Self {
+			id: number;
+			contributor: string;
+			title: string;
+			description: string;
+			youtube_url: string;
+			created_at: string;
+			updated_at: string;
+			tags: string[];
 		}
 	}
 
