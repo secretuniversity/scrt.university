@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { secretStore } from '$lib/stores';
+import { secretClient } from '$lib/stores';
 import { SecretNetworkClient } from 'secretjs';
 
 export async function connect() {
@@ -33,7 +33,7 @@ export async function connect() {
 		const exp = new Date();
 		exp.setDate(exp.getDate() + 1);
 
-		secretStore.set({ val: secretjs, exp: exp.getTime() });
+		secretClient.set({ val: secretjs, exp: exp.getTime() });
 		sessionStorage.setItem('keplr-connected', 'true');
 
 		return Promise.resolve();

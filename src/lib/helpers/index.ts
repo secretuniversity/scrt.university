@@ -1,8 +1,7 @@
 import { get } from 'svelte/store';
-import { notificationsStore } from '../stores';
-import type { ArticleRequest, PathwayRequest } from '$lib/models/index';
+import { notes } from '../stores';
 
-type Draft = PathwayRequest | ArticleRequest;
+type Draft = Contributions.Pathway.PathwayRequest | Contributions.Article.ArticleRequest;
 type DraftStorage = { drafts: Record<string, Draft[]> };
 
 export function slugify(str: string) {
@@ -34,7 +33,7 @@ export function getNotification(
 	status: 'success' | 'error' | 'info',
 	loading = false
 ) {
-	const n = get(notificationsStore);
+	const n = get(notes);
 
 	return {
 		id: n.length,
