@@ -2,8 +2,7 @@
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedArticle } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
-	import type { Article } from '$lib/models/index';
-	export let article: Article;
+	export let article: Contributions.Article.Self;
 </script>
 
 <a

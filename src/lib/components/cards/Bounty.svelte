@@ -1,8 +1,5 @@
 <script lang="ts">
-	import type { Bounty } from '$lib/models';
-
-	export let bounty: Bounty;
-	export let index = 0;
+	export let bounty: Contributions.Bounty.Self;
 
 	const url = bounty.proposal_url === null ? bounty.forum_url : bounty.proposal_url;
 

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { selectedPathway } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
-	import type { Pathway } from '$lib/models';
-	export let pathway: Pathway;
+	export let pathway: Contributions.Pathway.Self;
 </script>
 
 <a

@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
 	import GithubLogo from '$lib/assets/github_logo_gray.svg';
-	import type { Repo } from '$lib/models/index';
 
-	export let repo: Repo;
+	export let repo: Contributions.Repo.Self;
 </script>
 
 <a target="_blank" rel="noopener noreferrer" class="block h-56" href={repo.github_repo}>
