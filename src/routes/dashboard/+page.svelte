@@ -10,8 +10,7 @@
 	import { onMount } from 'svelte';
 	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import { contributorModal, userStore, bookmarksStore, notificationsStore } from '$lib/stores';
-	import type { Article, Pathway, SecretBox, Video } from '$lib/models';
+	import { contributorModal, user, notes } from '$lib/stores';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';
@@ -21,10 +20,10 @@
 	};
 	const exp = new Date().setHours(new Date().getHours() + 1);
 
-	let articles: Article[] = [];
-	let pathways: Pathway[] = [];
-	let secretBoxes: SecretBox[] = [];
-	let videos: Video[] = [];
+	let articles: Contributions.Article.Self[] = [];
+	let pathways: Contributions.Pathway.Self[] = [];
+	let secretBoxes: Contributions.SecretBox.Self[] = [];
+	let videos: Contributions.Video.Self[] = [];
 	let totalContributions = 0;
 
 	$: namePlaceholder = 'Your name';
@@ -44,9 +43,9 @@
 
 	onMount(async () => {
 		try {
-			if (!$userStore) {
-				$notificationsStore = [
-					...$notificationsStore,
+			if (!$user) {
+				$notes = [
+					...$notes,
 					getNotification('You must be logged in to view your dashboard.', 'error')
 				];
 
@@ -54,8 +53,8 @@
 				return;
 			}
 
-			if ($userStore.val.name) {
-				namePlaceholder = $userStore.val.name.String;
+			if ($user.val.name) {
+				namePlaceholder = $user.val.name.String;
 			}
 
 			await fetchRole();
@@ -67,14 +66,14 @@
 
 			totalContributions = articles.length + pathways.length + secretBoxes.length + videos.length;
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	});
 
 	async function fetchRole() {
-		if (!$userStore) return;
+		if (!$user) return;
 
-		const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
+		const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $user.val.id;
 		const res = await fetch(url);
 		const json = (await res.json()) as string[];
 
@@ -87,55 +86,46 @@
 		}
 	}
 
-	async function fetchArticles(): Promise<Article[]> {
-		if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
+	async function fetchArticles(): Promise<Contributions.Article.Self[]> {
+		if (!$user) return Promise.reject('You must be logged in to view your contributions.');
 
 		try {
-			const url = getBaseAPIUrl() + '/v1/articles/contributor/' + $userStore.val.id;
+			const url = getBaseAPIUrl() + '/v1/articles/contributor/' + $user.val.id;
 			const res = await fetch(url);
-			const json = (await res.json()) as Article[];
+			const json = (await res.json()) as Contributions.Article.Self[];
 
 			return json;
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Failed to fetch articles.', 'error')
-			];
+			$notes = [...$notes, getNotification('Failed to fetch articles.', 'error')];
 
 			return Promise.reject(err);
 		}
 	}
 
-	async function fetchPathways(): Promise<Pathway[]> {
+	async function fetchPathways(): Promise<Contributions.Pathway.Self[]> {
 		try {
-			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
-			const url = getBaseAPIUrl() + '/v1/pathways/contributor/' + $userStore.val.id;
+			if (!$user) return Promise.reject('You must be logged in to view your contributions.');
+			const url = getBaseAPIUrl() + '/v1/pathways/contributor/' + $user.val.id;
 			const res = await fetch(url);
-			const json = (await res.json()) as Pathway[];
+			const json = (await res.json()) as Contributions.Pathway.Self[];
 
 			return json;
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Failed to fetch pathways.', 'error')
-			];
+			$notes = [...$notes, getNotification('Failed to fetch pathways.', 'error')];
 			return Promise.reject(err);
 		}
 	}
 
-	async function fetchSecretBoxes(): Promise<SecretBox[]> {
+	async function fetchSecretBoxes(): Promise<Contributions.SecretBox.Self[]> {
 		try {
-			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
-			const url = getBaseAPIUrl() + '/v1/secret-boxes/contributor/' + $userStore.val.id;
+			if (!$user) return Promise.reject('You must be logged in to view your contributions.');
+			const url = getBaseAPIUrl() + '/v1/secret-boxes/contributor/' + $user.val.id;
 			const res = await fetch(url);
-			const json = (await res.json()) as SecretBox[];
+			const json = (await res.json()) as Contributions.SecretBox.Self[];
 
 			return json;
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Failed to fetch secret boxes.', 'error')
-			];
+			$notes = [...$notes, getNotification('Failed to fetch secret boxes.', 'error')];
 
 			return Promise.reject(err);
 		}
@@ -143,24 +133,21 @@
 
 	async function fetchVideos() {
 		try {
-			if (!$userStore) return Promise.reject('You must be logged in to view your contributions.');
-			const url = getBaseAPIUrl() + '/v1/videos/contributor/' + $userStore.val.id;
+			if (!$user) return Promise.reject('You must be logged in to view your contributions.');
+			const url = getBaseAPIUrl() + '/v1/videos/contributor/' + $user.val.id;
 			const res = await fetch(url);
-			const json = (await res.json()) as Video[];
+			const json = (await res.json()) as Contributions.Video.Self[];
 
 			return json;
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Failed to fetch videos.', 'error')
-			];
+			$notes = [...$notes, getNotification('Failed to fetch videos.', 'error')];
 
 			return Promise.reject(err);
 		}
 	}
 
 	async function changeName() {
-		if (!$userStore) return;
+		if (!$notes) return;
 
 		// const url = getBaseAPIUrl() + '/v1/users/name';
 		// const res = await fetch(url, {
@@ -225,8 +212,8 @@
 
 <section class="relative mt-12 min-h-home-hero px-36 text-white">
 	<div class="grid grid-cols-2 items-center">
-		{#if $userStore && $userStore.val.name}
-			<div class="py-24 text-4xl font-bold">Welcome Back, {$userStore.val.name.String} 👋</div>
+		{#if $user && $user.val.name}
+			<div class="py-24 text-4xl font-bold">Welcome Back, {$user.val.name.String} 👋</div>
 		{:else}
 			<div class="py-24 text-4xl">Your Dashboard</div>
 		{/if}
@@ -294,7 +281,7 @@
 						? 'bg-dark-5'
 						: ''} cursor-pointer px-8 py-2 hover:bg-dark-4"
 				>
-					Bookmarks ({$bookmarksStore ? $bookmarksStore.val.length : 0})
+					Bookmarks (0)
 				</div>
 
 				<div
@@ -345,7 +332,7 @@
 				{/if}
 			</div>
 
-			{#if tab === 'bookmarks'}
+			<!-- {#if tab === 'bookmarks'}
 				{#if !$bookmarksStore}
 					<div class="mt-24 text-center text-dark-5">Couldn't find any of your bookmarks.</div>
 				{:else}
@@ -353,7 +340,7 @@
 						{#each $bookmarksStore.val as c}{/each}
 					</div>
 				{/if}
-			{/if}
+			{/if} -->
 		</div>
 	{/if}
 

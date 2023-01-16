@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import Tag from '$lib/components/page/Tag.svelte';
 	import hljs from 'highlight.js';
 	import { onMount, tick } from 'svelte';
 	import { getNotification } from '$lib/helpers';
-	import { notificationsStore, selectedArticle } from '$lib/stores';
+	import { notes, selectedArticle } from '$lib/stores';
 	import { page } from '$app/stores';
 
 	import 'highlight.js/styles/tokyo-night-dark.css';
@@ -16,37 +15,6 @@
 	let pageTitle = '';
 
 	onMount(async () => {
-		try {
-			if (!$selectedArticle) {
-				const url = getBaseAPIUrl() + '/v1/articles/' + $page.params.id;
-				const res = await fetch(url);
-				const json = await res.json();
-
-				if (Object.keys(json).length === 0) {
-					$notificationsStore = [
-						...$notificationsStore,
-						getNotification('Unable to find article', 'error')
-					];
-
-					goto('/resources');
-
-					return;
-				} else {
-					$selectedArticle = json;
-					pageTitle = json.title;
-				}
-			} else {
-				pageTitle = $selectedArticle.title;
-			}
-		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('There was a problem finding that article.', 'error')
-			];
-
-			goto('/resources');
-		}
-
 		fetchContributor();
 
 		await tick();
@@ -63,15 +31,10 @@
 
 			author = json;
 		} catch (_err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Unable to find contributor name', 'error')
-			];
+			$notes = [...$notes, getNotification('Unable to find contributor name', 'error')];
 		}
 	}
 </script>
-
-<Head {pageTitle} />
 
 <section class="min-h-screen py-16 text-white">
 	{#if $selectedArticle}

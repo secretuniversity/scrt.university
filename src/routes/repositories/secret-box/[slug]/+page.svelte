@@ -1,5 +1,4 @@
 <script>
-	import Head from '$lib/components/Head.svelte';
 	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedSecretBox } from '$lib/stores';
@@ -20,8 +19,6 @@
 		bgImage = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/secret-box/${$selectedSecretBox.id}/${urlSafeTitle}.jpg`;
 	});
 </script>
-
-<Head {pageTitle} />
 
 {#if $selectedSecretBox}
 	<section class="relative min-h-[650px] pb-32">

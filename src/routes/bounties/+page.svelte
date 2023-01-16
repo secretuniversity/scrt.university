@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Filter from '$lib/components/forms/Filter.svelte';
-	import Head from '$lib/components/Head.svelte';
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import { bountiesStore, notificationsStore } from '$lib/stores';
+	import { bounties, notes } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 
 	const pageTitle = 'Bounties';
@@ -30,7 +29,7 @@
 			const json = await res.json();
 
 			if (res.ok) {
-				$bountiesStore = {
+				$bounties = {
 					val: json,
 					exp: new Date().setHours(new Date().getHours() + 1)
 				};
@@ -38,12 +37,10 @@
 				return json;
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 </script>
-
-<Head {pageTitle} />
 
 <section class="px-24 py-12">
 	<Breadcrumb routes={breadcrumbRoutes} />
@@ -136,7 +133,7 @@
 
 				<div class="flex-col space-y-4 pb-36">
 					{#each list as bounty, index}
-						<BountyCard {bounty} {index} />
+						<BountyCard {bounty} />
 					{/each}
 				</div>
 			{:catch error}

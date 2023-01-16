@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import Head from '$lib/components/Head.svelte';
-	import type { Pathway } from '$lib/models/index';
-	import { notificationsStore, selectedPathway } from '$lib/stores';
+	import { notes, selectedPathway } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl, slugify } from '$lib/helpers';
 	import { goto } from '$app/navigation';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import BGImage from '$lib/assets/illustrations/space_bg.svg';
 
-	const pageTitle = 'Pathways';
-
+	const detailsMap = {} as Record<string, boolean>;
 	const breadcrumbRoutes = [
 		{
 			name: 'Learn',
@@ -22,9 +19,7 @@
 	];
 
 	let placeholderIndex = 0;
-
-	let pathways: Pathway[] = [];
-	const detailsMap = {} as Record<string, boolean>;
+	let pathways: Contributions.Pathway.Self[] = [];
 
 	onMount(async () => {
 		try {
@@ -40,13 +35,10 @@
 			}
 
 			if (res.status !== 200) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Error fetching pathways', 'error')
-				];
+				$notes = [...$notes, getNotification('Error fetching pathways', 'error')];
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	});
 
@@ -54,8 +46,6 @@
 		detailsMap[index] = !detailsMap[index];
 	}
 </script>
-
-<Head {pageTitle} />
 
 <div class="mx-24 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
 	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
 	import CodeImage from '$lib/assets/illustrations/code.svg';
 	import TeachImage from '$lib/assets/illustrations/teach.svg';
 	import EarnImage from '$lib/assets/illustrations/earn.svg';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { contributorModal, notificationsStore, userStore } from '$lib/stores';
+	import { contributorModal, notes, user } from '$lib/stores';
 
 	const pageTitle = 'Build';
 
@@ -14,10 +13,10 @@
 
 	async function isContributor(): Promise<boolean> {
 		try {
-			if (!$userStore)
+			if (!$user)
 				return Promise.reject('You need to connect your Keplr wallet to submit this form.');
 
-			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $userStore.val.id;
+			const url = getBaseAPIUrl() + '/v1/users/roles?id=' + $user.val.id;
 			const res = await fetch(url);
 			const json = (await res.json()) as string[];
 
@@ -31,7 +30,7 @@
 
 			return Promise.resolve(false);
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 			return Promise.reject(err);
 		}
 	}
@@ -42,20 +41,15 @@
 			if (!is) {
 				$contributorModal = true;
 			} else {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('You are already a contributor.', 'info')
-				];
+				$notes = [...$notes, getNotification('You are already a contributor.', 'info')];
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 </script>
 
 <ContributorForm />
-
-<Head {pageTitle} />
 
 <div class="mx-auto max-w-2xl pt-20 pb-10">
 	<h1 class="text-center text-6xl font-bold text-white">Learn to Earn</h1>

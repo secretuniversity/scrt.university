@@ -6,12 +6,10 @@
 	import Image from '$lib/assets/illustrations/dev.svg';
 	import RepoCard from '$lib/components/cards/Repo.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
-	import Head from '$lib/components/Head.svelte';
 	import Search from '$lib/components/forms/Search.svelte';
 	import Fuse from 'fuse.js';
-	import { notificationsStore, reposStore, boxesStore } from '$lib/stores';
+	import { notes, repos, boxes } from '$lib/stores';
 	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';
-	import type { Repo, SecretBox, Tag } from '$lib/models/index';
 
 	const PAGE_TITLE = 'Repositories';
 	const BREADCRUMB_ROUTES = [
@@ -26,7 +24,7 @@
 	];
 	const FILTER_SECTIONS = ['Type', 'Date', 'Tags'];
 
-	let tags: Tag[] = [];
+	let tags: Contributions.Tag[] = [];
 	let limit = 25;
 	let offset = 0;
 	let hasBoxes = false;
@@ -35,8 +33,8 @@
 		boxes: [],
 		repos: []
 	} as {
-		boxes: SecretBox[];
-		repos: Repo[];
+		boxes: Contributions.SecretBox.Self[];
+		repos: Contributions.Repo.Self[];
 	};
 
 	onMount(async () => {
@@ -55,44 +53,44 @@
 			cache.boxes = boxesFetched;
 			cache.repos = reposFetched;
 
-			$reposStore = { val: reposFetched, exp: genExp() };
-			$boxesStore = { val: boxesFetched, exp: genExp() };
+			$repos = { val: reposFetched, exp: genExp() };
+			$boxes = { val: boxesFetched, exp: genExp() };
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	});
 
 	function handleSearch(e: CustomEvent) {
-		if (!$boxesStore || !$reposStore) return;
+		if (!$boxes || !$repos) return;
 
 		if (e.detail.val === '') {
-			$boxesStore.val = cache.boxes;
-			$reposStore.val = cache.repos;
+			$boxes.val = cache.boxes;
+			$repos.val = cache.repos;
 			setHasBoxes();
 			setHasRepos();
 			return;
 		}
 
-		const boxesFuse = new Fuse([...$boxesStore.val], {
+		const boxesFuse = new Fuse([...$boxes.val], {
 			keys: ['title', 'description', 'tags'],
 			threshold: 0.3
 		});
-		const reposFuse = new Fuse([...$reposStore.val], {
+		const reposFuse = new Fuse([...$repos.val], {
 			keys: ['title', 'description', 'tags'],
 			threshold: 0.3
 		});
 		const boxesRes = boxesFuse.search(e.detail.val);
 		const repoRes = reposFuse.search(e.detail.val);
 
-		$boxesStore.val = boxesRes.map((res) => res.item);
-		$reposStore.val = repoRes.map((res) => res.item);
+		$boxes.val = boxesRes.map((res) => res.item);
+		$repos.val = repoRes.map((res) => res.item);
 
 		setHasBoxes();
 		setHasRepos();
 	}
 
 	function setHasBoxes() {
-		if ($boxesStore && $boxesStore.val.length > 0) {
+		if ($boxes && $boxes.val.length > 0) {
 			hasBoxes = true;
 		} else {
 			hasBoxes = false;
@@ -100,21 +98,21 @@
 	}
 
 	function setHasRepos() {
-		if ($reposStore && $reposStore.val.length > 0) {
+		if ($repos && $repos.val.length > 0) {
 			hasRepos = true;
 		} else {
 			hasRepos = false;
 		}
 	}
 
-	async function getRepos(): Promise<Repo[]> {
+	async function getRepos(): Promise<Contributions.Repo.Self[]> {
 		try {
 			const url = getBaseAPIUrl() + `/v1/repos?limit=${limit}&offset=${offset}`;
 			const res = await fetch(url);
 
 			if (res.ok) {
 				let data = await res.json();
-				return data as Repo[];
+				return data as Contributions.Repo.Self[];
 			} else {
 				return Promise.reject("Couldn't fetch repos");
 			}
@@ -123,14 +121,14 @@
 		}
 	}
 
-	async function getSecretBoxes(): Promise<SecretBox[]> {
+	async function getSecretBoxes(): Promise<Contributions.SecretBox.Self[]> {
 		try {
 			const url = getBaseAPIUrl() + `/v1/secret-boxes?limit=${limit}&offset=${offset}`;
 			const res = await fetch(url);
 
 			if (res.ok) {
 				let data = await res.json();
-				return data as SecretBox[];
+				return data as Contributions.SecretBox.Self[];
 			} else {
 				return Promise.reject("Couldn't fetch secret boxes");
 			}
@@ -155,8 +153,6 @@
 	// 	});
 	// }
 </script>
-
-<Head pageTitle={PAGE_TITLE} />
 
 <div class="mx-24 py-8">
 	<Breadcrumb routes={BREADCRUMB_ROUTES} />
@@ -236,14 +232,14 @@
 			<div class="-z-10 pt-6 pb-20 lg:pt-4 lg:pb-28">
 				<div class="divide-gray-200 relative mx-auto max-w-lg divide-y-2 lg:max-w-full">
 					<div class="grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-						{#if $boxesStore}
-							{#each $boxesStore.val as b}
+						{#if $boxes}
+							{#each $boxes.val as b}
 								<SecretBoxCard secretBox={b} />
 							{/each}
 						{/if}
 
-						{#if $reposStore}
-							{#each $reposStore.val as r}
+						{#if $repos}
+							{#each $repos.val as r}
 								<RepoCard repo={r} />
 							{/each}
 						{/if}

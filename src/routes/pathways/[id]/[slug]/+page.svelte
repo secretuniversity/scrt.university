@@ -1,18 +1,16 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
 	import { afterUpdate, onMount, tick } from 'svelte';
-	import { notificationsStore, selectedPathway } from '$lib/stores';
+	import { notes, selectedPathway } from '$lib/stores';
 	import { goto } from '$app/navigation';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { page } from '$app/stores';
 	import hljs from 'highlight.js';
-	import type { Lesson, Quiz } from '$lib/models/index';
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
 
-	type Module = Lesson | Quiz;
+	type Module = Contributions.Pathway.Lesson | Contributions.Pathway.Quiz;
 
 	let modules = [] as Module[];
 	let moduleIndex = 0;
@@ -24,10 +22,7 @@
 		const json = await res.json();
 
 		if (Object.keys(json).length === 0) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Unable to find article', 'error')
-			];
+			$notes = [...$notes, getNotification('Unable to find article', 'error')];
 
 			goto('/pathways');
 
@@ -40,7 +35,7 @@
 	function makeModules() {
 		if (!$selectedPathway) return;
 
-		$selectedPathway.lessons.forEach((lesson: Lesson) => {
+		$selectedPathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
 			lesson.kind = 'lesson';
 			modules = [...modules, lesson];
 
@@ -66,7 +61,7 @@
 		}
 
 		if ($selectedPathway.lessons) {
-			$selectedPathway.lessons.forEach((lesson) => {
+			$selectedPathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
 				if (!lesson.quizzes) {
 					lesson.quizzes = [];
 				}
@@ -85,10 +80,7 @@
 		if (moduleIndex > 0) {
 			moduleIndex--;
 		} else {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You are at the beginning of the pathway', 'info')
-			];
+			$notes = [...$notes, getNotification('You are at the beginning of the pathway', 'info')];
 		}
 
 		scrollTo(0, 0);
@@ -100,10 +92,7 @@
 		if (moduleIndex < modules.length - 1) {
 			moduleIndex++;
 		} else {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You have completed the pathway!', 'success')
-			];
+			$notes = [...$notes, getNotification('You have completed the pathway!', 'success')];
 		}
 
 		scrollTo(0, 0);
@@ -112,14 +101,11 @@
 	function checkAnswer(i: number) {
 		if (currentModule.kind === 'quiz') {
 			if (i === currentModule.answer) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification("That's correct!", 'success')
-				];
+				$notes = [...$notes, getNotification("That's correct!", 'success')];
 				goForward();
 			} else {
-				$notificationsStore = [
-					...$notificationsStore,
+				$notes = [
+					...$notes,
 					getNotification("Sorry! That's not quite right! Please try again.", 'error')
 				];
 			}

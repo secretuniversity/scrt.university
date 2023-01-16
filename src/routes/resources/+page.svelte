@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import Head from '$lib/components/Head.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import Filter from '$lib/components/forms/Filter.svelte';
 	import Search from '$lib/components/forms/Search.svelte';
@@ -8,9 +7,8 @@
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import Fuse from 'fuse.js';
-	import { articlesStore, notificationsStore, videosStore } from '$lib/stores';
+	import { articles, notes, videos } from '$lib/stores';
 	import { genExp, getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import type { Article, Video, Tag } from '$lib/models/index';
 	import { onMount } from 'svelte';
 
 	const pageTitle = 'Community Resources';
@@ -26,14 +24,15 @@
 	];
 	const filterSections = ['Date', 'Type', 'Tags'];
 
-	let articles: Article[] = [];
-	let videos: Video[] = [];
+	let localArticles: Contributions.Article.Self[] = [];
+	let localVideos: Contributions.Video.Self[] = [];
+
 	const cache = {
 		articles: [],
 		videos: []
 	} as {
-		articles: Article[];
-		videos: Video[];
+		articles: Contributions.Article.Self[];
+		videos: Contributions.Video.Self[];
 	};
 
 	let limit = 25;
@@ -41,56 +40,56 @@
 
 	onMount(async () => {
 		try {
-			articles = await getArticles();
-			videos = await getVideos();
+			localArticles = await getArticles();
+			localVideos = await getVideos();
 
-			cache.articles = articles;
-			cache.videos = videos;
+			cache.articles = localArticles;
+			cache.videos = localVideos;
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	});
 
 	$: {
-		if (articles) {
-			$articlesStore = { val: articles, exp: genExp() };
+		if (localArticles) {
+			$articles = { val: localArticles, exp: genExp() };
 		}
 
-		if (videos) {
-			$videosStore = { val: videos, exp: genExp() };
+		if (localVideos) {
+			$videos = { val: localVideos, exp: genExp() };
 		}
 	}
 
 	function handleSearch(e: CustomEvent) {
 		if (e.detail.val === '') {
-			articles = cache.articles;
-			videos = cache.videos;
+			localArticles = cache.articles;
+			localVideos = cache.videos;
 			return;
 		}
 
-		const articleFuse = new Fuse([...articles], {
+		const articleFuse = new Fuse([...localArticles], {
 			keys: ['title', 'description', 'tags'],
 			threshold: 0.3
 		});
-		const videoFuse = new Fuse([...videos], {
+		const videoFuse = new Fuse([...localVideos], {
 			keys: ['title', 'description', 'tags'],
 			threshold: 0.3
 		});
 		const articleRes = articleFuse.search(e.detail.val);
 		const videoRes = videoFuse.search(e.detail.val);
 
-		articles = articleRes.map((res) => res.item);
-		videos = videoRes.map((res) => res.item);
+		localArticles = articleRes.map((res) => res.item);
+		localVideos = videoRes.map((res) => res.item);
 	}
 
-	async function getVideos(): Promise<Video[]> {
+	async function getVideos(): Promise<Contributions.Video.Self[]> {
 		try {
 			const url = getBaseAPIUrl() + `/v1/videos?limit=${limit}&offset=${offset}`;
 			const res = await fetch(url);
 
 			if (res.ok) {
 				const json = await res.json();
-				let typed: Video[] = json;
+				let typed: Contributions.Video.Self[] = json;
 				return Promise.resolve(typed);
 			} else {
 				return Promise.reject('Failed to fetch videos');
@@ -100,14 +99,14 @@
 		}
 	}
 
-	async function getArticles(): Promise<Article[]> {
+	async function getArticles(): Promise<Contributions.Article.Self[]> {
 		try {
 			const url = getBaseAPIUrl() + `/v1/articles?limit=${limit}&offset=${offset}`;
 			const res = await fetch(url);
 
 			if (res.ok) {
 				const json = await res.json();
-				let typed: Article[] = json;
+				let typed: Contributions.Article.Self[] = json;
 				return Promise.resolve(typed);
 			} else {
 				return Promise.reject('Failed to fetch videos');
@@ -117,16 +116,14 @@
 		}
 	}
 
-	async function getArticleTags(): Promise<Tag[]> {
-		return Promise.reject();
-	}
+	// async function getArticleTags(): Promise<Tag[]> {
+	// 	return Promise.reject();
+	// }
 
-	async function getVideoTags(): Promise<Tag[] | null> {
-		return Promise.reject();
-	}
+	// async function getVideoTags(): Promise<Tag[] | null> {
+	// 	return Promise.reject();
+	// }
 </script>
-
-<Head {pageTitle} />
 
 <div class="mx-24 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
@@ -200,16 +197,16 @@
 			<Search on:search={handleSearch} />
 			<div class="-z-10 pt-6 pb-28">
 				<div class="relative mx-auto max-w-full">
-					{#if articles.length === 0 && videos.length === 0}
+					{#if localArticles.length === 0 && localVideos.length === 0}
 						<div class="mt-24 text-center text-dark-5">Unable to find any community resources.</div>
 					{/if}
 
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-						{#each videos as video}
+						{#each localVideos as video}
 							<VideoCard {video} />
 						{/each}
 
-						{#each articles as article}
+						{#each localArticles as article}
 							<ArticleCard {article} />
 						{/each}
 					</div>

@@ -4,7 +4,7 @@
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import TagInput from '$lib/components/forms/TagInput.svelte';
-	import { userStore, notificationsStore } from '$lib/stores';
+	import { user, notes } from '$lib/stores';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { goto } from '$app/navigation';
 	import { array, number, object, string, mixed } from 'yup';
@@ -73,9 +73,9 @@
 	async function submit() {
 		const token = sessionStorage.getItem('user');
 
-		if (!$userStore || !token) {
+		if (!$user || !token) {
 			const n = getNotification('You must be logged in to submit a video.', 'error');
-			$notificationsStore = [n, ...$notificationsStore];
+			$notes = [...$notes, n];
 			return;
 		}
 
@@ -83,15 +83,12 @@
 			secretBox.file = files[0];
 		}
 
-		secretBox.contributor = $userStore.val.id;
+		secretBox.contributor = $user.val.id;
 
 		try {
 			await secretBoxSchema.validate(secretBox, { abortEarly: false });
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Your Secret Box has some errors!', 'error')
-			];
+			$notes = [...$notes, getNotification('Your Secret Box has some errors!', 'error')];
 
 			const e = err as ValidationError;
 
@@ -142,16 +139,16 @@
 
 			if (res.status === 200) {
 				const n = getNotification('Secret Box submitted successfully!', 'success');
-				$notificationsStore = [...$notificationsStore, n];
+				$notes = [...$notes, n];
 
 				goto('/dashboard');
 			} else {
 				const n = getNotification('There was an error submitting your Secret Box.', 'error');
-				$notificationsStore = [...$notificationsStore, n];
+				$notes = [...$notes, n];
 			}
 		} catch (err) {
 			const n = getNotification(err as string, 'error');
-			$notificationsStore = [...$notificationsStore, n];
+			$notes = [...$notes, n];
 		}
 	}
 </script>

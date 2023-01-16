@@ -7,15 +7,9 @@
 	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import EditIcon from '$lib/assets/edit_icon.svg';
 	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest, userStore, notificationsStore } from '$lib/stores';
+	import { pathwayRequest, user, notes } from '$lib/stores';
+	import { pathwayRequestSchema } from '$lib/types/schemas/pathways';
 	import type { ValidationError } from 'yup';
-	import {
-		pathwayRequestSchema,
-		type LessonRequest,
-		type QuizOptionRequest,
-		type QuizRequest,
-		type PathwayRequest
-	} from '$lib/models';
 	import { getNotification, getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
 
@@ -58,7 +52,7 @@
 	let errorMessage = '';
 
 	interface PathwayDraft {
-		val: PathwayRequest;
+		val: Contributions.Pathway.PathwayRequest;
 		iso: string;
 	}
 
@@ -81,15 +75,12 @@
 	async function submit() {
 		const token = loadJWT('user');
 
-		if (!token || !$userStore) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You must be logged in to submit a pathway.', 'error')
-			];
+		if (!token || !$user) {
+			$notes = [...$notes, getNotification('You must be logged in to submit a pathway.', 'error')];
 			return;
 		}
 
-		$pathwayRequest.contributor = $userStore.val.id;
+		$pathwayRequest.contributor = $user.val.id;
 
 		try {
 			await pathwayRequestSchema.validate($pathwayRequest, {
@@ -113,20 +104,17 @@
 			});
 
 			if (res.status === 200) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Pathway submitted successfully!', 'success')
-				];
+				$notes = [...$notes, getNotification('Pathway submitted successfully!', 'success')];
 
 				goto('/dashboard');
 			} else {
-				$notificationsStore = [
-					...$notificationsStore,
+				$notes = [
+					...$notes,
 					getNotification('There was an error submitting your pathway.', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 
@@ -150,14 +138,11 @@
 
 		localStorage.setItem('pathway_drafts', JSON.stringify(clean));
 
-		$notificationsStore = [
-			...$notificationsStore,
-			getNotification('Pathway draft saved successfully!', 'success')
-		];
+		$notes = [...$notes, getNotification('Pathway draft saved successfully!', 'success')];
 	}
 
 	function addNewLesson() {
-		const l: LessonRequest = {
+		const l: Contributions.Pathway.LessonRequest = {
 			name: 'New Lesson',
 			content: '',
 			quizzes: []
@@ -167,7 +152,7 @@
 	}
 
 	function addNewQuiz() {
-		const q: QuizRequest = {
+		const q: Contributions.Pathway.QuizRequest = {
 			question: '',
 			answer: -1,
 			hint: '',
@@ -183,14 +168,11 @@
 		const options = $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options;
 
 		if (options.length > maxAnswers) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You cannot have more than 5 answers.', 'error')
-			];
+			$notes = [...$notes, getNotification('You cannot have more than 5 answers.', 'error')];
 			return;
 		}
 
-		const o: QuizOptionRequest = {
+		const o: Contributions.Pathway.QuizOptionRequest = {
 			content: ''
 		};
 
@@ -329,10 +311,7 @@
 							$pathwayRequest = selectedDraft.val;
 							selectedDraft = null;
 							draftModal = false;
-							$notificationsStore = [
-								...$notificationsStore,
-								getNotification('Draft loaded successfully.', 'success')
-							];
+							$notes = [...$notes, getNotification('Draft loaded successfully.', 'success')];
 						}
 					}}
 					class="rounded-md bg-dark-blue px-6 py-4 hover:bg-darker-blue"
@@ -407,7 +386,7 @@
 
 			<div id="lessons" class="grid min-h-[24rem]">
 				{#if $pathwayRequest.lessons.length === 0}
-					<p for="lessons" class="block self-center text-center text-sm font-medium text-dark-5">
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
 						Your pathway currently has no lessons.
 					</p>
 				{/if}
@@ -481,7 +460,7 @@
 
 			<div id="quizzes" class="grid min-h-[24rem]">
 				{#if $pathwayRequest.lessons[currentLessonIndex].quizzes.length === 0}
-					<p for="lessons" class="block self-center text-center text-sm font-medium text-dark-5">
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
 						Your lesson currently has no quizzes.
 					</p>
 				{/if}
@@ -584,7 +563,7 @@
 
 			<div id="quiz-options" class="grid min-h-[24rem]">
 				{#if $pathwayRequest.lessons[currentLessonIndex].quizzes[currentQuizIndex].options.length === 0}
-					<p for="options" class="block self-center text-center text-sm font-medium text-dark-5">
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
 						Your quiz currently has no possible answers.
 					</p>
 				{/if}

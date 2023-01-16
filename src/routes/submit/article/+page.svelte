@@ -6,10 +6,10 @@
 	import TagInput from '$lib/components/forms/TagInput.svelte';
 	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
-	import { articleRequest, notificationsStore, userStore } from '$lib/stores';
+	import { articleRequest, notes, user } from '$lib/stores';
+	import { articleRequestSchema } from '$lib/types/schemas/articles';
 	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import { articleRequestSchema, type ArticleRequest } from '$lib/models';
 	import type { ValidationError } from 'yup';
 
 	const pageTitle = 'Submit An Article';
@@ -33,7 +33,7 @@
 	];
 
 	interface ArticleDraft {
-		val: ArticleRequest;
+		val: Contributions.Article.ArticleRequest;
 		iso: string;
 	}
 
@@ -48,25 +48,19 @@
 	async function submit() {
 		let token = loadJWT('user');
 
-		if (!token || !$userStore) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('You must be logged in to submit an article.', 'error')
-			];
+		if (!token || !$user) {
+			$notes = [...$notes, getNotification('You must be logged in to submit an article.', 'error')];
 			return;
 		}
 
-		$articleRequest.contributor = $userStore.val.id;
+		$articleRequest.contributor = $user.val.id;
 
 		try {
 			await articleRequestSchema.validate($articleRequest, { abortEarly: false, strict: true });
 		} catch (err) {
 			const e = err as ValidationError;
 
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Your article has some errors.', 'error')
-			];
+			$notes = [...$notes, getNotification('Your article has some errors.', 'error')];
 
 			for (const error of e.inner) {
 				switch (error.path) {
@@ -97,20 +91,17 @@
 			});
 
 			if (res.status === 200) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Article submitted successfully!', 'success')
-				];
+				$notes = [...$notes, getNotification('Article submitted successfully!', 'success')];
 
 				goto('/dashboard');
 			} else {
-				$notificationsStore = [
-					...$notificationsStore,
+				$notes = [
+					...$notes,
 					getNotification('Something wrong happened. Please try again in a bit.', 'error')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 
@@ -134,10 +125,7 @@
 
 		localStorage.setItem('article_drafts', JSON.stringify(clean));
 
-		$notificationsStore = [
-			...$notificationsStore,
-			getNotification('Article draft saved successfully!', 'success')
-		];
+		$notes = [...$notes, getNotification('Article draft saved successfully!', 'success')];
 	}
 </script>
 
@@ -185,10 +173,7 @@
 							$articleRequest = selectedDraft.val;
 							selectedDraft = null;
 							draftModal = false;
-							$notificationsStore = [
-								...$notificationsStore,
-								getNotification('Draft loaded successfully.', 'success')
-							];
+							$notes = [...$notes, getNotification('Draft loaded successfully.', 'success')];
 						}
 					}}
 					class="rounded-md bg-dark-blue px-6 py-4 hover:bg-darker-blue"

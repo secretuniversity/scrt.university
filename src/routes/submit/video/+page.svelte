@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/content_creator.svg';
-	import Head from '$lib/components/Head.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import TagInput from '$lib/components/forms/TagInput.svelte';
-	import { userStore, notificationsStore } from '$lib/stores';
+	import { user, notes } from '$lib/stores';
 	import { getNotification, getBaseAPIUrl, loadJWT } from '$lib/helpers';
 	import { goto } from '$app/navigation';
 	import { array, number, object, string, mixed } from 'yup';
-	import type { InferType, ValidationError } from 'yup';
+	import type { ValidationError } from 'yup';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -62,13 +61,13 @@
 	async function submit() {
 		const token = loadJWT('user');
 
-		if (!$userStore || !token) {
+		if (!$user || !token) {
 			const n = getNotification('You must be logged in to submit a video.', 'error');
-			$notificationsStore = [...$notificationsStore, n];
+			$notes = [...$notes, n];
 			return;
 		}
 
-		video.contributor = $userStore.val.id;
+		video.contributor = $user.val.id;
 		if (files && files.length > 0) {
 			video.file = files[0];
 		}
@@ -76,10 +75,7 @@
 		try {
 			await videoSchema.validate(video, { abortEarly: false });
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Your video has some errors!', 'error')
-			];
+			$notes = [...$notes, getNotification('Your video has some errors!', 'error')];
 
 			const e = err as ValidationError;
 
@@ -109,7 +105,7 @@
 
 		try {
 			const n = getNotification('Submitting video...', 'info', true);
-			$notificationsStore = [...$notificationsStore, n];
+			$notes = [...$notes, n];
 
 			const url = getBaseAPIUrl() + '/v1/videos';
 			const res = await fetch(url, {
@@ -121,29 +117,21 @@
 			});
 
 			if (res.status === 200) {
-				$notificationsStore = $notificationsStore.filter((v) => v.id !== n.id);
+				$notes = $notes.filter((v) => v.id !== n.id);
 
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Video submitted successfully!', 'success')
-				];
+				$notes = [...$notes, getNotification('Video submitted successfully!', 'success')];
 
 				goto('/dashboard');
 			} else {
-				$notificationsStore = $notificationsStore.filter((v) => v.id !== n.id);
+				$notes = $notes.filter((v) => v.id !== n.id);
 
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('There was an error submitting your video.', 'error')
-				];
+				$notes = [...$notes, getNotification('There was an error submitting your video.', 'error')];
 			}
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 </script>
-
-<Head {pageTitle} />
 
 <section class="mx-auto w-11/12 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />

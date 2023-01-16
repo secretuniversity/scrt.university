@@ -1,7 +1,5 @@
 <script context="module" lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import Hero from '$lib/components/hero/Hero.svelte';
-	import Nav from '$lib/components/page/Nav.svelte';
 	import RoadImage from '$lib/assets/illustrations/road.svg';
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';
@@ -9,11 +7,7 @@
 	import SNImage1 from '$lib/assets/illustrations/sn-1.png';
 	import SNImage2 from '$lib/assets/illustrations/sn-2.svg';
 	import SNImage3 from '$lib/assets/illustrations/sn-3.png';
-
-	const pageTitle = 'Home';
 </script>
-
-<Head {pageTitle} />
 
 <section class="relative overflow-hidden">
 	<div class="bg-dark-3">

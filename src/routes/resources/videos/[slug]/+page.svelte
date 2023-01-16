@@ -2,7 +2,7 @@
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { goto } from '$app/navigation';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { notificationsStore, selectedVideo } from '$lib/stores';
+	import { notes, selectedVideo } from '$lib/stores';
 	import { onMount } from 'svelte';
 
 	let author = '';
@@ -25,8 +25,8 @@
 			const clean = videoUrl.replace(/ /g, '%20');
 			src = clean;
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
+			$notes = [
+				...$notes,
 				getNotification("Could not find the name of this video's contributor", 'error')
 			];
 		}

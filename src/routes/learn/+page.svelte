@@ -1,10 +1,8 @@
 <script lang="ts">
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import Head from '$lib/components/Head.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
 	import ToolCard from '$lib/components/cards/Tool.svelte';
-	import Features from '$lib/components/page/FeatureList.svelte';
 	import HeaderImage from '$lib/assets/illustrations/teacher_student.svg';
 
 	const pageTitle = 'Learn';
@@ -16,8 +14,6 @@
 		}
 	];
 </script>
-
-<Head {pageTitle} />
 
 <div class="mx-24 py-8">
 	<Breadcrumb routes={breadcrumbRoutes} />
