@@ -1,7 +1,7 @@
 import { array, number, object, string } from 'yup';
 import type { InferType } from 'yup';
 
-const pathwayRequestSchema = object({
+export const pathwayRequestSchema = object({
 	title: string().required(),
 	contributor: number().required().positive().integer(),
 	description: string().required(),
@@ -32,7 +32,7 @@ const pathwayRequestSchema = object({
 	)
 });
 
-const lessonRequestSchema = object({
+export const lessonRequestSchema = object({
 	name: string().required(),
 	content: string().required(),
 	quizzes: array().of<typeof quizRequestSchema>(
@@ -51,7 +51,7 @@ const lessonRequestSchema = object({
 	)
 });
 
-const quizRequestSchema = object({
+export const quizRequestSchema = object({
 	question: string().required(),
 	answer: number().required(),
 	hint: string(),
