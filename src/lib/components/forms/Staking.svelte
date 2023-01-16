@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Image from '$lib/assets/illustrations/staking.svg';
 	import { getNotification } from '$lib/helpers';
-	import { notificationsStore, secretStore } from '$lib/stores';
+	import { notes, secretClient } from '$lib/stores';
 	import type { MsgDelegateParams } from 'secretjs';
 
 	const validatorAddress = 'secret1dc6lhau0gnqh9rup2zv7z2jj4q9wwtkc2khskf';
@@ -10,24 +10,18 @@
 
 	async function handleStake() {
 		try {
-			if (!$secretStore) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Please connect your Keplr wallet first', 'error')
-				];
+			if (!$secretClient) {
+				$notes = [...$notes, getNotification('Please connect your Keplr wallet first', 'error')];
 				return;
 			}
 
 			if (!scrtAmount || scrtAmount <= 0) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Please enter a valid amount', 'error')
-				];
+				$notes = [...$notes, getNotification('Please enter a valid amount', 'error')];
 				return;
 			}
 
 			if (process.env.APP_ENV === 'development') {
-				await $secretStore.val.tx.staking.delegate.simulate({
+				await $secretClient.val.tx.staking.delegate.simulate({
 					delegator_address: $secretStore.val.address,
 					validator_address: validatorAddress,
 					amount: {
@@ -38,7 +32,7 @@
 			}
 
 			if (process.env.APP_ENV === 'production') {
-				await $secretStore.val.tx.staking.delegate({
+				await $secretClient.val.tx.staking.delegate({
 					delegator_address: $secretStore.val.address,
 					validator_address: validatorAddress,
 					amount: {
@@ -48,15 +42,12 @@
 				} as MsgDelegateParams);
 			}
 
-			$notificationsStore = [
-				...$notificationsStore,
+			$notes = [
+				...$notes,
 				getNotification('Succesfully staked with Secret University! Tyvm!', 'success')
 			];
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Error staking with Secret University.', 'error')
-			];
+			$notes = [...$notes, getNotification('Error staking with Secret University.', 'error')];
 		}
 	}
 

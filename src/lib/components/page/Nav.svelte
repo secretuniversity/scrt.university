@@ -12,7 +12,7 @@
 		saveJWT,
 		getBaseAPIUrl
 	} from '$lib/helpers/index';
-	import { notificationsStore, userStore, secretStore } from '$lib/stores';
+	import { notes, user, secretClient } from '$lib/stores';
 	import type { User } from '$lib/models';
 	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
@@ -21,7 +21,7 @@
 	let dashboard = false;
 
 	$: if ($navigating) reset();
-	$: loggedIn = $userStore && $secretStore && loadJWT('user');
+	$: loggedIn = $user && $secretClient && loadJWT('user');
 
 	function reset() {
 		learn = false;
@@ -45,13 +45,13 @@
 				sessionStorage.setItem('user', token);
 			}
 
-			$notificationsStore = [
-				...$notificationsStore,
+			$notes = [
+				...$notes,
 				getNotification('Successfully connected to Secret University', 'success')
 			];
 			return Promise.resolve(json.user);
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 			return Promise.reject(err);
 		}
 	}
@@ -62,27 +62,27 @@
 			await connect();
 
 			// SecretStore should be populated by now
-			if (!$secretStore) {
-				$notificationsStore = [
-					...$notificationsStore,
-					getNotification('Error connecting to Keplr', 'error')
-				];
+			if (!$secretClient) {
+				$notes = [...$notes, getNotification('Error connecting to Keplr', 'error')];
 				return;
 			}
 
 			// Check if user is already logged in
-			if ($userStore && !isExpired($userStore.exp) && loadJWT('user')) {
+			if ($user && !isExpired($user.exp) && loadJWT('user')) {
 				return;
 			}
 
 			// Otherwise log user in
-			const res = await login($secretStore.val.address);
+			if (!$user) return;
+
+			const res = await login($user.val.address);
 			const exp = new Date();
+
 			exp.setDate(exp.getDate() + 1);
 
-			$userStore = { val: res, exp: exp.getTime() };
+			$user = { val: res, exp: exp.getTime() };
 		} catch (err) {
-			$notificationsStore = [...$notificationsStore, getNotification(err as string, 'error')];
+			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
 </script>

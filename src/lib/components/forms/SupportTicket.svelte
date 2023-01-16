@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { notificationsStore } from '$lib/stores';
+	import { notes } from '$lib/stores';
 	import { object, string } from 'yup';
 	import type { InferType, ValidationError } from 'yup';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
@@ -38,10 +38,7 @@
 		try {
 			await supportTicketSchema.validate(supportTicket, { abortEarly: false });
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('Please fill out all required fields.', 'error')
-			];
+			$notes = [...$notes, getNotification('Please fill out all required fields.', 'error')];
 
 			const e = err as ValidationError;
 

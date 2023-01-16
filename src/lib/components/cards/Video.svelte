@@ -2,8 +2,7 @@
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedVideo } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
-	import type { Video } from '$lib/models/index';
-	export let video: Video;
+	export let video: Contributions.Video.Self;
 </script>
 
 <a

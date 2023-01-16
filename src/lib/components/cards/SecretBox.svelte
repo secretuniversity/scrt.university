@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { slugify } from '$lib/helpers';
-	import type { SecretBox } from '$lib/models';
 	import { selectedSecretBox } from '$lib/stores';
 
 	import SecretBoxLogo from '$lib/assets/secret_box_logo.png';
 
-	export let secretBox: SecretBox;
+	export let secretBox: Contributions.SecretBox.Self;
 </script>
 
 <a

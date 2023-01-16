@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Modal from '$lib/components/page/Modal.svelte';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { contributorModal, notificationsStore, userStore } from '$lib/stores';
+	import { contributorModal, notes, user } from '$lib/stores';
 	import { number, object, string } from 'yup';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	import type { InferType, ValidationError } from 'yup';
@@ -75,9 +75,9 @@
 
 	async function submitContributorForm() {
 		try {
-			if (!$userStore) {
-				$notificationsStore = [
-					...$notificationsStore,
+			if (!$user) {
+				$notes = [
+					...$notes,
 					getNotification('Please connect your wallet to submit the contributor form.', 'error')
 				];
 				return;
@@ -85,7 +85,7 @@
 
 			await validateContributorForm();
 
-			contributorForm.id = $userStore.val.id;
+			contributorForm.id = $user.val.id;
 
 			const form = new FormData();
 			form.append('id', contributorForm.id.toString());
@@ -102,16 +102,13 @@
 
 			if (res.status === 200) {
 				$contributorModal = false;
-				$notificationsStore = [
-					...$notificationsStore,
+				$notes = [
+					...$notes,
 					getNotification('Successfully submitted contributor form.', 'success')
 				];
 			}
 		} catch (err) {
-			$notificationsStore = [
-				...$notificationsStore,
-				getNotification('There was a problem submitting your form.', 'error')
-			];
+			$notes = [...$notes, getNotification('There was a problem submitting your form.', 'error')];
 		}
 	}
 

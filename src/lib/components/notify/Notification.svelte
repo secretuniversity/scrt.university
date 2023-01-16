@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { Shadow } from 'svelte-loading-spinners';
 	import { fly, fade } from 'svelte/transition';
-	import { notificationsStore } from '$lib/stores';
-	import type { Notification } from '$lib/stores';
+	import { notes } from '$lib/stores';
 	import { onDestroy, onMount } from 'svelte';
 
-	export let n: Notification;
+	export let n: Note;
 	export let i = 0;
 
 	let close = false;
@@ -22,7 +21,7 @@
 		}
 	});
 
-	function getBGColor(n: Notification) {
+	function getBGColor(n: Note) {
 		switch (n.status) {
 			case 'error':
 				return 'bg-red-700';
@@ -36,7 +35,7 @@
 	}
 
 	onDestroy(() => {
-		$notificationsStore = $notificationsStore.filter((_, index) => index !== i);
+		$notes = $notes.filter((_, index) => index !== i);
 	});
 
 	function handleClick() {
