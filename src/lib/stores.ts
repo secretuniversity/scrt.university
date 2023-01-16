@@ -1,111 +1,28 @@
 import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
-import type { SecretNetworkClient } from 'secretjs';
-import type {
-	Article,
-	ArticleRequest,
-	Bookmark,
-	Bounty,
-	Contributor,
-	Contribution,
-	Pathway,
-	PathwayRequest,
-	User,
-	Repo,
-	Tag,
-	SecretBox,
-	Video
-} from './models/index';
 
-export interface Notification {
-	id: number;
-	message: string;
-	status: 'success' | 'error' | 'info';
-	loading: boolean;
-	close: boolean;
-}
+export const notes: Writable<Note[]> = writable([]);
+export const secretClient: Writable<Stores.SecretClient | null> = writable(null);
+export const bounties: Writable<Stores.Bounties | null> = writable(null);
 
-interface SecretStore {
-	val: SecretNetworkClient;
-	exp: number;
-}
+export const user: Writable<Stores.User | null> = writable(null);
+// export const bookmarksStore: Writable<Stores.Bookmarks | null> = writable(null);
+export const contributions: Writable<Stores.Contributions | null> = writable(null);
+// export const contributorStore: Writable<ContributorStore | null> = writable(null);
 
-interface UserStore {
-	val: User;
-	exp: number;
-}
+export const videos: Writable<Stores.Videos | null> = writable(null);
+export const articles: Writable<Stores.Articles | null> = writable(null);
+export const resourceTags: Writable<Stores.ResourceTags | null> = writable(null);
 
-interface BookmarksStore {
-	val: Bookmark[];
-	exp: number;
-}
+export const repos: Writable<Stores.Repos | null> = writable(null);
+export const boxes: Writable<Stores.Boxes | null> = writable(null);
 
-interface ContributionsStore {
-	val: Contribution[];
-	exp: number;
-}
+export const selectedArticle: Writable<Contributions.Article.Self | null> = writable(null);
+export const selectedVideo: Writable<Contributions.Video.Self | null> = writable(null);
+export const selectedSecretBox: Writable<Contributions.SecretBox.Self | null> = writable(null);
+export const selectedPathway: Writable<Contributions.Pathway.Self | null> = writable(null);
 
-interface BountiesStore {
-	val: Bounty[];
-	exp: number;
-}
-
-interface ContributorStore {
-	val: Contributor;
-	exp: number;
-}
-
-interface ArticlesStore {
-	val: Article[];
-	exp: number;
-}
-
-interface VideosStore {
-	val: Video[];
-	exp: number;
-}
-
-interface ResourceTagsStore {
-	val: Tag[];
-	exp: number;
-}
-
-interface ReposStore {
-	val: Repo[];
-	exp: number;
-}
-
-interface BoxesStore {
-	val: SecretBox[];
-	exp: number;
-}
-
-export const notificationsStore: Writable<Notification[]> = writable([]);
-export const secretStore: Writable<SecretStore | null> = writable(null);
-export const bountiesStore: Writable<BountiesStore | null> = writable(null);
-
-// Dashboard stores
-export const userStore: Writable<UserStore | null> = writable(null);
-export const bookmarksStore: Writable<BookmarksStore | null> = writable(null);
-export const contributionsStore: Writable<ContributionsStore | null> = writable(null);
-export const contributorStore: Writable<ContributorStore | null> = writable(null);
-
-// Resources stores
-export const videosStore: Writable<VideosStore | null> = writable(null);
-export const articlesStore: Writable<ArticlesStore | null> = writable(null);
-export const resourceTagsStore: Writable<ResourceTagsStore | null> = writable(null);
-
-// Repos stores
-export const reposStore: Writable<ReposStore | null> = writable(null);
-export const boxesStore: Writable<BoxesStore | null> = writable(null);
-
-// Page state stores
-export const selectedArticle: Writable<Article | null> = writable(null);
-export const selectedVideo: Writable<Video | null> = writable(null);
-export const selectedSecretBox: Writable<SecretBox | null> = writable(null);
-export const selectedPathway: Writable<Pathway | null> = writable(null);
-
-export const pathwayRequest: Writable<PathwayRequest> = writable({
+export const pathwayRequest: Writable<Contributions.Pathway.PathwayRequest> = writable({
 	title: '',
 	contributor: -1,
 	description: '',
@@ -113,7 +30,7 @@ export const pathwayRequest: Writable<PathwayRequest> = writable({
 	lessons: []
 });
 
-export const articleRequest: Writable<ArticleRequest> = writable({
+export const articleRequest: Writable<Contributions.Article.ArticleRequest> = writable({
 	title: '',
 	contributor: -1,
 	description: '',
