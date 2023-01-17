@@ -72,10 +72,7 @@
 				return;
 			}
 
-			// Otherwise log user in
-			if (!$user) return;
-
-			const res = await login($user.val.address);
+			const res = await login($secretClient.val.address);
 			const exp = new Date();
 
 			exp.setDate(exp.getDate() + 1);
