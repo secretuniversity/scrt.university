@@ -4,9 +4,9 @@
 	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
 	import LibraryImage from '$lib/assets/illustrations/library.svg';
 
-	import SNImage1 from '$lib/assets/illustrations/sn-1.png';
+	import SNImage1 from '$lib/assets/illustrations/sn-1.webp';
 	import SNImage2 from '$lib/assets/illustrations/sn-2.svg';
-	import SNImage3 from '$lib/assets/illustrations/sn-3.png';
+	import SNImage3 from '$lib/assets/illustrations/sn-3.webp';
 </script>
 
 <section class="relative overflow-hidden">
@@ -155,7 +155,7 @@
 					<!-- Content goes here -->
 					<h2 class="mt-5 text-xl font-bold leading-6 text-white">Teachers</h2>
 					<p class="mt-2 text-base text-gray">
-						As a community, our goal is to expand privacy awarness and create robust privacy
+						As a community, our goal is to expand privacy awareness and create robust privacy
 						solutions for web3. To do so, members of Secret University are encouraged and
 						incentivised to share their work with the community. Together, by expanding our
 						collective knowledge, we can iterate faster and build for the future.
