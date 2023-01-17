@@ -1,13 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import EnvironmentPlugin from 'vite-plugin-environment';
-import progress from 'vite-plugin-progress';
 // import vitePluginImportus from 'vite-plugin-importus';
 
 /** @type {import('vite').UserConfig} */
 const config = defineConfig(({ command, mode }) => ({
 	plugins: [
-		progress(),
 		sveltekit(),
 		EnvironmentPlugin({
 			APP_ENV: 'development',

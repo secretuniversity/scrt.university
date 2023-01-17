@@ -74,7 +74,6 @@ specifiers:
   vite-plugin-compression2: ^0.5.0
   vite-plugin-environment: ^1.1.3
   vite-plugin-importus: ^1.0.4
-  vite-plugin-progress: ^0.0.6
   yup: ^0.32.11
 
 dependencies:
@@ -153,7 +152,6 @@ devDependencies:
   vite-plugin-compression2: 0.5.0_vite@4.0.1
   vite-plugin-environment: 1.1.3_vite@4.0.1
   vite-plugin-importus: 1.0.4_vite@4.0.1
-  vite-plugin-progress: 0.0.6_vite@4.0.1
   yup: 0.32.11
 
 packages:
@@ -1156,6 +1154,7 @@ packages:
 
   /@types/node/10.12.18:
     resolution: {integrity: sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==}
+    dev: false
 
   /@types/node/11.11.6:
     resolution: {integrity: sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==}
@@ -3614,11 +3613,6 @@ packages:
     hasBin: true
     dev: true
 
-  /progress/2.0.3:
-    resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
-    engines: {node: '>=0.4.0'}
-    dev: true
-
   /property-expr/2.0.5:
     resolution: {integrity: sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA==}
     dev: true
@@ -3779,12 +3773,6 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
-    dev: true
-
-  /rd/2.0.1:
-    resolution: {integrity: sha512-/XdKU4UazUZTXFmI0dpABt8jSXPWcEyaGdk340KdHnsEOdkTctlX23aAK7ChQDn39YGNlAJr1M5uvaKt4QnpNw==}
-    dependencies:
-      '@types/node': 10.12.18
     dev: true
 
   /read-cache/1.0.0:
@@ -4619,18 +4607,6 @@ packages:
       lodash: 4.17.21
       magic-string: 0.26.7
       rimraf: 3.0.2
-      vite: 4.0.1_5eiorg4tirt3lvzr2fwssfury4
-    dev: true
-
-  /vite-plugin-progress/0.0.6_vite@4.0.1:
-    resolution: {integrity: sha512-pIK2TVEY4XFGrz10CQDdEufBBCDaV0geRHfXV3abGTBr+OF9O0Zmd3ZDrHJXDv4Rl3qAQP4BTCuPYQ3XqstmqA==}
-    engines: {node: '>=14', pnpm: '>=7.0.0'}
-    peerDependencies:
-      vite: '>2.0.0-0'
-    dependencies:
-      picocolors: 1.0.0
-      progress: 2.0.3
-      rd: 2.0.1
       vite: 4.0.1_5eiorg4tirt3lvzr2fwssfury4
     dev: true
 
