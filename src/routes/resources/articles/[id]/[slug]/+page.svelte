@@ -3,11 +3,13 @@
 	import hljs from 'highlight.js';
 	import { onMount, tick } from 'svelte';
 	import { getNotification } from '$lib/helpers';
-	import { notes, selectedArticle } from '$lib/stores';
+	import { notes } from '$lib/stores';
 
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
 	import { getBaseAPIUrl } from '$lib/helpers';
+
+	export let data: Page.Article;
 
 	let author = '';
 
@@ -19,10 +21,8 @@
 	});
 
 	async function fetchContributor() {
-		if (!$selectedArticle) return;
-
 		try {
-			const url = getBaseAPIUrl() + `/v1/users/name/${$selectedArticle.contributor}`;
+			const url = getBaseAPIUrl() + `/v1/users/name/${data.article.contributor}`;
 			const res = await fetch(url);
 			const json = await res.json();
 
@@ -34,13 +34,13 @@
 </script>
 
 <section class="min-h-screen py-16 text-white">
-	{#if $selectedArticle}
+	{#if data.article}
 		<div class="flex h-full w-full flex-col items-center justify-center">
-			<p class="my-6 text-center text-5xl font-bold">{$selectedArticle.title}</p>
+			<p class="my-6 text-center text-5xl font-bold">{data.article.title}</p>
 			<p class="mb-4 text-center text-base">Written by {author}</p>
 
 			<div class="mx-auto flex max-w-2xl flex-wrap space-x-2">
-				{#each $selectedArticle.tags as tag}
+				{#each data.article.tags as tag}
 					<div class="mb-2">
 						<Tag {tag} />
 					</div>
@@ -48,7 +48,7 @@
 			</div>
 
 			<div class="markdown mt-8 w-full max-w-4xl">
-				{@html $selectedArticle.content}
+				{@html data.article.content}
 			</div>
 		</div>
 	{:else}
