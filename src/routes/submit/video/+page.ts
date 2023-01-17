@@ -1,8 +1,8 @@
 import type { PageLoad } from './$types';
 
-export const load: PageLoad<PageData> = async () => {
+export const load: PageLoad<Page.Base> = async () => {
 	return {
-		title: 'Home',
+		title: 'Submit Your Video',
 		description:
 			'Welcome to Secret University, your destination for learning how to develop decentralized applications on Secret Network.'
 	};

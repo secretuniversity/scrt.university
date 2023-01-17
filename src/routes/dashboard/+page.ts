@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 
-export const load: PageLoad<PageData> = async () => {
+export const load: PageLoad<Page.Base> = async () => {
 	return {
 		title: 'Dashboard',
 		description:
