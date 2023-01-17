@@ -17,14 +17,14 @@ export const load: PageLoad<Page.Resources> = async ({ fetch }) => {
 };
 
 async function fetchArticles(fetch: FetchFn): Promise<Contributions.Article.Self[]> {
-	const res = await fetch(getBaseAPIUrl() + `/v1/articles?limit=25?offset=0`);
+	const res = await fetch(getBaseAPIUrl() + `/v1/articles?limit=25&offset=0`);
 	const articles = await res.json();
 
 	return articles as Contributions.Article.Self[];
 }
 
 async function fetchVideos(fetch: FetchFn): Promise<Contributions.Video.Self[]> {
-	const res = await fetch(getBaseAPIUrl() + `/v1/videos?limit=25?offset=0`);
+	const res = await fetch(getBaseAPIUrl() + `/v1/videos?limit=25&offset=0`);
 	const videos = await res.json();
 
 	return videos as Contributions.Video.Self[];

@@ -2,6 +2,7 @@ import { getBaseAPIUrl } from '$lib/helpers';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad<Page.Repositories> = async ({ fetch }) => {
+	console.log('asdf');
 	const repos = await fetchRepos(fetch);
 	const secretBoxes = await fetchSecretBoxes(fetch);
 	return {
@@ -16,6 +17,7 @@ export const load: PageLoad<Page.Repositories> = async ({ fetch }) => {
 async function fetchRepos(fetch: FetchFn): Promise<Contributions.Repo.Self[]> {
 	const response = await fetch(getBaseAPIUrl() + `/v1/repos?limit=100&offset=0`);
 	const repos = await response.json();
+
 	return repos as Contributions.Repo.Self[];
 }
 
