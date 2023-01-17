@@ -16,7 +16,6 @@
 	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 	import Image from '@tiptap/extension-image';
 	import Link from '@tiptap/extension-link';
-	import { Node } from 'prosemirror-model';
 	import { Plugin } from 'prosemirror-state';
 
 	import { marked } from 'marked';
