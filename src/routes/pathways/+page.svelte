@@ -6,6 +6,8 @@
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import BGImage from '$lib/assets/illustrations/space_bg.svg';
 
+	export let data: Page.Pathways;
+
 	const detailsMap = {} as Record<string, boolean>;
 	const breadcrumbRoutes = [
 		{
@@ -23,19 +25,11 @@
 
 	onMount(async () => {
 		try {
-			const url = getBaseAPIUrl() + '/v1/pathways';
-			const res = await fetch(url);
-			const json = await res.json();
-
-			pathways = json;
+			pathways = data.pathways;
 			placeholderIndex = pathways.length;
 
 			for (const pathway of pathways) {
 				detailsMap[pathway.id] = false;
-			}
-
-			if (res.status !== 200) {
-				$notes = [...$notes, getNotification('Error fetching pathways', 'error')];
 			}
 		} catch (err) {
 			$notes = [...$notes, getNotification(err as string, 'error')];

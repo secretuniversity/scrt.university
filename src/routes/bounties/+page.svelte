@@ -2,10 +2,9 @@
 	import Filter from '$lib/components/forms/Filter.svelte';
 	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import { bounties, notes } from '$lib/stores';
-	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
 
-	const pageTitle = 'Bounties';
+	export let data: Page.Bounties;
+
 	const breadcrumbRoutes = [
 		{
 			name: 'Build',
@@ -18,28 +17,6 @@
 	];
 
 	const filterSections = ['Date', 'Reward', 'Status'];
-
-	let limit = 25;
-	let offset = 0;
-
-	async function getBounties() {
-		try {
-			const url = getBaseAPIUrl() + `/v1/bounties?limit=${limit}&offset=${offset}`;
-			const res = await fetch(url);
-			const json = await res.json();
-
-			if (res.ok) {
-				$bounties = {
-					val: json,
-					exp: new Date().setHours(new Date().getHours() + 1)
-				};
-
-				return json;
-			}
-		} catch (err) {
-			$notes = [...$notes, getNotification(err as string, 'error')];
-		}
-	}
 </script>
 
 <section class="px-24 py-12">
@@ -122,26 +99,17 @@
 		</div>
 
 		<div class="col-span-9">
-			{#await getBounties()}
-				<!-- promise is pending -->
-			{:then list}
-				{#if list.length === 0}
-					<p class="block self-center text-center text-sm font-medium text-dark-5">
-						Secret University found no bounties.
-					</p>
-				{/if}
-
-				<div class="flex-col space-y-4 pb-36">
-					{#each list as bounty, index}
-						<BountyCard {bounty} />
-					{/each}
-				</div>
-			{:catch error}
-				<!-- promise was rejected -->
+			{#if data.bounties.length === 0}
 				<p class="block self-center text-center text-sm font-medium text-dark-5">
 					Secret University found no bounties.
 				</p>
-			{/await}
+			{/if}
+
+			<div class="flex-col space-y-4 pb-36">
+				{#each data.bounties as bounty, index}
+					<BountyCard {bounty} />
+				{/each}
+			</div>
 		</div>
 	</div>
 </section>

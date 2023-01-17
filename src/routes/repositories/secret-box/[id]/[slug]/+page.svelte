@@ -1,22 +1,18 @@
-<script>
+<script lang="ts">
 	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { selectedSecretBox } from '$lib/stores';
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 
-	let pageTitle = $page.params.slug + ' | Secret Box';
+	export let data: Page.SecretBox;
+
 	let bgImage = '';
 	$: bgStyles = `bg-[url('${bgImage}')] bg-cover bg-center`;
 
 	onMount(() => {
-		if (!$selectedSecretBox) return goto('/repositories');
+		const urlSafeTitle = data.box.title.replace(/ /g, '%20');
 
-		const urlSafeTitle = $selectedSecretBox.title.replace(/ /g, '%20');
-		pageTitle = $selectedSecretBox.title + ' | Secret Box';
-
-		bgImage = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/secret-box/${$selectedSecretBox.id}/${urlSafeTitle}.jpg`;
+		bgImage = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/secret-box/${data.box.id}/${urlSafeTitle}.jpg`;
 	});
 </script>
 

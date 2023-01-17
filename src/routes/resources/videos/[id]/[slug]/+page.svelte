@@ -1,27 +1,24 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
-	import { goto } from '$app/navigation';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { notes, selectedVideo } from '$lib/stores';
 	import { onMount } from 'svelte';
+
+	export let data: Page.Video;
 
 	let author = '';
 	let src = '';
 
 	onMount(async () => {
-		if (!$selectedVideo) {
-			goto('/resources');
-			return;
-		}
-
 		try {
-			const url = getBaseAPIUrl() + `/v1/users/name/${$selectedVideo.contributor}`;
+			$selectedVideo = data.video;
+			const url = getBaseAPIUrl() + `/v1/users/name/${data.video.contributor}`;
 			const res = await fetch(url);
 			const json = await res.json();
 
 			author = json;
 
-			const videoUrl = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/videos/${$selectedVideo.id}/${$selectedVideo.title}.mp4`;
+			const videoUrl = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/videos/${data.video.id}/${data.video.title}.mp4`;
 			const clean = videoUrl.replace(/ /g, '%20');
 			src = clean;
 		} catch (err) {

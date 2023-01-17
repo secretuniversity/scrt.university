@@ -4,15 +4,12 @@
 	import { onMount, tick } from 'svelte';
 	import { getNotification } from '$lib/helpers';
 	import { notes, selectedArticle } from '$lib/stores';
-	import { page } from '$app/stores';
 
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
 	import { getBaseAPIUrl } from '$lib/helpers';
-	import { goto } from '$app/navigation';
 
 	let author = '';
-	let pageTitle = '';
 
 	onMount(async () => {
 		fetchContributor();

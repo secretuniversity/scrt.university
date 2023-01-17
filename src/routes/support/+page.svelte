@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
 	import SupportTicket from '$lib/components/forms/SupportTicket.svelte';
 	import DiscordLogo from '$lib/assets/discord_logo.svg';
@@ -7,11 +6,7 @@
 	import SecretLogo from '$lib/assets/secret_white.svg';
 	import Staking from '$lib/components/forms/Staking.svelte';
 	import Image from '$lib/assets/illustrations/support.svg';
-
-	const pageTitle = 'Support';
 </script>
-
-<Head {pageTitle} />
 
 <section class="mx-24">
 	<div class="grid grid-cols-2 justify-items-center pt-36">

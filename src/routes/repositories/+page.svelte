@@ -11,6 +11,8 @@
 	import { notes, repos, boxes } from '$lib/stores';
 	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';
 
+	export let data: Page.Repositories;
+
 	const PAGE_TITLE = 'Repositories';
 	const BREADCRUMB_ROUTES = [
 		{
@@ -25,8 +27,6 @@
 	const FILTER_SECTIONS = ['Type', 'Date', 'Tags'];
 
 	let tags: Contributions.Tag[] = [];
-	let limit = 25;
-	let offset = 0;
 	let hasBoxes = false;
 	let hasRepos = false;
 	let cache = {
@@ -39,8 +39,8 @@
 
 	onMount(async () => {
 		try {
-			let reposFetched = await getRepos();
-			let boxesFetched = await getSecretBoxes();
+			let reposFetched = data.repos;
+			let boxesFetched = data.secretBoxes;
 
 			if (reposFetched.length > 0) {
 				hasRepos = true;
@@ -104,54 +104,6 @@
 			hasRepos = false;
 		}
 	}
-
-	async function getRepos(): Promise<Contributions.Repo.Self[]> {
-		try {
-			const url = getBaseAPIUrl() + `/v1/repos?limit=${limit}&offset=${offset}`;
-			const res = await fetch(url);
-
-			if (res.ok) {
-				let data = await res.json();
-				return data as Contributions.Repo.Self[];
-			} else {
-				return Promise.reject("Couldn't fetch repos");
-			}
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	}
-
-	async function getSecretBoxes(): Promise<Contributions.SecretBox.Self[]> {
-		try {
-			const url = getBaseAPIUrl() + `/v1/secret-boxes?limit=${limit}&offset=${offset}`;
-			const res = await fetch(url);
-
-			if (res.ok) {
-				let data = await res.json();
-				return data as Contributions.SecretBox.Self[];
-			} else {
-				return Promise.reject("Couldn't fetch secret boxes");
-			}
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	}
-
-	// async function getRepoTags(): Promise<Array<Tag>> {
-	// 	return new Promise((res, rej) => {
-	// 		fetch('/api/v1/tags/kind/repo/offset/0')
-	// 			.then((response) => response.json())
-	// 			.then((data) => res(data as Array<Tag>));
-	// 	});
-	// }
-
-	// async function getBoxesTags(): Promise<Array<Tag>> {
-	// 	return new Promise((res, rej) => {
-	// 		fetch('/api/v1/tags/kind/secret_box/offset/0')
-	// 			.then((response) => response.json())
-	// 			.then((data) => res(data as Array<Tag>));
-	// 	});
-	// }
 </script>
 
 <div class="mx-24 py-8">

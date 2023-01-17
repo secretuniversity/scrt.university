@@ -8,10 +8,11 @@
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import Fuse from 'fuse.js';
 	import { articles, notes, videos } from '$lib/stores';
-	import { genExp, getBaseAPIUrl, getNotification } from '$lib/helpers';
+	import { genExp, getNotification } from '$lib/helpers';
 	import { onMount } from 'svelte';
 
-	const pageTitle = 'Community Resources';
+	export let data: Page.Resources;
+
 	const breadcrumbRoutes = [
 		{
 			name: 'Learn',
@@ -35,13 +36,10 @@
 		videos: Contributions.Video.Self[];
 	};
 
-	let limit = 25;
-	let offset = 0;
-
 	onMount(async () => {
 		try {
-			localArticles = await getArticles();
-			localVideos = await getVideos();
+			localArticles = data.resources.articles;
+			localVideos = data.resources.videos;
 
 			cache.articles = localArticles;
 			cache.videos = localVideos;
@@ -81,48 +79,6 @@
 		localArticles = articleRes.map((res) => res.item);
 		localVideos = videoRes.map((res) => res.item);
 	}
-
-	async function getVideos(): Promise<Contributions.Video.Self[]> {
-		try {
-			const url = getBaseAPIUrl() + `/v1/videos?limit=${limit}&offset=${offset}`;
-			const res = await fetch(url);
-
-			if (res.ok) {
-				const json = await res.json();
-				let typed: Contributions.Video.Self[] = json;
-				return Promise.resolve(typed);
-			} else {
-				return Promise.reject('Failed to fetch videos');
-			}
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	}
-
-	async function getArticles(): Promise<Contributions.Article.Self[]> {
-		try {
-			const url = getBaseAPIUrl() + `/v1/articles?limit=${limit}&offset=${offset}`;
-			const res = await fetch(url);
-
-			if (res.ok) {
-				const json = await res.json();
-				let typed: Contributions.Article.Self[] = json;
-				return Promise.resolve(typed);
-			} else {
-				return Promise.reject('Failed to fetch videos');
-			}
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	}
-
-	// async function getArticleTags(): Promise<Tag[]> {
-	// 	return Promise.reject();
-	// }
-
-	// async function getVideoTags(): Promise<Tag[] | null> {
-	// 	return Promise.reject();
-	// }
 </script>
 
 <div class="mx-24 py-8">

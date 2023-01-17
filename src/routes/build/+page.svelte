@@ -7,10 +7,6 @@
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { contributorModal, notes, user } from '$lib/stores';
 
-	const pageTitle = 'Build';
-
-	let isModalActive = false;
-
 	async function isContributor(): Promise<boolean> {
 		try {
 			if (!$user)

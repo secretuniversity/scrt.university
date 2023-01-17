@@ -1,36 +1,19 @@
 <script lang="ts">
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
-	import { afterUpdate, onMount, tick } from 'svelte';
+	import { afterUpdate, tick } from 'svelte';
 	import { notes, selectedPathway } from '$lib/stores';
-	import { goto } from '$app/navigation';
-	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
-	import { page } from '$app/stores';
+	import { getNotification } from '$lib/helpers';
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/tokyo-night-dark.css';
 	import '$lib/styles/markdown.scss';
+	import { onMount } from 'svelte';
 
 	type Module = Contributions.Pathway.Lesson | Contributions.Pathway.Quiz;
 
 	let modules = [] as Module[];
 	let moduleIndex = 0;
 	$: currentModule = modules[moduleIndex];
-
-	async function handleFetch() {
-		const api = getBaseAPIUrl() + '/v1/pathways/' + $page.params.id;
-		const res = await fetch(api);
-		const json = await res.json();
-
-		if (Object.keys(json).length === 0) {
-			$notes = [...$notes, getNotification('Unable to find article', 'error')];
-
-			goto('/pathways');
-
-			return;
-		} else {
-			$selectedPathway = json;
-		}
-	}
 
 	function makeModules() {
 		if (!$selectedPathway) return;
@@ -48,28 +31,11 @@
 		});
 	}
 
-	afterUpdate(async () => {
-		await tick();
-		hljs.highlightAll();
+	onMount(() => {
+		makeModules();
 	});
 
-	onMount(async () => {
-		if (!$selectedPathway) {
-			await handleFetch();
-
-			if (!$selectedPathway) return;
-		}
-
-		if ($selectedPathway.lessons) {
-			$selectedPathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
-				if (!lesson.quizzes) {
-					lesson.quizzes = [];
-				}
-			});
-		}
-
-		makeModules();
-
+	afterUpdate(async () => {
 		await tick();
 		hljs.highlightAll();
 	});
