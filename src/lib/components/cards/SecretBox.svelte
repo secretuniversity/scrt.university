@@ -10,7 +10,7 @@
 
 <a
 	class="block h-56"
-	href={'/repositories/secret-box/' + slugify(secretBox.title)}
+	href={'/repositories/secret-box/' + secretBox.id + '/' + slugify(secretBox.title)}
 	on:click={() => selectedSecretBox.set(secretBox)}
 >
 	<div

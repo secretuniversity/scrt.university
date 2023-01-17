@@ -7,7 +7,7 @@
 
 <a
 	class="block h-56 w-full"
-	href={'/resources/videos/' + slugify(video.title)}
+	href={'/resources/videos/' + video.id + '/' + slugify(video.title)}
 	on:click={() => selectedVideo.set(video)}
 >
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
