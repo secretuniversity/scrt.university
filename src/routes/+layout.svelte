@@ -17,7 +17,6 @@
 <svelte:head>
 	<title>{$page.data.title} | Secret University</title>
 	<meta name="description" content={$page.data.description} />
-	<meta http-equiv="Content-Security-Policy" content="script-src 'none'" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link
