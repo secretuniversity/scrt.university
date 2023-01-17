@@ -22,7 +22,7 @@
 
 			if (process.env.APP_ENV === 'development') {
 				await $secretClient.val.tx.staking.delegate.simulate({
-					delegator_address: $secretStore.val.address,
+					delegator_address: $secretClient.val.address,
 					validator_address: validatorAddress,
 					amount: {
 						amount: getSCRTasUSCRT(scrtAmount),
@@ -33,7 +33,7 @@
 
 			if (process.env.APP_ENV === 'production') {
 				await $secretClient.val.tx.staking.delegate({
-					delegator_address: $secretStore.val.address,
+					delegator_address: $secretClient.val.address,
 					validator_address: validatorAddress,
 					amount: {
 						amount: getSCRTasUSCRT(scrtAmount),
