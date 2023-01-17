@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	import Head from '$lib/components/Head.svelte';
 	import Banner from '$lib/components/page/Banner.svelte';
 	import Footer from '$lib/components/page/Footer.svelte';
 	import Nav from '$lib/components/page/Nav.svelte';
