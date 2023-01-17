@@ -17,9 +17,47 @@ declare namespace User {
 	}
 }
 
-interface PageData {
-	title: string;
-	description: string;
+declare namespace Page {
+	interface Base {
+		title: string;
+		description: string;
+	}
+
+	interface Bounties extends Base {
+		bounties: Contributions.Bounty.Self[];
+	}
+
+	interface Resources extends Base {
+		resources: {
+			articles: Contributions.Article.Self[];
+			videos: Contributions.Video.Self[];
+		};
+	}
+
+	interface Repositories extends Base {
+		repos: Contributions.Repo.Self[];
+		secretBoxes: Contributions.SecretBox.Self[];
+	}
+
+	interface Pathways extends Base {
+		pathways: Contributions.Pathway.Self[];
+	}
+
+	interface Article extends Base {
+		article: Contributions.Article.Self;
+	}
+
+	interface Video extends Base {
+		video: Contributions.Video.Self;
+	}
+
+	interface Pathway extends Base {
+		pathway: Contributions.Pathway.Self;
+	}
+
+	interface SecretBox extends Base {
+		box: Contributions.SecretBox.Self;
+	}
 }
 
 interface Note {
