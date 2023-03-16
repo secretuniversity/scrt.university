@@ -1,14 +1,14 @@
 <script lang="ts">
-	import Image from '$lib/assets/illustrations/developer.svg';
-	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import TagInput from '$lib/components/forms/TagInput.svelte';
-	import { user, notes } from '$lib/stores';
-	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import { array, number, object, string, mixed } from 'yup';
+	import Image from '$lib/assets/illustrations/developer.svg';
+	import TagInput from '$lib/components/forms/TagInput.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Head from '$lib/components/page/Head.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
+	import { notes, user } from '$lib/stores';
 	import type { InferType, ValidationError } from 'yup';
+	import { array, mixed, number, object, string } from 'yup';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 

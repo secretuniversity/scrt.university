@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import ChevronDown from '$lib/assets/chevron_down_white.svg';
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import PathwayCard from '$lib/components/cards/Pathway.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
-	import Head from '$lib/components/Head.svelte';
 	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
-	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+	import Head from '$lib/components/page/Head.svelte';
 	import { clickOutside } from '$lib/directives/clickOutside';
+	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
+	import { contributorModal, notes, user } from '$lib/stores';
 	import { onMount } from 'svelte';
-	import { getNotification, getBaseAPIUrl } from '$lib/helpers';
-	import { goto } from '$app/navigation';
-	import { contributorModal, user, notes } from '$lib/stores';
 
 	const title = 'Your Dashboard';
 	const description = 'Browse your bookmarks and view your contributions to the university.';

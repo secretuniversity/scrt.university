@@ -1,10 +1,9 @@
 <script lang="ts">
-	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import Head from '$lib/components/Head.svelte';
-	import DevImage from '$lib/assets/illustrations/dev.svg';
-	import WriterImage from '$lib/assets/illustrations/writing.svg';
-	import ProfessorImage from '$lib/assets/illustrations/professor.svg';
 	import ContentCreatorImage from '$lib/assets/illustrations/content_creator.svg';
+	import DevImage from '$lib/assets/illustrations/dev.svg';
+	import ProfessorImage from '$lib/assets/illustrations/professor.svg';
+	import WriterImage from '$lib/assets/illustrations/writing.svg';
+	import Head from '$lib/components/page/Head.svelte';
 
 	const pageTitle = 'Submit';
 	const pageDescription =

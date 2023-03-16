@@ -1,17 +1,17 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import EditIcon from '$lib/assets/edit_icon.svg';
 	import Image from '$lib/assets/illustrations/professor.svg';
-	import Head from '$lib/components/Head.svelte';
+	import TrashIcon from '$lib/assets/trash_icon.svg';
+	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Head from '$lib/components/page/Head.svelte';
 	import Modal from '$lib/components/page/Modal.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import TipTap from '$lib/components/forms/TipTap.svelte';
-	import EditIcon from '$lib/assets/edit_icon.svg';
-	import TrashIcon from '$lib/assets/trash_icon.svg';
-	import { pathwayRequest, user, notes } from '$lib/stores';
+	import { getBaseAPIUrl, getLessonBaseContent, getNotification, loadJWT } from '$lib/helpers';
+	import { notes, pathwayRequest, user } from '$lib/stores';
 	import { pathwayRequestSchema } from '$lib/types/schemas/pathways';
 	import type { ValidationError } from 'yup';
-	import { getNotification, getBaseAPIUrl, getLessonBaseContent, loadJWT } from '$lib/helpers';
-	import { goto } from '$app/navigation';
 
 	const pageTitle = 'Submit A Pathway';
 	const pageDescription =

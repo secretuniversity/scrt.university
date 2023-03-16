@@ -1,15 +1,15 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import Modal from '$lib/components/page/Modal.svelte';
-	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import { goto } from '$app/navigation';
+	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
 	import TagInput from '$lib/components/forms/TagInput.svelte';
 	import TipTap from '$lib/components/forms/TipTap.svelte';
-	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Head from '$lib/components/page/Head.svelte';
+	import Modal from '$lib/components/page/Modal.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';
 	import { articleRequest, notes, user } from '$lib/stores';
 	import { articleRequestSchema } from '$lib/types/schemas/articles';
-	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';
-	import { goto } from '$app/navigation';
 	import type { ValidationError } from 'yup';
 
 	const pageTitle = 'Submit An Article';
