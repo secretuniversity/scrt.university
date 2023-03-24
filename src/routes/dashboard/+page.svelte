@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import PathwayCard from '$lib/components/cards/Pathway.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
 	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
 	import Head from '$lib/components/page/Head.svelte';
+
+	import { goto } from '$app/navigation';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { contributorModal, notes, user } from '$lib/stores';
@@ -63,6 +65,8 @@
 			pathways = await fetchPathways();
 			secretBoxes = await fetchSecretBoxes();
 			videos = await fetchVideos();
+
+			console.log(articles);
 
 			totalContributions = articles.length + pathways.length + secretBoxes.length + videos.length;
 		} catch (err) {
@@ -229,6 +233,17 @@
 						profileButtonText = 'Edit Profile';
 					}
 				}}
+				on:keydown={(e) => {
+					if (e.key === 'Enter') {
+						if (profileButtonText !== 'Back') {
+							view = views.settings;
+							profileButtonText = 'Back';
+						} else {
+							view = views.profile;
+							profileButtonText = 'Edit Profile';
+						}
+					}
+				}}
 				class="mr-4 mb-4 cursor-pointer rounded-md bg-dark-5 py-2 px-4 text-center hover:bg-dark-4"
 			>
 				{profileButtonText}
@@ -277,6 +292,11 @@
 			<h2 class="flex w-full border-b-4 border-dark-5 text-lg">
 				<div
 					on:click={() => (tab = 'bookmarks')}
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							tab = 'bookmarks';
+						}
+					}}
 					class="w-fit rounded-tr-3xl {tab === 'bookmarks'
 						? 'bg-dark-5'
 						: ''} cursor-pointer px-8 py-2 hover:bg-dark-4"
@@ -286,6 +306,11 @@
 
 				<div
 					on:click={() => (tab = 'contributions')}
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							tab = 'contributions';
+						}
+					}}
 					class="w-fit {tab === 'contributions'
 						? 'bg-dark-5'
 						: ''} cursor-pointer rounded-t-3xl px-8 py-2 hover:bg-dark-4"
@@ -303,30 +328,38 @@
 					{:else}
 						<h2 class="mt-16 font-bold text-dark-5">Articles ({articles.length})</h2>
 						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
-							{#each articles as article}
-								<ArticleCard {article} />
-							{/each}
+							{#if articles}
+								{#each articles as article}
+									<ArticleCard {article} />
+								{/each}
+							{/if}
 						</div>
 
 						<h2 class="mt-16 font-bold text-dark-5">Pathways ({pathways.length})</h2>
 						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
-							{#each pathways as pathway}
-								<PathwayCard {pathway} />
-							{/each}
+							{#if pathways}
+								{#each pathways as pathway}
+									<PathwayCard {pathway} />
+								{/each}
+							{/if}
 						</div>
 
 						<h2 class="mt-16 font-bold text-dark-5">Secret Boxes ({secretBoxes.length})</h2>
 						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
-							{#each secretBoxes as secretBox}
-								<SecretBoxCard {secretBox} />
-							{/each}
+							{#if secretBoxes}
+								{#each secretBoxes as secretBox}
+									<SecretBoxCard {secretBox} />
+								{/each}
+							{/if}
 						</div>
 
 						<h2 class="mt-16 font-bold text-dark-5">Videos ({videos.length})</h2>
 						<div class="mt-8 grid h-full w-full auto-rows-max grid-cols-4 gap-6 px-8 pb-4">
-							{#each videos as video}
-								<VideoCard {video} />
-							{/each}
+							{#if videos}
+								{#each videos as video}
+									<VideoCard {video} />
+								{/each}
+							{/if}
 						</div>
 					{/if}
 				{/if}
