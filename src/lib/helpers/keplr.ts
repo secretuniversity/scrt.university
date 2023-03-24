@@ -38,6 +38,6 @@ export async function connect() {
 
 		return Promise.resolve();
 	} catch (err) {
-		return Promise.reject();
+		return Promise.reject(err);
 	}
 }
