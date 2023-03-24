@@ -188,7 +188,7 @@
 				class="rounded-sm"
 			/>
 			<label for="external" class="mr-4 block text-sm font-medium text-white"
-				>Provide an external article.</label
+				>Provide an external video.</label
 			>
 		</div>
 
