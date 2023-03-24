@@ -1,13 +1,13 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Image from '$lib/assets/illustrations/content_creator.svg';
+	import TagInput from '$lib/components/forms/TagInput.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import TagInput from '$lib/components/forms/TagInput.svelte';
-	import { user, notes } from '$lib/stores';
-	import { getNotification, getBaseAPIUrl, loadJWT } from '$lib/helpers';
-	import { goto } from '$app/navigation';
-	import { array, number, object, string, mixed } from 'yup';
+	import { getBaseAPIUrl, getNotification, loadJWT } from '$lib/helpers';
+	import { notes, user } from '$lib/stores';
 	import type { ValidationError } from 'yup';
+	import { array, number, object, string } from 'yup';
 
 	const pageTitle = 'Submit a Video';
 	const pageDescription =
@@ -32,7 +32,6 @@
 		title: string().required('Title is required'),
 		description: string().required('Description is required'),
 		contributor: number().required('Contributor is required'),
-		file: mixed().required('File is required'),
 		tags: array().of(string()).required('Tags are required')
 	});
 
@@ -41,6 +40,7 @@
 		description: string;
 		contributor: number;
 		file: File | null;
+		external_url: string;
 		tags: string[];
 	}
 
@@ -51,8 +51,11 @@
 		description: '',
 		contributor: -1,
 		file: null,
+		external_url: '',
 		tags: []
 	};
+
+	let useExternal = false;
 
 	let hasTitleError = false;
 	let hasDescriptionError = false;
@@ -75,6 +78,7 @@
 		try {
 			await videoSchema.validate(video, { abortEarly: false });
 		} catch (err) {
+			console.log(err);
 			$notes = [...$notes, getNotification('Your video has some errors!', 'error')];
 
 			const e = err as ValidationError;
@@ -100,6 +104,7 @@
 		formData.append('title', video.title);
 		formData.append('description', video.description);
 		formData.append('contributor', video.contributor.toString());
+		formData.append('external_url', video.external_url);
 		if (video.file) formData.append('file', video.file);
 		video.tags.forEach((tag) => formData.append('tags', tag));
 
@@ -175,21 +180,46 @@
 			/>
 		</div>
 
-		{#if hasFileError}
-			<p class="italic text-dark-red">Video file is required</p>
-		{/if}
+		<div class="mb-6 inline-flex items-center space-x-4">
+			<input
+				on:click={() => (useExternal = !useExternal)}
+				type="checkbox"
+				name="external"
+				id="external"
+				class="rounded-sm"
+			/>
+			<label for="external" class="mr-4 block text-sm font-medium text-white"
+				>Provide an external article.</label
+			>
+		</div>
 
-		<label class="block cursor-pointer text-sm font-medium text-white" for="file_input"
-			>Upload video <span class="text-dark-5">MP4</span></label
-		>
-		<input
-			class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
-			aria-describedby="file_input_help"
-			id="file_input"
-			on:change={() => (hasFileError = false)}
-			type="file"
-			bind:files
-		/>
+		{#if useExternal}
+			<!-- content here -->
+			<input
+				type="text"
+				name="external-link"
+				id="external-link"
+				bind:value={video.external_url}
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
+				placeholder="https://youtube.com/secretnetwork"
+			/>
+		{:else}
+			{#if hasFileError}
+				<p class="italic text-dark-red">Video file is required</p>
+			{/if}
+
+			<label class="block cursor-pointer text-sm font-medium text-white" for="file_input"
+				>Upload video <span class="text-dark-5">MP4</span></label
+			>
+			<input
+				class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
+				aria-describedby="file_input_help"
+				id="file_input"
+				on:change={() => (hasFileError = false)}
+				type="file"
+				bind:files
+			/>
+		{/if}
 
 		<TagInput artifact={'video'} on:update={(e) => (video.tags = e.detail.tags)} />
 

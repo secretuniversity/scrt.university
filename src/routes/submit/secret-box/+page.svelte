@@ -8,7 +8,7 @@
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { notes, user } from '$lib/stores';
 	import type { InferType, ValidationError } from 'yup';
-	import { array, mixed, number, object, string } from 'yup';
+	import { array, number, object, string } from 'yup';
 
 	const pageTitle = 'Submit a Secret Box';
 	const pageDescription = `Have you created a tool, template, or some kind of cool concept while 
@@ -37,7 +37,6 @@
 		contributor: number().required('Contributor is required'),
 		devEnv: string(),
 		difficulty: string().required('Difficulty is required'),
-		file: mixed().nullable(),
 		tags: array().of(string()).required('Tags are required')
 	});
 
@@ -47,7 +46,6 @@
 		url: string;
 		difficulty: string;
 		devEnv: string;
-		file: File | null;
 		tags: string[];
 	}
 
@@ -58,11 +56,8 @@
 		contributor: -1,
 		difficulty: '',
 		devEnv: '',
-		file: null,
 		tags: []
 	};
-
-	let files: FileList;
 
 	let hasTitleError = false;
 	let hasDescriptionError = false;
@@ -77,10 +72,6 @@
 			const n = getNotification('You must be logged in to submit a video.', 'error');
 			$notes = [...$notes, n];
 			return;
-		}
-
-		if (files && files.length > 0) {
-			secretBox.file = files[0];
 		}
 
 		secretBox.contributor = $user.val.id;
@@ -115,26 +106,23 @@
 			return;
 		}
 
-		const formData = new FormData();
-		formData.append('title', secretBox.title);
-		formData.append('description', secretBox.description);
-		formData.append('repo_url', secretBox.url);
-		formData.append('contributor', secretBox.contributor.toString());
-		formData.append('difficulty', secretBox.difficulty);
-		formData.append('dev_env', secretBox.devEnv);
-		if (secretBox.file) {
-			formData.append('file', secretBox.file);
-		}
-		secretBox.tags.forEach((tag) => formData.append('tags', tag));
-
 		try {
 			const url = getBaseAPIUrl() + '/v1/secret-boxes';
 			const res = await fetch(url, {
 				method: 'POST',
 				headers: {
+					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`
 				},
-				body: formData
+				body: JSON.stringify({
+					title: secretBox.title,
+					description: secretBox.description,
+					repo_url: secretBox.url,
+					contributor: secretBox.contributor,
+					difficulty: secretBox.difficulty,
+					dev_env: secretBox.devEnv,
+					tags: secretBox.tags
+				})
 			});
 
 			if (res.status === 200) {
@@ -250,19 +238,6 @@
 			<option value="intermediate">Intermediate</option>
 			<option value="Advanced">Advanced</option>
 		</select>
-
-		<label for="banner-img" class="block text-sm font-medium text-white"
-			>Banner Image (optional .JPG)</label
-		>
-
-		<input
-			class="block w-full cursor-pointer rounded-lg border border-white text-sm text-white focus:outline-none"
-			aria-describedby="file_input_help"
-			id="banner-img"
-			accept="image/jpg"
-			type="file"
-			bind:files
-		/>
 
 		<TagInput artifact={'secret box'} on:update={(e) => (secretBox.tags = e.detail.tags)} />
 

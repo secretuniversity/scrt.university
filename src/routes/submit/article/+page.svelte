@@ -45,6 +45,8 @@
 	let hasDescriptionError = false;
 	let hasContentError = false;
 
+	let useExternal = false;
+
 	async function submit() {
 		let token = loadJWT('user');
 
@@ -78,6 +80,8 @@
 
 			return;
 		}
+
+		console.log($articleRequest);
 
 		try {
 			const url = getBaseAPIUrl() + '/v1/articles';
@@ -147,6 +151,11 @@
 					{#each drafts as d}
 						<div
 							on:click={() => (selectedDraft = d)}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') {
+									selectedDraft = d;
+								}
+							}}
 							class="grid w-full cursor-pointer grid-cols-12 rounded-md bg-dark-5 p-2"
 						>
 							<p class="col-span-3">{d.val.title}</p>
@@ -255,16 +264,45 @@
 			<p class="mb-2 italic text-dark-red">Content is required</p>
 		{/if}
 
-		<div
-			on:click={() => (hasContentError = false)}
-			class="min-h-[800px] rounded-md border border-solid border-white text-white"
-		>
-			<TipTap
-				value={$articleRequest.content}
-				on:update={(e) => {
-					$articleRequest.content = e.detail.content;
-				}}
+		<div class="mb-6 inline-flex items-center space-x-4">
+			<input
+				on:click={() => (useExternal = !useExternal)}
+				type="checkbox"
+				name="external"
+				id="external"
+				class="rounded-sm"
 			/>
+			<label for="external" class="mr-4 block text-sm font-medium text-white"
+				>Provide an external article.</label
+			>
 		</div>
+
+		{#if useExternal}
+			<input
+				type="text"
+				name="external-link"
+				id="external-link"
+				bind:value={$articleRequest.external_url}
+				class="block w-full rounded-md border-white bg-dark-3 text-white shadow-sm"
+				placeholder="https://medium.com/@secretnetwork"
+			/>
+		{:else}
+			<div
+				on:click={() => (hasContentError = false)}
+				on:keydown={(e) => {
+					if (e.key === 'Enter') {
+						hasContentError = false;
+					}
+				}}
+				class="min-h-[800px] rounded-md border border-solid border-white text-white"
+			>
+				<TipTap
+					value={$articleRequest.content}
+					on:update={(e) => {
+						$articleRequest.content = e.detail.content;
+					}}
+				/>
+			</div>
+		{/if}
 	</div>
 </section>

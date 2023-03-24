@@ -285,6 +285,11 @@
 					{#each drafts as d}
 						<div
 							on:click={() => (selectedDraft = d)}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') {
+									selectedDraft = d;
+								}
+							}}
 							class="grid w-full cursor-pointer grid-cols-12 rounded-md bg-dark-5 p-2"
 						>
 							<p class="cols-span-2">{d.val.title}</p>
