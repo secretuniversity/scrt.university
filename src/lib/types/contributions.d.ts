@@ -5,7 +5,7 @@ declare type QuizOptionRequestSchema = import('./schemas/pathways').QuizOptionRe
 declare type ArticleRequestSchema = import('./schemas/articles').ArticleRequestSchema;
 
 declare namespace Contributions {
-	declare type Contribution = Article.Self | Video.Self | Repo.Self | SecretBox.Self | Pathway.Self;
+	declare type UserContribution = Article.Self | Video.Self | SecretBox.Self | Pathway.Self;
 
 	interface Tag {
 		id: string;
@@ -14,7 +14,9 @@ declare namespace Contributions {
 
 	declare namespace Pathway {
 		interface Self {
+			kind: 'pathway';
 			id: string;
+			contributor: number;
 			title: string;
 			description: string;
 			difficulty: string;
@@ -75,12 +77,18 @@ declare namespace Contributions {
 
 	declare namespace Article {
 		interface Self {
+			kind: 'article';
 			id: string;
 			title: string;
-			contributor: string;
+			contributor: number;
 			description: string;
 			content: string;
 			tags: string[];
+			external_url: {
+				String: string;
+				Valid: boolean;
+			};
+
 			createdAt: Date;
 			updatedAt: Date;
 		}
@@ -90,6 +98,7 @@ declare namespace Contributions {
 			contributor: number;
 			description: string;
 			content: string;
+			external_url: string;
 			tags: string[];
 		}
 	}
@@ -110,10 +119,11 @@ declare namespace Contributions {
 
 	declare namespace SecretBox {
 		interface Self {
+			kind: 'secret-box';
 			id: number;
 			title: string;
 			description: string;
-			contributor: string;
+			contributor: number;
 			repo_url: string;
 			difficulty: string;
 			dev_env: string;
@@ -139,10 +149,15 @@ declare namespace Contributions {
 
 	declare namespace Video {
 		interface Self {
+			kind: 'video';
 			id: number;
-			contributor: string;
+			contributor: number;
 			title: string;
 			description: string;
+			external_url: {
+				String: string;
+				Valid: boolean;
+			};
 			youtube_url: string;
 			created_at: string;
 			updated_at: string;
