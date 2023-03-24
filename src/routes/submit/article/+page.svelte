@@ -81,8 +81,6 @@
 			return;
 		}
 
-		console.log($articleRequest);
-
 		try {
 			const url = getBaseAPIUrl() + '/v1/articles';
 			const res = await fetch(url, {

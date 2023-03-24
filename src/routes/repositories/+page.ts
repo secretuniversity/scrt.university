@@ -2,7 +2,6 @@ import { getBaseAPIUrl } from '$lib/helpers';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad<Page.Repositories> = async ({ fetch }) => {
-	console.log('asdf');
 	const repos = await fetchRepos(fetch);
 	const secretBoxes = await fetchSecretBoxes(fetch);
 	return {

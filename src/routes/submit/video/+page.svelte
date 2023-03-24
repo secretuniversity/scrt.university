@@ -78,7 +78,6 @@
 		try {
 			await videoSchema.validate(video, { abortEarly: false });
 		} catch (err) {
-			console.log(err);
 			$notes = [...$notes, getNotification('Your video has some errors!', 'error')];
 
 			const e = err as ValidationError;

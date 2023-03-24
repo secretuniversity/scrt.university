@@ -90,8 +90,6 @@
 		video.description = data.video.description;
 		video.contributor = data.video.contributor;
 		video.tags = data.video.tags;
-
-		console.log(video);
 	});
 
 	async function submit() {

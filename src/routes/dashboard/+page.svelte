@@ -66,8 +66,6 @@
 			secretBoxes = await fetchSecretBoxes();
 			videos = await fetchVideos();
 
-			console.log(articles);
-
 			totalContributions = articles.length + pathways.length + secretBoxes.length + videos.length;
 		} catch (err) {
 			$notes = [...$notes, getNotification(err as string, 'error')];
