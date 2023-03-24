@@ -1,21 +1,13 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/stores';
-	import { clickOutside } from '$lib/directives/clickOutside';
-	import { connect } from '$lib/helpers/keplr';
-	import {
-		getNotification,
-		isExpired,
-		retry,
-		loadJWT,
-		saveJWT,
-		getBaseAPIUrl
-	} from '$lib/helpers/index';
-	import { notes, user, secretClient } from '$lib/stores';
-	import type { User } from '$lib/models';
-	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import ChevronDown from '$lib/assets/chevron_down_white.svg';
+	import WalletIcon from '$lib/assets/wallet_icon.svg';
+	import { clickOutside } from '$lib/directives/clickOutside';
+	import { getBaseAPIUrl, getNotification, isExpired, loadJWT } from '$lib/helpers/index';
+	import { connect } from '$lib/helpers/keplr';
+	import type { User } from '$lib/models';
+	import { notes, secretClient, user } from '$lib/stores';
 
 	let learn = false;
 	let dashboard = false;
@@ -57,6 +49,7 @@
 	}
 
 	async function handleConnect() {
+		const localUser = localStorage.getItem('user');
 		try {
 			// Connect to Keplr
 			await connect();
@@ -65,6 +58,10 @@
 			if (!$secretClient) {
 				$notes = [...$notes, getNotification('Error connecting to Keplr', 'error')];
 				return;
+			}
+
+			if (localUser) {
+				$user = JSON.parse(localUser);
 			}
 
 			// Check if user is already logged in
@@ -78,6 +75,7 @@
 			exp.setDate(exp.getDate() + 1);
 
 			$user = { val: res, exp: exp.getTime() };
+			localStorage.setItem('local-user', JSON.stringify($user));
 		} catch (err) {
 			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
@@ -123,6 +121,11 @@
 					<a href="/learn" class="font-medium text-white hover:text-gray"> Learn </a>
 					<img
 						on:click={() => (learn = true)}
+						on:keydown={(e) => {
+							if (e.key === 'Enter') {
+								learn = true;
+							}
+						}}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
 						src={ChevronDown}
 						alt="Learn to build on Secret Network"
