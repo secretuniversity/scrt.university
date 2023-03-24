@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { slugify } from '$lib/helpers';
-	import { selectedSecretBox } from '$lib/stores';
+	import { boxCursor } from '$lib/stores';
 
 	import SecretBoxLogo from '$lib/assets/secret_box_logo.png';
 
@@ -11,7 +11,7 @@
 <a
 	class="block h-56"
 	href={'/repositories/secret-box/' + secretBox.id + '/' + slugify(secretBox.title)}
-	on:click={() => selectedSecretBox.set(secretBox)}
+	on:click={() => boxCursor.set(secretBox)}
 >
 	<div
 		class="h-full rounded-md bg-gradient-to-r from-dark-blue to-dark-orange p-[0.125rem] shadow-lg"

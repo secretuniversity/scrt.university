@@ -1,15 +1,17 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
-	import { selectedArticle } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
+	import { articleCursor } from '$lib/stores';
 	export let article: Contributions.Article.Self;
+
+	$: href = article.external_url
+		? article.external_url.String
+		: '/resources/articles/' + article.id + '/' + slugify(article.title);
+
+	$: target = article.external_url ? '_blank' : '_self';
 </script>
 
-<a
-	class=" block h-56 w-full"
-	href={'/resources/articles/' + article.id + '/' + slugify(article.title)}
-	on:click={() => selectedArticle.set(article)}
->
+<a class=" block h-56 w-full" {href} {target} on:click={() => articleCursor.set(article)}>
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
 		<div class="mb-4 flex h-fit w-full space-x-4">
 			<h3 class="grow text-2xl font-bold">
@@ -28,13 +30,15 @@
 		</p>
 
 		<div class="mt-8 flex space-x-2 self-end">
-			{#each article.tags as tag, i}
-				{#if i < 3}
-					<Tag {tag} />
+			{#if article.tags}
+				{#each article.tags as tag, i}
+					{#if i < 3}
+						<Tag {tag} />
+					{/if}
+				{/each}
+				{#if article.tags.length > 3}
+					<p class="ml-2 self-end text-gray">+ more</p>
 				{/if}
-			{/each}
-			{#if article.tags.length > 3}
-				<p class="ml-2 self-end text-gray">+ more</p>
 			{/if}
 		</div>
 	</div>

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { selectedPathway } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
+	import { pathwayCursor } from '$lib/stores';
 	export let pathway: Contributions.Pathway.Self;
 </script>
 
 <a
 	class=" block h-56 w-full"
-	href={'/pathways/' + slugify(pathway.title)}
-	on:click={() => selectedPathway.set(pathway)}
+	href={'/pathways/' + pathway.id + '/' + slugify(pathway.title)}
+	on:click={() => pathwayCursor.set(pathway)}
 >
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
 		<div class="mb-4 flex h-fit w-full space-x-4">

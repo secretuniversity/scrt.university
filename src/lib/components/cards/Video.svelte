@@ -1,15 +1,17 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
-	import { selectedVideo } from '$lib/stores';
 	import { slugify } from '$lib/helpers';
+	import { videoCursor } from '$lib/stores';
 	export let video: Contributions.Video.Self;
+
+	$: href = video.external_url
+		? video.external_url.String
+		: '/resources/videos/' + video.id + '/' + slugify(video.title);
+
+	$: target = video.external_url ? '_blank' : '_self';
 </script>
 
-<a
-	class="block h-56 w-full"
-	href={'/resources/videos/' + video.id + '/' + slugify(video.title)}
-	on:click={() => selectedVideo.set(video)}
->
+<a class="block h-56 w-full" {href} {target} on:click={() => videoCursor.set(video)}>
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
 		<div class="mb-4 flex h-fit w-full grid-cols-2">
 			<h3 class="grow text-2xl font-bold">
