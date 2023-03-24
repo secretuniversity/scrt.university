@@ -1,17 +1,38 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import MobileImage from '$lib/assets/illustrations/mobile.svg';
+	import Notification from '$lib/components/notify/Notifications.svelte';
 	import Banner from '$lib/components/page/Banner.svelte';
 	import Footer from '$lib/components/page/Footer.svelte';
 	import Nav from '$lib/components/page/Nav.svelte';
-	import Notification from '$lib/components/notify/Notifications.svelte';
-	import MobileImage from '$lib/assets/illustrations/mobile.svg';
+	import { isExpired } from '$lib/helpers';
+	import { connect } from '$lib/helpers/keplr';
+	import { user } from '$lib/stores';
+	import { onMount } from 'svelte';
 	import '../app.css';
 
 	const minScreenWidth = 961;
 
 	$: width = 2000; // arbitrary large number to avoid loading mobile warning
 	$: isMobile = width < minScreenWidth;
+
+	onMount(async () => {
+		const localUser = localStorage.getItem('local-user');
+		try {
+			if (sessionStorage.getItem('keplr-connected') === 'true' && localUser) {
+				await connect();
+				$user = JSON.parse(localUser);
+
+				if ($user && isExpired($user.exp)) {
+					$user = null;
+					localStorage.setItem('local-user', '');
+				}
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	});
 </script>
 
 <svelte:head>
