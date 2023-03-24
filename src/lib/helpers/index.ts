@@ -95,6 +95,14 @@ export function isExpired(exp: number) {
 	return exp < new Date().getTime();
 }
 
+export function toTitleCase(str: string) {
+	return str
+		.toLowerCase()
+		.split(' ')
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+}
+
 // export async function getOrCreateUser(address: string): Promise<User> {
 // 	try {
 // 		const data = { address };
