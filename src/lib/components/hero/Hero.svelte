@@ -85,17 +85,37 @@
 	<div class="mx-auto flex h-[12%] w-max space-x-2">
 		<div
 			on:click={() => clear(0)}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					clear(0);
+				}
+			}}
 			class="h-4 w-4 cursor-pointer rounded-full {i === 0 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(1)}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					clear(1);
+				}
+			}}
 			class="h-4 w-4 cursor-pointer rounded-full {i === 1 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
 			on:click={() => clear(2)}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					clear(2);
+				}
+			}}
 			class="h-4 w-4 cursor-pointer rounded-full {i === 2 ? 'bg-white' : 'bg-gray'}"
 		/>
 		<div
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					clear(3);
+				}
+			}}
 			on:click={() => clear(3)}
 			class="h-4 w-4 cursor-pointer rounded-full {i === 3 ? 'bg-white' : 'bg-gray'}"
 		/>

@@ -13,7 +13,12 @@
 			>
 			<span
 				class="col-start-3 cursor-pointer self-center justify-self-end pr-4 text-xl"
-				on:click={() => (show = false)}>&times;</span
+				on:click={() => (show = false)}
+				on:keydown={(e) => {
+					if (e.key === 'Enter') {
+						show = false;
+					}
+				}}>&times;</span
 			>
 		</span>
 	</div>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Shadow } from 'svelte-loading-spinners';
-	import { fly, fade } from 'svelte/transition';
 	import { notes } from '$lib/stores';
 	import { onDestroy, onMount } from 'svelte';
+	import { Shadow } from 'svelte-loading-spinners';
+	import { fade, fly } from 'svelte/transition';
 
 	export let n: Note;
 	export let i = 0;
@@ -50,6 +50,9 @@
 		in:fly={{ y: -200, duration: 1000 }}
 		out:fade
 		on:click={() => handleClick()}
+		on:keydown={(e) => {
+			if (e.key === 'Enter') handleClick();
+		}}
 		class="cursor-pointer px-4 py-2 text-base text-white {getBGColor(n)} rounded-md shadow-md"
 	>
 		<div class="flex items-center">

@@ -47,7 +47,15 @@
 {/if}
 
 {#each tags as tag, i}
-	<div class="mr-2 inline-block cursor-pointer" on:click={() => removeTag(i)}>
+	<div
+		class="mr-2 inline-block cursor-pointer"
+		on:click={() => removeTag(i)}
+		on:keydown={(e) => {
+			if (e.key === 'Backspace') {
+				removeTag(i);
+			}
+		}}
+	>
 		<Tag {tag} />
 	</div>
 {/each}
@@ -69,6 +77,11 @@
 			class="inline-block cursor-pointer"
 			on:click={() => {
 				addCommonTag(str);
+			}}
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					addCommonTag(str);
+				}
 			}}
 		>
 			<Tag tag={str} />
