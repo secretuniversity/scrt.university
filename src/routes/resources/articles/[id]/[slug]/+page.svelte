@@ -1,19 +1,23 @@
 <script lang="ts">
+	import ContributionUpdateButton from '$lib/components/page/ContributionUpdateButton.svelte';
 	import Tag from '$lib/components/page/Tag.svelte';
+	import { getNotification } from '$lib/helpers';
+	import { articleCursor, notes } from '$lib/stores';
 	import hljs from 'highlight.js';
 	import { onMount, tick } from 'svelte';
-	import { getNotification } from '$lib/helpers';
-	import { notes } from '$lib/stores';
 
-	import 'highlight.js/styles/tokyo-night-dark.css';
-	import '$lib/styles/markdown.scss';
 	import { getBaseAPIUrl } from '$lib/helpers';
+	import '$lib/styles/markdown.scss';
+	import 'highlight.js/styles/tokyo-night-dark.css';
 
 	export let data: Page.Article;
 
 	let author = '';
 
 	onMount(async () => {
+		$articleCursor = data.article;
+
+		data.article.kind = 'article';
 		fetchContributor();
 
 		await tick();
@@ -34,17 +38,22 @@
 </script>
 
 <section class="min-h-screen py-16 text-white">
+	<div class="mx-32 mb-6 flex justify-end">
+		<ContributionUpdateButton contribution={data.article} />
+	</div>
 	{#if data.article}
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			<p class="my-6 text-center text-5xl font-bold">{data.article.title}</p>
 			<p class="mb-4 text-center text-base">Written by {author}</p>
 
 			<div class="mx-auto flex max-w-2xl flex-wrap space-x-2">
-				{#each data.article.tags as tag}
-					<div class="mb-2">
-						<Tag {tag} />
-					</div>
-				{/each}
+				{#if data.article.tags}
+					{#each data.article.tags as tag}
+						<div class="mb-2">
+							<Tag {tag} />
+						</div>
+					{/each}
+				{/if}
 			</div>
 
 			<div class="markdown mt-8 w-full max-w-4xl">

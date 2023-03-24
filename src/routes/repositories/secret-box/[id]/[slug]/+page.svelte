@@ -1,7 +1,8 @@
 <script lang="ts">
 	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
+	import ContributionUpdateButton from '$lib/components/page/ContributionUpdateButton.svelte';
 	import Tag from '$lib/components/page/Tag.svelte';
-	import { selectedSecretBox } from '$lib/stores';
+	import { boxCursor } from '$lib/stores';
 	import { onMount } from 'svelte';
 
 	export let data: Page.SecretBox;
@@ -10,14 +11,18 @@
 	$: bgStyles = `bg-[url('${bgImage}')] bg-cover bg-center`;
 
 	onMount(() => {
+		$boxCursor = data.box;
 		const urlSafeTitle = data.box.title.replace(/ /g, '%20');
 
 		bgImage = `https://storage.googleapis.com/celadon/${process.env.APP_ENV}/secret-box/${data.box.id}/${urlSafeTitle}.jpg`;
 	});
 </script>
 
-{#if $selectedSecretBox}
+{#if $boxCursor}
 	<section class="relative min-h-[650px] pb-32">
+		<div class="my-6 mx-32 flex justify-end">
+			<ContributionUpdateButton contribution={data.box} />
+		</div>
 		<!-- <div class="h-72 w-full overflow-hidden">
 			<img class="h-auto w-full" src={bgImage} alt="Learn with Secret Boxes" />
 		</div>
@@ -34,32 +39,34 @@
 					</p>
 
 					<h2 class="text-4xl font-bold uppercase tracking-wide text-white">
-						{$selectedSecretBox.title}
+						{$boxCursor.title}
 					</h2>
 					<p class="mt-4 max-w-2xl text-base text-gray">
-						{$selectedSecretBox.description}
+						{$boxCursor.description}
 					</p>
 
 					<div class="my-4 flex space-x-2">
-						{#each $selectedSecretBox.tags as tag}
-							<Tag {tag} />
-						{/each}
+						{#if $boxCursor.tags}
+							{#each $boxCursor.tags as tag}
+								<Tag {tag} />
+							{/each}
+						{/if}
 					</div>
 
 					<div class="mt-4 flex gap-x-3 self-start">
 						<a
 							target="_blank"
 							rel="noopener noreferrer"
-							href={$selectedSecretBox.repo_url}
+							href={$boxCursor.repo_url}
 							class="mt-3 w-max cursor-pointer rounded-md bg-dark-3 px-6 py-3 text-base font-medium text-white hover:bg-dark-2"
 							>View on Github</a
 						>
 
-						{#if $selectedSecretBox.dev_env}
+						{#if $boxCursor.dev_env}
 							<a
 								target="_blank"
 								rel="noopener noreferrer"
-								href={$selectedSecretBox.dev_env}
+								href={$boxCursor.dev_env}
 								class="bg-[] mt-3 w-max cursor-pointer rounded-md bg-[#FFAE33] px-6 py-3 text-base font-medium text-dark-2 hover:bg-[#ffa319]"
 								>Launch Sandbox</a
 							>

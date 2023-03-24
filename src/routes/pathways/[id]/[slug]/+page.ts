@@ -1,9 +1,10 @@
 import { getBaseAPIUrl } from '$lib/helpers';
+import { pathwayCursor } from '$lib/stores';
 import type { PageLoad } from './$types';
-import { selectedPathway } from '$lib/stores';
 
 export const load: PageLoad<Page.Pathway> = async ({ params, fetch }) => {
 	const pathway = await loadPathway(params.id, fetch);
+	pathway.kind = 'pathway';
 
 	return {
 		title: pathway.title,
@@ -13,8 +14,8 @@ export const load: PageLoad<Page.Pathway> = async ({ params, fetch }) => {
 };
 
 async function loadPathway(id: string, fetch: FetchFn): Promise<Contributions.Pathway.Self> {
-	selectedPathway.subscribe((p) => {
-		if (p) {
+	pathwayCursor.subscribe((p) => {
+		if (p && p.lessons) {
 			p.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
 				if (!lesson.quizzes) {
 					lesson.quizzes = [];
@@ -33,13 +34,17 @@ async function loadPathway(id: string, fetch: FetchFn): Promise<Contributions.Pa
 	const json = await res.json();
 	const pathway = json as Contributions.Pathway.Self;
 
-	pathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
-		if (!lesson.quizzes) {
-			lesson.quizzes = [];
-		}
-	});
+	if (pathway.lessons) {
+		pathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
+			if (!lesson.quizzes) {
+				lesson.quizzes = [];
+			}
+		});
+	} else {
+		pathway.lessons = [];
+	}
 
-	selectedPathway.set(json);
+	pathwayCursor.set(json);
 
 	return json as Contributions.Pathway.Self;
 }

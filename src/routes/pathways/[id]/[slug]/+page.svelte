@@ -1,34 +1,40 @@
 <script lang="ts">
 	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
 	import RightArrowIcon from '$lib/assets/right_arrow.svg';
-	import { afterUpdate, tick } from 'svelte';
-	import { notes, selectedPathway } from '$lib/stores';
+	import ContributionUpdateButton from '$lib/components/page/ContributionUpdateButton.svelte';
 	import { getNotification } from '$lib/helpers';
+	import { notes, pathwayCursor } from '$lib/stores';
+	import '$lib/styles/markdown.scss';
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/tokyo-night-dark.css';
-	import '$lib/styles/markdown.scss';
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount, tick } from 'svelte';
 
 	type Module = Contributions.Pathway.Lesson | Contributions.Pathway.Quiz;
+
+	export let data: Page.Pathway;
 
 	let modules = [] as Module[];
 	let moduleIndex = 0;
 	$: currentModule = modules[moduleIndex];
 
 	function makeModules() {
-		if (!$selectedPathway) return;
+		if (!$pathwayCursor) return;
 
-		$selectedPathway.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
-			lesson.kind = 'lesson';
-			modules = [...modules, lesson];
+		if ($pathwayCursor.lessons) {
+			$pathwayCursor.lessons.forEach((lesson: Contributions.Pathway.Lesson) => {
+				lesson.kind = 'lesson';
+				modules = [...modules, lesson];
 
-			if (lesson.quizzes) {
-				lesson.quizzes.forEach((quiz: Module) => {
-					quiz.kind = 'quiz';
-					modules = [...modules, quiz];
-				});
-			}
-		});
+				if (lesson.quizzes) {
+					lesson.quizzes.forEach((quiz: Module) => {
+						quiz.kind = 'quiz';
+						modules = [...modules, quiz];
+					});
+				}
+			});
+		} else {
+			$pathwayCursor.lessons = [];
+		}
 	}
 
 	onMount(() => {
@@ -41,7 +47,7 @@
 	});
 
 	function goBack() {
-		if (!$selectedPathway) return;
+		if (!$pathwayCursor) return;
 
 		if (moduleIndex > 0) {
 			moduleIndex--;
@@ -53,7 +59,7 @@
 	}
 
 	async function goForward() {
-		if (!$selectedPathway) return;
+		if (!$pathwayCursor) return;
 
 		if (moduleIndex < modules.length - 1) {
 			moduleIndex++;
@@ -100,6 +106,10 @@
 </script>
 
 <section class="mx-4 grid min-h-screen pb-36">
+	<div class="mx-32 mt-8 mb-6 flex justify-end">
+		<ContributionUpdateButton contribution={data.pathway} />
+	</div>
+
 	<div class="mt-8 grid grid-cols-12 gap-x-4">
 		<div class="col-span-3 pl-2">
 			<!-- <Review /> -->

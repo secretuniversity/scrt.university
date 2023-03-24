@@ -25,6 +25,10 @@ async function fetchSecretBoxes(fetch: FetchFn): Promise<Contributions.SecretBox
 	const response = await fetch(getBaseAPIUrl() + `/v1/secret-boxes?limit=100&offset=0`);
 	const boxes = await response.json();
 
+	boxes.forEach((box: Contributions.SecretBox.Self) => {
+		box.kind = 'secret-box';
+	});
+
 	return boxes as Contributions.SecretBox.Self[];
 }
 

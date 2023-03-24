@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { notes, selectedPathway } from '$lib/stores';
-	import { getNotification, getBaseAPIUrl, slugify } from '$lib/helpers';
 	import { goto } from '$app/navigation';
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import BGImage from '$lib/assets/illustrations/space_bg.svg';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import { getNotification, slugify } from '$lib/helpers';
+	import { notes, pathwayCursor } from '$lib/stores';
+	import { onMount } from 'svelte';
 
 	export let data: Page.Pathways;
 
@@ -82,6 +82,11 @@
 							<div class="grid w-full grid-cols-2">
 								<p
 									on:click={() => toggleDetailsFor(i)}
+									on:keydown={(e) => {
+										if (e.key === 'Enter') {
+											toggleDetailsFor(i);
+										}
+									}}
 									class="mt-2 cursor-pointer text-light-blue underline"
 								>
 									{detailsMap[i] ? 'View Less' : 'View More'}
@@ -89,7 +94,7 @@
 
 								<button
 									on:click={() => {
-										selectedPathway.set(p);
+										pathwayCursor.set(p);
 										goto(`/pathways/${slugify(p.id)}/${slugify(p.title)}`);
 									}}
 									class="justify-self-end rounded-md bg-dark-blue px-6 py-2 text-white hover:bg-darker-blue"

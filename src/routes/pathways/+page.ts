@@ -16,5 +16,9 @@ async function loadPathways(fetch: FetchFn): Promise<Contributions.Pathway.Self[
 	const res = await fetch(getBaseAPIUrl() + '/v1/pathways');
 	const json = await res.json();
 
+	json.forEach((pathway: Contributions.Pathway.Self) => {
+		pathway.kind = 'pathway';
+	});
+
 	return json as Contributions.Pathway.Self[];
 }
