@@ -1,34 +1,33 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
 
 	const dispatch = createEventDispatcher<{ update: { content: string } }>();
 
 	import { Editor, Extension } from '@tiptap/core';
-	import StarterKit from '@tiptap/starter-kit';
-	import Typography from '@tiptap/extension-typography';
-	import Underline from '@tiptap/extension-underline';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+	import Image from '@tiptap/extension-image';
+	import Link from '@tiptap/extension-link';
 	import Table from '@tiptap/extension-table';
 	import TableCell from '@tiptap/extension-table-cell';
 	import TableHeader from '@tiptap/extension-table-header';
 	import TableRow from '@tiptap/extension-table-row';
-	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-	import Image from '@tiptap/extension-image';
-	import Link from '@tiptap/extension-link';
+	import Typography from '@tiptap/extension-typography';
+	import Underline from '@tiptap/extension-underline';
+	import StarterKit from '@tiptap/starter-kit';
 	import { Plugin } from 'prosemirror-state';
 
-	import { marked } from 'marked';
 	import DOMPurify from 'isomorphic-dompurify';
+	import { marked } from 'marked';
 
-	import html from 'highlight.js/lib/languages/xml';
+	import bash from 'highlight.js/lib/languages/bash';
+	import csharp from 'highlight.js/lib/languages/csharp';
 	import css from 'highlight.js/lib/languages/css';
 	import js from 'highlight.js/lib/languages/javascript';
-	import ts from 'highlight.js/lib/languages/typescript';
-	import rust from 'highlight.js/lib/languages/rust';
-	import bash from 'highlight.js/lib/languages/bash';
 	import python from 'highlight.js/lib/languages/python';
-	import csharp from 'highlight.js/lib/languages/csharp';
+	import rust from 'highlight.js/lib/languages/rust';
+	import ts from 'highlight.js/lib/languages/typescript';
+	import html from 'highlight.js/lib/languages/xml';
 	import { lowlight } from 'lowlight';
 
 	import ClearIcon from '$lib/assets/clear-icon.svg';
@@ -78,7 +77,9 @@
 		}
 	});
 
-	onMount(() => {
+	onMount(async () => {
+		await tick();
+
 		lowlight.registerLanguage('html', html);
 		lowlight.registerLanguage('xml', html);
 		lowlight.registerLanguage('css', css);
