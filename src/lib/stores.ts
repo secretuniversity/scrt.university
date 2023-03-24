@@ -38,6 +38,7 @@ export const pathwayRequest: Writable<Contributions.Pathway.PathwayRequest> = wr
 
 export const articleRequest: Writable<Contributions.Article.ArticleRequest> = writable({
 	title: '',
+	external_url: '',
 	contributor: -1,
 	description: '',
 	content: '',
