@@ -10,14 +10,14 @@
 	import { notes, secretClient, user } from '$lib/stores';
 
 	let learn = false;
-	let dashboard = false;
+	let build = false;
 
 	$: if ($navigating) reset();
 	$: loggedIn = $user && $secretClient && loadJWT('user');
 
 	function reset() {
 		learn = false;
-		dashboard = false;
+		build = false;
 	}
 
 	async function login(address: string): Promise<User> {
@@ -148,6 +148,28 @@
 
 				<span class="relative inline-flex items-center gap-x-2">
 					<a href="/build" class="font-medium text-white hover:text-gray"> Build </a>
+					<img
+						on:click={() => (build = true)}
+						on:keydown={(e) => {
+							if (e.key === 'Enter') {
+								build = true;
+							}
+						}}
+						class="inline-block h-3.5 w-3.5 cursor-pointer"
+						src={ChevronDown}
+						alt="Learn to build on Secret Network"
+					/>
+					{#if build}
+						<div
+							use:clickOutside
+							on:click_outside={() => (build = false)}
+							class="absolute top-0 left-0 z-10 mt-10 w-max rounded-md border border-gray bg-dark-4 p-4"
+						>
+							<div class="grid-col-1 grid gap-y-2 overflow-visible border-gray text-white">
+								<a href="/bounties">Bounties</a>
+							</div>
+						</div>
+					{/if}
 				</span>
 				<a href="/support" class="font-medium text-white hover:text-gray">Support</a>
 			</div>
