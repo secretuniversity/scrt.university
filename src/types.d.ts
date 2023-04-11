@@ -24,7 +24,8 @@ declare namespace Page {
 	}
 
 	interface Bounties extends Base {
-		bounties: Contributions.Bounty.Self[];
+		communityBounties: Contributions.Bounty.Community[];
+		slabsBounties: Contributions.Bounty.Slabs[];
 	}
 
 	interface Resources extends Base {

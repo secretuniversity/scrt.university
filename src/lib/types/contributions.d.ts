@@ -104,7 +104,7 @@ declare namespace Contributions {
 	}
 
 	declare namespace Bounty {
-		interface Self {
+		interface Community {
 			id: string;
 			title: string;
 			description: string;
@@ -114,6 +114,19 @@ declare namespace Contributions {
 			status: string;
 			created_at: string;
 			updated_at: string;
+		}
+
+		interface Slabs {
+			id: number;
+			category: string;
+			title: string;
+			complexity: string;
+			status: string;
+			reward: number;
+			token: string;
+			description: string;
+			success_criteria: string;
+			external_url: string;
 		}
 	}
 

@@ -1,9 +1,17 @@
 <script lang="ts">
+	import CommunityBountyCard from '$lib/components/cards/bounties/Community.svelte';
+	import SlabsBountyCard from '$lib/components/cards/bounties/Slabs.svelte';
 	import Filter from '$lib/components/forms/Filter.svelte';
-	import BountyCard from '$lib/components/cards/Bounty.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import Tabs from '$lib/components/page/Tabs.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: Page.Bounties;
+
+	enum Programs {
+		Slabs = 'Secret Labs Bounty Program',
+		Ccbl = 'Community Curated Bounty List'
+	}
 
 	const breadcrumbRoutes = [
 		{
@@ -16,21 +24,47 @@
 		}
 	];
 
+	const tabs = [Programs.Slabs, Programs.Ccbl];
 	const filterSections = ['Date', 'Reward', 'Status'];
+
+	let program: string = Programs.Slabs;
+
+	onMount(() => {
+		console.log(data);
+	});
+
+	function getProgramDescription(p: string) {
+		if (p === Programs.Slabs) {
+			return 'The Secret Labs Bounty program offers exciting opportunities for developers to contribute to the growth and development of the Secret ecosystem. These bounties focus on enhancing Keplr wallet functionality, improving user experience, and supporting a variety of tokens, making the network even more accessible and powerful for our community.';
+		} else if (p === Programs.Ccbl) {
+			return 'This community curated bounty list (CCBL) contains requests from the Secret Network community. Each bounty is a project many have voted on and hope to see built on the network. Think you can take on a bounty for the community? Click the bounty to learn more.';
+		}
+	}
 </script>
 
 <section class="px-24 py-12">
 	<Breadcrumb routes={breadcrumbRoutes} />
 </section>
 
-<section class="min-h-screen px-24">
-	<div class="pb-28">
-		<h1 class="mb-4 text-4xl font-bold text-white">Community Curated Bounty List</h1>
-		<p class="max-w-3xl text-base font-medium text-gray">
-			This community curated bounty list (CCBL) contains requests from the Secret Network community.
-			Each bounty is a project many have voted on and hope to see built on the network. Think you
-			can take on a bounty for the community? Click the bounty to learn more.
-		</p>
+<section class="relative min-h-screen px-24 pt-8">
+	<div class="grid w-full grid-cols-2 items-start pb-28">
+		<div>
+			<h1 class="mb-4 text-4xl font-bold text-white">{program}</h1>
+			<p class="max-w-2xl text-base font-medium text-gray">
+				{getProgramDescription(program)}
+			</p>
+		</div>
+
+		<div class="flex w-full justify-end">
+			<div class="w-[70%]">
+				<Tabs
+					{tabs}
+					on:tab-click={(e) => {
+						program = e.detail;
+					}}
+				/>
+			</div>
+		</div>
 	</div>
 
 	<div class="grid grid-cols-12 gap-x-6">
@@ -99,17 +133,34 @@
 		</div>
 
 		<div class="col-span-9">
-			{#if data.bounties.length === 0}
-				<p class="block self-center text-center text-sm font-medium text-dark-5">
-					Secret University found no bounties.
-				</p>
+			{#if program === Programs.Slabs}
+				<!-- content here -->
+				{#if data.slabsBounties.length === 0}
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
+						Secret University found no Secret Labs bounties.
+					</p>
+				{/if}
+
+				<div class="flex-col space-y-4 pb-36">
+					{#each data.slabsBounties as bounty, index}
+						<SlabsBountyCard {bounty} />
+					{/each}
+				</div>
 			{/if}
 
-			<div class="flex-col space-y-4 pb-36">
-				{#each data.bounties as bounty, index}
-					<BountyCard {bounty} />
-				{/each}
-			</div>
+			{#if program === Programs.Ccbl}
+				{#if data.communityBounties.length === 0}
+					<p class="block self-center text-center text-sm font-medium text-dark-5">
+						Secret University found no community bounties.
+					</p>
+				{/if}
+
+				<div class="flex-col space-y-4 pb-36">
+					{#each data.communityBounties as bounty, index}
+						<CommunityBountyCard {bounty} />
+					{/each}
+				</div>
+			{/if}
 		</div>
 	</div>
 </section>

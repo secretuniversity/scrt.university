@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let bounty: Contributions.Bounty.Self;
+	export let bounty: Contributions.Bounty.Community;
 
 	const url = bounty.proposal_url === null ? bounty.forum_url : bounty.proposal_url;
 
