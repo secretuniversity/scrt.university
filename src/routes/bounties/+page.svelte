@@ -35,7 +35,7 @@
 
 	function getProgramDescription(p: string) {
 		if (p === Programs.Slabs) {
-			return 'The Secret Labs Bounty program offers exciting opportunities for developers to contribute to the growth and development of the Secret ecosystem. These bounties focus on enhancing Keplr wallet functionality, improving user experience, and supporting a variety of tokens, making the network even more accessible and powerful for our community.';
+			return 'The Secret Labs Bounty program offers exciting opportunities for developers to contribute to the growth and development of the Secret ecosystem. These bounties focus on enhancing Keplr wallet functionality, improving user experience, and supporting a variety of tokens, making the network even more accessible and powerful for our community.<br /><br /><p style="font-weight:800;">Please contact Secret Labs via <a style="color:#60A0DC;text-decoration:underline;" href="https://t.me/Yonatan_SCRTLabs" target="_blank" rel="noopener noreferrer">Telegram</a> to ensure a bounty is still available before you start working on it.</p>';
 		} else if (p === Programs.Ccbl) {
 			return 'This community curated bounty list (CCBL) contains requests from the Secret Network community. Each bounty is a project many have voted on and hope to see built on the network. Think you can take on a bounty for the community? Click the bounty to learn more.';
 		}
@@ -51,7 +51,7 @@
 		<div>
 			<h1 class="mb-4 text-4xl font-bold text-white">{program}</h1>
 			<p class="max-w-2xl text-base font-medium text-gray">
-				{getProgramDescription(program)}
+				{@html getProgramDescription(program)}
 			</p>
 		</div>
 
@@ -164,3 +164,10 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.important {
+		color: blue;
+		font-weight: 600;
+	}
+</style>
