@@ -103,29 +103,6 @@ export function toTitleCase(str: string) {
 		.join(' ');
 }
 
-// export async function getOrCreateUser(address: string): Promise<User> {
-// 	try {
-// 		const data = { address };
-// 		const res = await fetch('/api/v1/users', {
-// 			method: 'POST',
-// 			headers: { 'Content-Type': 'application/json' },
-// 			body: JSON.stringify(data)
-// 		})
-
-// 		const token = res.headers.get('token');
-// 		const json = await res.json();
-
-// 		saveJWT(token);
-// 	} catch (err) {
-// 		$notificationsStore = [
-// 			{
-// 				message: "Error creating or finding your Secret University account.",
-// 				type: "error"
-// 			}
-// 		]
-// 	}
-// }
-
 export function retry(fn: () => Promise<any>, retriesLeft = 5, interval = 1000): Promise<any> {
 	return fn().catch((err) => {
 		return new Promise((resolve, reject) => {
