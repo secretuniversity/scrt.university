@@ -6,7 +6,6 @@
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { getBaseAPIUrl, getNotification, isExpired, loadJWT } from '$lib/helpers/index';
 	import { connect } from '$lib/helpers/keplr';
-	import type { User } from '$lib/models';
 	import { notes, secretClient, user } from '$lib/stores';
 
 	let learn = false;
@@ -20,7 +19,7 @@
 		build = false;
 	}
 
-	async function login(address: string): Promise<User> {
+	async function login(address: string): Promise<User.Self> {
 		try {
 			const url = getBaseAPIUrl() + '/v1/users';
 			const res = await fetch(url, {
