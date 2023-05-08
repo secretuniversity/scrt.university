@@ -19,11 +19,6 @@ declare namespace Stores {
 		exp: number;
 	}
 
-	// interface ContributorStore {
-	// 	val: Contributor;
-	// 	exp: number;
-	// }
-
 	interface Articles {
 		val: Contributions.Article.Self[];
 		exp: number;
