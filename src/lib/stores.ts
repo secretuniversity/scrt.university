@@ -14,8 +14,6 @@ export const secretClient: Writable<Stores.SecretClient | null> = writable(null)
 export const bounties: Writable<Stores.Bounties | null> = writable(null);
 export const user: Writable<Stores.User | null> = writable(null);
 export const contributions: Writable<Stores.Contributions | null> = writable(null);
-// export const bookmarksStore: Writable<Stores.Bookmarks | null> = writable(null);
-// export const contributorStore: Writable<ContributorStore | null> = writable(null);
 
 export const videos: Writable<Stores.Videos | null> = writable(null);
 export const articles: Writable<Stores.Articles | null> = writable(null);
