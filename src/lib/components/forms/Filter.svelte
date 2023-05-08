@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import CaretLeftIcon from '$lib/assets/left_caret.svg';
-	import CaretUpIcon from '$lib/assets/up_caret.svg';
 	import CaretDownIcon from '$lib/assets/down_caret.svg';
-	import FilterIcon from '$lib/assets/filter.svg';
+	import CaretUpIcon from '$lib/assets/up_caret.svg';
 
 	export let sections: string[] = [];
 	const flags: boolean[] = [];
@@ -27,6 +25,11 @@
 		{#if flags[index]}
 			<div class="h-full self-center">
 				<img
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							flags[index] = false;
+						}
+					}}
 					on:click={() => {
 						flags[index] = false;
 					}}
@@ -40,6 +43,11 @@
 		{:else}
 			<div class="h-full self-center">
 				<img
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							flags[index] = true;
+						}
+					}}
 					on:click={() => {
 						flags[index] = true;
 					}}

@@ -2,11 +2,9 @@
 	import Modal from '$lib/components/page/Modal.svelte';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { contributorModal, notes, user } from '$lib/stores';
-	import { number, object, string } from 'yup';
-	import { createEventDispatcher, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import type { InferType, ValidationError } from 'yup';
-
-	const dispatch = createEventDispatcher();
+	import { number, object, string } from 'yup';
 
 	const contributorFormSchema = object({
 		id: number().positive().integer().required('id is required'),

@@ -7,7 +7,6 @@
 	export let routes: Array<Route> = [];
 </script>
 
-<!-- This example requires Tailwind CSS v2.0+ -->
 <nav class="shadown-xl flex w-fit rounded-lg" aria-label="Breadcrumb">
 	<ol class="flex max-w-screen-xl px-4 sm:px-6 lg:px-2">
 		<li class="flex space-x-2">
@@ -34,17 +33,6 @@
 
 		{#each routes as route, index}
 			<li class="flex space-x-2">
-				<!-- <svg
-					class="text-gray-200 h-full w-6 flex-shrink-0"
-					viewBox="0 0 24 44"
-					preserveAspectRatio="none"
-					fill="white"
-					xmlns="http://www.w3.org/2000/svg"
-					aria-hidden="true"
-				>
-					<path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
-				</svg> -->
-
 				<div class="flex items-center">
 					<a href={route.path} class="ml-4 text-sm font-medium text-gray hover:text-dark-5">
 						{route.name}

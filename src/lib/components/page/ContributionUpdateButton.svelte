@@ -1,7 +1,7 @@
 <!-- 
     ContributionUpdateButton.svelte
 
-    This component is used to allow a user to update a specfic contribution.
+    This component is used to allow a user to update a specific contribution.
     It is used on a particular contribution page (e.g video, article, secret box, or pathway).
     It is only visible to the user who created the contribution.
 -->

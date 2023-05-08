@@ -1,9 +1,9 @@
 <script>
-	import { fade } from 'svelte/transition';
 	import ThumbUpEmptyIcon from '$lib/assets/thumbs_up_empty.svg';
 	import ThumbUpFilledIcon from '$lib/assets/thumbs_up_filled.svg';
+	import { fade } from 'svelte/transition';
 
-	// NOTE: Need seperate variables for fade transition.
+	// NOTE: Need separate variables for fade transition.
 	let hasReviewed = false;
 	let hasNotReviewed = true;
 	let isThumbEmpty = true;
@@ -36,6 +36,11 @@
 		{/if}
 	</p>
 	<div
+		on:keydown={(e) => {
+			if (e.key === 'Enter') {
+				review();
+			}
+		}}
 		on:click={() => review()}
 		class="cursor-pointer self-center rounded-r-xl border-l border-gray bg-dark-2 px-4 py-3"
 	>
