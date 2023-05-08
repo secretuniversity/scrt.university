@@ -22,26 +22,8 @@
 </script>
 
 <div class="w-full">
-	<div class="sm:hidden">
-		<label for="tabs" class="sr-only">Select a tab</label>
-		<!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-		<!-- <select
-			id="tabs"
-			name="tabs"
-			class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-		>
-			<option selected>My Account</option>
-
-			<option>Company</option>
-
-			<option>Team Members</option>
-
-			<option>Billing</option>
-		</select> -->
-	</div>
 	<div class="hidden sm:block">
 		<nav class="isolate flex divide-x divide-dark-1 rounded-lg shadow" aria-label="Tabs">
-			<!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
 			{#each tabs as t, i}
 				<div
 					on:click={() => handleTabClick(t)}
