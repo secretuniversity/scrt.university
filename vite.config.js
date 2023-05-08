@@ -1,10 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import EnvironmentPlugin from 'vite-plugin-environment';
-// import vitePluginImportus from 'vite-plugin-importus';
 
 /** @type {import('vite').UserConfig} */
-const config = defineConfig(({ command, mode }) => ({
+const config = defineConfig(() => ({
 	plugins: [
 		sveltekit(),
 		EnvironmentPlugin({
@@ -31,7 +30,6 @@ const config = defineConfig(({ command, mode }) => ({
 		rollupOptions: {
 			output: {
 				manualChunks: (id) => {
-					// Magic happens here
 					if (id.includes('secretjs')) {
 						return 'vendor-secretjs';
 					}
