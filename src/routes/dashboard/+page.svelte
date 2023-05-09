@@ -1,6 +1,4 @@
 <script lang="ts">
-	import ChevronDown from '$lib/assets/chevron_down_white.svg';
-
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import PathwayCard from '$lib/components/cards/Pathway.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
@@ -265,7 +263,11 @@
 					class="mb-4 box-border block rounded-tr-md rounded-br-md bg-dark-5 py-2 px-4 hover:bg-dark-4"
 					on:click|preventDefault={() => (contributionDropdownActive = true)}
 				>
-					<img class="h-4 w-4" src={ChevronDown} alt="Choose your contribution" />
+					<img
+						class="h-4 w-4"
+						src="/images/icons/chevron_down_white.svg"
+						alt="Choose your contribution"
+					/>
 				</button>
 			{/if}
 
