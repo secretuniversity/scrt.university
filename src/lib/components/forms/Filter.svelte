@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import CaretDownIcon from '$lib/assets/down_caret.svg';
-	import CaretUpIcon from '$lib/assets/up_caret.svg';
-
 	export let sections: string[] = [];
 	const flags: boolean[] = [];
 
@@ -36,7 +33,7 @@
 					width="20"
 					height="20"
 					class="block cursor-pointer"
-					src={CaretUpIcon}
+					src="/images/icons/up_caret.svg"
 					alt="Hide the side filter"
 				/>
 			</div>
@@ -54,7 +51,7 @@
 					width="20"
 					height="20"
 					class="block cursor-pointer"
-					src={CaretDownIcon}
+					src="/images/icons/down_caret.svg"
 					alt="Hide the side filter"
 				/>
 			</div>

@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import EditIcon from '$lib/assets/edit_icon.svg';
-	import Image from '$lib/assets/illustrations/professor.svg';
-	import TrashIcon from '$lib/assets/trash_icon.svg';
 	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import Head from '$lib/components/page/Head.svelte';
@@ -363,7 +360,11 @@
 </section>
 
 <section class="mx-auto w-11/12 pb-8">
-	<PageHeader image={Image} title={pageTitle} description={pageDescription} />
+	<PageHeader
+		image="/images/illustrations/professor.svg"
+		title={pageTitle}
+		description={pageDescription}
+	/>
 </section>
 
 <section
@@ -447,7 +448,11 @@
 									>
 										<div class="flex items-center">
 											<span>Edit</span>
-											<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit lesson" />
+											<img
+												class="ml-2 inline-block h-5 w-5"
+												src="/images/icons/edit_icon.svg"
+												alt="Edit lesson"
+											/>
 										</div>
 									</button>
 									<button
@@ -456,7 +461,7 @@
 											$pathwayRequest.lessons = $pathwayRequest.lessons.filter((_, j) => j !== i);
 										}}
 									>
-										<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
+										<img class="h-5 w-5" src="/images/icons/trash_icon.svg" alt="Remove lesson" />
 									</button>
 								</div>
 							</div>
@@ -522,7 +527,11 @@
 								>
 									<div class="flex items-center">
 										<span>Edit</span>
-										<img class="ml-2 inline-block h-5 w-5" src={EditIcon} alt="Edit quiz" />
+										<img
+											class="ml-2 inline-block h-5 w-5"
+											src="/images/icons/edit_icon.svg"
+											alt="Edit quiz"
+										/>
 									</div>
 								</button>
 								<button
@@ -534,7 +543,7 @@
 										);
 									}}
 								>
-									<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
+									<img class="h-5 w-5" src="/images/icons/trash_icon.svg" alt="Remove lesson" />
 								</button>
 							</div>
 						</div>
@@ -627,7 +636,7 @@
 											options.filter((_, j) => j !== i);
 									}}
 								>
-									<img class="h-5 w-5" src={TrashIcon} alt="Remove lesson" />
+									<img class="h-5 w-5" src="/images/icons/trash_icon.svg" alt="Remove lesson" />
 								</button>
 							</div>
 						</div>

@@ -1,11 +1,7 @@
 <script lang="ts">
-	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
-	import SupportTicket from '$lib/components/forms/SupportTicket.svelte';
-	import DiscordLogo from '$lib/assets/discord_logo.svg';
-	import GithubLogo from '$lib/assets/github_logo_white.svg';
-	import SecretLogo from '$lib/assets/secret_white.svg';
 	import Staking from '$lib/components/forms/Staking.svelte';
-	import Image from '$lib/assets/illustrations/support.svg';
+	import SupportTicket from '$lib/components/forms/SupportTicket.svelte';
+	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
 </script>
 
 <section class="mx-24">
@@ -25,7 +21,7 @@
 				>
 			</div>
 
-			<img class="mt-16" src={Image} alt="support illustration" />
+			<img class="mt-16" src="/images/illustrations/support.svg" alt="support illustration" />
 		</div>
 
 		<div class="h-fit overflow-hidden rounded-lg bg-dark-4 px-20 py-16 shadow-lg">
@@ -48,7 +44,7 @@
 	<div class="mx-auto flex max-w-7xl gap-x-12 py-12">
 		<div class="flex flex-col items-center space-y-4 lg:w-4/12">
 			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-red">
-				<img src={DiscordLogo} alt="Join the Secret Network Discord" />
+				<img src="/images/icons/discord_icon.svg" alt="Join the Secret Network Discord" />
 			</div>
 			<h2 class="text-lg font-semibold text-white">Chat on Discord</h2>
 			<p class="mb-2 max-w-xs text-center text-base text-gray">
@@ -67,7 +63,7 @@
 			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-turquoise-g">
 				<img
 					class="h-20 w-auto"
-					src={SecretLogo}
+					src="/images/icons/secret_white_icon.svg"
 					alt="Join discussions on the Secret Network forum."
 				/>
 			</div>
@@ -86,7 +82,10 @@
 
 		<div class="flex flex-col items-center space-y-4 lg:w-4/12">
 			<div class="grid h-32 w-32 items-center justify-items-center rounded-md bg-dark-blue">
-				<img src={GithubLogo} alt="Check out Secret University on Github" />
+				<img
+					src="/images/icons/github_white_icon.svg"
+					alt="Check out Secret University on Github"
+				/>
 			</div>
 			<h2 class="text-lg font-semibold text-white">Find us on Github</h2>
 			<p class="mb-2 max-w-xs text-center text-base text-gray">

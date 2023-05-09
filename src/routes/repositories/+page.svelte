@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import Filter from '$lib/components/forms/Filter.svelte';
-	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import Image from '$lib/assets/illustrations/dev.svg';
 	import RepoCard from '$lib/components/cards/Repo.svelte';
 	import SecretBoxCard from '$lib/components/cards/SecretBox.svelte';
+	import Filter from '$lib/components/forms/Filter.svelte';
 	import Search from '$lib/components/forms/Search.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
+	import { genExp, getNotification } from '$lib/helpers';
+	import { boxes, notes, repos } from '$lib/stores';
 	import Fuse from 'fuse.js';
-	import { notes, repos, boxes } from '$lib/stores';
-	import { getNotification, genExp, getBaseAPIUrl } from '$lib/helpers';
+	import { onMount } from 'svelte';
 
 	export let data: Page.Repositories;
 
@@ -112,7 +111,7 @@
 
 <section class="lg:mx-24">
 	<PageHeader
-		image={Image}
+		image="/images/illustrations/dev.svg"
 		title={PAGE_TITLE}
 		description={'Learn from the source. Find inspiration for you next project by looking at these repositories.'}
 	/>

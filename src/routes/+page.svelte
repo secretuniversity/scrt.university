@@ -1,12 +1,5 @@
 <script context="module" lang="ts">
 	import Hero from '$lib/components/hero/Hero.svelte';
-	import RoadImage from '$lib/assets/illustrations/road.svg';
-	import BoxImage from '$lib/assets/illustrations/mystery_box.svg';
-	import LibraryImage from '$lib/assets/illustrations/library.svg';
-
-	import SNImage1 from '$lib/assets/illustrations/sn-1.webp';
-	import SNImage2 from '$lib/assets/illustrations/sn-2.svg';
-	import SNImage3 from '$lib/assets/illustrations/sn-3.webp';
 </script>
 
 <section class="relative overflow-hidden">
@@ -48,13 +41,21 @@
 				>
 			</div>
 			<div class="col-span-6">
-				<img class="h-auto w-[32rem]" src={RoadImage} alt="take coures on secret university" />
+				<img
+					class="h-auto w-[32rem]"
+					src="/images/illustrations/road.svg"
+					alt="take coures on secret university"
+				/>
 			</div>
 		</div>
 
 		<div class="mx-auto grid max-w-[80%] grid-cols-12 items-center justify-items-center">
 			<div class="col-span-6">
-				<img class="h-auto w-[32rem]" src={BoxImage} alt="utilize secret box starter projects" />
+				<img
+					class="h-auto w-[32rem]"
+					src="/images/illustrations/mystery_box.svg"
+					alt="utilize secret box starter projects"
+				/>
 			</div>
 
 			<div class="col-span-6">
@@ -91,7 +92,7 @@
 			<div class="col-span-6">
 				<img
 					class="h-auto w-[32rem]"
-					src={LibraryImage}
+					src="/images/illustrations/library.svg"
 					alt="browse resources on secret university"
 				/>
 			</div>
@@ -113,7 +114,7 @@
 			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
 				<div class="h-[50%] bg-dark-5">
 					<!-- Image goes here -->
-					<img class="h-auto w-full" src={SNImage3} alt="Space" />
+					<img class="h-auto w-full" src="/images/illustrations/sn-3.webp" alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->
@@ -131,7 +132,7 @@
 			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
 				<div class="flex h-[50%] items-center bg-dark-5">
 					<!-- Image goes here -->
-					<img class="h-auto w-full" src={SNImage1} alt="Space" />
+					<img class="h-auto w-full" src="/images/illustrations/sn-1.webp" alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->
@@ -149,7 +150,7 @@
 			<div class="mb-12 overflow-hidden rounded-lg bg-dark-4">
 				<div class="h-[50%] bg-dark-5">
 					<!-- Image goes here -->
-					<img class="h-full w-auto" src={SNImage2} alt="Space" />
+					<img class="h-full w-auto" src="/images/illustrations/sn-2.svg" alt="Space" />
 				</div>
 				<div class="pb-6 sm:px-6">
 					<!-- Content goes here -->

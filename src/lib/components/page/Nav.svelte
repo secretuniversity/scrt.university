@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/stores';
-	import ChevronDown from '$lib/assets/chevron_down_white.svg';
-	import WalletIcon from '$lib/assets/wallet_icon.svg';
 	import { clickOutside } from '$lib/directives/clickOutside';
 	import { getBaseAPIUrl, getNotification, isExpired, loadJWT } from '$lib/helpers/index';
 	import { connect } from '$lib/helpers/keplr';
@@ -126,7 +124,7 @@
 							}
 						}}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
-						src={ChevronDown}
+						src="/images/icons/chevron_down_white.svg"
 						alt="Learn to build on Secret Network"
 					/>
 					{#if learn}
@@ -155,7 +153,7 @@
 							}
 						}}
 						class="inline-block h-3.5 w-3.5 cursor-pointer"
-						src={ChevronDown}
+						src="/images/icons/chevron_down_white.svg"
 						alt="Learn to build on Secret Network"
 					/>
 					{#if build}
@@ -190,7 +188,7 @@
 						<div class="flex">
 							<img
 								class="mr-2 h-7 w-7 self-center justify-self-center"
-								src={WalletIcon}
+								src="/images/icons/wallet_icon.svg"
 								alt="Wallet icon"
 							/>
 							<p class="self-center justify-self-center">Connect</p>

@@ -1,11 +1,8 @@
 <script lang="ts">
+	import ToolCard from '$lib/components/cards/Tool.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import SectionHeader from '$lib/components/page/SectionHeader.svelte';
-	import ToolCard from '$lib/components/cards/Tool.svelte';
-	import HeaderImage from '$lib/assets/illustrations/teacher_student.svg';
-
-	const pageTitle = 'Learn';
 
 	const breadcrumbRoutes = [
 		{
@@ -23,7 +20,7 @@
 	<PageHeader
 		title={'Learn'}
 		description={'Learn to build on Secret Network using our courses Secret Pathways or dive deep into code with Secret Boxes'}
-		image={HeaderImage}
+		image="/images/illustrations/teacher_student.svg"
 	/>
 
 	<div class="mt-20 mb-12 text-4xl font-bold leading-6 text-white">Core Learning Materials</div>

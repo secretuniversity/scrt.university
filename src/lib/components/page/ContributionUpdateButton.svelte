@@ -7,7 +7,6 @@
 -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import EditIcon from '$lib/assets/edit_white.svg';
 	import { user } from '$lib/stores';
 
 	export let contribution: Contributions.UserContribution;
@@ -26,6 +25,10 @@
 			goto(`/update/${contribution.kind}/${contribution.id}`);
 		}}
 		class="rounded-full bg-dark-4 px-3 py-3 text-white"
-		><img class="mx-auto h-4 w-4" src={EditIcon} alt="Edit your contribution" /></button
+		><img
+			class="mx-auto h-4 w-4"
+			src="/images/icons/edit_white.svg"
+			alt="Edit your contribution"
+		/></button
 	>
 {/if}

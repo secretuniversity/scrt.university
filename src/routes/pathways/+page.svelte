@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import BGImage from '$lib/assets/illustrations/space_bg.svg';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
 	import { getNotification, slugify } from '$lib/helpers';
 	import { notes, pathwayCursor } from '$lib/stores';
@@ -47,7 +46,11 @@
 
 <div class="relative">
 	<div class="z-1 absolute top-0 left-0 right-0 mx-auto h-auto w-11/12">
-		<img class="h-full w-full" src={BGImage} alt="Explore Secret Pathways" />
+		<img
+			class="h-full w-full"
+			src="/images/illustrations/space_bg.svg"
+			alt="Explore Secret Pathways"
+		/>
 	</div>
 
 	<section class="relative mx-24 min-h-home-hero">

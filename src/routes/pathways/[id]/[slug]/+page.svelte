@@ -1,6 +1,4 @@
 <script lang="ts">
-	import LeftArrowIcon from '$lib/assets/left_arrow.svg';
-	import RightArrowIcon from '$lib/assets/right_arrow.svg';
 	import ContributionUpdateButton from '$lib/components/page/ContributionUpdateButton.svelte';
 	import { getNotification } from '$lib/helpers';
 	import { notes, pathwayCursor } from '$lib/stores';
@@ -187,7 +185,7 @@
 					}}
 					on:click={() => goBack()}
 				>
-					<img class="h-8 w-auto" src={LeftArrowIcon} alt="Left reading arrow" />
+					<img class="h-8 w-auto" src="/images/icons/left_arrow.svg" alt="Left reading arrow" />
 				</div>
 				<div class="col-span-8 col-start-2">
 					{#if modules.length !== 0}
@@ -236,7 +234,7 @@
 					class="sticky top-0 flex h-home-hero cursor-pointer items-center justify-self-center p-4"
 					on:click={() => goForward()}
 				>
-					<img class="h-8 w-auto" src={RightArrowIcon} alt="Right reading arrow" />
+					<img class="h-8 w-auto" src="/images/icons/right_arrow.svg" alt="Right reading arrow" />
 				</div>
 			</div>
 		</div>

@@ -1,11 +1,11 @@
-<script lang="ts">
-	import Image from '$lib/assets/illustrations/developer.svg';
-</script>
-
 <div class="flex justify-center space-x-6">
 	<div class="relative">
 		<div class="relative mx-auto h-full w-full">
-			<img class="h-full w-full" src={Image} alt="Grow as a developer" />
+			<img
+				class="h-full w-full"
+				src="/images/illustrations/developer.svg"
+				alt="Grow as a developer"
+			/>
 		</div>
 	</div>
 

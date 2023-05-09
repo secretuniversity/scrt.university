@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Image from '$lib/assets/illustrations/staking.svg';
 	import { getNotification } from '$lib/helpers';
 	import { notes, secretClient } from '$lib/stores';
 	import type { MsgDelegateParams } from 'secretjs';
@@ -59,7 +58,7 @@
 <div class="container relative mx-auto max-h-fit px-4 sm:px-6 lg:py-20 lg:px-16">
 	<img
 		class="absolute right-20 -top-4 h-auto w-2/6"
-		src={Image}
+		src="/images/illustrations/staking.svg"
 		alt="stake your SCRT with Secret University"
 	/>
 	<div

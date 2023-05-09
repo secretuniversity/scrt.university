@@ -30,10 +30,6 @@
 	import html from 'highlight.js/lib/languages/xml';
 	import { lowlight } from 'lowlight';
 
-	import ClearIcon from '$lib/assets/clear-icon.svg';
-	import ImageIcon from '$lib/assets/image_icon_white.svg';
-	import LinkIcon from '$lib/assets/link-icon.svg';
-
 	import '$lib/styles/tiptap.scss';
 
 	export let value = '';
@@ -166,7 +162,7 @@
 			</button>
 
 			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
-				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
+				<img class="h-4 w-4" src="/images/icons/clear_icon.svg" alt="Clear text styles" />
 			</button>
 
 			{#if isAddingImage}
@@ -188,7 +184,7 @@
 				</div>
 			{:else}
 				<button on:click={() => (isAddingImage = true)}>
-					<img class="h-4 w-4" src={ImageIcon} alt="Add screenshots" />
+					<img class="h-4 w-4" src="/images/icons/image_icon_white.svg" alt="Add screenshots" />
 				</button>
 			{/if}
 
@@ -209,7 +205,7 @@
 				>
 			{:else}
 				<button on:click={() => (isAddingLink = true)}>
-					<img class="h-4 w-4" src={LinkIcon} alt="Add link" />
+					<img class="h-4 w-4" src="/images/icons/link_icon.svg" alt="Add link" />
 				</button>
 			{/if}
 		</div>
@@ -230,7 +226,7 @@
 				S
 			</button>
 			<button on:click={() => editor.chain().focus().unsetAllMarks().run()}>
-				<img class="h-4 w-4" src={ClearIcon} alt="Clear text styles" />
+				<img class="h-4 w-4" src="/images/icons/clear_icon.svg" alt="Clear text styles" />
 			</button>
 		</div>
 	</div>

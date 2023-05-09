@@ -1,7 +1,3 @@
-<script lang="ts">
-	import Image from '$lib/assets/illustrations/main_professor.svg';
-</script>
-
 <div class="flex justify-center">
 	<div class="max-w-2xl text-left">
 		<h1>
@@ -21,7 +17,11 @@
 	</div>
 	<div class="relative">
 		<div class="relative mx-auto w-max">
-			<img class="h-full w-full" src={Image} alt="Welcome to Secret University" />
+			<img
+				class="h-full w-full"
+				src="/images/illustrations/main_professor.svg"
+				alt="Welcome to Secret University"
+			/>
 		</div>
 	</div>
 </div>

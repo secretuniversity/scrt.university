@@ -3,8 +3,6 @@
 	import { slugify } from '$lib/helpers';
 	import { boxCursor } from '$lib/stores';
 
-	import SecretBoxLogo from '$lib/assets/secret_box_logo.png';
-
 	export let secretBox: Contributions.SecretBox.Self;
 </script>
 
@@ -23,10 +21,7 @@
 				</h3>
 
 				<div class="flex items-center space-x-2">
-					<img src={SecretBoxLogo} alt="Learn today with Secret Boxes" />
-					<!-- <p id="label" class="h-fit w-fit shrink rounded-sm py-1 px-3 text-sm font-semibold ">
-						SECRET BOX
-					</p> -->
+					<img src="/images/icons/secret_box_icon.png" alt="Learn today with Secret Boxes" />
 				</div>
 			</div>
 

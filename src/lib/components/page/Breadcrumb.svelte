@@ -12,7 +12,6 @@
 		<li class="flex space-x-2">
 			<div class="flex items-center">
 				<a href="/" class="text-gray hover:text-dark-4">
-					<!-- Heroicon name: solid/home -->
 					<svg
 						class="h-5 w-5 flex-shrink-0"
 						xmlns="http://www.w3.org/2000/svg"

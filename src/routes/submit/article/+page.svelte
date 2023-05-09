@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import PageHeaderImage from '$lib/assets/illustrations/writing.svg';
 	import TagInput from '$lib/components/forms/TagInput.svelte';
 	import TipTap from '$lib/components/forms/TipTap.svelte';
 	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
@@ -13,7 +12,7 @@
 	import type { ValidationError } from 'yup';
 
 	const pageTitle = 'Submit An Article';
-	const pageDescription = `For those with a knack for writing and endless curiousity, submit your article to 
+	const pageDescription = `For those with a knack for writing and endless curiosity, submit your article to 
 		Secret University and share your discoveries with the Secret community.</br>
 		<a href=""><span class="inline-block mt-2 text-dark-blue underline cursor-pointer">Learn more</span></a> 
 		about writing articles for Secret University.`;
@@ -197,7 +196,11 @@
 </section>
 
 <section class="relative mx-auto w-11/12 pb-8">
-	<PageHeader title={pageTitle} description={pageDescription} image={PageHeaderImage} />
+	<PageHeader
+		title={pageTitle}
+		description={pageDescription}
+		image="/images/illustrations/writing.svg"
+	/>
 </section>
 
 <section class="mx-auto grid w-11/12 grid-cols-3 gap-x-8 gap-y-4 pt-8 pb-36">

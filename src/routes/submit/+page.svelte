@@ -1,8 +1,4 @@
 <script lang="ts">
-	import ContentCreatorImage from '$lib/assets/illustrations/content_creator.svg';
-	import DevImage from '$lib/assets/illustrations/dev.svg';
-	import ProfessorImage from '$lib/assets/illustrations/professor.svg';
-	import WriterImage from '$lib/assets/illustrations/writing.svg';
 	import Head from '$lib/components/page/Head.svelte';
 
 	const pageTitle = 'Submit';
@@ -42,11 +38,19 @@
 			</div>
 		</div>
 
-		<img class="h-72 w-72 justify-self-start" src={WriterImage} alt="Submit an article" />
+		<img
+			class="h-72 w-72 justify-self-start"
+			src="/images/illustrations/writing.svg"
+			alt="Submit an article"
+		/>
 	</div>
 
 	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
-		<img class="h-72 w-72 justify-self-end" src={ContentCreatorImage} alt="Submit a video" />
+		<img
+			class="h-72 w-72 justify-self-end"
+			src="/images/illustrations/content_creator.svg"
+			alt="Submit a video"
+		/>
 
 		<div class="col-span-2 grid gap-y-4">
 			<p class="text-base font-semibold text-dark-turquoise-b">VIDEOS & SCREENCASTS</p>
@@ -89,11 +93,19 @@
 			</div>
 		</div>
 
-		<img class="h-72 w-72 justify-self-start" src={DevImage} alt="Submit a secret box" />
+		<img
+			class="h-72 w-72 justify-self-start"
+			src="/images/illustrations/dev.svg"
+			alt="Submit a secret box"
+		/>
 	</div>
 
 	<div class="grid grid-cols-3 items-center justify-items-center py-32 text-white">
-		<img class="h-72 w-72 justify-self-end" src={ProfessorImage} alt="Submit a pathway" />
+		<img
+			class="h-72 w-72 justify-self-end"
+			src="/images/illustrations/professor.svg"
+			alt="Submit a pathway"
+		/>
 		<div class="col-span-2 grid gap-y-4">
 			<p class="text-base font-semibold text-dark-turquoise-b">SECRET PATHWAYS</p>
 			<p class="text-4xl font-bold">For the Professor</p>

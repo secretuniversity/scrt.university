@@ -1,14 +1,12 @@
 <script>
-	import SecretLogo from '$lib/assets/secret_logo.svg';
 </script>
 
-<!-- This example requires Tailwind CSS v2.0+ -->
 <footer class="bg-dark-4" aria-labelledby="footer-heading">
 	<h2 id="footer-heading" class="sr-only">Footer</h2>
 	<div class="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
 		<div class="xl:grid xl:grid-cols-3 xl:gap-8">
 			<div class="space-y-8 xl:col-span-1">
-				<img class="h-10" src={SecretLogo} alt="Secret Network logo" />
+				<img class="h-10" src="/images/icons/secret_logo_icon.svg" alt="Secret Network logo" />
 				<p class="text-base text-off-white">
 					Secret University is built to support development on Secret Network.
 				</p>
@@ -109,7 +107,7 @@
 			</div>
 		</div>
 		<div class="mt-12 border-t border-white pt-8">
-			<p class="text-base text-white xl:text-center">&copy; 2022 Secret University</p>
+			<p class="text-base text-white xl:text-center">&copy; 2023 Secret University</p>
 		</div>
 	</div>
 </footer>

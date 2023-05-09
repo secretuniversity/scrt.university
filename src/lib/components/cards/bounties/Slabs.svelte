@@ -1,5 +1,4 @@
 <script lang="ts">
-	import LinkIcon from '$lib/assets/link_icon.svg';
 	import { toTitleCase } from '$lib/helpers';
 	export let bounty: Contributions.Bounty.Slabs;
 
@@ -47,7 +46,7 @@
 			href={bounty.external_url}
 			class="cursor-pointer justify-self-end"
 		>
-			<img class="h-6 w-6" src={LinkIcon} alt="" />
+			<img class="h-6 w-6" src="/images/icons/link_icon.svg" alt="" />
 		</a>
 	</div>
 

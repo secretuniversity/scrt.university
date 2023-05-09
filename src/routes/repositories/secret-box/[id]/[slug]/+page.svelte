@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SecretBoxImage from '$lib/assets/illustrations/hello_box.svg';
 	import ContributionUpdateButton from '$lib/components/page/ContributionUpdateButton.svelte';
 	import Tag from '$lib/components/page/Tag.svelte';
 	import { boxCursor } from '$lib/stores';
@@ -105,7 +104,7 @@
 
 			<img
 				class="h-full w-auto justify-self-center"
-				src={SecretBoxImage}
+				src="/images/illustrations/hello_box.svg"
 				alt="Support development on Secret by using Secret Boxes"
 			/>
 		</div>
@@ -115,6 +114,7 @@
 <style>
 	#label {
 		background: -webkit-linear-gradient(left, #60a0dc, #eb8045);
+		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}

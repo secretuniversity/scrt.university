@@ -1,9 +1,3 @@
-<script lang="ts">
-	import Image from '$lib/assets/illustrations/secret_box.svg';
-	import Image2 from '$lib/assets/illustrations/counter_box.svg';
-	import Image3 from '$lib/assets/illustrations/hello_box.svg';
-</script>
-
 <div class="flex items-center justify-center">
 	<div class="max-w-2xl text-left">
 		<h1>
@@ -23,9 +17,21 @@
 	</div>
 	<div class="relative">
 		<div class="relative mx-auto w-max">
-			<img class="h-full w-full" src={Image} alt="Explore Secret Boxes" />
-			<img class="ml-16 h-full w-full" src={Image2} alt="Explore Secret Boxes" />
-			<img class="h-full w-full" src={Image3} alt="Explore Secret Boxes" />
+			<img
+				class="h-full w-full"
+				src="/images/illustrations/secret_box.svg"
+				alt="Explore Secret Boxes"
+			/>
+			<img
+				class="ml-16 h-full w-full"
+				src="/images/illustrations/counter_box.svg"
+				alt="Explore Secret Boxes"
+			/>
+			<img
+				class="h-full w-full"
+				src="/images/illustrations/hello_box.svg"
+				alt="Explore Secret Boxes"
+			/>
 		</div>
 	</div>
 </div>

@@ -1,14 +1,13 @@
 <script lang="ts">
-	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
-	import PageHeader from '$lib/components/page/PageHeader.svelte';
-	import Filter from '$lib/components/forms/Filter.svelte';
-	import Search from '$lib/components/forms/Search.svelte';
-	import Image from '$lib/assets/illustrations/code.svg';
 	import ArticleCard from '$lib/components/cards/Article.svelte';
 	import VideoCard from '$lib/components/cards/Video.svelte';
-	import Fuse from 'fuse.js';
-	import { articles, notes, videos } from '$lib/stores';
+	import Filter from '$lib/components/forms/Filter.svelte';
+	import Search from '$lib/components/forms/Search.svelte';
+	import Breadcrumb from '$lib/components/page/Breadcrumb.svelte';
+	import PageHeader from '$lib/components/page/PageHeader.svelte';
 	import { genExp, getNotification } from '$lib/helpers';
+	import { articles, notes, videos } from '$lib/stores';
+	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
 
 	export let data: Page.Resources;
@@ -87,7 +86,7 @@
 
 <section class="mx-24">
 	<PageHeader
-		image={Image}
+		image="/images/illustrations/code.svg"
 		title={'Community Resources'}
 		description={'Learn from the community. Find guides, courses, videos, and more— each made by developers on Secret Network.'}
 	/>

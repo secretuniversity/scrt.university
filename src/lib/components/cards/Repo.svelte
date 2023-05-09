@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Tag from '$lib/components/page/Tag.svelte';
-	import GithubLogo from '$lib/assets/github_logo_gray.svg';
 
 	export let repo: Contributions.Repo.Self;
 </script>
@@ -12,7 +11,7 @@
 			<div class="mb-3 mt-1 flex items-center space-x-2">
 				<img
 					class="h-6 w-6 self-center"
-					src={GithubLogo}
+					src="/images/icons/github_gray_icon.svg"
 					alt="Learn more about the author of this Secret Box on Github"
 				/>
 				<a

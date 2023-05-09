@@ -1,9 +1,5 @@
 <script lang="ts">
 	import ContributorForm from '$lib/components/forms/ContributorForm.svelte';
-	import GoldPot from '$lib/assets/illustrations/gold_pot.svg';
-	import CodeImage from '$lib/assets/illustrations/code.svg';
-	import TeachImage from '$lib/assets/illustrations/teach.svg';
-	import EarnImage from '$lib/assets/illustrations/earn.svg';
 	import { getBaseAPIUrl, getNotification } from '$lib/helpers';
 	import { contributorModal, notes, user } from '$lib/stores';
 
@@ -58,7 +54,11 @@
 
 <div class="my-8 flex justify-center gap-x-40">
 	<div class="lg:max-w-xs">
-		<img class="mx-auto h-56 w-56" src={CodeImage} alt="code your next project on secret" />
+		<img
+			class="mx-auto h-56 w-56"
+			src="/images/illustrations/code.svg"
+			alt="code your next project on secret"
+		/>
 		<h2 class="mt-4 text-center text-lg font-semibold text-white">Code</h2>
 		<p class="mt-2 text-center text-base text-gray">
 			Build your next project on Secret and learn to build private decentralized applications.
@@ -68,7 +68,7 @@
 	<div class="lg:max-w-xs">
 		<img
 			class="mx-auto h-56 w-56"
-			src={TeachImage}
+			src="/images/illustrations/teach.svg"
 			alt="teach for the next generation of builders on secret"
 		/>
 		<h2 class="mt-4 text-center text-lg font-semibold text-white">Teach</h2>
@@ -81,7 +81,7 @@
 	<div class="lg:max-w-xs">
 		<img
 			class="mx-auto h-56 w-56"
-			src={EarnImage}
+			src="/images/illustrations/earn.svg"
 			alt="earn SCRT for your contributions to secret university"
 		/>
 		<h2 class="mt-4 text-center text-lg font-semibold text-white">Earn</h2>
@@ -121,5 +121,9 @@
 		</div>
 	</div>
 
-	<img class="h-72 w-72 justify-self-start" src={GoldPot} alt="Pot of gold" />
+	<img
+		class="h-72 w-72 justify-self-start"
+		src="/images/illustrations/gold_pot.svg"
+		alt="Pot of gold"
+	/>
 </div>

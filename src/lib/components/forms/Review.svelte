@@ -1,6 +1,4 @@
 <script>
-	import ThumbUpEmptyIcon from '$lib/assets/thumbs_up_empty.svg';
-	import ThumbUpFilledIcon from '$lib/assets/thumbs_up_filled.svg';
 	import { fade } from 'svelte/transition';
 
 	// NOTE: Need separate variables for fade transition.
@@ -48,14 +46,14 @@
 			<img
 				width="30"
 				height="30"
-				src={ThumbUpFilledIcon}
+				src="/images/icons/thumbs_up_filled.svg"
 				alt="Recommend this material to another developer."
 			/>
 		{:else}
 			<img
 				width="30"
 				height="30"
-				src={ThumbUpEmptyIcon}
+				src="images/icons/thumbs_up_empty.svg"
 				alt="Recommend this material to another developer."
 			/>
 		{/if}
