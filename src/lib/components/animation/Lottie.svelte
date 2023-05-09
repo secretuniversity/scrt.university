@@ -1,19 +1,23 @@
 <script>
-	import { onMount } from 'svelte';
 	import lottie from 'lottie-web';
+	import { onMount } from 'svelte';
 
 	export let id = 'lottie-id';
 	export let path = '';
 	export let loop = true;
 
 	onMount(() => {
-		var _animation = lottie.loadAnimation({
-			container: document.getElementById(id), // Required
-			path, // Required
-			renderer: 'svg', // Required
-			loop, // Optional
-			autoplay: true // Optional
-		});
+		const el = document.getElementById(id);
+
+		if (el) {
+			let _animation = lottie.loadAnimation({
+				container: el, // Required
+				path, // Required
+				renderer: 'svg', // Required
+				loop, // Optional
+				autoplay: true // Optional
+			});
+		}
 	});
 </script>
 
