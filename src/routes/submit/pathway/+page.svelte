@@ -105,12 +105,14 @@
 
 				goto('/dashboard');
 			} else {
+				console.error(res);
 				$notes = [
 					...$notes,
 					getNotification('There was an error submitting your pathway.', 'error')
 				];
 			}
 		} catch (err) {
+			console.error(err);
 			$notes = [...$notes, getNotification(err as string, 'error')];
 		}
 	}
