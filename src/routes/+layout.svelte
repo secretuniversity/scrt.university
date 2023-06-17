@@ -11,7 +11,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 
-	const minScreenWidth = 961;
+	const minScreenWidth = 601;
 
 	$: width = 2000; // arbitrary large number to avoid loading mobile warning
 	$: isMobile = width < minScreenWidth;
