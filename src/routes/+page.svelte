@@ -182,7 +182,7 @@
 			<a
 				target="_blank"
 				rel="noopener noreferrer"
-				href="https://chat.scrt.network"
+				href="https://scrt.network/discord"
 				class="inline-flex items-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-darker-blue"
 				>Reach Out</a
 			>

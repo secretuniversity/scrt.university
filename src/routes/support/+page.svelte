@@ -53,7 +53,7 @@
 			<a
 				target="_blank"
 				rel="noopener noreferrer"
-				href="https://chat.scrt.network"
+				href="https://scrt.network/discord"
 				class="inline-flex items-center rounded-md border border-transparent bg-light-cream px-4 py-2 text-base font-medium text-dark-2 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 				>Join Discord</a
 			>

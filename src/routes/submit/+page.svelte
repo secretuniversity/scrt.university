@@ -139,7 +139,7 @@
 		</p>
 		<div class="mx-auto mt-4 w-min">
 			<a
-				href="https://chat.scrt.network"
+				href="https://scrt.network/discord"
 				type="button"
 				class="inline-flex w-max items-center rounded-md border border-transparent bg-light-cream px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-darker-light-cream"
 				>Reach Out</a
