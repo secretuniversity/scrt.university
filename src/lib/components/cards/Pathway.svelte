@@ -5,7 +5,7 @@
 </script>
 
 <a
-	class=" block h-56 w-full"
+	class=" block h-[364px] w-full"
 	href={'/pathways/' + pathway.id + '/' + slugify(pathway.title)}
 	on:click={() => pathwayCursor.set(pathway)}
 >

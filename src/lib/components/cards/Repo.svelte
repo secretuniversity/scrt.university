@@ -4,7 +4,7 @@
 	export let repo: Contributions.Repo.Self;
 </script>
 
-<a target="_blank" rel="noopener noreferrer" class="block h-56" href={repo.github_repo}>
+<a target="_blank" rel="noopener noreferrer" class="block h-[364px]" href={repo.github_repo}>
 	<div class="h-full overflow-hidden rounded-md bg-dark-4 px-4 py-6 shadow lg:px-8 lg:py-8">
 		<div class="grid h-full auto-rows-auto">
 			<p class="grow text-2xl font-semibold text-white">{repo.title}</p>

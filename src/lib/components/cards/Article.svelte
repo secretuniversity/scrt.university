@@ -11,7 +11,7 @@
 	$: target = article.external_url ? '_blank' : '_self';
 </script>
 
-<a class=" block h-56 w-full" {href} {target} on:click={() => articleCursor.set(article)}>
+<a class=" block h-[364px] w-full" {href} {target} on:click={() => articleCursor.set(article)}>
 	<div class="grid h-full rounded-md bg-dark-4 p-6 text-white shadow-lg">
 		<div class="mb-4 flex h-fit w-full space-x-4">
 			<h3 class="grow text-2xl font-bold">

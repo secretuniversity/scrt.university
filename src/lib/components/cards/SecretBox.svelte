@@ -7,7 +7,7 @@
 </script>
 
 <a
-	class="block h-56"
+	class="block h-[364px]"
 	href={'/repositories/secret-box/' + secretBox.id + '/' + slugify(secretBox.title)}
 	on:click={() => boxCursor.set(secretBox)}
 >
